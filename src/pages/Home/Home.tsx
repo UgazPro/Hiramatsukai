@@ -161,9 +161,9 @@ export default function Home() {
                 </section>
             </main>
 
-            <footer className="border-t py-6 md:py-0">
-                <div className="container flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">
-                    <p className="text-center text-sm leading-loose  md:text-left">
+            <footer className="border-t py-6">
+                <div className="flex items-center justify-center">
+                    <p className="text-center text-sm leading-loose">
                         © 2025 Hiramatsukai. Todos los derechos reservados.
                     </p>
                 </div>
