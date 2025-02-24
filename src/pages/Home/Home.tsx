@@ -14,7 +14,7 @@ export default function Home() {
     };
 
     return (
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col w-full">
             <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <div className="container flex h-16 items-center justify-between">
                     <Link to="/" className="flex items-center space-x-2">
@@ -64,8 +64,8 @@ export default function Home() {
                 </div>
             </header>
 
-            <main className="flex-1">
-                <section id="home" className="relative">
+            <main className="flex-1 w-full">
+                <section id="home" className="relative w-full">
                     <div className="absolute inset-0">
                         <img
                             src="/placeholder.svg?height=600&width=1200"
@@ -74,7 +74,7 @@ export default function Home() {
                         />
                         <div className="absolute inset-0 bg-black/60" />
                     </div>
-                    <div className="container relative py-24 sm:py-32">
+                    <div className="container relative py-24 sm:py-32 w-full">
                         <div className="mx-auto max-w-3xl text-center text-white">
                             <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">Hiramatsukai</h1>
                             <p className="mt-6 text-lg leading-8">Tradición, disciplina y excelencia en las artes marciales</p>
@@ -90,8 +90,8 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section id="karate" className="bg-muted py-16 sm:py-24">
-                    <div className="container">
+                <section id="karate" className="bg-muted py-16 px-16 sm:py-24 w-full">
+                    <div className="w-full">
                         <div className="mx-auto max-w-2xl lg:mx-0">
                             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Goju-ryu Karate</h2>
                             <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -131,7 +131,7 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section id="kobudo" className="py-16 sm:py-24">
+                <section id="kobudo" className="py-16 px-16 sm:py-24">
                     <div className="container">
                         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-3xl">
                             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Kobudo</h2>
@@ -146,7 +146,7 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section id="contacto" className="bg-muted py-16 sm:py-24">
+                <section id="contacto" className="bg-muted px-16 py-16 sm:py-24">
                     <div className="container">
                         <div className="mx-auto max-w-2xl text-center">
                             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Contacto</h2>
