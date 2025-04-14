@@ -1,7 +1,7 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Link } from "react-router";
 import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/ButtonComponent";
 
 export default function NavBar() {
 
@@ -31,7 +31,7 @@ export default function NavBar() {
                     Dojos
                 </p >
             </nav>
-            <Sheet>
+            {/* <Sheet>
                 <SheetTrigger asChild>
                     <Button variant="ghost" className="px-2 md:hidden">
                         <Menu className="h-6 w-6" />
@@ -59,7 +59,7 @@ export default function NavBar() {
                         </Link>
                     </div>
                 </SheetContent>
-            </Sheet>
+            </Sheet> */}
         </div>
     );
 }

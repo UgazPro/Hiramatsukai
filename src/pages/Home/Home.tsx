@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/ButtonComponent";
 import Karatedo from "./Karatedo/Karatedo";
 import Kobudo from "./Kobudo/Kobudo";
 import KendoIaido from "./KendoIaido/KendoIaido";
@@ -12,7 +12,7 @@ export default function Home() {
             <section id="home" className="relative w-full">
                 <div className="absolute inset-0">
                     <img
-                        src="/placeholder.svg?height=600&width=1200"
+                        src="/karateK.png"
                         alt="Karate training"
                         className="object-cover"
                     />
@@ -26,7 +26,7 @@ export default function Home() {
                             <Button size="lg" variant="default" className="cursor-pointer">
                                 Comienza tu viaje
                             </Button>
-                            <Button size="lg" variant="outline" className="text-white cursor-pointer">
+                            <Button size="lg" variant="outline" className="text-black cursor-pointer">
                                 Conócenos
                             </Button>
                         </div>

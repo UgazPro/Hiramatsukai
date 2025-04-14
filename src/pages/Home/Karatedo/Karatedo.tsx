@@ -1,7 +1,11 @@
+import { Button } from "@/components/ui/ButtonComponent";
 import { GraduationCap, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router";
 
 export default function Karatedo() {
+
+    const navigate = useNavigate();
+
     return (
         <section id="karate" className="bg-muted py-16 px-16 sm:py-24 w-full">
             <div className="w-full flex items-start justify-between ">
@@ -13,9 +17,12 @@ export default function Karatedo() {
                     </p>
                 </div>
 
-                <div className="">
-                    Imagen
+                <div className="w-1/2">
+                    <img src="/oki2.png" alt="Oki"
+                        className="!w-60 !h-60 mx-auto"
+                    />
                 </div>
+
             </div>
             <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                 <div className="flex flex-col items-start">
@@ -47,7 +54,13 @@ export default function Karatedo() {
                 </div>
 
                 <div className="mt-10">
-                    <Button size="lg" className="cursor-pointer">Descubre el KarateDo</Button>
+                    <Button
+                        variant={`link`}
+                        style={{ fontFamily: 'JetBrains Mono' }}
+                        onClick={() => navigate('/kobudo')}
+                    >
+                        Descubre el Kobudo
+                    </Button>
                 </div>
             </div>
         </section>

@@ -1,6 +1,11 @@
 import InformationSchema from "@/components/InformationSchema";
+import { Button } from "@/components/ui/ButtonComponent";
+import { useNavigate } from "react-router";
 
 export default function Dojos() {
+
+    const navigate = useNavigate();
+
     return (
         <section id="dojos" className="px-16 py-16 sm:py-24">
             <div className="container">
@@ -33,6 +38,18 @@ export default function Dojos() {
                     </div>
                 </div>
             </div>
+
+            <div className="mt-10 w-full text-center">
+                <Button
+                    variant={`SeeMore`}
+                    style={{ fontFamily: 'JetBrains Mono' }}
+                    onClick={() => navigate('/dojos')}
+                    className="text-base"
+                >
+                    Ver más
+                </Button>
+            </div>
+
         </section>
     );
 }
