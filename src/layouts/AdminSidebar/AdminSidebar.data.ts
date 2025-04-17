@@ -6,6 +6,7 @@ import { FaMoneyBillWave } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiAncientGateFill } from "react-icons/ri";
+import { LuDumbbell } from "react-icons/lu";
 
 interface SidebarContent {
   name: string;
@@ -18,49 +19,55 @@ export const sidebarData: SidebarContent[] = [
   {
     name: "Mi Dojo",
     icon: RiAncientGateFill,
-    redirectTo: "",
+    redirectTo: "/admin",
     active: true,
   },
   {
     name: "Alumnos",
     icon: BsPeopleFill,
-    redirectTo: "",
+    redirectTo: "/admin/alumnos",
     active: false,
   },
   {
     name: "Horario",
     icon: MdSchedule,
-    redirectTo: "",
+    redirectTo: "/admin/horario",
     active: false,
   },
   {
     name: "Actividades",
     icon: IoCalendar,
-    redirectTo: "",
+    redirectTo: "/admin/actividades",
+    active: false,
+  },
+  {
+    name: "Entrenamientos",
+    icon: LuDumbbell,
+    redirectTo: "/admin/entrenamientos",
     active: false,
   },
   {
     name: "Postulaciones",
     icon: FaUserCheck,
-    redirectTo: "",
+    redirectTo: "/admin/postulaciones",
     active: false,
   },
   {
     name: "Pagos",
     icon: FaMoneyBillWave,
-    redirectTo: "",
+    redirectTo: "/admin/pagos",
     active: false,
   },
   {
     name: "Configuración",
     icon: IoSettingsSharp,
-    redirectTo: "",
+    redirectTo: "/admin/configuracion",
     active: false,
   },
   {
     name: "Mi perfil",
     icon: FaRegUserCircle,
-    redirectTo: "",
+    redirectTo: "/admin/perfil",
     active: false,
   },
 ];

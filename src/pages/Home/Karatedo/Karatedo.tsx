@@ -59,7 +59,7 @@ export default function Karatedo() {
                         style={{ fontFamily: 'JetBrains Mono' }}
                         onClick={() => navigate('/kobudo')}
                     >
-                        Descubre el Kobudo
+                        Descubre el Karatedo
                     </Button>
                 </div>
             </div>

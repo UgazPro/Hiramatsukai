@@ -1,11 +1,9 @@
 import { Link } from "react-router";
 import { sidebarData } from "./AdminSidebar.data";
-import { BarChart3, Users, Calendar, Dumbbell, Award, Settings, LogOut } from "lucide-react";
+import { BarChart3, Users, Calendar, Dumbbell, Award, LogOut } from "lucide-react";
 
 
 export default function AdminSidebar() {
-
-
 
   return (
 
@@ -13,33 +11,23 @@ export default function AdminSidebar() {
       <div className="hidden w-64 bg-black text-white p-6 flex-col justify-between md:flex">
         <div>
           <div className="flex items-center mb-8">
-            <span className="text-2xl font-bold">Karate Master</span>
+            <span className="text-2xl font-bold">Dojo Kenzendo</span>
           </div>
           <nav className="space-y-2">
-            <Link to="/" className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800">
-              <BarChart3 className="h-5 w-5" />
-              <span>Dashboard</span>
-            </Link>
-            <Link to="/estudiantes" className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800">
-              <Users className="h-5 w-5" />
-              <span>Estudiantes</span>
-            </Link>
-            <Link to="/clases" className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800">
-              <Calendar className="h-5 w-5" />
-              <span>Clases</span>
-            </Link>
-            <Link to="/entrenamientos" className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800">
-              <Dumbbell className="h-5 w-5" />
-              <span>Entrenamientos</span>
-            </Link>
-            <Link to="/cinturones" className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800">
-              <Award className="h-5 w-5" />
-              <span>Cinturones</span>
-            </Link>
-            <Link to="/configuracion" className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800">
-              <Settings className="h-5 w-5" />
-              <span>Configuración</span>
-            </Link>
+
+            {sidebarData && sidebarData.map((item, index) => (
+
+              <Link 
+                key={index} 
+                to={item.redirectTo} 
+                className={`flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-800 ${item.active ? 'bg-gray-800' : ''}`}
+              >
+                <item.icon className="h-5 w-5" />
+                <span>{item.name}</span>
+              </Link>
+
+            ))}
+
           </nav>
         </div>
         <div>
