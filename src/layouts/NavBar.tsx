@@ -1,7 +1,7 @@
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Link } from "react-router";
 import { Menu } from "lucide-react";
-import { Button } from "@/components/ui/ButtonComponent";
+import { Button } from "@/components/ui/button";
 
 export default function NavBar() {
 

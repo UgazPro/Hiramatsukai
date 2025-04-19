@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/ButtonComponent";
+import { Button } from "@/components/ui/button";
 import Karatedo from "./Karatedo/Karatedo";
 import Kobudo from "./Kobudo/Kobudo";
 import KendoIaido from "./KendoIaido/KendoIaido";

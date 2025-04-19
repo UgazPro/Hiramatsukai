@@ -8,7 +8,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { RiAncientGateFill } from "react-icons/ri";
 import { LuDumbbell } from "react-icons/lu";
 
-interface SidebarContent {
+export interface SidebarContent {
   name: string;
   icon: React.ComponentType<{className?: string}>;
   redirectTo: string;
@@ -20,7 +20,7 @@ export const sidebarData: SidebarContent[] = [
     name: "Mi Dojo",
     icon: RiAncientGateFill,
     redirectTo: "/admin",
-    active: true,
+    active: false,
   },
   {
     name: "Alumnos",

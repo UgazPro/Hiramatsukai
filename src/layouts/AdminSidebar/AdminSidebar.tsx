@@ -1,9 +1,27 @@
-import { Link } from "react-router";
-import { sidebarData } from "./AdminSidebar.data";
-import { BarChart3, Users, Calendar, Dumbbell, Award, LogOut } from "lucide-react";
+import { Link, useLocation } from "react-router";
+import { SidebarContent, sidebarData } from "./AdminSidebar.data";
+import { LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
 
 
 export default function AdminSidebar() {
+
+  const [ sidebar, setSidebar ] = useState<SidebarContent[]>(sidebarData);
+
+  const location = useLocation();
+
+  useEffect( () => {
+  
+    const updatedSidebar = sidebar.map(item => {
+      return {
+        ...item,
+        active: item.redirectTo === location.pathname
+      };
+    });
+
+    setSidebar(updatedSidebar);
+  
+  }, [location.pathname]);
 
   return (
 
@@ -15,7 +33,7 @@ export default function AdminSidebar() {
           </div>
           <nav className="space-y-2">
 
-            {sidebarData && sidebarData.map((item, index) => (
+            {sidebar && sidebar.map((item, index) => (
 
               <Link 
                 key={index} 
@@ -39,28 +57,18 @@ export default function AdminSidebar() {
       </div>
 
       {/* Mobile Sidebar */}
-      <div className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-black text-white">
+      <div className="md:hidden fixed top-0 left-0 z-50 w-full h-16 bg-black text-white">
         <div className="grid h-full grid-cols-5 mx-auto">
-          <Link to="/" className="flex flex-col items-center justify-center">
-            <BarChart3 className="h-5 w-5" />
-            <span className="text-xs">Dashboard</span>
-          </Link>
-          <Link to="/estudiantes" className="flex flex-col items-center justify-center">
-            <Users className="h-5 w-5" />
-            <span className="text-xs">Estudiantes</span>
-          </Link>
-          <Link to="/clases" className="flex flex-col items-center justify-center">
-            <Calendar className="h-5 w-5" />
-            <span className="text-xs">Clases</span>
-          </Link>
-          <Link to="/entrenamientos" className="flex flex-col items-center justify-center">
-            <Dumbbell className="h-5 w-5" />
-            <span className="text-xs">Entrenamientos</span>
-          </Link>
-          <Link to="/cinturones" className="flex flex-col items-center justify-center">
-            <Award className="h-5 w-5" />
-            <span className="text-xs">Cinturones</span>
-          </Link>
+          {sidebarData.slice(0, 5).map((item, index) => (
+            <Link 
+              key={index} 
+              to={item.redirectTo} 
+              className="flex flex-col items-center justify-center"
+            >
+              <item.icon className="h-5 w-5" />
+              <span className="text-xs">{item.name}</span>
+            </Link>
+          ))}
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/ButtonComponent";
+import { Button } from "@/components/ui/button";
 import { GraduationCap, MapPin } from "lucide-react";
 import { useNavigate } from "react-router";
 

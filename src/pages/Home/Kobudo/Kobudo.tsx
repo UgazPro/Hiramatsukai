@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/ButtonComponent";
+import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router";
 
 export default function Kobudo() {

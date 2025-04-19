@@ -1,9 +1,10 @@
-import { Button } from "@/components/ui/ButtonComponent";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Calendar, Award } from "lucide-react";
 
 
 export default function AdminPanel() {
+
   return (
 
     <>
