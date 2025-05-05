@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { LoginForm } from "@/interfaces/users";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "./Login.data";
-import ErrorMessage from "@/components/ErrorMessage";
+import ErrorMessage from "@/components/form/ErrorMessage";
 
 export default function Login() {
 

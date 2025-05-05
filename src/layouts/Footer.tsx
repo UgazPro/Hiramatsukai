@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import InstagramIcon from '@mui/icons-material/Instagram';
-import FacebookIcon from '@mui/icons-material/Facebook';
+import { FaInstagram } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
     return (
@@ -12,17 +12,17 @@ export default function Footer() {
                     <span className="text-2xl lg:text-5xl font-bold">Hiramatsukai</span>
                 </Link>
 
-                <div className="space-x-5">
+                <div className="space-x-5 flex">
                     <a href="https://www.instagram.com/hiramatsukai?igsh=amY5NGdpMTQ5eXVh" target="_blank">
-                        <InstagramIcon
-                            fontSize="large"
-                            className="hover:cursor-pointer"
+                        <FaInstagram 
+                            size={'30px'}
+                            className="cursor-pointer"
                         />
                     </a>
                     <a href="https://www.facebook.com/share/18DmkvAqxX/" target="_blank">
-                        <FacebookIcon
-                            fontSize="large"
-                            className="hover:cursor-pointer"
+                        <FaFacebook
+                            size={'30px'}
+                            className="cursor-pointer"
                         />
                     </a>
                 </div>

@@ -1,7 +1,12 @@
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { students } from "@/pages/Admin/Students/students.data";
+import { IColumns } from "./table.interface";
 
-export default function TableComponent() {
+interface TableComponentProps {
+  tableColumns: IColumns[];
+  tableData: any[];
+}
+
+export default function TableComponent({ tableColumns, tableData } : TableComponentProps) {
 
   return (
 
@@ -10,21 +15,21 @@ export default function TableComponent() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead></TableHead>
-            <TableHead>Nombre</TableHead>
-            <TableHead>Dirección</TableHead>
-            <TableHead>Teléfono</TableHead>
-            <TableHead>Correo</TableHead>
+            {
+              tableColumns && tableColumns.map((column, index) => (
+                <TableHead key={index} className="text-center">{column.label}</TableHead>
+              ))
+            }
           </TableRow>
         </TableHeader>
         <TableBody>
-          {students.map((student) => (
-            <TableRow key={student.id}>
-              <TableCell className="py-8">{student.img}</TableCell>
-              <TableCell>{student.name}</TableCell>
-              <TableCell>{student.address}</TableCell>
-              <TableCell>{student.phone}</TableCell>
-              <TableCell>{student.email}</TableCell>
+          {tableData && tableData.map((item, index) => (
+            <TableRow key={index} className="text-center">
+              {tableColumns && tableColumns.map((column, index) => (
+                <TableCell key={index}>
+                  <span>{column.element(item)}</span>
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>

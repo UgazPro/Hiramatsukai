@@ -1,15 +1,30 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TabsProperties } from "./tabs.interface";
 
-export default function TabsComponent() {
+interface TabsComponentProps {
+  tabValue: string;
+  tabs: TabsProperties[];
+}
+
+export default function TabsComponent({ tabs }: TabsComponentProps) {
+
+  const [ defaultTabLabel ] = useState<string>(tabs[0].label);
 
   return (
 
     <>
-      
-      <Tabs defaultValue="account" className="w-full px-8">
-        <TabsList>
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+
+      <Tabs defaultValue={defaultTabLabel} className="w-full px-8">
+        <TabsList className="">
+          {tabs && tabs.map((tab: TabsProperties, index: number) => (
+            <TabsTrigger 
+              value={tab.label} 
+              key={index}
+            >
+              {tab.label}
+            </TabsTrigger>
+          ))}
         </TabsList>
       </Tabs>
 

@@ -17,6 +17,7 @@ import Applications from './pages/Admin/Applications/Applications'
 import Payments from './pages/Admin/Payments/Payments'
 import Settings from './pages/Admin/Settings/Settings'
 import Profile from './pages/Admin/Profile/Profile'
+import NuevoEstudiantePage from './pages/Admin/Students/StudentsForm/FormTest'
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
             <Route path="/admin/pagos" element={<Payments />} />
             <Route path="/admin/configuracion" element={<Settings />} />
             <Route path="/admin/perfil" element={<Profile />} />
+            <Route path="/nuevoE" element={<NuevoEstudiantePage />} />
           </Route>
 
         </Routes>

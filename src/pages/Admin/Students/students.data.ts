@@ -1,3 +1,27 @@
+import { IColumns } from "@/components/table/table.interface";
+
+export const studentsColumns : IColumns[] = [
+    {
+        label: 'Foto',
+        element: (data) => data.img,
+    },
+    {
+        label: 'Nombre',
+        element: (data) => `${data.name} ${data.lastName}`,
+    },
+    {
+        label: 'Rango',
+        element: (data) => data.rank,
+    },
+    {
+        label: 'Cinturón',
+        element: (data) => data.belt,
+    },
+    {
+        label: 'Edad',
+        element: (data) => data.birthday,
+    },
+]
 
 interface StudentsInfo {
     img: string;
@@ -14,7 +38,7 @@ interface StudentsInfo {
 
 export const students : StudentsInfo[] = [
     {
-        img: '',
+        img: 'dsfsdfsdf',
         id: 1,
         name: 'Luis Angel',
         lastName: 'Ugaz Mendez',
