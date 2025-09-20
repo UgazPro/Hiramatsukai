@@ -2,13 +2,32 @@ import TabsComponent from "@/components/tabs/TabsComponent";
 import TableComponent from "@/components/table/TableComponent";
 import { students, studentsColumns } from "./students.data";
 import DialogComponent from "@/components/dialog/DialogComponent";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import StudentsForm from "./StudentsForm/StudentsForm";
+import StudentCard from "./StudentCard/StudentCard";
+import { getUsers } from "@/services/users/userService";
+import { IStudentsGroup } from "@/services/users/user.interface";
 
 export default function Students() {
 
+  const [ students, setStudents ] = useState<IStudentsGroup>({ allStudents: [], students: [] });
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  useEffect( () => {
+    getStudents();
+  }, []);
+
+  const getStudents = async () => {
+
+    const response = await getUsers();
+
+    setStudents({
+      allStudents: response,
+      students: response
+    });
+
+  }
 
   return (
 
@@ -36,16 +55,23 @@ export default function Students() {
         ]}
       />
 
-      <div className="border-2 border-gray-300 rounded-lg p-6 m-8 bg-white">
+      {students.students.map((student) => (
+        <StudentCard 
+          key={student.id}
+          student={student}
+        />
+      ))}
+
+      {/* <div className="border-2 border-gray-300 rounded-lg p-6 m-8 bg-white">
 
         <h3 className="text-xl mb-5 font-bold">Todos los Alumnos</h3>
 
         <TableComponent
           tableColumns={studentsColumns}
-          tableData={students}
+          tableData={students.students}
         />
 
-      </div>
+      </div> */}
 
       <DialogComponent
         openDialog={openDialog}

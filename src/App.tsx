@@ -17,7 +17,7 @@ import Applications from './pages/Admin/Applications/Applications'
 import Payments from './pages/Admin/Payments/Payments'
 import Settings from './pages/Admin/Settings/Settings'
 import Profile from './pages/Admin/Profile/Profile'
-import NuevoEstudiantePage from './pages/Admin/Students/StudentsForm/FormTest'
+import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo'
 
 function App() {
 
@@ -29,6 +29,7 @@ function App() {
           {/* Users */}
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/about-us" element={<AboutUsInfo />} />
             <Route path="/login" element={<Login />} />
             <Route path="/karatedo" element={<KaratedoInfo />} />
             <Route path="/kobudo" element={<KobudoInfo />} />
@@ -47,7 +48,6 @@ function App() {
             <Route path="/admin/pagos" element={<Payments />} />
             <Route path="/admin/configuracion" element={<Settings />} />
             <Route path="/admin/perfil" element={<Profile />} />
-            <Route path="/nuevoE" element={<NuevoEstudiantePage />} />
           </Route>
 
         </Routes>
