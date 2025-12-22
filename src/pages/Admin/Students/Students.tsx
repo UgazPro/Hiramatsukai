@@ -35,7 +35,7 @@ export default function Students() {
 
       <div className="flex justify-between items-center p-7">
 
-        <h2 className="font-black text-3xl">Alumnos</h2>
+        <h2 className="font-black text-xl">Alumnos</h2>
 
         <Button
           variant={'clickRed'}
