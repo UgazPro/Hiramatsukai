@@ -26,7 +26,7 @@ export default function AdminSidebar() {
   return (
 
     <>
-      <div className="hidden w-64 bg-black text-white p-6 flex-col justify-between md:flex">
+      <div className="hidden w-10 hover:w-64 transition-all ease-in   bg-black text-white p-6 flex-col justify-between md:flex absolute top-0 left-0 h-full z-50">
         <div>
           <div className="flex items-center mb-8">
             <span className="text-2xl font-bold">Dojo Kenzendo</span>

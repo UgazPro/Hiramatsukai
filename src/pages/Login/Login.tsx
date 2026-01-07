@@ -1,11 +1,17 @@
-import { Link } from "react-router";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { useForm } from 'react-hook-form';
-import { LoginForm } from "@/interfaces/users";
+import { googleLogInData, LoginForm } from "@/interfaces/users";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "./Login.data";
 import ErrorMessage from "@/components/form/ErrorMessage";
+import { authGoogle, authLogin } from "@/services/auth/authService";
+import { GoogleLogin } from "@react-oauth/google";
 
 export default function Login() {
+
+    const [loginErrorMessage, setLoginErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     const defaultValues: LoginForm = {
         username: '',
@@ -18,7 +24,46 @@ export default function Login() {
     });
 
     async function successfulLogin(formData: LoginForm) {
-        console.log(formData);
+        if (formData) {
+
+            const response = await authLogin(formData);
+            console.log(response);
+
+            if (response.success) {
+                navigate('/admin');
+            }
+
+            if (!response.success) {
+                setLoginErrorMessage(response.message);
+
+                setTimeout(() => {
+                    setLoginErrorMessage('');
+                }, 2000);
+            }
+
+        }
+    }
+
+    async function logInWithGoogle(googleResponse: googleLogInData) {
+        
+        if (googleResponse) {
+
+            const response = await authGoogle({token: googleResponse.credential as string});
+            console.log(response);
+
+            if (response.success) {
+                navigate('/admin');
+            }
+
+            if (!response.success) {
+                setLoginErrorMessage(response.message);
+
+                setTimeout(() => {
+                    setLoginErrorMessage('');
+                }, 2000);
+            }
+
+        }
     }
 
     return (
@@ -55,7 +100,17 @@ export default function Login() {
                                     placeholder="*********"
                                 />
                                 {errors.password && (<ErrorMessage>{errors.password?.message}</ErrorMessage>)}
+                                {loginErrorMessage && (<ErrorMessage>{loginErrorMessage}</ErrorMessage>)}
                             </div>
+
+                            <GoogleLogin
+                                onSuccess={(credentialResponse) => {
+                                    logInWithGoogle(credentialResponse);
+                                }}
+                                onError={() => {
+                                    console.log('Login Failed');
+                                }}
+                            />
 
                             <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center">
                                 <Link
@@ -72,6 +127,7 @@ export default function Login() {
                                     Iniciar Sesión
                                 </button>
                             </div>
+
                         </div>
                     </form>
                 </div>

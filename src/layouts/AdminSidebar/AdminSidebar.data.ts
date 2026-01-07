@@ -1,12 +1,10 @@
 import { BsPeopleFill } from "react-icons/bs";
-import { MdSchedule } from "react-icons/md";
 import { IoCalendar } from "react-icons/io5";
 import { FaUserCheck } from "react-icons/fa";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiAncientGateFill } from "react-icons/ri";
-import { LuDumbbell } from "react-icons/lu";
 
 export interface SidebarContent {
   name: string;
@@ -29,21 +27,9 @@ export const sidebarData: SidebarContent[] = [
     active: false,
   },
   {
-    name: "Horario",
-    icon: MdSchedule,
-    redirectTo: "/admin/horario",
-    active: false,
-  },
-  {
     name: "Actividades",
     icon: IoCalendar,
     redirectTo: "/admin/actividades",
-    active: false,
-  },
-  {
-    name: "Entrenamientos",
-    icon: LuDumbbell,
-    redirectTo: "/admin/entrenamientos",
     active: false,
   },
   {
