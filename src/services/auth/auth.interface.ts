@@ -1,4 +1,14 @@
 
+export interface LoginForm {
+    username: string;
+    password: string;
+}
+
+export interface googleLogInData {
+    clientId?: string;
+    credential?: string;
+}
+
 export interface AuthLoginData {
     username: string;
     password: string;

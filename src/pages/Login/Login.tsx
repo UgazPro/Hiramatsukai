@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useForm } from 'react-hook-form';
-import { googleLogInData, LoginForm } from "@/interfaces/users";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "./Login.data";
 import ErrorMessage from "@/components/form/ErrorMessage";
-import { authGoogle, authLogin } from "@/services/auth/authService";
 import { GoogleLogin } from "@react-oauth/google";
+import { authGoogle, authLogin } from "@/services/auth/authService";
+import { googleLogInData, LoginForm } from "@/services/auth/auth.interface";
 
 export default function Login() {
 
