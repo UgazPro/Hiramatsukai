@@ -7,8 +7,10 @@ export default function AdminLayout() {
     return (
         <>
             <div className="flex relative h-full min-h-screen w-full bg-gray-200 justify-end">
-                <AdminSidebar />
-                <div className="h-full w-full pl-12">
+                <div className="hidden md:block">
+                    <AdminSidebar />
+                </div>
+                <div className="h-full w-full md:pl-12">
                     <Header />
                     <Outlet />
                     <Footer />
