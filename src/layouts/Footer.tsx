@@ -3,7 +3,9 @@ import { FaInstagram } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 
 export default function Footer() {
+    
     return (
+
         <footer className="py-6 bg-black text-white px-7">
 
             <div className="flex justify-between items-center">
@@ -14,7 +16,7 @@ export default function Footer() {
 
                 <div className="space-x-5 flex">
                     <a href="https://www.instagram.com/hiramatsukai?igsh=amY5NGdpMTQ5eXVh" target="_blank">
-                        <FaInstagram 
+                        <FaInstagram
                             size={'30px'}
                             className="cursor-pointer"
                         />

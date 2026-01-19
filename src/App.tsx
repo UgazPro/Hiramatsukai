@@ -1,23 +1,23 @@
-import { BrowserRouter, Routes, Route } from 'react-router'
-import './App.css'
-import Home from './pages/Home/Home'
-import AppLayout from './layouts/AppLayout'
-import Login from './pages/Login/Login'
-import KaratedoInfo from './pages/KaratedoInfo/KaratedoInfo'
-import KobudoInfo from './pages/KobudoInfo/KobudoInfo'
-import KendoIaidoInfo from './pages/KendoIaidoInfo/KendoIaidoInfo'
-import DojosInfo from './pages/DojosInfo/DojosInfo'
-import AdminPanel from './pages/Admin/AdminPanel/AdminPanel'
-import AdminLayout from './layouts/AdminLayout'
-import Students from './pages/Admin/Students/Students'
-import Schedule from './pages/Admin/Schedule/Schedule'
-import Activities from './pages/Admin/Activities/Activities'
-import Training from './pages/Admin/Training/Training'
-import Applications from './pages/Admin/Applications/Applications'
-import Payments from './pages/Admin/Payments/Payments'
-import Settings from './pages/Admin/Settings/Settings'
-import Profile from './pages/Admin/Profile/Profile'
-import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo'
+import { BrowserRouter, Routes, Route } from 'react-router';
+import './App.css';
+import Home from './pages/Home/Home';
+import AppLayout from './layouts/AppLayout';
+import Login from './pages/Login/Login';
+import KaratedoInfo from './pages/KaratedoInfo/KaratedoInfo';
+import KobudoInfo from './pages/KobudoInfo/KobudoInfo';
+import KendoIaidoInfo from './pages/KendoIaidoInfo/KendoIaidoInfo';
+import AdminPanel from './pages/Admin/AdminPanel/AdminPanel';
+import AdminLayout from './layouts/AdminLayout';
+import Students from './pages/Admin/Students/Students';
+import Schedule from './pages/Admin/Schedule/Schedule';
+import Activities from './pages/Admin/Activities/Activities';
+import Training from './pages/Admin/Training/Training';
+import Applications from './pages/Admin/Applications/Applications';
+import Payments from './pages/Admin/Payments/Payments';
+import Settings from './pages/Admin/Settings/Settings';
+import Profile from './pages/Admin/Profile/Profile';
+import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
+import DojosInfo from './pages/DojosInfo/DojosInfo';
 
 function App() {
 
@@ -34,7 +34,7 @@ function App() {
             <Route path="/karatedo" element={<KaratedoInfo />} />
             <Route path="/kobudo" element={<KobudoInfo />} />
             <Route path="/kendoIaido" element={<KendoIaidoInfo />} />
-            <Route path="/dojos" element={<DojosInfo />} />
+            <Route path="/dojos/dojo" element={<DojosInfo />} />
           </Route>
 
           {/* Admin */}
@@ -56,4 +56,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

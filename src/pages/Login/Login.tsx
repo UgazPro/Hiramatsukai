@@ -11,6 +11,7 @@ import { googleLogInData, LoginForm } from "@/services/auth/auth.interface";
 export default function Login() {
 
     const [loginErrorMessage, setLoginErrorMessage] = useState('');
+
     const navigate = useNavigate();
 
     const defaultValues: LoginForm = {
@@ -27,9 +28,9 @@ export default function Login() {
         if (formData) {
 
             const response = await authLogin(formData);
-            console.log(response);
 
             if (response.success) {
+                localStorage.setItem('token', response.token);
                 navigate('/admin');
             }
 
@@ -52,6 +53,7 @@ export default function Login() {
             console.log(response);
 
             if (response.success) {
+                localStorage.setItem('token', response.token);
                 navigate('/admin');
             }
 
@@ -76,7 +78,7 @@ export default function Login() {
                 <div className="flex flex-col justify-center w-[90%] sm:w-1/3 mx-auto mb-5 space-y-8">
                     <form onSubmit={handleSubmit(successfulLogin)}>
                         <div className="flex flex-col bg-black/60 p-10 rounded-lg shadow space-y-6">
-                            <img src="/Logos.png" alt="Logos Hiramatsukai" className="rounded-full" />
+                            <img src="/artesmarciales.jpg" alt="Logos Hiramatsukai" className="rounded-full" />
                             {/* <h1 style={{ fontFamily: "Kaushan Script" }} className="font-bold text-center text-4xl text-white">Hiramat<span className="text-white">sukai</span></h1> */}
                             <h1 className="font-bold text-xl text-center text-white">Inicia Sesión</h1>
 

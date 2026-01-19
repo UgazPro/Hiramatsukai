@@ -1,5 +1,4 @@
 
-
 interface InformationSchemaProps {
     img: string;
     dojo: string;
