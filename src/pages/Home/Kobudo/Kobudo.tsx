@@ -52,7 +52,7 @@ export default function Kobudo() {
 
                         <div className="flex items-center gap-2">
 
-                            <div className="h-12 w-12 lg:hidden">
+                            <div className="h-11 w-11 lg:hidden">
                                 <img src="gi.jpg" alt="" />
                             </div>
 
