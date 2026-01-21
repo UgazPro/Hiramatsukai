@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import NavBar from "./NavBar";
-import { useEffect, useState } from "react";
+import { getLoggedInUserBasicData } from "@/helpers/getTokens";
 
 export default function Header() {
 
@@ -8,6 +9,8 @@ export default function Header() {
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
+
+    const { userRole, userName, userLastName } = getLoggedInUserBasicData();
 
     const handleScroll = () => {
         const currentScrollPos = window.scrollY;
@@ -59,6 +62,21 @@ export default function Header() {
                         Iniciar Sesión
                     </Link>
                 }
+
+                {location.pathname.includes("/admin") && (
+
+                    <div className="flex flex-col items-end">
+
+                        <p className="text-white text-2xl">
+                            {userName} {userLastName}
+                        </p>
+
+                        <p className="text-white">{userRole}</p>
+
+                    </div>
+
+                )}
+
             </div>
 
             {location.pathname === "/" && <NavBar />}
