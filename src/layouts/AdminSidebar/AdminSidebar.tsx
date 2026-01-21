@@ -1,14 +1,16 @@
-import { Link, useLocation } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { SidebarContent, sidebarData } from "./AdminSidebar.data";
 import { LogOut } from "lucide-react";
-import { useEffect, useState } from "react";
 
 
 export default function AdminSidebar() {
 
   const [sidebar, setSidebar] = useState<SidebarContent[]>(sidebarData);
+  const [ showSpinner, setShowSpinner ] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -25,6 +27,20 @@ export default function AdminSidebar() {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    setShowSpinner(true);
+
+    setTimeout(() => {
+      navigate('/');
+      setShowSpinner(false);
+    }, 1000);
+  }
+
+  if(showSpinner) {
+    return (
+      <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-16 w-16"></div>
+      </div>
+    );
   }
 
   return (
@@ -93,20 +109,19 @@ export default function AdminSidebar() {
         {/* Logout Button */}
         <div className="w-full">
 
-          <Link
-            to="/"
+          <button
             className="flex items-center p-3 rounded-lg hover:bg-gray-800 transition-all duration-300 group/item"
+            onClick={handleLogout}
           >
             <LogOut className="h-5 w-5 shrink-0" />
 
             <span
               className="ml-3 overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0 hover:cursor-pointer"
-              onClick={handleLogout}
             >
               Cerrar Sesión
             </span>
 
-          </Link>
+          </button>
 
         </div>
 
