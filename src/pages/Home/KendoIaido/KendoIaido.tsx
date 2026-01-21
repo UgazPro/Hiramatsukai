@@ -7,17 +7,25 @@ export default function KendoIaido() {
     return (
 
         <section id="kendoIaido" className="py-16 sm:py-10 bg-linear-to-b from-gray-100 to-white">
-            
+
             <div className="container mx-auto px-4">
 
                 <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
 
-                    {/* Columna izquierda - Contenido */}
                     <div className="lg:w-1/2 w-full order-1 lg:order-2">
                         <div className="space-y-6">
-                            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                                Kendo & Iaido
-                            </h2>
+
+                            <div className="flex items-center gap-2">
+
+                                <div className="h-11 w-11 lg:hidden">
+                                    <img src="kendoiaido.jpg" alt="" className="rounded-full" />
+                                </div>
+
+                                <h2 className="text-2xl lg:text-4xl font-bold text-gray-900">
+                                    Kendo & Iaido
+                                </h2>
+
+                            </div>
 
                             <p className="text-lg text-gray-700 leading-relaxed">
                                 El camino de la espada japonesa. Dos artes marciales tradicionales que representan
@@ -85,18 +93,15 @@ export default function KendoIaido() {
 
                             </div>
 
-                            {/* Logo central */}
-                            <div className="h-40 w-40 mx-auto">
-                                <img src="kendoiaido.jpg" alt="" />
+                            <div className="h-40 w-40 mx-auto lg:block hidden">
+                                <img src="kendoiaido.jpg" alt="" className="rounded-full" />
                             </div>
 
                         </div>
                     </div>
 
-                    {/* Columna derecha - Imágenes */}
                     <div className="lg:w-1/2 w-full space-y-9 order-2 lg:order-1">
 
-                        {/* Primera Imagen - Kendo */}
                         <div className="relative rounded-2xl overflow-hidden">
                             <img
                                 src="/Hiramatsukai.jpg"
@@ -110,14 +115,12 @@ export default function KendoIaido() {
                                 Kendo - 剣道
                             </div>
 
-                            {/* Texto en la imagen */}
                             <div className="absolute bottom-4 left-4 text-white">
                                 <h3 className="font-bold text-lg">Combate con Shinai</h3>
                                 <p className="text-sm opacity-90">Armadura tradicional (Bogu)</p>
                             </div>
                         </div>
 
-                        {/* Segunda Imagen - Iaido */}
                         <div className="relative rounded-2xl overflow-hidden">
                             <img
                                 src="/Hiramatsukai.jpg"
@@ -131,7 +134,6 @@ export default function KendoIaido() {
                                 Iaido - 居合道
                             </div>
 
-                            {/* Texto en la imagen */}
                             <div className="absolute bottom-4 left-4 text-white">
                                 <h3 className="font-bold text-lg">Arte del Desenvaine</h3>
                                 <p className="text-sm opacity-90">Katana tradicional</p>

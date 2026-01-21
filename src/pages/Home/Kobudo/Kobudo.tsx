@@ -48,13 +48,21 @@ export default function Kobudo() {
 
                     </div>
 
-                    {/* Contenido Kobudo - Lado izquierdo en desktop */}
                     <div className="lg:w-1/2 w-full space-y-6 order-1 lg:order-2">
-                        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 text-right lg:text-left">
-                            Kobudo Okinawense
-                        </h2>
 
-                        <p className="text-lg text-gray-700 leading-relaxed text-right lg:text-left">
+                        <div className="flex items-center gap-2">
+
+                            <div className="h-11 w-11 lg:hidden">
+                                <img src="gi.jpg" alt="" />
+                            </div>
+
+                            <h2 className="text-2xl lg:text-4xl font-bold text-gray-900 text-right">
+                                Kobudo Okinawense
+                            </h2>
+
+                        </div>
+
+                        <p className="text-lg text-gray-700 leading-relaxed">
                             Arte marcial de Okinawa que enseña el manejo de armas.
                             Desarrollado por los campesinos y pescadores okinawenses como método de defensa personal.
                         </p>
@@ -102,7 +110,7 @@ export default function Kobudo() {
                             </div>
                         </div>
 
-                        <div className="h-37 w-37 mx-auto">
+                        <div className="h-37 w-37 mx-auto hidden lg:block">
                             <img src="gi.jpg" alt="" />
                         </div>
                     </div>
