@@ -25,6 +25,7 @@ export default function Login() {
     });
 
     async function successfulLogin(formData: LoginForm) {
+
         if (formData) {
 
             const response = await authLogin(formData);
@@ -43,6 +44,7 @@ export default function Login() {
             }
 
         }
+        
     }
 
     async function logInWithGoogle(googleResponse: googleLogInData) {
