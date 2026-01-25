@@ -1,3 +1,5 @@
+import { differenceInYears, format } from "date-fns";
+import { es } from "date-fns/locale";
 
 export function calculateAge(birthday: Date): number {
     const today = new Date();
@@ -11,6 +13,23 @@ export function calculateAge(birthday: Date): number {
 
     return age;
 }
+
+export const howLongHasSomeonePracticeInMonths = (enrollmentDate: Date) => {
+    const today = new Date();
+    const enrollment = new Date(enrollmentDate);
+    const months = differenceInYears(today, enrollment) * 12 +
+        (today.getMonth() - enrollment.getMonth());
+    return months;
+};
+
+export function dateFormatter(date: Date) {
+    try {
+        return format(new Date(date), "dd/MM/yyyy", { locale: es });
+    } catch {
+        return "Fecha inválida";
+    }
+};
+
 
 
 
