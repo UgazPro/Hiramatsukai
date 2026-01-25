@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "./Login.data";
 import ErrorMessage from "@/components/form/ErrorMessage";
 import { GoogleLogin } from "@react-oauth/google";
-import { authGoogle, authLogin } from "@/services/auth/authService";
+import { authGoogle, authLogin } from "@/services/auth/auth.service";
 import { googleLogInData, LoginForm } from "@/services/auth/auth.interface";
 
 export default function Login() {
