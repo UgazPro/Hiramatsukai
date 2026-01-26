@@ -10,7 +10,7 @@ import { useStudentsStore } from "@/stores/students.store";
 import SpinnerComponent from "@/components/SpinnerComponent";
 import DialogComponent from "@/components/dialog/DialogComponent";
 import StudentsForm from "./StudentForm/StudentsForm";
-import StudentLongCardView from "./StudentViews/StudentLongCardView"; 
+import StudentLongCardView from "./StudentViews/StudentLongCardView";
 import StudentsFilter from "./StudentFilters/StudentsFilter";
 import StudentsHeader from "./StudentViews/StudentsHeader";
 import StudentsNoResults from "./StudentViews/StudentsNoResults";

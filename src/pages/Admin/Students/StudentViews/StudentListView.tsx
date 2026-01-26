@@ -35,7 +35,7 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                 <TableBody>
 
                     {filteredStudents.map((student: IStudent) => (
-                        <TableRow key={student.id} className="border-b border-gray-200 hover:bg-gray-50/80">
+                        <TableRow key={student.id} className="border-b border-gray-200 hover:bg-gray-50/80 ">
                             <TableCell className="py-4">
                                 <div className="flex items-center gap-3">
                                     <div className="h-10 w-10 rounded-full bg-linear-to-br from-amber-100 to-red-100 border border-amber-200 flex items-center justify-center">
@@ -103,7 +103,7 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end" className="bg-white border-gray-300 shadow-lg">
-                                        <DropdownMenuItem className="text-gray-700 hover:bg-gray-100 cursor-pointer">
+                                        <DropdownMenuItem className="text-gray-700 hover:bg-gray-100 cursor-pointer" >
                                             <Eye className="h-4 w-4 mr-2 text-gray-600" />
                                             Ver detalles
                                         </DropdownMenuItem>
