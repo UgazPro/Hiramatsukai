@@ -18,6 +18,7 @@ import Settings from './pages/Admin/Settings/Settings';
 import Profile from './pages/Admin/Profile/Profile';
 import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
 import DojosInfo from './pages/DojosInfo/DojosInfo';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
 
@@ -38,7 +39,9 @@ function App() {
           </Route>
 
           {/* Admin */}
-          <Route element={<AdminLayout />}>
+          <Route element={
+            <ProtectedRoute><AdminLayout /></ProtectedRoute>
+          }>
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/admin/alumnos" element={<Students />} />
             <Route path="/admin/horario" element={<Schedule />} />

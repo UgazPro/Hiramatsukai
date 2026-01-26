@@ -8,7 +8,7 @@ import {
 
 interface DialogComponentProps {
     openDialog: boolean;
-    setOpenDialog: (open: boolean) => void;
+    onClose: (open: boolean) => void;
     children?: React.ReactNode;
     dialogTitle: string;
     dialogDescription?: string; 
@@ -16,13 +16,13 @@ interface DialogComponentProps {
     dialogTitleStyle?: string;
 }
 
-export default function DialogComponent({openDialog, setOpenDialog, children, dialogTitle, dialogDescription, className, dialogTitleStyle} : DialogComponentProps) {
+export default function DialogComponent({openDialog, onClose, children, dialogTitle, dialogDescription, className, dialogTitleStyle} : DialogComponentProps) {
 
     return (
 
         <div>
 
-            <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+            <Dialog open={openDialog} onOpenChange={onClose}>
                 <DialogContent className={className}>
                     <DialogHeader>
                         <DialogTitle className={dialogTitleStyle}>{dialogTitle}</DialogTitle>

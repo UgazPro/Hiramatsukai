@@ -1,35 +1,23 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
-import { SidebarContent, sidebarData } from "./AdminSidebar.data";
+import { useState } from "react";
+import { Link, useLocation } from "react-router";
+import { sidebarData } from "./AdminSidebar.data";
 import { LogOut } from "lucide-react";
 import SpinnerComponent from "@/components/SpinnerComponent";
+import { useAuthStore } from "@/stores/auth.store";
 
 export default function AdminSidebar() {
-  const [sidebar, setSidebar] = useState<SidebarContent[]>(sidebarData);
   const [showSpinner, setShowSpinner] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const location = useLocation();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const updatedSidebar = sidebar.map(item => ({
-      ...item,
-      active: item.redirectTo === location.pathname
-    }));
-    setSidebar(updatedSidebar);
-  }, [location.pathname]);
+  const logout = useAuthStore((s) => s.logout);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
     setShowSpinner(true);
 
-    localStorage.removeItem('token');
-
-    setTimeout(() => {
-      navigate('/');
-    }, 800);
-  }
+    logout();
+  };
 
   if (isLoggingOut) {
     return (
@@ -68,29 +56,33 @@ export default function AdminSidebar() {
 
           {/* Navigation Items */}
           <nav className="space-y-3">
-            {sidebar.map((item, index) => (
-              <Link
-                key={index}
-                to={item.redirectTo}
-                className={`flex items-center rounded-lg transition-all duration-300 hover:bg-gray-800 relative group/item ${item.active ? 'group-hover:bg-gray-800' : ''}`}
-              >
-                <div className={`p-2 ${item.active ? 'bg-gray-800 rounded-xl' : ''}`}>
-                  <item.icon className="h-5 w-5 shrink-0" />
-                </div>
-                <span className="ml-3 overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0">
-                  {item.name}
-                </span>
-                <div
-                  className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover/item:opacity-0 group-hover:opacity-0 pointer-events-none transition-opacity duration-300 z-50 whitespace-nowrap shadow-xl border border-gray-700"
+            {sidebarData.map((item, index) => {
+              const isActive = item.redirectTo === location.pathname;
+
+              return (
+                <Link
+                  key={index}
+                  to={item.redirectTo}
+                  className={`flex items-center rounded-lg transition-all duration-300 hover:bg-gray-800 relative group/item ${isActive ? 'group-hover:bg-gray-800' : ''}`}
                 >
-                  {item.name}
-                  <div className="absolute top-1/2 -left-1 transform -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
-                </div>
-                {item.active && (
-                  <div className="absolute right-2 top-1/2 transform -translate-y-1/2 h-2 w-2 bg-yellow-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                )}
-              </Link>
-            ))}
+                  <div className={`p-2 ${isActive ? 'bg-gray-800 rounded-xl' : ''}`}>
+                    <item.icon className="h-5 w-5 shrink-0" />
+                  </div>
+                  <span className="ml-3 overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0">
+                    {item.name}
+                  </span>
+                  <div
+                    className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover/item:opacity-0 group-hover:opacity-0 pointer-events-none transition-opacity duration-300 z-50 whitespace-nowrap shadow-xl border border-gray-700"
+                  >
+                    {item.name}
+                    <div className="absolute top-1/2 -left-1 transform -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                  </div>
+                  {isActive && (
+                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 h-2 w-2 bg-yellow-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  )}
+                </Link>
+              );
+            })}
           </nav>
         </div>
 
@@ -105,7 +97,7 @@ export default function AdminSidebar() {
             <span
               className="ml-3 overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0 hover:cursor-pointer"
             >
-              {isLoggingOut ? "Saliendo..." : "Cerrar Sesión"}
+              Cerrar Sesión
             </span>
           </button>
         </div>

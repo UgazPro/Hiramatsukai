@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import InformationSchema from "@/components/InformationSchema";
 import { Button } from "@/components/ui/button";
 import { IDojo } from "@/services/dojos/dojo.interface";
-import { getDojos } from "@/services/dojos/dojoService";
+import { getDojos } from "@/services/dojos/dojo.service";
 import { useNavigate } from "react-router";
 
 export default function Dojos() {

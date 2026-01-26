@@ -9,6 +9,7 @@ import { Upload, X } from "lucide-react";
 import { FiTrash2 } from "react-icons/fi";
 import { IMartialRanks, IStudentForm } from "./studentsForm.interface";
 import { v4 as uuidv4 } from 'uuid';
+import { useStudentsStore } from "@/stores/students.store";
 
 export default function StudentsForm() {
 
@@ -16,6 +17,8 @@ export default function StudentsForm() {
     const [ martialRanks, setMartialRanks ] = useState<IMartialRanks[]>([{
         id: uuidv4(), rank: '', martial_art: ''
     }]);
+
+    const { closeCreateStudent } = useStudentsStore();
 
     const [martialArts, setMartialArts] = useState([
         {
@@ -275,7 +278,10 @@ export default function StudentsForm() {
             </div>
 
             <div className="flex justify-end space-x-4">
-                <Button type="button" variant="outline" className="cursor-pointer">
+                <Button 
+                    type="button" variant="outline" className="cursor-pointer"
+                    onClick={closeCreateStudent}
+                >
                     Cancelar
                 </Button>
                 <Button type="submit" className="bg-red-700 hover:bg-red-800 cursor-pointer">

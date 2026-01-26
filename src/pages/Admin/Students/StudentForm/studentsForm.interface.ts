@@ -1,5 +1,4 @@
 
-
 export interface IMartialRanks {
     id: string;
     rank: string;

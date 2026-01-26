@@ -1,3 +1,5 @@
+export type ViewMode = "list" | "grid" | "cards" | "longCards";
+export type FilterStatus = "all" | "active" | "inactive";
 
 export interface IStudent {
     id:             number;
@@ -39,8 +41,6 @@ export interface Rol {
     id:  number;
     rol: string;
 }
-
-
 
 
 

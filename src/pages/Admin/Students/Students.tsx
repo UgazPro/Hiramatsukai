@@ -1,89 +1,78 @@
-import TabsComponent from "@/components/tabs/TabsComponent";
-import TableComponent from "@/components/table/TableComponent";
-import { students, studentsColumns } from "./students.data";
+import StudentListView from "./StudentViews/StudentListView";
+import StudentGridView from "./StudentViews/StudentGridView";
+import StudentCardView from "./StudentViews/StudentCardView";
+
+import { useStudents } from "@/hooks/useStudents";
+import { useFilteredStudents } from "@/hooks/useFilteredStudents";
+
+import { useStudentsStore } from "@/stores/students.store";
+
+import SpinnerComponent from "@/components/SpinnerComponent";
 import DialogComponent from "@/components/dialog/DialogComponent";
-import { useEffect, useState } from 'react';
-import { Button } from "@/components/ui/button";
-import StudentsForm from "./StudentsForm/StudentsForm";
-import StudentCard from "./StudentCard/StudentCard";
-import { getUsers } from "@/services/users/userService";
-import { IStudentsGroup } from "@/services/users/user.interface";
+import StudentsForm from "./StudentForm/StudentsForm";
+import StudentLongCardView from "./StudentViews/StudentLongCardView";
+import StudentsFilter from "./StudentFilters/StudentsFilter";
+import StudentsHeader from "./StudentViews/StudentsHeader";
+import StudentsNoResults from "./StudentViews/StudentsNoResults";
 
 export default function Students() {
 
-  const [ students, setStudents ] = useState<IStudentsGroup>({ allStudents: [], students: [] });
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const { data: students = [], isLoading } = useStudents();
 
-  useEffect( () => {
-    getStudents();
-  }, []);
+  const { viewMode, setViewMode, resetFilters, isCreateStudentOpen, openCreateStudent, closeCreateStudent } = useStudentsStore();
 
-  const getStudents = async () => {
-
-    const response = await getUsers();
-
-    setStudents({
-      allStudents: response,
-      students: response
-    });
-
-  }
+  const filteredStudents = useFilteredStudents(students);
 
   return (
 
-    <div className="bg-gray-200">
+    <div className="container mx-auto p-4 md:p-6">
 
-      <div className="flex justify-between items-center p-7">
+      {isLoading ? (
+        <SpinnerComponent />
+      ) : (
 
-        <h2 className="font-black text-xl">Alumnos</h2>
+        <>
+          {/* Header */}
+          <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openCreateStudent} />
 
-        <Button
-          variant={'clickRed'}
-          onClick={() => setOpenDialog(true)}
-        >
-          + Nuevo Alumno
-        </Button>
-        
-      </div>
+          {/* Form */}
+          <DialogComponent
+            openDialog={isCreateStudentOpen}
+            onClose={closeCreateStudent}
+            dialogTitle="Nuevo Estudiante"
+            children={<StudentsForm />}
+            className="max-w-6xl"
+            dialogDescription="Complete los campos para agregar un nuevo estudiante al dojo"
+          />
 
-      <TabsComponent
-        tabValue={'Todos los Alumnos'}
-        tabs={[
-          { label: 'Todos los Alumnos' },
-          { label: 'Alumnos Activos' },
-          { label: 'Alumnos Inactivos' },
-        ]}
-      />
+          {/* Filter */}
+          <StudentsFilter filteredStudents={filteredStudents} students={students} />
 
-      {students.students.map((student) => (
-        <StudentCard 
-          key={student.id}
-          student={student}
-        />
-      ))}
+          {/* Views */}
+          {viewMode === "list" && (
+            <StudentListView filteredStudents={filteredStudents} />
+          )}
+          {viewMode === "grid" && (
+            <StudentGridView filteredStudents={filteredStudents} />
+          )}
+          {viewMode === "cards" && (
+            <StudentCardView filteredStudents={filteredStudents} />
+          )}
+          {viewMode === "longCards" && (
+            <StudentLongCardView filteredStudents={filteredStudents} />
+          )}
 
-      {/* <div className="border-2 border-gray-300 rounded-lg p-6 m-8 bg-white">
+          {/* View if no results are found */}
+          {filteredStudents.length === 0 && <StudentsNoResults resetFilters={resetFilters} openCreateStudent={openCreateStudent} />}
+        </>
 
-        <h3 className="text-xl mb-5 font-bold">Todos los Alumnos</h3>
-
-        <TableComponent
-          tableColumns={studentsColumns}
-          tableData={students.students}
-        />
-
-      </div> */}
-
-      <DialogComponent
-        openDialog={openDialog}
-        setOpenDialog={setOpenDialog}
-        dialogTitle="Nuevo Alumno"
-        children={<StudentsForm />}
-        className="bg-gray-200 w-[70rem]"
-        dialogTitleStyle="text-3xl font-black -mb-2"
-      />
+      )}
 
     </div>
 
   );
 
 }
+
+
+
