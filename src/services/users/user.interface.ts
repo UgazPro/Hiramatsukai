@@ -19,7 +19,7 @@ export interface IStudent {
     deleted:        boolean;
     createdAt:      Date;
     enrollmentDate: Date;
-    rol:            Rol;
+    rol:            IRol;
     dojo:           Dojo;
 }
 
@@ -37,7 +37,7 @@ export interface Dojo {
     martialArts: any[];
 }
 
-export interface Rol {
+export interface IRol {
     id:  number;
     rol: string;
 }
