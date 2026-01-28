@@ -39,7 +39,7 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                             <TableCell className="py-4">
                                 <div className="flex items-center gap-3">
                                     <div className="h-10 w-10 rounded-full bg-linear-to-br from-amber-100 to-red-100 border border-amber-200 flex items-center justify-center">
-                                        {student.profileImg ? (
+                                        {student.profileImg.trim() !== '' ? (
                                             <img src={student.profileImg} className="h-10 w-10 rounded-full object-cover" alt={student.name} />
                                         ) : (
                                             <User className="h-5 w-5 text-amber-600" />

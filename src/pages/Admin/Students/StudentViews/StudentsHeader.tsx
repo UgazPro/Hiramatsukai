@@ -47,7 +47,7 @@ export default function StudentsHeader({ viewMode, setViewMode, openCreateStuden
                 </div>
 
                 <Button
-                    className="bg-linear-to-r from-yellow-600 to-yellow-400 hover:from-yellow-400 hover:to-yellow-600 text-white shadow-md hover:shadow-lg transition-all"
+                    className="bg-linear-to-r from-yellow-600 to-yellow-400 hover:from-yellow-500 hover:to-yellow-500 text-white shadow-md hover:shadow-lg transition-colors duration-700 ease-in-out"
                     onClick={openCreateStudent}
                 >
                     <UserPlus className="h-4 w-4 mr-2" />

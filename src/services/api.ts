@@ -6,8 +6,13 @@ export const api = axios.create({
 
 export const getDataApi = async (url: string) => {
     try {
+        const token = localStorage.getItem('token');
+        const header = {
+            'Authorization': `Bearer ${token}`
+        }
+        console.log(token);
         
-        return await api.get(url).then(res => {
+        return await api.get(url, { headers: header }).then(res => {
             return res.data;
         });
 

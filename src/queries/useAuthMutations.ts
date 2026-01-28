@@ -12,6 +12,7 @@ export function useLoginMutation() {
     mutationFn: authLogin,
     onSuccess: (response) => {
       if (response.success) {
+        localStorage.setItem('token', response.token);
         setToken(response.token);
         navigate("/admin");
       } else {
@@ -30,6 +31,7 @@ export function useGoogleLoginMutation() {
     mutationFn: authGoogle,
     onSuccess: (response) => {
       if (response.success) {
+        localStorage.setItem('token', response.token);
         setToken(response.token);
         navigate("/admin");
       } else {

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import TabsComponent from "@/components/tabs/TabsComponent";
 import { IStudentsGroup } from "@/services/users/user.interface";
-import { getUsers } from "@/services/users/userService";
-import StudentCard from "../Students/StudentCard/StudentCard";
+import { getUsers } from "@/services/users/user.service";
+// import { getUsers } from "@/services/users/userService";
+// import StudentCard from "../Students/StudentCard/StudentCard";
 
 
 export default function Applications() {
@@ -14,7 +15,6 @@ export default function Applications() {
   }, []);
 
   const getStudents = async () => {
-
     const response = await getUsers();
 
     setStudents({
@@ -49,12 +49,12 @@ export default function Applications() {
 
       <div>
 
-        {students.students.map((student) => (
+        {/* {students.students.map((student) => (
           <StudentCard
             key={student.id}
             student={student}
           />
-        ))}
+        ))} */}
 
       </div>
 
