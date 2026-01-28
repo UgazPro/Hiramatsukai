@@ -6,3 +6,7 @@ const dojosUrl = '/dojos';
 export const getDojos = async () : Promise<IDojo[]> => {
     return await getDataApi(dojosUrl);
 }
+
+
+
+
