@@ -46,6 +46,7 @@ export const ProgressStepper: FC<ProgressStepperPropsArray> = ({ steps }) => {
     }, [steps]);
 
     useEffect(() => {
+        setCurrentStep(steps[0]);
         const timeoutId = window.setTimeout(() => {
             const totalSteps = steps.length;
             const spanRatio = 0.75;

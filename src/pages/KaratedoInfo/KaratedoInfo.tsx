@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Swords, Target, Users, Award, BookOpen, Shield, Activity, Brain, Heart, Zap } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
-import { ProgressStepper, ProgressStepperProps } from "@/components/progressStepper/progress-stepper";
+import { ProgressStepper, ProgressStepperProps } from "@/components/progressStepper/Progress-stepper";
 
 export default function KaratedoInfo() {
 
