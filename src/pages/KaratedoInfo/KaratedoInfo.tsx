@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Swords, Target, Users, Award, BookOpen, Shield, Activity, Brain, Heart, Zap } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
+import { ProgressStepper, ProgressStepperProps } from "@/components/progressStepper/progress-stepper";
 
 export default function KaratedoInfo() {
 
@@ -17,6 +18,16 @@ export default function KaratedoInfo() {
         { name: "Seisan", level: "Nanadan", description: "Kata de las 13 manos", purpose: "Contraataques rápidos" },
         { name: "Suparinpei", level: "Hachidan", description: "Kata de los 108 movimientos", purpose: "Perfeccionamiento técnico total" }
     ];
+
+    const progressData: ProgressStepperProps[] = [
+        { active: true, year: "1929", label: "Fundación del Goju-Ryu por Chojun Miyagi" },
+        { active: false, year: "1940", label: "Difusión internacional del Goju-Ryu" },
+        { active: false, year: "1953", label: "Fallecimiento de Chojun Miyagi" },
+        { active: false, year: "1960", label: "Establecimiento de la Federación Mundial de Goju-Ryu" },
+        { active: false, year: "1980", label: "Incorporación de técnicas modernas de entrenamiento" },
+        { active: false, year: "2000", label: "Globalización y expansión del Goju-Ryu" },
+        { active: false, year: "2020", label: "Adaptación a nuevas tecnologías y métodos de enseñanza" }
+    ]
 
     const principles = [
         {
@@ -59,6 +70,8 @@ export default function KaratedoInfo() {
                     <CarouselComponent />
                 </div>
             </section>
+
+
 
             {/* Main grid about Goju Ryu Karatedo */}
             <section className="py-10 bg-white">
@@ -106,6 +119,10 @@ export default function KaratedoInfo() {
                 </div>
             </section>
 
+            <div className="w-full border-2 h-80 mt-20">
+                <ProgressStepper steps={progressData} />
+            </div>
+
             <section className="py-12 bg-gray-50">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto">
@@ -123,8 +140,8 @@ export default function KaratedoInfo() {
                                         key={section.id}
                                         onClick={() => setActiveSection(section.id)}
                                         className={`flex items-center gap-3 px-6 py-4 rounded-xl font-medium transition-all duration-300 ${isActive
-                                                ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
-                                                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                                            ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
+                                            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                                             }`}
                                     >
                                         <Icon className="h-5 w-5" />

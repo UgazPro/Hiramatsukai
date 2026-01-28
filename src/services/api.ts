@@ -10,8 +10,6 @@ export const getDataApi = async (url: string) => {
         const header = {
             'Authorization': `Bearer ${token}`
         }
-        console.log(token);
-        
         return await api.get(url, { headers: header }).then(res => {
             return res.data;
         });
