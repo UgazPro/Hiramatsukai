@@ -1,9 +1,29 @@
+import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 
 export default function Karatedo() {
 
   const navigate = useNavigate();
+
+  const cardsKarate: CardComponentProps[] = [
+    {
+      title: "Fuerza (Go)",
+      description: '"Técnicas lineales y poderosas',
+      icon: "力",
+      bgIcon: "bg-linear-to-br from-red-500 to-red-800",
+      bg: "bg-linear-to-br from-red-50 to-red-100",
+      border: "border-red-200",
+    },
+    {
+      title: "Suavidad (Ju)",
+      description: 'Movimientos circulares y flexibles',
+      icon: "柔",
+      bgIcon: "bg-linear-to-br from-blue-700 to-blue-900",
+      bg: "bg-linear-to-br from-blue-100 to-blue-200",
+      border: "border-blue-300",
+    }
+  ];
 
   return (
 
@@ -37,33 +57,9 @@ export default function Karatedo() {
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-
-                <div className="flex items-start space-x-3 bg-red-100 rounded-xl p-4">
-
-                  <div className="h-8 w-8 rounded-full bg-red-100 flex items-center justify-center shrink-0">
-                    <span className="text-red-600 font-bold">力</span>
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Fuerza (Go)</h4>
-                    <p className="text-gray-600 text-sm">Técnicas lineales y poderosas</p>
-                  </div>
-
-                </div>
-
-                <div className="flex items-start space-x-3 bg-blue-100 rounded-xl p-4">
-
-                  <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-                    <span className="text-blue-600 font-bold">柔</span>
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Suavidad (Ju)</h4>
-                    <p className="text-gray-600 text-sm">Movimientos circulares y flexibles</p>
-                  </div>
-
-                </div>
-
+                {cardsKarate.map((card, index) => (
+                  <CardComponent card={card} key={index} />
+                ))}
               </div>
 
               <div className="h-50 w-50 mx-auto hidden lg:block">

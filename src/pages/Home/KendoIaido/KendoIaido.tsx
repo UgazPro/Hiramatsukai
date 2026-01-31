@@ -1,8 +1,44 @@
+import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 
 export default function KendoIaido() {
     const navigate = useNavigate();
+
+    const cardsKendoIaido: CardComponentProps[] = [
+        {
+            title: "Kendo",
+            description: '"El camino de la espada" - Combate con shinai',
+            icon: "剣",
+            bgIcon: "bg-linear-to-br from-blue-500 to-blue-600",
+            bg: "bg-linear-to-br from-blue-50 to-blue-100",
+            border: "border-blue-200",
+        },
+        {
+            title: "Iaido",
+            description: '"Arte del desenvaine" - Katana tradicional',
+            icon: "居",
+            bgIcon: "bg-linear-to-br from-gray-700 to-gray-900",
+            bg: "bg-linear-to-br from-gray-100 to-gray-200",
+            border: "border-gray-300",
+        },
+        {
+            title: "Bushido",
+            description: "Código del samurái - Honor y disciplina",
+            icon: "道",
+            bgIcon: "bg-linear-to-br from-indigo-500 to-indigo-700",    
+            bg: "bg-linear-to-br from-indigo-50 to-indigo-100",
+            border: "border-indigo-200",
+        },
+        {
+            title: "Bogu",
+            description: "Armadura tradicional - Protección y etiqueta",
+            icon: "具",
+            bgIcon: "bg-linear-to-br from-slate-600 to-slate-800",
+            bg: "bg-linear-to-br from-slate-50 to-slate-100",
+            border: "border-slate-200",
+        }
+    ];
 
     return (
 
@@ -34,63 +70,9 @@ export default function KendoIaido() {
                             </p>
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-
-                                {/* Kendo */}
-                                <div className="flex items-start space-x-3 bg-linear-to-br from-blue-50 to-blue-100 rounded-xl p-4 border border-blue-200">
-
-                                    <div className="h-8 w-8 rounded-full bg-linear-to-br from-blue-500 to-blue-600 flex items-center justify-center shrink-0">
-                                        <span className="text-white font-bold">剣</span>
-                                    </div>
-
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900">Kendo</h4>
-                                        <p className="text-gray-600 text-sm">"El camino de la espada" - Combate con shinai</p>
-                                    </div>
-
-                                </div>
-
-                                {/* Iaido */}
-                                <div className="flex items-start space-x-3 bg-linear-to-br from-gray-100 to-gray-200 rounded-xl p-4 border border-gray-300">
-
-                                    <div className="h-8 w-8 rounded-full bg-linear-to-br from-gray-700 to-gray-900 flex items-center justify-center shrink-0">
-                                        <span className="text-white font-bold">居</span>
-                                    </div>
-
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900">Iaido</h4>
-                                        <p className="text-gray-600 text-sm">"Arte del desenvaine" - Katana tradicional</p>
-                                    </div>
-
-                                </div>
-
-                                {/* Bushido */}
-                                <div className="flex items-start space-x-3 bg-linear-to-br from-indigo-50 to-indigo-100 rounded-xl p-4 border border-indigo-200">
-
-                                    <div className="h-8 w-8 rounded-full bg-linear-to-br from-indigo-500 to-indigo-700 flex items-center justify-center shrink-0">
-                                        <span className="text-white font-bold">道</span>
-                                    </div>
-
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900">Bushido</h4>
-                                        <p className="text-gray-600 text-sm">Código del samurái - Honor y disciplina</p>
-                                    </div>
-
-                                </div>
-
-                                {/* Bogu */}
-                                <div className="flex items-start space-x-3 bg-linear-to-br from-slate-50 to-slate-100 rounded-xl p-4 border border-slate-200">
-
-                                    <div className="h-8 w-8 rounded-full bg-linear-to-br from-slate-600 to-slate-800 flex items-center justify-center shrink-0">
-                                        <span className="text-white font-bold">具</span>
-                                    </div>
-
-                                    <div>
-                                        <h4 className="font-semibold text-gray-900">Bogu</h4>
-                                        <p className="text-gray-600 text-sm">Armadura tradicional - Protección y etiqueta</p>
-                                    </div>
-
-                                </div>
-
+                                {cardsKendoIaido.map((card, index) => (
+                                    <CardComponent card={card} key={index} />
+                                ))}
                             </div>
 
                             <div className="h-40 w-40 mx-auto lg:block hidden">

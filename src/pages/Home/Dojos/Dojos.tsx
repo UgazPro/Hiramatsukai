@@ -72,7 +72,7 @@ export default function Dojos() {
                                 <div
                                     key={dojo.dojo}
                                     className={`animate-slide-up delay-${index} `}
-                                    onClick={() => navigate('/dojos/dojo')}
+                                    onClick={() => navigate(`/dojos/dojo/${dojo.code}`)}
                                 >
                                     <InformationSchema
                                         img={'https://blog.marti.mx/wp-content/uploads/2023/01/conoce-que-es-karate-jpg.webp'}
