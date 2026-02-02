@@ -3,30 +3,25 @@ import { Button } from "@/components/ui/button";
 import { Swords, Target, Users, Award, BookOpen, Shield, Activity, Brain, Heart, Zap } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 import { ProgressStepper, ProgressStepperProps } from "@/components/progressStepper/Progress-stepper";
+import { karatedoInfoData, katas, ProgressSteps } from "./KaratedoInfo.data";
+
 
 export default function KaratedoInfo() {
 
     const [activeSection, setActiveSection] = useState("fundamentos");
+    const [activeHistory, setActiveHistory] = useState<ProgressSteps>("nahate");
 
-    const katas = [
-        { name: "Sanchin", level: "Shodan", description: "Kata fundamental de respiración y estructura", purpose: "Desarrollo de la postura y respiración ibuki" },
-        { name: "Saifa", level: "Nidan", description: "Primer kata superior", purpose: "Técnicas de desgarre y control" },
-        { name: "Seiyunchin", level: "Sandan", description: "Kata de agarres y proyecciones", purpose: "Trabajo de distancia corta" },
-        { name: "Shisochin", level: "Yondan", description: "Kata de los cuatro puntos cardinales", purpose: "Defensa en todas direcciones" },
-        { name: "Seipai", level: "Godan", description: "Kata de los 18 movimientos", purpose: "Técnicas ocultas y aplicaciones" },
-        { name: "Kururunfa", level: "Rokudan", description: "Kata fluido como el agua", purpose: "Movimientos circulares y evasiones" },
-        { name: "Seisan", level: "Nanadan", description: "Kata de las 13 manos", purpose: "Contraataques rápidos" },
-        { name: "Suparinpei", level: "Hachidan", description: "Kata de los 108 movimientos", purpose: "Perfeccionamiento técnico total" }
-    ];
-
-    const progressData: ProgressStepperProps[] = [
-        { active: true, year: "1929", label: "Fundación del Goju-Ryu por Chojun Miyagi" },
-        { active: false, year: "1940", label: "Difusión internacional del Goju-Ryu" },
-        { active: false, year: "1953", label: "Fallecimiento de Chojun Miyagi" },
-        { active: false, year: "1960", label: "Establecimiento de la Federación Mundial de Goju-Ryu" },
-        { active: false, year: "1980", label: "Incorporación de técnicas modernas de entrenamiento" },
-        { active: false, year: "2000", label: "Globalización y expansión del Goju-Ryu" },
-        { active: false, year: "2020", label: "Adaptación a nuevas tecnologías y métodos de enseñanza" }
+    const progressData: ProgressStepperProps<ProgressSteps>[] = [
+        { active: true, name: 'nahate', year: "1853", label: "Kanryō Higaonna y el Naha-te" },
+        { active: false, name: 'chojun-miyagi', year: "1916", label: "Chōjun Miyagi consolida el legado" },
+        { active: false, name: 'goju-ryu', year: "1930", label: "Se adopta el nombre Gōjū-ryū" },
+        { active: false, name: 'reconocimiento-1933', year: "1933", label: "Reconocimiento oficial en Japón" },
+        { active: false, name: 'kanken-toyama', year: "1930", label: "Kanken Tōyama y el Shūdōkan" },
+        { active: false, name: 'posguerra-y-legado', year: "1953", label: "Posguerra y continuidad del estilo" },
+        { active: false, name: 'morio-higaonna', year: "1960", label: "Expansión moderna: Morio Higaonna" },
+        { active: false, name: 'hiramatsu-venezuela', year: "1977", label: "Gijin Hiramatsu llega a Venezuela" },
+        { active: false, name: 'hiramatsukai-venezuela', year: "1980", label: "Consolidación: Hiramatsu Kai" },
+        { active: false, name: 'legado-hiramatsu', year: "1997", label: "Legado de Hiramatsu" }
     ]
 
     const principles = [
@@ -66,61 +61,48 @@ export default function KaratedoInfo() {
 
             {/* Carousel */}
             <section className="relative">
-                <div className="h-[600px] md:h-[700px]">
+                <div className="h-[600px] md:h-[600px]">
                     <CarouselComponent />
                 </div>
             </section>
 
-
-
             {/* Main grid about Goju Ryu Karatedo */}
-            <section className="py-10 bg-white">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-6xl mx-auto">
-                        <div className="grid lg:grid-cols-2 gap-12 items-center">
-                            <div>
-                                <div className="inline-block px-4 py-2 bg-red-500 text-white rounded-full text-sm font-bold mb-6">
-                                    Estilo Tradicional
-                                </div>
-                                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
-                                    Goju-Ryu <span className="text-red-600">Karate-Do</span>
-                                </h1>
-                                <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                                    Fundado por el gran maestro <strong>Chojun Miyagi</strong> (1888-1953),
-                                    el Goju-Ryu (estilo duro-suave) representa la síntesis perfecta entre
-                                    las artes marciales chinas y las técnicas indígenas de Okinawa.
-                                </p>
-                                <p className="text-lg text-gray-700 mb-8">
-                                    En Hiramatsukai, preservamos este legado enseñando el Goju-Ryu en su
-                                    forma más pura, manteniendo los katas originales y la filosofía del
-                                    fundador.
-                                </p>
-                                <Button size="lg" className="bg-red-500 hover:bg-red-600 text-white px-8">
-                                    Iniciar Entrenamiento
-                                </Button>
+            <section className="bg-[url('/public/background-karate.png')] bg-repeat bg-[length:500px] pt-8 pb-28">
+                <div className="mx-auto px-4">
+                    <div className="max-w-6xl mx-auto text-center">
+                        <div>
+                            <div className="inline-block px-4 py-2 bg-red-500 text-white rounded-full text-sm font-bold mb-6">
+                                Estilo Tradicional
                             </div>
-                            <div className="relative">
-                                <div className="bg-linear-to-br from-red-500 to-red-600 rounded-3xl p-1">
-                                    <div className="bg-white rounded-2xl p-8">
-                                        <div className="aspect-square rounded-xl overflow-hidden bg-linear-to-br from-red-50 to-white flex items-center justify-center">
-                                            <div className="text-center">
-                                                <Swords className="h-24 w-24 text-red-500 mx-auto mb-4" />
-                                                <h3 className="text-2xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
-                                                    Fundado en 1929
-                                                </h3>
-                                                <p className="text-gray-600 mt-2">Por Chojun Miyagi</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
+                                Goju-Ryu <span className="text-red-600">Karate-Do</span>
+                            </h1>
+                            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                                Fundado por el gran maestro <strong>Chojun Miyagi</strong> (1888-1953),
+                                el Goju-Ryu (estilo duro-suave) representa la síntesis perfecta entre
+                                las artes marciales chinas y las técnicas indígenas de Okinawa.
+                            </p>
+                            <p className="text-lg text-gray-700 mb-8">
+                                En Hiramatsukai, preservamos este legado enseñando el Goju-Ryu en su
+                                forma más pura, manteniendo los katas originales y la filosofía del
+                                fundador.
+                            </p>
+                            <Button size="lg" className="bg-red-500 hover:bg-red-600 text-white px-8">
+                                Iniciar Entrenamiento
+                            </Button>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <div className="w-full border-2 h-80 mt-20">
-                <ProgressStepper steps={progressData} />
+            <div className="w-full h-28">
+                <ProgressStepper steps={progressData} onSelectStep={setActiveHistory} />
+            </div>
+
+            <div className="w-3/4 mx-auto text-justify">
+                {karatedoInfoData.find(info => info.name === activeHistory)?.content.map((paragraph, index) => (
+                    <p key={index} className="mb-4">{paragraph}</p>
+                ))}
             </div>
 
             <section className="py-12 bg-gray-50">
@@ -239,7 +221,7 @@ export default function KaratedoInfo() {
             {activeSection === "katas" && (
                 <section className="py-20 bg-gray-50">
                     <div className="container mx-auto px-4">
-                        <div className="max-w-6xl mx-auto">
+                        <div className="w-full px-4">
                             <div className="text-center mb-16">
                                 <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                                     Katas <span className="text-red-600">Tradicionales</span>
@@ -249,18 +231,11 @@ export default function KaratedoInfo() {
                                 </p>
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-8">
+                            <div className="grid md:grid-cols-4 gap-8">
                                 {katas.map((kata, index) => (
                                     <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                                         <div className="flex items-start justify-between mb-4">
-                                            <div>
-                                                <h3 className="text-xl font-bold text-gray-900">{kata.name}</h3>
-                                                <div className="flex items-center gap-2 mt-1">
-                                                    <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-bold">
-                                                        {kata.level}
-                                                    </span>
-                                                </div>
-                                            </div>
+                                            <h3 className="text-xl font-bold text-gray-900">{kata.name}</h3>
                                             <Target className="h-8 w-8 text-red-500" />
                                         </div>
                                         <p className="text-gray-700 mb-4">{kata.description}</p>

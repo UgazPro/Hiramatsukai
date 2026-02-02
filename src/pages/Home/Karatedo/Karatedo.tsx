@@ -12,16 +12,16 @@ export default function Karatedo() {
       description: '"Técnicas lineales y poderosas',
       icon: "力",
       bgIcon: "bg-linear-to-br from-red-500 to-red-800",
-      bg: "bg-linear-to-br from-red-50 to-red-100",
-      border: "border-red-200",
+      bg: "bg-linear-to-br from-red-200 to-red-300",
+      border: "border-red-400",
     },
     {
       title: "Suavidad (Ju)",
       description: 'Movimientos circulares y flexibles',
       icon: "柔",
       bgIcon: "bg-linear-to-br from-blue-700 to-blue-900",
-      bg: "bg-linear-to-br from-blue-100 to-blue-200",
-      border: "border-blue-300",
+      bg: "bg-linear-to-br from-blue-200 to-blue-300",
+      border: "border-blue-400",
     }
   ];
 

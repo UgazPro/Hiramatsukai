@@ -42,18 +42,12 @@ export default function Dojos() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {visibleDojos.map((dojo, index) => (
                                 <div
-<<<<<<< HEAD
-                                    key={dojo.dojo}
-                                    className={`animate-slide-up delay-${index} `}
-                                    onClick={() => navigate(`/dojos/dojo/${dojo.code}`)}
-=======
                                     key={dojo.code}
-                                    onClick={() => navigate("/dojos/dojo")}
+                                    onClick={() => navigate(`/dojos/dojo/${dojo.code}`)}
                                     className="transition-all duration-700 ease-in-out animate-slide-up"
                                     style={{
                                         transitionDelay: `${index * 100}ms`,
                                     }}
->>>>>>> 202088504388ec230a3fb0e16b7bba95f5e9bdc9
                                 >
                                     <InformationSchema
                                         img="https://blog.marti.mx/wp-content/uploads/2023/01/conoce-que-es-karate-jpg.webp"

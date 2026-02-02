@@ -5,12 +5,10 @@ import { Button } from "@/components/ui/button";
 export default function NavBar() {
 
     const [open, setOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
 
     // Este efecto solo maneja el estado de scroll, NO cierra el menú
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
             setOpen(false);
         };
 
@@ -36,7 +34,7 @@ export default function NavBar() {
 
     return (
 
-        <div className={`bg-(--yellowColor) transition-all duration-300 ${isScrolled ? 'py-2' : 'md:py-5 py-2'}`}>
+        <div className={`bg-(--yellowColor) transition-all duration-300 py-2`}>
 
             {/* DESKTOP MENU */}
             <nav className="hidden md:flex justify-around">
@@ -45,7 +43,7 @@ export default function NavBar() {
                         key={item.id}
                         onClick={() => handleScroll(item.id)}
                         style={{ fontFamily: "Kavoon" }}
-                        className="text-xl cursor-pointer font-medium transition-colors hover:text-primary bg-transparent border-none p-2"
+                        className="text-xl cursor-pointer font-medium transition-colors hover:text-primary bg-transparent"
                     >
                         {item.label}
                     </button>
@@ -71,7 +69,7 @@ export default function NavBar() {
                                     key={item.id}
                                     onClick={() => handleScroll(item.id)}
                                     style={{ fontFamily: "Kavoon" }}
-                                    className="text-xl cursor-pointer font-medium transition-colors hover:text-primary bg-transparent border-none p-2 w-full text-center"
+                                    className="text-xl cursor-pointer font-medium transition-colors hover:text-primary bg-transparent p-2 w-full text-center"
                                 >
                                     {item.label}
                                 </button>
