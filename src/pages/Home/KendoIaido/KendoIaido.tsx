@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 
 export default function KendoIaido() {
+    
     const navigate = useNavigate();
 
     const cardsKendoIaido: CardComponentProps[] = [
