@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ViewMode } from "@/services/users/user.interface";
-import { Grid3X3, IdCard, LayoutGrid, List, UserPlus } from "lucide-react";
+import { ViewMode } from "@/services/students/student.interface";
+import { IdCard, LayoutGrid, List, UserPlus } from "lucide-react";
 
 interface StudentsHeaderProps {
     viewMode: ViewMode;
@@ -12,8 +12,7 @@ export default function StudentsHeader({ viewMode, setViewMode, openCreateStuden
 
     const views = [
         { key: "list", icon: List },
-        { key: "grid", icon: Grid3X3 },
-        { key: "cards", icon: LayoutGrid },
+        { key: "grid", icon: LayoutGrid },
         { key: "longCards", icon: IdCard },
     ];
 
@@ -47,7 +46,7 @@ export default function StudentsHeader({ viewMode, setViewMode, openCreateStuden
                 </div>
 
                 <Button
-                    className="bg-linear-to-r from-yellow-600 to-yellow-400 hover:from-yellow-400 hover:to-yellow-600 text-white shadow-md hover:shadow-lg transition-all"
+                    className="bg-linear-to-r from-yellow-600 to-yellow-400 hover:from-yellow-400 hover:to-yellow-600 text-white shadow-md hover:shadow-lg transition-colors ease-in-out"
                     onClick={openCreateStudent}
                 >
                     <UserPlus className="h-4 w-4 mr-2" />

@@ -1,5 +1,5 @@
 import { getDataApi } from "../api";
-import { IRol, IStudent } from "./user.interface";
+import { IRol, IStudent } from "./student.interface";
 
 const usersUrl = '/users';
 const rolesUrl = 'users/roles';

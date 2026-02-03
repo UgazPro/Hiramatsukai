@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { calculateAge } from "@/helpers/formatter";
-import { IStudent } from "@/services/users/user.interface";
+import { IStudent } from "@/services/students/student.interface";
 import { Edit, Eye, Mail, Phone, School, User } from "lucide-react";
 
 interface StudentGridViewProps {

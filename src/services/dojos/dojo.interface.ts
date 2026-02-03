@@ -1,5 +1,6 @@
 
 export interface IDojo {
+    id: number;
     dojo: string;
     address: string;
     code: string;
@@ -10,12 +11,17 @@ export interface IDojo {
     martialArts: number[];
 }
 
+export interface IDojoMartialArts {
+    id: number;
+    martialArt: string;
+    icon: string;
+}
 
-
-
-
-
-
-
-
-
+export interface IDojoRanks {
+    id: string;
+    code: string;
+    rank_name: string;
+    belt: string;
+    icon: string;
+    martialArtId: number;
+}

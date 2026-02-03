@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getRoles, getUsers } from "@/services/users/user.service";
+import { getRoles, getUsers } from "@/services/students/student.service";
 
 export const useStudents = () => {
   return useQuery({
@@ -16,6 +16,7 @@ export const useRoles = () => {
     staleTime: 1000 * 60 * 5,
   });
 };
+
 
 
 

@@ -1,3 +1,5 @@
+import { IDojo } from "../dojos/dojo.interface";
+
 export type ViewMode = "list" | "grid" | "cards" | "longCards";
 export type FilterStatus = "all" | "active" | "inactive";
 
@@ -20,21 +22,12 @@ export interface IStudent {
     createdAt:      Date;
     enrollmentDate: Date;
     rol:            IRol;
-    dojo:           Dojo;
+    dojo:           IDojo;
 }
 
 export interface IStudentsGroup {
     allStudents: IStudent[];
     students:    IStudent[];
-}
-
-export interface Dojo {
-    id:          number;
-    dojo:        string;
-    address:     string;
-    location:    string;
-    code:        string;
-    martialArts: any[];
 }
 
 export interface IRol {
