@@ -1,3 +1,5 @@
+import { ProgressStepperProps } from "@/components/progressStepper/Progress-stepper";
+
 export type ProgressSteps =
     'nahate' |
     'chojun-miyagi' |
@@ -101,4 +103,17 @@ export const katas: KataInfo[] = [
     { name: "Kururunfa", description: "Kata fluido como el agua", purpose: "Movimientos circulares y evasiones" },
     { name: "Seisan", description: "Kata de las 13 manos", purpose: "Contraataques rápidos" },
     { name: "Suparinpei", description: "Kata de los 108 movimientos", purpose: "Perfeccionamiento técnico total" }
+];
+
+export const progressData: ProgressStepperProps<ProgressSteps>[] = [
+    { active: true, name: 'nahate', year: "1853", label: "Kanryō Higaonna y el Naha-te" },
+    { active: false, name: 'chojun-miyagi', year: "1916", label: "Chōjun Miyagi consolida el legado" },
+    { active: false, name: 'goju-ryu', year: "1930", label: "Se adopta el nombre Gōjū-ryū" },
+    { active: false, name: 'reconocimiento-1933', year: "1933", label: "Reconocimiento oficial en Japón" },
+    { active: false, name: 'kanken-toyama', year: "1930", label: "Kanken Tōyama y el Shūdōkan" },
+    { active: false, name: 'posguerra-y-legado', year: "1953", label: "Posguerra y continuidad del estilo" },
+    { active: false, name: 'morio-higaonna', year: "1960", label: "Expansión moderna: Morio Higaonna" },
+    { active: false, name: 'hiramatsu-venezuela', year: "1977", label: "Gijin Hiramatsu llega a Venezuela" },
+    { active: false, name: 'hiramatsukai-venezuela', year: "1980", label: "Consolidación: Hiramatsu Kai" },
+    { active: false, name: 'legado-hiramatsu', year: "1997", label: "Legado de Hiramatsu" }
 ];
