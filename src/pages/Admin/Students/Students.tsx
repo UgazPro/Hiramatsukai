@@ -1,6 +1,5 @@
 import StudentListView from "./StudentViews/StudentListView";
 import StudentGridView from "./StudentViews/StudentGridView";
-import StudentCardView from "./StudentViews/StudentCardView";
 
 import { useStudents } from "@/hooks/useStudents";
 import { useFilteredStudents } from "@/hooks/useFilteredStudents";
@@ -14,61 +13,71 @@ import StudentLongCardView from "./StudentViews/StudentLongCardView";
 import StudentsFilter from "./StudentFilters/StudentsFilter";
 import StudentsHeader from "./StudentViews/StudentsHeader";
 import StudentsNoResults from "./StudentViews/StudentsNoResults";
+import StudentDetailView from "./StudentDetailView/StudentDetailView";
 
 export default function Students() {
 
   const { data: students = [], isLoading } = useStudents();
 
-  const { viewMode, setViewMode, resetFilters, isCreateStudentOpen, openCreateStudent, closeCreateStudent } = useStudentsStore();
+  const { viewMode, setViewMode, resetFilters, isCreateStudentOpen, openCreateStudent, closeCreateStudent, screen } = useStudentsStore();
 
   const filteredStudents = useFilteredStudents(students);
 
   return (
 
-    <div className="container mx-auto p-4 md:p-6">
+    <div className="relative overflow-hidden">
 
-      {isLoading ? (
-        <SpinnerComponent />
-      ) : (
+      <div className={`transition-transform duration-300 ${screen === "list" ? "translate-x-0" : "-translate-x-full"}`}>
 
-        <>
-          {/* Header */}
-          <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openCreateStudent} />
+        <div className="container mx-auto p-4 md:p-6">
 
-          {/* Form */}
-          <DialogComponent
-            openDialog={isCreateStudentOpen}
-            onClose={closeCreateStudent}
-            dialogTitle="Nuevo Estudiante"
-            children={<StudentsForm />}
-            className="max-w-6xl"
-            dialogDescription="Complete los campos para agregar un nuevo estudiante al dojo"
-          />
+          <>
+            {/* Header */}
+            <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openCreateStudent} />
 
-          {/* Filter */}
-          <StudentsFilter filteredStudents={filteredStudents} students={students} />
+            {isLoading && <SpinnerComponent />}
 
-          {/* Views */}
-          {viewMode === "list" && (
-            <StudentListView filteredStudents={filteredStudents} />
-          )}
-          {viewMode === "grid" && (
-            <StudentGridView filteredStudents={filteredStudents} />
-          )}
-          {viewMode === "cards" && (
-            <StudentCardView filteredStudents={filteredStudents} />
-          )}
-          {viewMode === "longCards" && (
-            <StudentLongCardView filteredStudents={filteredStudents} />
-          )}
+            {/* Form */}
+            <DialogComponent
+              openDialog={isCreateStudentOpen}
+              onClose={closeCreateStudent}
+              dialogTitle="Nuevo Estudiante"
+              children={<StudentsForm />}
+              className="max-w-6xl"
+              dialogDescription="Complete los campos para agregar un nuevo estudiante al dojo"
+            />
 
-          {/* View if no results are found */}
-          {filteredStudents.length === 0 && <StudentsNoResults resetFilters={resetFilters} openCreateStudent={openCreateStudent} />}
-        </>
+            {/* Filter */}
+            <StudentsFilter filteredStudents={filteredStudents} students={students} />
 
-      )}
+            {/* Views */}
+            {viewMode === "list" && (
+              <StudentListView filteredStudents={filteredStudents} />
+            )}
+            {viewMode === "grid" && (
+              <StudentGridView filteredStudents={filteredStudents} />
+            )}
+            {viewMode === "longCards" && (
+              <StudentLongCardView filteredStudents={filteredStudents} />
+            )}
+
+            {/* View if no results are found */}
+            {filteredStudents.length === 0 && <StudentsNoResults resetFilters={resetFilters} openCreateStudent={openCreateStudent} />}
+
+          </>
+
+        </div>
+
+      </div>
+
+      <div className={`absolute inset-0 transition-transform duration-300 ${screen === "detail" ? "translate-x-0" : "translate-x-full"}`}>
+
+        {screen === "detail" && <div className="h-full overflow-y-auto"><StudentDetailView /></div>}
+
+      </div>
 
     </div>
+
 
   );
 

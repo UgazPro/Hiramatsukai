@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { IStudent } from "@/services/users/user.interface";
+import { IStudent } from "@/services/students/student.interface";
 import { useStudentsStore } from "@/stores/students.store";
 
 export const useFilteredStudents = (students: IStudent[] = []) => {

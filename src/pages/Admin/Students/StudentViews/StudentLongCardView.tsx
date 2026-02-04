@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { calculateAge, dateFormatter, howLongHasSomeonePracticeInMonths } from "@/helpers/formatter";
-import { IStudent } from "@/services/users/user.interface";
+import { IStudent } from "@/services/students/student.interface";
 import { Cake, Calendar, CheckCircle, Clock, Edit, Eye, Mail, MapPin, MoreVertical, Phone, School, Shield, Trash2, User } from "lucide-react";
 
 interface StudentLongCardViewProps {

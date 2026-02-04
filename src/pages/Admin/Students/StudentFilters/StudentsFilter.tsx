@@ -5,8 +5,9 @@ import { Input } from "@/components/ui/input";
 
 import { Badge } from "@/components/ui/badge";
 import { useStudentsStore } from "@/stores/students.store";
-import { IStudent } from "@/services/users/user.interface";
+import { IStudent } from "@/services/students/student.interface";
 import { useDojos } from "@/hooks/useDojos";
+import { useRoles } from "@/hooks/useStudents";
 
 import SpinnerComponent from "@/components/SpinnerComponent";
 import StudentDropDown from "./StudentDropDown";
@@ -21,7 +22,8 @@ export default function StudentsFilter({ filteredStudents, students } : StudentF
 
     const { searchTerm, setSearchTerm, filterDojo, setFilterDojo, filterRol, setFilterRol, filterActivo, setFilterActivo, showFilters, toggleFilters } = useStudentsStore();
     
-    const { data: dojos = [], isLoading } = useDojos();
+    const { data: dojos = [], isLoading : isLoadingDojos } = useDojos();
+    const { data: roles = [], isLoading : isLoadingRoles } = useRoles();
 
     return (
 
@@ -116,7 +118,7 @@ export default function StudentsFilter({ filteredStudents, students } : StudentF
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 border border-gray-300 rounded-xl bg-white shadow-sm">
 
                         {/* Dojo */}
-                        {isLoading ? <SpinnerComponent /> : (
+                        {isLoadingDojos ? <SpinnerComponent /> : (
                             <StudentDropDown
                                 label="Dojo"
                                 icon={<School className="h-4 w-4 text-amber-600" />}
@@ -138,10 +140,7 @@ export default function StudentsFilter({ filteredStudents, students } : StudentF
                             onChange={setFilterRol}
                             options={[
                                 "all",
-                                "Alumno",
-                                "Instructor",
-                                "Administrador",
-                                "Sensei",
+                                ...roles.map(r => r.rol)
                             ]}
                             renderLabel={(v) => v === "all" ? "Todos" : v}
                         />

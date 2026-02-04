@@ -1,16 +1,18 @@
-import { IStudent } from "@/services/users/user.interface";
-import { User, Phone, Calendar, CheckCircle, XCircle, MoreVertical, Eye, Edit, Trash2 } from "lucide-react";
+import { IStudent } from "@/services/students/student.interface";
+import { User, Phone, Calendar, CheckCircle, XCircle, Edit, Trash2 } from "lucide-react";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { calculateAge, dateFormatter } from "@/helpers/formatter";
+import { useStudentsStore } from "@/stores/students.store";
 
 interface StudentListViewProps {
     filteredStudents: IStudent[];
 }
 
 export default function StudentListView({ filteredStudents }: StudentListViewProps) {
+
+    const selectStudent = useStudentsStore((state) => state.selectStudent);
 
     return (
 
@@ -35,11 +37,15 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                 <TableBody>
 
                     {filteredStudents.map((student: IStudent) => (
-                        <TableRow key={student.id} className="border-b border-gray-200 hover:bg-gray-50/80 ">
+                        <TableRow 
+                            key={student.id} 
+                            className="border-b border-gray-200 hover:bg-gray-50/80 hover:cursor-pointer"
+                            onClick={() => selectStudent(student)}
+                        >
                             <TableCell className="py-4">
                                 <div className="flex items-center gap-3">
                                     <div className="h-10 w-10 rounded-full bg-linear-to-br from-amber-100 to-red-100 border border-amber-200 flex items-center justify-center">
-                                        {student.profileImg.trim() !== '' ? (
+                                        {student.profileImg.trim() != '' ? (
                                             <img src={student.profileImg} className="h-10 w-10 rounded-full object-cover" alt={student.name} />
                                         ) : (
                                             <User className="h-5 w-5 text-amber-600" />
@@ -96,27 +102,12 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                                 )}
                             </TableCell>
                             <TableCell className="text-right py-4">
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 hover:bg-gray-100">
-                                            <MoreVertical className="h-4 w-4 text-gray-600" />
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent align="end" className="bg-white border-gray-300 shadow-lg">
-                                        <DropdownMenuItem className="text-gray-700 hover:bg-gray-100 cursor-pointer" >
-                                            <Eye className="h-4 w-4 mr-2 text-gray-600" />
-                                            Ver detalles
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem className="text-gray-700 hover:bg-gray-100 cursor-pointer">
-                                            <Edit className="h-4 w-4 mr-2 text-gray-600" />
-                                            Editar
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem className="text-red-600 hover:bg-red-50 cursor-pointer">
-                                            <Trash2 className="h-4 w-4 mr-2" />
-                                            Eliminar
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
+                                <Button variant="ghost" size="sm">
+                                    <Edit className="h-4 w-4" />
+                                </Button>
+                                <Button variant="ghost" size="sm">
+                                    <Trash2 className="h-4 w-4" />
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}

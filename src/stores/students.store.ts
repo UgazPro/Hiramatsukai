@@ -1,10 +1,19 @@
-import { FilterStatus, ViewMode } from "@/services/users/user.interface";
+import { FilterStatus, IStudent, ViewMode } from "@/services/students/student.interface";
 import { create } from "zustand";
+
+type StudentScreen = "list" | "detail" | "edit";
 
 interface StudentsStore {
 
   viewMode: ViewMode;
   setViewMode: (view: ViewMode) => void;
+
+  screen: StudentScreen;
+  setScreen: (screen: StudentScreen) => void;
+
+  selectedStudent: IStudent | null;
+  selectStudent: (student: IStudent) => void;
+  clearSelectedStudent: () => void;
 
   searchTerm: string;
   setSearchTerm: (v: string) => void;
@@ -25,14 +34,19 @@ interface StudentsStore {
   isCreateStudentOpen: boolean;
   openCreateStudent: () => void;
   closeCreateStudent: () => void;
-  toggleCreateStudent: () => void;
 }
 
 export const useStudentsStore = create<StudentsStore>((set) => ({
   
-
   viewMode: "list",
   setViewMode: (view) => set({ viewMode: view }),
+
+  screen: "list",
+  setScreen: (screen) => set({ screen }),
+
+  selectedStudent: null,
+  selectStudent: (student) => set({ selectedStudent: student, screen: "detail" }),
+  clearSelectedStudent: () => set({ selectedStudent: null, screen: "list" }),
 
   searchTerm: "",
   setSearchTerm: (v) => set({ searchTerm: v }),
@@ -54,6 +68,5 @@ export const useStudentsStore = create<StudentsStore>((set) => ({
   isCreateStudentOpen: false,
   openCreateStudent: () => set({ isCreateStudentOpen: true }),
   closeCreateStudent: () => set({ isCreateStudentOpen: false }),
-  toggleCreateStudent: () => set((state) => ({ isCreateStudentOpen: !state.isCreateStudentOpen })),
 
 }));
