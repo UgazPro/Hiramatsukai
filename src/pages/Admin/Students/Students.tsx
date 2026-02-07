@@ -19,7 +19,7 @@ export default function Students() {
 
   const { data: students = [], isLoading } = useStudents();
 
-  const { viewMode, setViewMode, resetFilters, isCreateStudentOpen, openCreateStudent, closeCreateStudent, screen } = useStudentsStore();
+  const { viewMode, setViewMode, resetFilters, usingForm, openForm, screen, finishForm } = useStudentsStore();
 
   const filteredStudents = useFilteredStudents(students);
 
@@ -33,14 +33,14 @@ export default function Students() {
 
           <>
             {/* Header */}
-            <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openCreateStudent} />
+            <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openForm} />
 
             {isLoading && <SpinnerComponent />}
 
             {/* Form */}
             <DialogComponent
-              openDialog={isCreateStudentOpen}
-              onClose={closeCreateStudent}
+              openDialog={usingForm}
+              onClose={finishForm}
               dialogTitle="Nuevo Estudiante"
               children={<StudentsForm />}
               className="max-w-6xl"
@@ -62,7 +62,7 @@ export default function Students() {
             )}
 
             {/* View if no results are found */}
-            {filteredStudents.length === 0 && <StudentsNoResults resetFilters={resetFilters} openCreateStudent={openCreateStudent} />}
+            {filteredStudents.length === 0 && <StudentsNoResults resetFilters={resetFilters} openCreateStudent={openForm} />}
 
           </>
 

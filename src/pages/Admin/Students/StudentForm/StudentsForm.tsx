@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStudentsStore } from "@/stores/students.store";
 import { useDojoMartialArts, useDojoRanks, useDojos } from "@/hooks/useDojos";
 import { StudentFormValues, studentSchema } from "@/services/students/student.schema";
-import { useCreateStudent } from "@/queries/useStudentMutations";
+import { useCreateStudent, useUpdateStudent } from "@/queries/useStudentMutations";
 import { useUserData } from "@/helpers/token";
 import { useRoles } from "@/hooks/useStudents";
 import { FormComponent } from "@/components/form/FormComponent";
@@ -26,7 +26,10 @@ export default function StudentsForm() {
 
     const student = useUserData();
 
-    const { mutateAsync, isPending } = useCreateStudent();
+    const { selectedStudent, mode, finishForm } = useStudentsStore();
+
+    const { mutateAsync: createStudent } = useCreateStudent();
+    const { mutateAsync: updateStudent } = useUpdateStudent();
 
     const form = useForm<StudentFormValues>({
         resolver: zodResolver(studentSchema),
@@ -47,6 +50,35 @@ export default function StudentsForm() {
             martialArtRank: [{ martialArtId: 0, rankId: 0 }],
         }
     });
+
+    useEffect(() => {
+
+        if (!selectedStudent || mode !== "edit") return;
+        if (!roles.length || !dojos.length) return;
+
+        if (mode === "edit" && selectedStudent) {
+            form.reset({
+                identification: selectedStudent.identification,
+                name: selectedStudent.name,
+                lastName: selectedStudent.lastName,
+                email: selectedStudent.email,
+                username: selectedStudent.username,
+                address: selectedStudent.address,
+                phone: selectedStudent.phone,
+                sex: selectedStudent.sex,
+                dojoId: selectedStudent.dojoId,
+                rolId: selectedStudent.rolId,
+                birthday: new Date(selectedStudent.birthday),
+                enrollmentDate: new Date(selectedStudent.enrollmentDate),
+                martialArtRank: selectedStudent.userRanks.map(r => ({
+                    martialArtId: r.martialArt.id,
+                    rankId: r.rank.id,
+                })),
+            });
+
+            setImagePreview(selectedStudent.profileImg || null);
+        }
+    }, [mode, selectedStudent, roles, dojos]);
 
     const returnTitle = (code: string) => {
         const rename = code.slice(1);
@@ -108,13 +140,16 @@ export default function StudentsForm() {
             martialArtRank: data.martialArtRank.filter(m => m.martialArtId > 0 && m.rankId > 0),
         };
 
+        if (mode === "create") {
+            await createStudent({ data: payload, imageFile: imageFile as File });
+        } else {
+            await updateStudent({ id: selectedStudent!.id, data: payload, imageFile: imageFile as File });
+        }
+
         console.log(payload);
 
-        await mutateAsync({ data: payload, imageFile: imageFile as File });
-        closeCreateStudent();
+        finishForm();
     };
-
-    const { closeCreateStudent } = useStudentsStore();
 
     return (
 
@@ -168,7 +203,7 @@ export default function StudentsForm() {
                 <div className="flex justify-end space-x-4">
                     <Button
                         type="button" variant="outline" className="cursor-pointer"
-                        onClick={closeCreateStudent}
+                        onClick={finishForm}
                     >
                         Cancelar
                     </Button>
@@ -176,7 +211,7 @@ export default function StudentsForm() {
                         type="submit"
                         className="bg-red-700 hover:bg-red-800 cursor-pointer"
                     >
-                        Guardar Estudiante
+                        {mode === "create" ? "Guardar Estudiante" : "Actualizar Estudiante"}
                     </Button>
                 </div>
 

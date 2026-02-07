@@ -39,6 +39,7 @@ export function SelectComponentForm({ form, label, placeholder, name, options, d
                     <FormLabel>{label}</FormLabel>
 
                     <Select
+                        key={String(field.value)}
                         value={field.value !== undefined && field.value !== null ? String(field.value) : ''}
                         onValueChange={(value) => {
                             field.onChange(isNumberSelect ? Number(value) : value);

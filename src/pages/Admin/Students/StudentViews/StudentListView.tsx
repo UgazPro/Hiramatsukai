@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { calculateAge, dateFormatter } from "@/helpers/formatter";
 import { useStudentsStore } from "@/stores/students.store";
+import { useEffect } from "react";
+import { useDeleteStudent } from "@/queries/useStudentMutations";
+import { DeleteStudentDialog } from "@/components/deleteStudentDialog";
 
 interface StudentListViewProps {
     filteredStudents: IStudent[];
@@ -12,7 +15,15 @@ interface StudentListViewProps {
 
 export default function StudentListView({ filteredStudents }: StudentListViewProps) {
 
+    const { startEdit, selectedStudent } = useStudentsStore();
+
     const selectStudent = useStudentsStore((state) => state.selectStudent);
+
+    const { mutateAsync : deleteStudent } = useDeleteStudent();
+
+    useEffect(() => {
+        console.log("Selected Student:", selectedStudent);
+    }, [selectedStudent]);
 
     return (
 
@@ -37,8 +48,8 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                 <TableBody>
 
                     {filteredStudents.map((student: IStudent) => (
-                        <TableRow 
-                            key={student.id} 
+                        <TableRow
+                            key={student.id}
                             className="border-b border-gray-200 hover:bg-gray-50/80 hover:cursor-pointer"
                             onClick={() => selectStudent(student)}
                         >
@@ -102,12 +113,20 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                                 )}
                             </TableCell>
                             <TableCell className="text-right py-4">
-                                <Button variant="ghost" size="sm">
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        startEdit(student);
+                                    }}
+                                >
                                     <Edit className="h-4 w-4" />
                                 </Button>
-                                <Button variant="ghost" size="sm">
-                                    <Trash2 className="h-4 w-4" />
-                                </Button>
+                                <DeleteStudentDialog 
+                                    studentName={`${student.name} ${student.lastName}`}
+                                    onConfirm={() => deleteStudent(student.id)}
+                                />
                             </TableCell>
                         </TableRow>
                     ))}

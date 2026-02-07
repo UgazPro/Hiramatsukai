@@ -1,4 +1,4 @@
-import { IDojo } from "../dojos/dojo.interface";
+import { IDojo, IDojoMartialArts, IDojoRanks } from "../dojos/dojo.interface";
 
 export type ViewMode = "list" | "grid" | "cards" | "longCards";
 export type FilterStatus = "all" | "active" | "inactive";
@@ -6,6 +6,7 @@ export type FilterStatus = "all" | "active" | "inactive";
 export interface IStudent {
     id:             number;
     identification: string;
+    sex: string;
     name:           string;
     lastName:       string;
     password:       string;
@@ -23,6 +24,10 @@ export interface IStudent {
     enrollmentDate: Date;
     rol:            IRol;
     dojo:           IDojo;
+    userRanks: [{
+        martialArt: IDojoMartialArts;
+        rank: IStudentRanks;
+    }]
 }
 
 export interface IStudentsGroup {
@@ -34,6 +39,16 @@ export interface IRol {
     id:  number;
     rol: string;
 }
+
+export interface IStudentRanks {
+    id:        number;
+    userId:    number;
+    rankId:    number;
+    martialArt: IDojoMartialArts;
+    rank:      IDojoRanks;
+}
+
+
 
 
 

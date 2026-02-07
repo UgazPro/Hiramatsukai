@@ -5,6 +5,8 @@ type StudentScreen = "list" | "detail" | "edit";
 
 interface StudentsStore {
 
+  mode: "create" | "edit";
+
   viewMode: ViewMode;
   setViewMode: (view: ViewMode) => void;
 
@@ -14,6 +16,10 @@ interface StudentsStore {
   selectedStudent: IStudent | null;
   selectStudent: (student: IStudent) => void;
   clearSelectedStudent: () => void;
+
+  startCreate: () => void;
+  startEdit: (student: IStudent) => void;
+  finishForm: () => void;
 
   searchTerm: string;
   setSearchTerm: (v: string) => void;
@@ -31,12 +37,14 @@ interface StudentsStore {
   toggleFilters: () => void;
   resetFilters: () => void;
 
-  isCreateStudentOpen: boolean;
-  openCreateStudent: () => void;
-  closeCreateStudent: () => void;
+  usingForm: boolean;
+  openForm: () => void;
+  closeForm: () => void;
 }
 
 export const useStudentsStore = create<StudentsStore>((set) => ({
+
+  mode: "create",
   
   viewMode: "list",
   setViewMode: (view) => set({ viewMode: view }),
@@ -47,6 +55,24 @@ export const useStudentsStore = create<StudentsStore>((set) => ({
   selectedStudent: null,
   selectStudent: (student) => set({ selectedStudent: student, screen: "detail" }),
   clearSelectedStudent: () => set({ selectedStudent: null, screen: "list" }),
+
+  startCreate: () => set({
+    mode: "create",
+    selectedStudent: null,
+    usingForm: true,
+  }),
+
+  startEdit: (student) => set({
+    mode: "edit",
+    selectedStudent: student,
+    usingForm: true,
+  }),
+
+  finishForm: () => set({
+    usingForm: false,
+    selectedStudent: null,
+    mode: "create",
+  }),
 
   searchTerm: "",
   setSearchTerm: (v) => set({ searchTerm: v }),
@@ -65,8 +91,8 @@ export const useStudentsStore = create<StudentsStore>((set) => ({
 
   resetFilters: () => set({ searchTerm: "", filterDojo: "all", filterRol: "all", filterActivo: "all", }),
 
-  isCreateStudentOpen: false,
-  openCreateStudent: () => set({ isCreateStudentOpen: true }),
-  closeCreateStudent: () => set({ isCreateStudentOpen: false }),
+  usingForm: false,
+  openForm: () => set({ usingForm: true }),
+  closeForm: () => set({ usingForm: false }),
 
 }));

@@ -6,10 +6,11 @@ import { X, User, Mail, MapPin, Phone, Cake, Calendar, Clock, Award, Star, FileT
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useStudentsStore } from "@/stores/students.store";
+import { calculateMartialTime, dateFormatterIntoLong } from "@/helpers/formatter";
 
 export default function StudentDetailView() {
 
-    const { setScreen } = useStudentsStore();
+    const { selectedStudent, setScreen } = useStudentsStore();
 
     const datosFicticios = {
         identification: "123456789",
@@ -44,24 +45,16 @@ export default function StudentDetailView() {
         ]
     };
 
-    const formatFecha = (fecha: Date) => {
-        try {
-            return format(new Date(fecha), "dd 'de' MMMM 'de' yyyy", { locale: es });
-        } catch {
-            return "Fecha inválida";
-        }
-    };
-
     return (
 
         <div className="min-h-full p-6 relative w-full max-w-6xl mx-auto my-6 bg-white shadow-xl border border-gray-200 rounded-xl">
 
             {/* Header */}
-            <div className="sticky top-0 z-20 bg-gradient-to-r from-amber-50 to-red-50 border-b border-gray-300 rounded-lg">
+            <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-300 rounded-lg">
                 <h2 className="p-6">
                     <div className="flex justify-between items-start">
                         <div className="flex items-center gap-4">
-                            <div className="h-20 w-20 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-1">
+                            <div className="h-20 w-20 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-1">
                                 <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
                                     {datosFicticios.profileImg ? (
                                         <img
@@ -76,17 +69,17 @@ export default function StudentDetailView() {
                             </div>
                             <div>
                                 <h2 className="text-3xl font-bold text-gray-900">
-                                    {datosFicticios.name} {datosFicticios.lastName}
+                                    {selectedStudent!.name} {selectedStudent!.lastName}
                                 </h2>
                                 <div className="flex items-center gap-3 mt-2">
                                     <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-base px-3 py-1">
                                         <Shield className="h-4 w-4 mr-1" />
-                                        {datosFicticios.cinturonActual}
+                                        {selectedStudent!.userRanks[0].rank.belt}
                                     </Badge>
                                     <Badge className="bg-gray-100 text-gray-800 border-gray-200">
-                                        {datosFicticios.gradoActual}
+                                        {selectedStudent!.userRanks[0].rank.code}
                                     </Badge>
-                                    {datosFicticios.active ? (
+                                    {selectedStudent!.active ? (
                                         <Badge className="bg-green-100 text-green-800 border-green-200">
                                             <CheckCircle className="h-3 w-3 mr-1" />
                                             Activo
@@ -127,25 +120,25 @@ export default function StudentDetailView() {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <p className="text-sm text-gray-500 mb-1">Cédula</p>
-                                        <p className="font-mono font-medium text-gray-900">{datosFicticios.identification}</p>
+                                        <p className="font-mono font-medium text-gray-900">{selectedStudent!.identification}</p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-500 mb-1">Sexo</p>
-                                        <p className="font-medium text-gray-900">{datosFicticios.sexo}</p>
+                                        <p className="font-medium text-gray-900">{selectedStudent!.sex}</p>
                                     </div>
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500 mb-1">Fecha de Nacimiento</p>
                                     <div className="flex items-center gap-2">
                                         <Cake className="h-4 w-4 text-gray-500" />
-                                        <p className="font-medium text-gray-900">{formatFecha(datosFicticios.birthday)}</p>
+                                        <p className="font-medium text-gray-900">{dateFormatterIntoLong(selectedStudent!.birthday)}</p>
                                     </div>
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500 mb-1">Tiempo Practicando</p>
                                     <div className="flex items-center gap-2">
                                         <Clock className="h-4 w-4 text-gray-500" />
-                                        <p className="font-medium text-gray-900">{datosFicticios.tiempoPracticando}</p>
+                                        <p className="font-medium text-gray-900">{calculateMartialTime(selectedStudent!.enrollmentDate).text}</p>
                                     </div>
                                 </div>
                             </div>
@@ -160,30 +153,30 @@ export default function StudentDetailView() {
                             </div>
                             <div className="space-y-4">
                                 <div className="flex items-start gap-3">
-                                    <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                                    <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
                                         <Mail className="h-5 w-5 text-gray-600" />
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-sm text-gray-500 mb-1">Email</p>
-                                        <p className="font-medium text-gray-900 break-words">{datosFicticios.email}</p>
+                                        <p className="font-medium text-gray-900 wrap-break-word">{selectedStudent!.email}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
-                                    <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                                    <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
                                         <Phone className="h-5 w-5 text-gray-600" />
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-sm text-gray-500 mb-1">Teléfono</p>
-                                        <p className="font-medium text-gray-900">{datosFicticios.phone}</p>
+                                        <p className="font-medium text-gray-900">{selectedStudent!.phone}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
-                                    <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                                    <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
                                         <MapPin className="h-5 w-5 text-gray-600" />
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-500 mb-1">Dirección</p>
-                                        <p className="font-medium text-gray-900">{datosFicticios.address}</p>
+                                        <p className="font-medium text-gray-900">{selectedStudent!.address}</p>
                                     </div>
                                 </div>
                             </div>
@@ -203,17 +196,17 @@ export default function StudentDetailView() {
                                 <div>
                                     <p className="text-sm text-gray-500 mb-1">Dojo Asignado</p>
                                     <div className="flex items-center gap-2">
-                                        <div className="h-8 w-8 rounded-full bg-gradient-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center">
+                                        <div className="h-8 w-8 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center">
                                             <Target className="h-4 w-4 text-amber-600" />
                                         </div>
-                                        <p className="font-semibold text-gray-900 text-lg">{datosFicticios.dojo}</p>
+                                        <p className="font-semibold text-gray-900 text-lg">{selectedStudent!.dojo.dojo}</p>
                                     </div>
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500 mb-1">Fecha de Inscripción</p>
                                     <div className="flex items-center gap-2">
                                         <Calendar className="h-4 w-4 text-gray-500" />
-                                        <p className="font-medium text-gray-900">{formatFecha(datosFicticios.enrollmentDate)}</p>
+                                        <p className="font-medium text-gray-900">{dateFormatterIntoLong(selectedStudent!.enrollmentDate)}</p>
                                     </div>
                                 </div>
                             </div>
@@ -332,7 +325,7 @@ export default function StudentDetailView() {
                                         <p className="text-sm text-gray-500">Próximo Examen</p>
                                         <div className="flex items-center gap-2">
                                             <Calendar className="h-4 w-4 text-amber-600" />
-                                            <p className="font-semibold text-gray-900">{formatFecha(datosFicticios.proximoExamen)}</p>
+                                            <p className="font-semibold text-gray-900">{dateFormatterIntoLong(datosFicticios.proximoExamen)}</p>
                                         </div>
                                     </div>
                                     <Badge className="bg-amber-100 text-amber-800 border-amber-200">

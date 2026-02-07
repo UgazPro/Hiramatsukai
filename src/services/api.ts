@@ -25,11 +25,23 @@ export const postDataApi = async (url: string, data: any) => {
   }
 };
 
-export const postDataImageApi = async (
-  url: string,
-  data: any,
-  img?: File | null,
-) => {
+export const putDataApi = async (endpoint: string, data: any) => {
+    return await api.put(endpoint, data).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
+
+export const deleteDataApi = async (endpoint: string, data: number) => {
+    return await api.delete(`${endpoint}/${data}`).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
+
+export const postDataImageApi = async ( url: string, data: any, img?: File | null, ) => {
   try {
     const formData = new FormData();
 
@@ -69,6 +81,7 @@ export const postDataImageApi = async (
   }
 };
 
+// Interceptors
 api.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().token;
