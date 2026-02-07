@@ -1,5 +1,5 @@
 import { IStudent } from "@/services/students/student.interface";
-import { User, Phone, Calendar, CheckCircle, XCircle, Edit, Trash2 } from "lucide-react";
+import { User, Phone, Calendar, CheckCircle, XCircle, Edit } from "lucide-react";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,7 +19,7 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
 
     const selectStudent = useStudentsStore((state) => state.selectStudent);
 
-    const { mutateAsync : deleteStudent } = useDeleteStudent();
+    const { mutateAsync: deleteStudent } = useDeleteStudent();
 
     useEffect(() => {
         console.log("Selected Student:", selectedStudent);
@@ -51,7 +51,10 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                         <TableRow
                             key={student.id}
                             className="border-b border-gray-200 hover:bg-gray-50/80 hover:cursor-pointer"
-                            onClick={() => selectStudent(student)}
+                            onClick={() => {
+                                selectStudent(student);
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                            }}
                         >
                             <TableCell className="py-4">
                                 <div className="flex items-center gap-3">
@@ -123,7 +126,7 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
                                 >
                                     <Edit className="h-4 w-4" />
                                 </Button>
-                                <DeleteStudentDialog 
+                                <DeleteStudentDialog
                                     studentName={`${student.name} ${student.lastName}`}
                                     onConfirm={() => deleteStudent(student.id)}
                                 />

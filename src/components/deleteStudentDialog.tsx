@@ -5,18 +5,23 @@ import { Button } from "@/components/ui/button";
 interface Props {
   studentName: string;
   onConfirm: () => void;
+  buttonStyles?: string;
+  buttonText?: string;
+  buttonType?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | "clickRed" | null;
 }
 
-export function DeleteStudentDialog({ studentName, onConfirm }: Props) {
+export function DeleteStudentDialog({ studentName, onConfirm, buttonStyles, buttonText, buttonType }: Props) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant="ghost"
+          variant={buttonType ? buttonType : 'ghost'}
           size="sm"
           onClick={(e) => e.stopPropagation()}
+          className={buttonStyles}
         >
-          <Trash2 className="h-4 w-4 text-red-600" />
+          <Trash2 />
+          {buttonText}
         </Button>
       </AlertDialogTrigger>
 
