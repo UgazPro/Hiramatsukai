@@ -157,7 +157,7 @@ export default function AboutUsInfo() {
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
                                         className={`flex items-center gap-3 px-6 py-4 rounded-xl font-medium transition-all duration-300 ${isActive
-                                                ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
+                                                ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
                                                 : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                                             }`}
                                     >
@@ -233,7 +233,7 @@ export default function AboutUsInfo() {
                             <div className="grid md:grid-cols-3 gap-8">
                                 {foundingMembers.map((member, index) => (
                                     <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-                                        <div className="h-48 bg-gradient-to-r from-gray-200 to-gray-300 relative">
+                                        <div className="h-48 bg-linear-to-r from-gray-200 to-gray-300 relative">
                                             {/* Placeholder para imagen */}
                                             <div className="absolute inset-0 flex items-center justify-center">
                                                 <Users className="h-24 w-24 text-gray-400" />
@@ -346,7 +346,7 @@ export default function AboutUsInfo() {
                             </div>
 
                             {/* Mapa de dojos (conceptual) */}
-                            <div className="mt-16 bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
+                            <div className="mt-16 bg-linear-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
                                 <div className="flex items-center gap-4 mb-6">
                                     <Globe className="h-8 w-8" />
                                     <h3 className="text-2xl font-bold" style={{ fontFamily: "Kavoon" }}>
@@ -396,7 +396,7 @@ export default function AboutUsInfo() {
                                     const Icon = art.icon;
                                     return (
                                         <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-                                            <div className={`p-6 bg-gradient-to-r from-${art.color}-500 to-${art.color}-600 text-white`}>
+                                            <div className={`p-6 bg-linear-to-r from-${art.color}-500 to-${art.color}-600 text-white`}>
                                                 <Icon className="h-12 w-12 mb-4" />
                                                 <h3 className="text-2xl font-bold">{art.name}</h3>
                                                 <p className="opacity-90">{art.description}</p>
@@ -442,7 +442,7 @@ export default function AboutUsInfo() {
             )}
 
             {/* Footer de Contacto */}
-            <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800">
+            <section className="py-20 bg-linear-to-r from-gray-900 to-gray-800">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center text-white">
                         <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: "Kavoon" }}>
@@ -479,7 +479,7 @@ export default function AboutUsInfo() {
                             </Button>
                         </div>
 
-                        <Button size="lg" className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-12">
+                        <Button size="lg" className="bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-12">
                             Solicitar Información
                         </Button>
                     </div>
