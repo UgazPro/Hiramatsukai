@@ -81,6 +81,48 @@ export const postDataImageApi = async ( url: string, data: any, img?: File | nul
   }
 };
 
+export const putDataImageApi = async ( url: string, data: any, img?: File | null, ) => {
+  try {
+    const formData = new FormData();
+
+    if (img) {
+      formData.append("profileImg", img);
+    }
+
+    Object.entries(data).forEach(([key, value]) => {
+
+      if(key === "id") return;
+
+      if (Array.isArray(value)) {
+        formData.append(key, JSON.stringify(value));
+        return;
+      }
+
+
+      if (value instanceof Date) {
+        formData.append(key, value.toISOString());
+        return;
+      }
+
+      if (typeof value === "number") {
+        formData.append(key, value.toString());
+        return;
+      }
+
+      if (value === null || value === undefined) {
+        return;
+      }
+
+      formData.append(key, value as string);
+    });
+
+    return await api.put(url, formData).then((res) => res.data);
+  } catch (error) {
+    console.error("postDataImageApi error:", error);
+    throw error;
+  }
+};
+
 // Interceptors
 api.interceptors.request.use(
   (config) => {

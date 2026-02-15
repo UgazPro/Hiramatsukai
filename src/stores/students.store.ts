@@ -1,4 +1,4 @@
-import { FilterStatus, IStudent, ViewMode } from "@/services/students/student.interface";
+import { IStudent, ViewMode } from "@/services/students/student.interface";
 import { create } from "zustand";
 
 type StudentScreen = "list" | "detail" | "edit";
@@ -23,19 +23,6 @@ interface StudentsStore {
 
   searchTerm: string;
   setSearchTerm: (v: string) => void;
-
-  filterDojo: string;
-  setFilterDojo: (v: string) => void;
-
-  filterRol: string;
-  setFilterRol: (v: string) => void;
-
-  filterActivo: FilterStatus;
-  setFilterActivo: (v: FilterStatus) => void;
-
-  showFilters: boolean;
-  toggleFilters: () => void;
-  resetFilters: () => void;
 
   usingForm: boolean;
   openForm: () => void;
@@ -76,20 +63,6 @@ export const useStudentsStore = create<StudentsStore>((set) => ({
 
   searchTerm: "",
   setSearchTerm: (v) => set({ searchTerm: v }),
-
-  filterDojo: "all",
-  setFilterDojo: (v) => set({ filterDojo: v }),
-
-  filterRol: "all",
-  setFilterRol: (v) => set({ filterRol: v }),
-
-  filterActivo: "all",
-  setFilterActivo: (v) => set({ filterActivo: v }),
-
-  showFilters: false,
-  toggleFilters: () => set((state) => ({ showFilters: !state.showFilters })),
-
-  resetFilters: () => set({ searchTerm: "", filterDojo: "all", filterRol: "all", filterActivo: "all", }),
 
   usingForm: false,
   openForm: () => set({ usingForm: true }),

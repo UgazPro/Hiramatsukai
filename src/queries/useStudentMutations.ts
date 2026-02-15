@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteDataApi, postDataApi, postDataImageApi, putDataApi } from "@/services/api";
+import { deleteDataApi, postDataApi, postDataImageApi, putDataApi, putDataImageApi } from "@/services/api";
 
 export const useCreateStudent = () => {
   const qc = useQueryClient();
@@ -17,14 +17,8 @@ export const useUpdateStudent = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data, imageFile, }: { id: number; data: any; imageFile?: File | null; }) => {
-
-      if (imageFile) {
-        return postDataImageApi(`/users/${id}`, data, imageFile);
-      }
-
-      return putDataApi(`/users/${id}`, data);
-    },
+    mutationFn: ({ data, imageFile }: { data: any; imageFile: File | null }) =>
+    putDataImageApi(`/users/${data.id}`, data, imageFile),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["students"] });
     },
