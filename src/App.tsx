@@ -19,7 +19,6 @@ import Profile from './pages/Admin/Profile/Profile';
 import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
 import DojosInfo from './pages/DojosInfo/DojosInfo';
 import ProtectedRoute from './ProtectedRoute';
-import GoogleRegister from './pages/googleRegister/GoogleRegister';
 
 function App() {
 
@@ -33,7 +32,6 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about-us" element={<AboutUsInfo />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register/google" element={<GoogleRegister />} />
             <Route path="/karatedo" element={<KaratedoInfo />} />
             <Route path="/kobudo" element={<KobudoInfo />} />
             <Route path="/kendoIaido" element={<KendoIaidoInfo />} />

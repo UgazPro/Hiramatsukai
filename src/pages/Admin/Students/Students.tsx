@@ -1,11 +1,8 @@
 import StudentListView from "./StudentViews/StudentListView";
 import StudentGridView from "./StudentViews/StudentGridView";
-
 import { useStudents } from "@/hooks/useStudents";
 import { useFilteredStudents } from "@/hooks/useFilteredStudents";
-
 import { useStudentsStore } from "@/stores/students.store";
-
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import DialogComponent from "@/components/dialog/DialogComponent";
 import StudentsForm from "./StudentForm/StudentsForm";
@@ -28,6 +25,9 @@ export default function Students() {
 
     <div className="w-full h-full">
 
+      
+      {isLoading && <SpinnerComponent />}
+
       <PageTransitionComponent
 
         primaryChildren={
@@ -37,8 +37,6 @@ export default function Students() {
             <>
               {/* Header */}
               <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openForm} />
-
-              {isLoading && <SpinnerComponent />}
 
               {/* Form */}
               <DialogComponent

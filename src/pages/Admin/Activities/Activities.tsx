@@ -241,6 +241,7 @@ export default function Activities() {
   const dayNames = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
   return (
+    
     <div className="mx-auto p-4 md:p-6">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
@@ -284,121 +285,17 @@ export default function Activities() {
       <div className="flex items-start justify-between gap-8">
         {/* Tabla de actividades - 2/3 del ancho */}
         <div className={'flex-1'}>
-          <Card className="border border-gray-300 shadow-sm">
-            <CardContent className="p-0">
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Actividad</TableHead>
-                      <TableHead>Tipo</TableHead>
-                      <TableHead>Instructor</TableHead>
-                      <TableHead>Dojo</TableHead>
-                      <TableHead>Fecha/Hora</TableHead>
-                      <TableHead className="text-right">Acciones</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredActivities.map((actividad) => (
-                      <TableRow
-                        key={actividad.id}
-                        className={`border-b border-gray-200 hover:bg-gray-50/80 cursor-pointer transition-colors ${selectedActivity?.id === actividad.id ? 'bg-amber-50' : ''
-                          }`}
-                        onClick={() => {
-                          setSelectedActivity(actividad);
-                          // Ir al mes de la actividad
-                          setCurrentDate(parseISO(actividad.date));
-                        }}
-                      >
-                        <TableCell>{actividad.title}</TableCell>
-
-                        <TableCell>
-                          <Badge>{actividad.type}</Badge>
-                        </TableCell>
-
-                        <TableCell>{actividad.organization}</TableCell>
-
-                        <TableCell>{actividad.dojo}</TableCell>
-
-                        <TableCell>
-                          {format(parseISO(actividad.date), 'dd/MM/yyyy')} {actividad.time}
-                        </TableCell>
-
-                        <TableCell className="text-right">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border-gray-300 text-gray-700 hover:bg-gray-100"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedActivity(actividad);
-                              setCurrentDate(parseISO(actividad.date));
-                            }}
-                          >
-                            Ver
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-
-                {/* <TableComponent
-                  data={filteredActivities}
-                  columns={columns}
-                  onRowClick={(activity) => {
-                    setSelectedActivity(activity);
-                    setCurrentDate(parseISO(activity.date));
-                  }}
-                  rowClassName={(activity) =>
-                    selectedActivity?.id === activity.id ? "bg-amber-50" : ""
-                  }
-                /> */}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Estadísticas */}
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-4">
-            <Card className="border border-gray-300 shadow-sm">
-              <CardContent className="p-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-gray-900">{actividades.length}</div>
-                  <div className="text-sm text-gray-600">Total actividades</div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border border-gray-300 shadow-sm">
-              <CardContent className="p-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">
-                    {actividades.filter(a => a.type === 'dojo').length}
-                  </div>
-                  <div className="text-sm text-gray-600">Actividades del dojo</div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border border-gray-300 shadow-sm">
-              <CardContent className="p-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-purple-600">
-                    {actividades.filter(a => a.type === 'organizacion').length}
-                  </div>
-                  <div className="text-sm text-gray-600">Actividades organización</div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="border border-gray-300 shadow-sm">
-              <CardContent className="p-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">
-                    {actividades.filter(a => a.openInscription).length}
-                  </div>
-                  <div className="text-sm text-gray-600">Inscripciones abiertas</div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <TableComponent
+            data={filteredActivities}
+            columns={columns}
+            onRowClick={(activity) => {
+              setSelectedActivity(activity);
+              setCurrentDate(parseISO(activity.date));
+            }}
+            rowClassName={(activity) =>
+              selectedActivity?.id === activity.id ? "bg-amber-50" : ""
+            }
+          />
         </div>
 
         {/* Calendario - 1/3 del ancho */}

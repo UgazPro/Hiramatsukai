@@ -1,6 +1,5 @@
 import { Column } from "@/components/table/TableComponent";
 import { IStudent, userRolesNames } from "./student.interface";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Edit, User, Phone, Calendar } from "lucide-react";
 import { DeleteStudentDialog } from "@/components/deleteStudentDialog";
