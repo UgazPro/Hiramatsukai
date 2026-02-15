@@ -112,7 +112,7 @@ export default function KendoIaido() {
 
                             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 via-transparent to-transparent pointer-events-none" />
 
-                            <div className="absolute top-4 left-4 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            <div className="absolute top-4 left-4 bg-linear-to-r from-blue-600 to-blue-800 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                                 Kendo - 剣道
                             </div>
 
@@ -131,7 +131,7 @@ export default function KendoIaido() {
 
                             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent pointer-events-none" />
 
-                            <div className="absolute top-4 left-4 bg-gradient-to-r from-gray-700 to-gray-900 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
+                            <div className="absolute top-4 left-4 bg-linear-to-r from-gray-700 to-gray-900 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                                 Iaido - 居合道
                             </div>
 

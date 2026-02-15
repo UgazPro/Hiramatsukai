@@ -131,7 +131,7 @@ export default function KendoIaidoInfo() {
               <button
                 onClick={() => setActiveSection("kendo")}
                 className={`flex items-center gap-3 px-8 py-4 rounded-xl font-medium transition-all duration-300 ${activeSection === "kendo"
-                    ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
+                    ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                   }`}
               >
@@ -141,7 +141,7 @@ export default function KendoIaidoInfo() {
               <button
                 onClick={() => setActiveSection("iaido")}
                 className={`flex items-center gap-3 px-8 py-4 rounded-xl font-medium transition-all duration-300 ${activeSection === "iaido"
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg'
+                    ? 'bg-linear-to-r from-blue-500 to-blue-600 text-white shadow-lg'
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                   }`}
               >
@@ -404,7 +404,7 @@ export default function KendoIaidoInfo() {
       </section>
 
       {/* CTA Final */}
-      <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800">
+      <section className="py-20 bg-linear-to-r from-gray-900 to-gray-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center text-white">
             <Sword className="h-16 w-16 mx-auto mb-6" />

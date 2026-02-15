@@ -123,7 +123,7 @@ export default function KaratedoInfo() {
                                         key={section.id}
                                         onClick={() => setActiveSection(section.id)}
                                         className={`flex items-center gap-3 px-6 py-4 rounded-xl font-medium transition-all duration-300 ${isActive
-                                                ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
+                                                ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
                                                 : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                                             }`}
                                     >
@@ -255,7 +255,7 @@ export default function KaratedoInfo() {
                             </div>
 
                             {/* Kata Sanchin especial */}
-                            <div className="mt-16 bg-gradient-to-r from-red-500 to-red-600 rounded-3xl p-8 text-white">
+                            <div className="mt-16 bg-linear-to-r from-red-500 to-red-600 rounded-3xl p-8 text-white">
                                 <div className="grid lg:grid-cols-2 gap-8 items-center">
                                     <div>
                                         <h3 className="text-3xl font-bold mb-4" style={{ fontFamily: "Kavoon" }}>
@@ -374,7 +374,7 @@ export default function KaratedoInfo() {
             )}
 
             {/* CTA Final */}
-            <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800">
+            <section className="py-20 bg-linear-to-r from-gray-900 to-gray-800">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center text-white">
                         <Swords className="h-16 w-16 mx-auto mb-6" />
