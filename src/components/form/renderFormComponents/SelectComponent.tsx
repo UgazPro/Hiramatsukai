@@ -2,7 +2,7 @@
 import { FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEffect } from 'react';
-import { Label } from './ui/label';
+import { Label } from '@/components/ui/label';
 
 export interface IOptions {
     label: string;

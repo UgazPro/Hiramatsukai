@@ -1,6 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "./ui/calendar";
-import { Button } from "./ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
