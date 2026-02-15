@@ -2,11 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Plus, Users } from "lucide-react";
 
 interface StudentsNoResultsProps {
-    resetFilters: () => void;
     openCreateStudent: () => void;
 }
 
-export default function StudentsNoResults({ resetFilters, openCreateStudent } : StudentsNoResultsProps) {
+export default function StudentsNoResults({ openCreateStudent } : StudentsNoResultsProps) {
 
     return (
 
@@ -16,13 +15,10 @@ export default function StudentsNoResults({ resetFilters, openCreateStudent } : 
                 No se encontraron estudiantes
             </h3>
             <p className="text-gray-600 mb-8 max-w-md mx-auto">
-                No hay estudiantes que coincidan con los filtros aplicados.
+                No hay estudiantes que coincidan con su búsqueda.
             </p>
 
             <div className="flex gap-3 justify-center">
-                <Button variant="outline" onClick={resetFilters}>
-                    Limpiar todos los filtros
-                </Button>
                 <Button
                     className="bg-amber-600 hover:bg-amber-700 text-white"
                     onClick={openCreateStudent}

@@ -11,7 +11,7 @@ import { useRoles } from "@/hooks/useStudents";
 import { FormComponent } from "@/components/form/FormComponent";
 import { studentLeftFields, studentMiddleFields, studentRightFields } from "./studentsForm.data";
 import ProfilePictureComponent from "@/components/ProfilePictureComponent";
-import MartialRanksComponent from "@/components/MartialRanksComponent";
+import MartialRanksComponent from "@/components/form/renderFormComponents/MartialRanksComponent";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function StudentsForm() {
@@ -24,7 +24,7 @@ export default function StudentsForm() {
     const { data: dojos = [] } = useDojos();
     const { data: roles = [] } = useRoles();
 
-    const student = useUserData();
+    const user = useUserData();
 
     const { selectedStudent, mode, finishForm } = useStudentsStore();
 
@@ -42,7 +42,7 @@ export default function StudentsForm() {
             username: '',
             address: '',
             phone: '',
-            dojoId: student?.dojoId || 0,
+            dojoId: user?.dojoId || 0,
             rolId: roles[0]?.id ?? 0,
             profileImg: '',
             birthday: new Date(),
@@ -78,6 +78,7 @@ export default function StudentsForm() {
 
             setImagePreview(selectedStudent.profileImg || null);
         }
+
     }, [mode, selectedStudent, roles, dojos]);
 
     const returnTitle = (code: string) => {
@@ -86,7 +87,7 @@ export default function StudentsForm() {
         return `${rename} ${grade == 'K' ? 'Kyu' : 'Dan'}`
     }
 
-    const dojosOptions = dojos.filter(dojo => student?.rol.rol === "Administrador" ? dojos.map(d => d) : dojo.id === student?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
+    const dojosOptions = dojos.filter(dojo => user?.rol.rol === "Administrador" ? dojos.map(d => d) : dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
 
     const martialArtsOptions = dojoMartialArts.map(ma => ({
         label: ma.martialArt,
@@ -124,7 +125,10 @@ export default function StudentsForm() {
 
     const sendForm = async (data: StudentFormValues) => {
 
+        console.log(data);
+
         const payload = {
+            ...(mode === "edit" && selectedStudent?.id ? { id: selectedStudent.id } : {}),
             identification: data.identification,
             sex: data.sex,
             name: data.name,
@@ -141,10 +145,14 @@ export default function StudentsForm() {
         };
 
         if (mode === "create") {
-            await createStudent({ data: payload, imageFile: imageFile as File });
+            await createStudent({ data: payload, imageFile });
         } else {
-            await updateStudent({ id: selectedStudent!.id, data: payload, imageFile: imageFile as File });
+            await updateStudent({
+                data: { ...payload, id: selectedStudent!.id },
+                imageFile
+            });
         }
+
 
         console.log(payload);
 
@@ -186,7 +194,7 @@ export default function StudentsForm() {
                         fields={studentRightFields(
                             dojosOptions,
                             roles,
-                            student?.rol.rol === "Administrador"
+                            user?.rol.rol === "Administrador"
                         )}
                         otherType={
                             <MartialRanksComponent

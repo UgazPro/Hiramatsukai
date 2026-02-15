@@ -301,7 +301,7 @@ export default function StudentDetailView() {
                                         className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200"
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-amber-500/10 to-red-500/10 flex items-center justify-center">
+                                            <div className="h-10 w-10 rounded-full bg-linear-to-br from-amber-500/10 to-red-500/10 flex items-center justify-center">
                                                 <Award className="h-5 w-5 text-amber-600" />
                                             </div>
                                             <div>
@@ -347,9 +347,9 @@ export default function StudentDetailView() {
                                 {datosFicticios.actividadesAsistidas.map((actividad, index) => (
                                     <div
                                         key={index}
-                                        className="flex items-center gap-3 p-3 bg-gradient-to-r from-white to-amber-50 rounded-lg border border-amber-200 hover:border-amber-300 transition-colors group"
+                                        className="flex items-center gap-3 p-3 bg-linear-to-r from-white to-amber-50 rounded-lg border border-amber-200 hover:border-amber-300 transition-colors group"
                                     >
-                                        <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-200 transition-colors">
+                                        <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
                                             <Star className="h-4 w-4 text-amber-600" />
                                         </div>
                                         <div className="flex-1">
@@ -392,7 +392,7 @@ export default function StudentDetailView() {
                             <div className="relative">
                                 <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
                                     <div
-                                        className="h-full bg-gradient-to-r from-amber-500 to-red-500 rounded-full"
+                                        className="h-full bg-linear-to-r from-amber-500 to-red-500 rounded-full"
                                         style={{ width: '65%' }}
                                     />
                                 </div>
@@ -434,7 +434,7 @@ export default function StudentDetailView() {
                         >
                             Cerrar
                         </Button>
-                        <Button className="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white">
+                        <Button className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white">
                             <Edit className="h-4 w-4 mr-2" />
                             Editar Información
                         </Button>

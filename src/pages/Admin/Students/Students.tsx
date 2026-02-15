@@ -6,7 +6,7 @@ import { useFilteredStudents } from "@/hooks/useFilteredStudents";
 
 import { useStudentsStore } from "@/stores/students.store";
 
-import SpinnerComponent from "@/components/SpinnerComponent";
+import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import DialogComponent from "@/components/dialog/DialogComponent";
 import StudentsForm from "./StudentForm/StudentsForm";
 import StudentLongCardView from "./StudentViews/StudentLongCardView";
@@ -14,70 +14,84 @@ import StudentsFilter from "./StudentFilters/StudentsFilter";
 import StudentsHeader from "./StudentViews/StudentsHeader";
 import StudentsNoResults from "./StudentViews/StudentsNoResults";
 import StudentDetailView from "./StudentDetailView/StudentDetailView";
+import PageTransitionComponent from "@/components/PageTransitionComponent";
 
 export default function Students() {
 
   const { data: students = [], isLoading } = useStudents();
 
-  const { viewMode, setViewMode, resetFilters, usingForm, openForm, screen, finishForm } = useStudentsStore();
+  const { viewMode, setViewMode, usingForm, openForm, screen, finishForm } = useStudentsStore();
 
   const filteredStudents = useFilteredStudents(students);
 
   return (
 
-    <div className="relative overflow-hidden">
+    <div className="w-full h-full">
 
-      <div className={`transition-transform duration-300 ${screen === "list" ? "translate-x-0" : "-translate-x-full"}`}>
+      <PageTransitionComponent
 
-        <div className="container mx-auto p-4 md:p-6">
+        primaryChildren={
 
-          <>
-            {/* Header */}
-            <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openForm} />
+          <div className="p-4">
 
-            {isLoading && <SpinnerComponent />}
+            <>
+              {/* Header */}
+              <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openForm} />
 
-            {/* Form */}
-            <DialogComponent
-              openDialog={usingForm}
-              onClose={finishForm}
-              dialogTitle="Nuevo Estudiante"
-              children={<StudentsForm />}
-              className="max-w-6xl"
-              dialogDescription="Complete los campos para agregar un nuevo estudiante al dojo"
-            />
+              {isLoading && <SpinnerComponent />}
 
-            {/* Filter */}
-            <StudentsFilter filteredStudents={filteredStudents} students={students} />
+              {/* Form */}
+              <DialogComponent
+                openDialog={usingForm}
+                onClose={finishForm}
+                dialogTitle="Nuevo Estudiante"
+                children={<StudentsForm />}
+                className="max-w-6xl"
+                dialogDescription="Complete los campos para agregar un nuevo estudiante al dojo"
+              />
 
-            {/* Views */}
-            {viewMode === "list" && (
-              <StudentListView filteredStudents={filteredStudents} />
-            )}
-            {viewMode === "grid" && (
-              <StudentGridView filteredStudents={filteredStudents} />
-            )}
-            {viewMode === "longCards" && (
-              <StudentLongCardView filteredStudents={filteredStudents} />
-            )}
+              {/* Filter */}
+              <StudentsFilter />
 
-            {/* View if no results are found */}
-            {filteredStudents.length === 0 && <StudentsNoResults resetFilters={resetFilters} openCreateStudent={openForm} />}
+              {/* Views */}
+              {viewMode === "list" && (
+                <>
+                  <StudentListView filteredStudents={filteredStudents} />
+                  {filteredStudents.length !== 0 && (
+                    <div className="text-sm text-gray-600 mt-6 text-right">
+                      {filteredStudents.length} de {students.length} estudiantes
+                    </div>
+                  )}
+                </>
+              )}
+              {viewMode === "grid" && (
+                <StudentGridView filteredStudents={filteredStudents} />
+              )}
+              {viewMode === "longCards" && (
+                <StudentLongCardView filteredStudents={filteredStudents} />
+              )}
 
-          </>
+              {/* View if no results are found */}
+              {filteredStudents.length === 0 && <StudentsNoResults openCreateStudent={openForm} />}
 
-        </div>
+            </>
 
-      </div>
+          </div>
 
-      <div className={`absolute inset-0 transition-transform duration-300 ${screen === "detail" ? "translate-x-0" : "translate-x-full"}`}>
+        }
 
-        {screen === "detail" && <div className="h-full overflow-y-auto"><StudentDetailView /></div>}
+        secondaryChildren={
+          <div>
 
-      </div>
+            {screen === "detail" && <div className="h-full overflow-y-auto"><StudentDetailView /></div>}
+
+          </div>
+        }
+
+        toggle={screen === "detail" ? true : false}
+      />
 
     </div>
-
 
   );
 

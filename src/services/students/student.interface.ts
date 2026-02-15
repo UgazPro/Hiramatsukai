@@ -1,7 +1,7 @@
 import { IDojo, IDojoMartialArts, IDojoRanks } from "../dojos/dojo.interface";
 
 export type ViewMode = "list" | "grid" | "cards" | "longCards";
-export type FilterStatus = "all" | "active" | "inactive";
+export type userRolesNames = "Administrador" | "Líder Instructor" | "Instructor" |"Estudiante" | "Representante";
 
 export interface IStudent {
     id:             number;
@@ -37,7 +37,7 @@ export interface IStudentsGroup {
 
 export interface IRol {
     id:  number;
-    rol: string;
+    rol: userRolesNames;
 }
 
 export interface IStudentRanks {

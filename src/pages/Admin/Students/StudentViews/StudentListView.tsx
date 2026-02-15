@@ -8,6 +8,8 @@ import { useStudentsStore } from "@/stores/students.store";
 import { useEffect } from "react";
 import { useDeleteStudent } from "@/queries/useStudentMutations";
 import { DeleteStudentDialog } from "@/components/deleteStudentDialog";
+import { TableComponent } from "@/components/table/TableComponent";
+import { getStudentColumns } from "@/services/students/student.tables";
 
 interface StudentListViewProps {
     filteredStudents: IStudent[];
@@ -21,6 +23,8 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
 
     const { mutateAsync: deleteStudent } = useDeleteStudent();
 
+    const columns = getStudentColumns({ startEdit, deleteStudent, });
+
     useEffect(() => {
         console.log("Selected Student:", selectedStudent);
     }, [selectedStudent]);
@@ -29,7 +33,16 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
 
         <div className="rounded-lg border border-gray-300 shadow-sm overflow-hidden bg-white">
 
-            <Table>
+            <TableComponent
+                data={filteredStudents}
+                columns={columns}
+                onRowClick={(student) => {
+                    selectStudent(student);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+            />
+
+            {/* <Table>
 
                 <TableHeader className="bg-gray-50">
                     <TableRow className="border-b border-gray-300 hover:bg-gray-50">
@@ -136,7 +149,7 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
 
                 </TableBody>
 
-            </Table>
+            </Table> */}
 
         </div>
 
