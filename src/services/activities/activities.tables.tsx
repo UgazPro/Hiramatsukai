@@ -1,74 +1,56 @@
 import { Column } from "@/components/table/TableComponent";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { format, parseISO } from "date-fns";
-import { Edit, Eye, Trash } from "lucide-react";
-
-export interface Actividad {
-  id: number;
-  title: string;
-  type: "dojo" | "organizacion";
-  date: string;
-  time: string;
-  place: string;
-  description: string;
-  category: string;
-  expectedStudents: number;
-  requiredLevel: string;
-  cost?: number;
-  openInscription: boolean;
-  dojo: string;
-  organization: string;
-}
+import { CalendarDays, Clock, Edit, Eye, Trash } from "lucide-react";
+import { IActivity } from "./activity.interface";
+import FieldBadge from "@/components/table/RenderTableComponents";
+import { activityScreen } from "@/stores/activities.store";
 
 interface Actions {
-  onSelect: (actividad: Actividad) => void;
+  startEdit: (activity: IActivity) => void;
+  setSelectedActivity: (activity: IActivity) => void; 
+  setScreen: (screen: activityScreen) => void;
 }
 
-export const getActivitiesColumns = ({ onSelect }: Actions): Column<Actividad>[] => [
+export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen } : Actions): Column<IActivity>[] => [
   {
     header: "Actividad",
-    render: (a) => <div className="font-medium">{a.title}</div>,
+    render: (a) => <p className="font-medium">{a.name}</p>,
   },
 
   {
     header: "Tipo",
     render: (a) => (
-      <Badge
-        className={
-          a.type === "dojo"
-            ? "bg-amber-100 text-amber-800 border-amber-200"
-            : "bg-blue-100 text-blue-800 border-blue-200"
-        }
-      >
-        {a.type}
-      </Badge>
+      <div>
+        <FieldBadge
+          label={a.ActivityDojos.length > 1 ? 'Organizacional' : 'Interna'}
+          color="blue"
+        />
+      </div>
     ),
   },
 
   {
-    header: "Instructor",
-    render: (a) => a.organization,
-  },
-
-  {
-    header: "Dojo",
-    render: (a) => a.dojo,
+    header: "Lugar",
+    render: (a) => (
+      <>{a.place}</>
+    ),
   },
 
   {
     header: "Fecha/Hora",
     render: (a) => (
-      <div className="text-sm">
-        {format(parseISO(a.date), "dd/MM/yyyy")} {a.time}
+      <div className="space-y-2">
+        <p className="text-xs flex gap-1"><CalendarDays size={'16px'} />{format(parseISO(a.date.toString()), "dd/MM/yyyy")}</p>
+        <p className="text-xs flex gap-1"><Clock size={'16px'} />{format(parseISO(a.date.toString()), "hh:mm aaa")}</p>
       </div>
     ),
   },
 
   {
     header: "Acciones",
-    headerClassName: "text-right",
-    className: "text-right",
+    headerClassName: "",
+    className: "",
     render: (a) => (
       <>
         <Button
@@ -77,7 +59,8 @@ export const getActivitiesColumns = ({ onSelect }: Actions): Column<Actividad>[]
           className="border-gray-300 text-gray-700 hover:bg-gray-100"
           onClick={(e) => {
             e.stopPropagation();
-            onSelect(a);
+            setSelectedActivity(a);
+            setScreen("detail");
           }}
         >
           <Eye />
@@ -86,6 +69,10 @@ export const getActivitiesColumns = ({ onSelect }: Actions): Column<Actividad>[]
           size="sm"
           variant="ghost"
           className="border-gray-300 text-gray-700 hover:bg-gray-100"
+          onClick={(e) => {
+            e.stopPropagation();
+            startEdit(a);
+          }}
         >
           <Edit />
         </Button>
@@ -93,6 +80,9 @@ export const getActivitiesColumns = ({ onSelect }: Actions): Column<Actividad>[]
           size="sm"
           variant="ghost"
           className="border-gray-300 text-gray-700 hover:bg-gray-100"
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
         >
           <Trash />
         </Button>
