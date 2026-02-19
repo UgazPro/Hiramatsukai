@@ -9,7 +9,7 @@ import { useCreateStudent, useUpdateStudent } from "@/queries/useStudentMutation
 import { useUserData } from "@/helpers/token";
 import { useRoles } from "@/hooks/useStudents";
 import { FormComponent } from "@/components/form/FormComponent";
-import { studentLeftFields, studentMiddleFields, studentRightFields } from "./studentsForm.data";
+import { studentLeftFields, studentMiddleFields, studentRightFields } from "../../../../services/students/studentsForm.data";
 import ProfilePictureComponent from "@/components/ProfilePictureComponent";
 import MartialRanksComponent from "@/components/form/renderFormComponents/MartialRanksComponent";
 import { zodResolver } from "@hookform/resolvers/zod";

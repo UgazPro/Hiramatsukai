@@ -68,7 +68,7 @@ export default function Header() {
                             className="hidden md:block md:h-15 md:w-50 rounded-full mr-3 shadow-2xl h-8 w-30"
                         />
                     )}
-                    <span className="text-2xl md:text-3xl lg:text-5xl font-bold">Hiramatsukai</span>
+                    <span className="text-2xl md:text-3xl lg:text-5xl font-bold">Hiramatsukai Internacional</span>
                 </Link>
 
                 {location.pathname === "/" && (

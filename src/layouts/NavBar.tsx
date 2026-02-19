@@ -28,7 +28,7 @@ export default function NavBar() {
 
     const menuItems = [
         { id: "home", label: "Inicio" },
-        { id: "karate", label: "Karate" },
+        { id: "karate", label: "Karatedo" },
         { id: "kobudo", label: "Kobudo" },
         { id: "kendoIaido", label: "Kendo Iaido" },
         { id: "dojos", label: "Dojos" },
