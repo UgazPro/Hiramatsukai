@@ -2,10 +2,11 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { SelectComponentForm } from "./renderFormComponents/SelectComponent";
-import { CalendarComponent } from "./renderFormComponents/CalendarComponent";
+import { CalendarFieldComponent } from "./renderFormComponents/CalendarFieldComponent";
 import { FormField } from "./formComponent.interface";
 import { Controller } from "react-hook-form";
 import ErrorMessage from "./renderFormComponents/ErrorMessage";
+import { MultiSelectField } from "./renderFormComponents/MultiSelectField";
 
 interface FormComponentProps {
     fields: FormField[];
@@ -69,13 +70,32 @@ export function FormComponent({ fields, form, otherType }: FormComponentProps) {
                                     control={form.control}
                                     name={field.name}
                                     render={({ field: controllerField }) => (
-                                        <CalendarComponent
+                                        <CalendarFieldComponent
                                             value={controllerField.value}
                                             onChange={controllerField.onChange}
                                         />
                                     )}
                                 />
                                 {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                            </div>
+                        );
+
+                    case "multiselect":
+                        return (
+                            <div key={field.name} className="space-y-2 relative">
+                                <MultiSelectField
+                                    form={form}
+                                    name={field.name}
+                                    label={field.label}
+                                    options={field.options}
+                                    disabled={field.disabled}
+                                    placeholder={field.placeholder!}
+                                />
+                                {form.formState.errors[field.name] && (
+                                    <ErrorMessage>
+                                        {form.formState.errors[field.name]?.message}
+                                    </ErrorMessage>
+                                )}
                             </div>
                         );
 

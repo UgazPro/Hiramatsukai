@@ -5,13 +5,13 @@ import { ChevronDownIcon } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
-interface CalendarComponentProps {
+interface CalendarFieldComponentProps {
     value?: Date;
     onChange: (date: Date | undefined) => void;
     placeholder?: string;
 }
 
-export function CalendarComponent({value, onChange, placeholder = "Selecciona una fecha", }: CalendarComponentProps) {
+export function CalendarFieldComponent({value, onChange, placeholder = "Selecciona una fecha", }: CalendarFieldComponentProps) {
 
     return (
         <Popover>
