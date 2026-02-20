@@ -322,7 +322,7 @@ export default function DojoPage() {
                   
                   <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-r-lg mb-6">
                     <div className="flex items-start gap-3">
-                      <Quote className="h-6 w-6 text-yellow-600 mt-1 flex-shrink-0" />
+                      <Quote className="h-6 w-6 text-yellow-600 mt-1 shrink-0" />
                       <div>
                         <p className="text-gray-800 font-medium italic">
                           "No buscamos crear luchadores, sino forjar seres humanos íntegros capaces de enfrentar cualquier desafío con honor y determinación."
@@ -409,7 +409,7 @@ export default function DojoPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {dojoData.principles.map((principle, index) => (
                     <div key={index} className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
-                      <div className="h-6 w-6 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                      <div className="h-6 w-6 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                         <span className="text-red-600 font-bold text-sm">{index + 1}</span>
                       </div>
                       <p className="text-gray-700">{principle}</p>
@@ -768,7 +768,7 @@ export default function DojoPage() {
                 
                 <div className="space-y-6">
                   <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
-                    <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <div className="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                       <MapPin className="h-6 w-6 text-red-600" />
                     </div>
                     <div>
@@ -778,7 +778,7 @@ export default function DojoPage() {
                   </div>
 
                   <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
-                    <div className="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                    <div className="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
                       <Phone className="h-6 w-6 text-yellow-600" />
                     </div>
                     <div>
@@ -790,7 +790,7 @@ export default function DojoPage() {
                   </div>
 
                   <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
-                    <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                    <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
                       <Mail className="h-6 w-6 text-blue-600" />
                     </div>
                     <div>
@@ -801,7 +801,7 @@ export default function DojoPage() {
                   </div>
 
                   <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
-                    <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                    <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center shrink-0">
                       <Clock className="h-6 w-6 text-green-600" />
                     </div>
                     <div>

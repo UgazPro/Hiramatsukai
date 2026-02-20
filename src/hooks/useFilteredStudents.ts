@@ -4,7 +4,7 @@ import { useStudentsStore } from "@/stores/students.store";
 
 export const useFilteredStudents = (students: IStudent[] = []) => {
   
-  const { searchTerm, filterDojo, filterRol, filterActivo, } = useStudentsStore();
+  const { searchTerm } = useStudentsStore();
 
   return useMemo(() => {
     const searchLower = searchTerm.toLowerCase();
@@ -17,18 +17,7 @@ export const useFilteredStudents = (students: IStudent[] = []) => {
         student.email.toLowerCase().includes(searchLower) ||
         `${student.name} ${student.lastName}`.toLowerCase().includes(searchLower);
 
-      const matchesDojo =
-        filterDojo === "all" || student.dojo.dojo === filterDojo;
-
-      const matchesRol =
-        filterRol === "all" || student.rol.rol === filterRol;
-
-      const matchesActivo =
-        filterActivo === "all" ||
-        (filterActivo === "active" && student.active) ||
-        (filterActivo === "inactive" && !student.active);
-
-      return matchesSearch && matchesDojo && matchesRol && matchesActivo;
+      return matchesSearch;
     });
-  }, [students, searchTerm, filterDojo, filterRol, filterActivo]);
+  }, [ students, searchTerm ]);
 };

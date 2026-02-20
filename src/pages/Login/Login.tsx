@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GoogleLogin } from "@react-oauth/google";
 
 import { LoginSchema } from "./Login.data";
-import ErrorMessage from "@/components/ErrorMessage";
+import ErrorMessage from "@/components/form/renderFormComponents/ErrorMessage";
 import { LoginForm, googleLogInData } from "@/services/auth/auth.interface";
 import { useLoginMutation, useGoogleLoginMutation } from "@/queries/useAuthMutations";
-import SpinnerComponent from "@/components/SpinnerComponent";
+import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 
 export default function Login() {
     const [loginErrorMessage, setLoginErrorMessage] = useState("");

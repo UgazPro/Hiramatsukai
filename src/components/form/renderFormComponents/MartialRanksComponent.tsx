@@ -1,3 +1,4 @@
+import { useStudentsStore } from "@/stores/students.store";
 import ErrorMessage from "./ErrorMessage";
 import { SelectComponent } from "./SelectComponent";
 
@@ -10,6 +11,7 @@ interface MartialRanksComponentProps {
 
 export default function MartialRanksComponent({ dojoMartialArts, martialArtsOptions, ranksOptions, form }: MartialRanksComponentProps) {
 
+    const { selectedStudent } = useStudentsStore(); 
     const isSubmitted = form.formState.isSubmitted;
 
     return (
@@ -18,16 +20,22 @@ export default function MartialRanksComponent({ dojoMartialArts, martialArtsOpti
             <div className="border-2 p-5 rounded-lg space-y-2">
 
                 {dojoMartialArts.length > 0 && dojoMartialArts.map((field, index) => (
+                    
                     <div key={field.id} className="flex items-center gap-2">
                         <SelectComponent
                             label={index === 0 ? "Arte Marcial" : ""}
                             placeholder="Arte marcial"
                             options={martialArtsOptions.filter(ma => ma.value === field.id)}
-                            value={String(form.watch(`martialArtRank.${index}.martialArtId`))}
+                            value={
+                                selectedStudent
+                                    ? String(selectedStudent.userRanks[index]?.martialArt?.id && selectedStudent.userRanks[index].martialArt.id)
+                                    : String(form.watch(`martialArtRank.${index}.martialArtId`))
+                            }
                             onChange={v => {
                                 form.setValue(`martialArtRank.${index}.martialArtId`, Number(v));
                                 form.trigger("martialArtRank");
                             }}
+                            disabled={selectedStudent?.userRanks[index]?.martialArt?.id ? true : false}
                         />
 
                         <SelectComponent
@@ -36,12 +44,16 @@ export default function MartialRanksComponent({ dojoMartialArts, martialArtsOpti
                             options={ranksOptions.filter(   
                                 r => r.martialArtId === form.watch(`martialArtRank.${index}.martialArtId`)
                             )}
-                            value={String(form.watch(`martialArtRank.${index}.rankId`))}
+                            value={
+                                selectedStudent 
+                                    ? String(selectedStudent.userRanks[index]?.rank?.id ?? "")
+                                    : String(form.watch(`martialArtRank.${index}.rankId`))
+                            }
                             onChange={v => {
                                 form.setValue(`martialArtRank.${index}.rankId`, Number(v));
                                 form.trigger("martialArtRank");
                             }}
-                            disabled={!form.watch(`martialArtRank.${index}.martialArtId`)}
+                            disabled={!form.watch(`martialArtRank.${index}.martialArtId`) || !!selectedStudent}
                         />
 
 

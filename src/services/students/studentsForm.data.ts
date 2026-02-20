@@ -16,8 +16,8 @@ export const studentMiddleFields: FormField[] = [
     label: "Sexo",
     placeholder: "Seleccione un sexo",
     options: [
-      { label: "Masculino", value: "masculino" },
-      { label: "Femenino", value: "femenino" },
+      { label: "Masculino", value: "Masculino" },
+      { label: "Femenino", value: "Femenino" },
     ],
   },
   { type: "text", name: "email", label: "Correo Electrónico" },

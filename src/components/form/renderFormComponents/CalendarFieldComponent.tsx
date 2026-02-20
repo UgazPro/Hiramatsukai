@@ -1,17 +1,17 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "./ui/calendar";
-import { Button } from "./ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 
-interface CalendarComponentProps {
+interface CalendarFieldComponentProps {
     value?: Date;
     onChange: (date: Date | undefined) => void;
     placeholder?: string;
 }
 
-export function CalendarComponent({value, onChange, placeholder = "Selecciona una fecha", }: CalendarComponentProps) {
+export function CalendarFieldComponent({value, onChange, placeholder = "Selecciona una fecha", }: CalendarFieldComponentProps) {
 
     return (
         <Popover>

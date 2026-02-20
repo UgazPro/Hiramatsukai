@@ -1,8 +1,8 @@
 import { useState } from "react";
-import InformationSchema from "@/components/InformationSchema";
+import InformationSchema from "@/components/informationSchemas/InformationSchema";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
-import SpinnerComponent from "@/components/SpinnerComponent";
+import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useDojos } from "@/hooks/useDojos";
 
 const MAX_DOJOS = 4;

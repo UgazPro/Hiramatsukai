@@ -1,30 +1,42 @@
+import { DeleteStudentDialog } from "@/components/deleteStudentDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { calculateAge, dateFormatter, howLongHasSomeonePracticeInMonths } from "@/helpers/formatter";
+import { useDeleteStudent } from "@/queries/useStudentMutations";
 import { IStudent } from "@/services/students/student.interface";
-import { Cake, Calendar, CheckCircle, Clock, Edit, Eye, Mail, MapPin, MoreVertical, Phone, School, Shield, Trash2, User } from "lucide-react";
+import { useStudentsStore } from "@/stores/students.store";
+import { Cake, Calendar, Clock, Edit, Mail, MapPin, Phone, School, Shield, User } from "lucide-react";
 
 interface StudentLongCardViewProps {
     filteredStudents: IStudent[];
 }
 
-export default function StudentLongCardView({ filteredStudents } : StudentLongCardViewProps) {
+export default function StudentLongCardView({ filteredStudents }: StudentLongCardViewProps) {
+
+    const { startEdit } = useStudentsStore();
+
+    const selectStudent = useStudentsStore((state) => state.selectStudent);
+
+    const { mutateAsync: deleteStudent } = useDeleteStudent();
 
     return (
 
         <div className="container mx-auto p-4 md:p-6">
-            
+
             <div className="space-y-4">
                 {filteredStudents.map((student) => (
                     <Card
                         key={student.id}
-                        className="border border-gray-300 bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-200 overflow-hidden group"
+                        className="border border-gray-300 bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer"
+                        onClick={() => {
+                            selectStudent(student);
+                            window.scrollTo({ top: 0, behavior: "smooth" });
+                        }}
                     >
                         <CardContent className="p-0">
                             <div className="flex flex-col md:flex-row items-start md:items-center gap-4 p-6">
-                                
+
                                 <div className="flex items-center gap-4 min-w-70 flex-1">
                                     <div className="relative">
                                         <div className="h-16 w-16 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5">
@@ -40,7 +52,7 @@ export default function StudentLongCardView({ filteredStudents } : StudentLongCa
                                                 )}
                                             </div>
                                         </div>
-                                        
+
                                         <div className={`absolute -bottom-1 -right-1 h-5 w-5 rounded-full border-2 border-white ${student.active ? 'bg-green-500' : 'bg-red-500'
                                             }`} />
                                     </div>
@@ -74,7 +86,7 @@ export default function StudentLongCardView({ filteredStudents } : StudentLongCa
                                     </div>
                                 </div>
 
-                                
+
                                 <div className="flex-1 min-w-50">
                                     <div className="space-y-2">
                                         <div className="flex items-center gap-2">
@@ -91,7 +103,7 @@ export default function StudentLongCardView({ filteredStudents } : StudentLongCa
                                     </div>
                                 </div>
 
-                                
+
                                 <div className="flex-1 min-w-55">
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-3">
@@ -115,7 +127,7 @@ export default function StudentLongCardView({ filteredStudents } : StudentLongCa
                                     </div>
                                 </div>
 
-                                
+
                                 <div className="flex flex-col gap-3 min-w-45">
                                     <div className="space-y-2">
                                         <div className="flex items-center gap-2">
@@ -138,44 +150,27 @@ export default function StudentLongCardView({ filteredStudents } : StudentLongCa
                                         </div>
                                     </div>
 
-                                    
+
                                     <div className="flex items-center gap-2 pt-2">
-                                        <Button
-                                            size="sm"
-                                            variant="outline"
-                                            className="h-8 border-gray-300 text-gray-700 hover:bg-gray-100 hover:border-gray-400 flex-1"
-                                        >
-                                            <Eye className="h-3 w-3 mr-1" />
-                                            Ver
-                                        </Button>
+                                        <DeleteStudentDialog
+                                            studentName={`${student.name} ${student.lastName}`}
+                                            onConfirm={() => deleteStudent(student.id)}
+                                            buttonText="Eliminar"
+                                            buttonStyles="border-red-300 text-red-700 hover:bg-red-100 hover:border-red-400 flex-1"
+                                            buttonType='outline'
+                                        />
                                         <Button
                                             size="sm"
                                             variant="outline"
                                             className="h-8 border-amber-300 text-amber-700 hover:bg-amber-50 hover:border-amber-400"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                startEdit(student);
+                                            }}
                                         >
                                             <Edit className="h-3 w-3" />
+                                            Editar
                                         </Button>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger asChild>
-                                                <Button
-                                                    size="sm"
-                                                    variant="outline"
-                                                    className="h-8 border-gray-300 text-gray-700 hover:bg-gray-100 hover:border-gray-400"
-                                                >
-                                                    <MoreVertical className="h-3 w-3" />
-                                                </Button>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end" className="bg-white border-gray-300 shadow-lg">
-                                                <DropdownMenuItem className="text-gray-700 hover:bg-gray-100 cursor-pointer">
-                                                    <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-                                                    {student.active ? 'Desactivar' : 'Activar'}
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem className="text-red-600 hover:bg-red-50 cursor-pointer">
-                                                    <Trash2 className="h-4 w-4 mr-2" />
-                                                    Eliminar
-                                                </DropdownMenuItem>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
                                     </div>
                                 </div>
                             </div>
@@ -183,9 +178,9 @@ export default function StudentLongCardView({ filteredStudents } : StudentLongCa
                     </Card>
                 ))}
             </div>
-            
+
         </div>
 
     );
-    
+
 }

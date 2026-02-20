@@ -2,7 +2,7 @@
 import { FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useEffect } from 'react';
-import { Label } from './ui/label';
+import { Label } from '@/components/ui/label';
 
 export interface IOptions {
     label: string;
@@ -39,6 +39,7 @@ export function SelectComponentForm({ form, label, placeholder, name, options, d
                     <FormLabel>{label}</FormLabel>
 
                     <Select
+                        key={String(field.value)}
                         value={field.value !== undefined && field.value !== null ? String(field.value) : ''}
                         onValueChange={(value) => {
                             field.onChange(isNumberSelect ? Number(value) : value);

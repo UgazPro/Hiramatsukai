@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router";
 import { sidebarData } from "./AdminSidebar.data";
 import { LogOut } from "lucide-react";
-import SpinnerComponent from "@/components/SpinnerComponent";
+import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useAuthStore } from "@/stores/auth.store";
 
 export default function AdminSidebar() {
