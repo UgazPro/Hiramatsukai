@@ -23,6 +23,7 @@ export default function Login() {
     const onSubmit = async (data: LoginForm) => {
         try {
             await loginMutation.mutateAsync(data);
+            
         } catch (error: any) {
             setLoginErrorMessage(error.message || "Error al iniciar sesión");
             setTimeout(() => setLoginErrorMessage(""), 2500);
@@ -39,7 +40,7 @@ export default function Login() {
         }
     };
 
-    const isLoading = loginMutation.status === "pending" || googleLoginMutation.status === "pending";
+    const isLoading = false;
 
     return (
 

@@ -1,3 +1,4 @@
+import { FaLocationDot } from "react-icons/fa6";
 
 interface InformationSchemaProps {
     img: string;
@@ -15,8 +16,8 @@ export default function InformationSchema({img, dojo, address} : InformationSche
                 <img src={img} alt="Imagen Líder Maestro" className="w-full h-full object-cover transition duration-300 ease-in-out lg:hover:-translate-y-3.5 lg:hover:scale-117 " />
             </div>
 
-            <p className="font-bold text-xl">Dojo {dojo}</p>
-            <p className="text-xs">{address}</p>
+            <p className="font-bold text-xl">{dojo}</p>
+            <p className="text-xs flex items-center gap-2 "><FaLocationDot className="text-red-700"/> {address}</p>
 
         </div>
 

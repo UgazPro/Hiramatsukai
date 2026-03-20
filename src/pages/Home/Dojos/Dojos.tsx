@@ -43,7 +43,7 @@ export default function Dojos() {
                             {visibleDojos.map((dojo, index) => (
                                 <div
                                     key={dojo.code}
-                                    onClick={() => navigate("/dojos/dojo")}
+                                    onClick={() => navigate(`/dojos/dojo/${dojo.code}`)}
                                     className="transition-all duration-700 ease-in-out animate-slide-up"
                                     style={{
                                         transitionDelay: `${index * 100}ms`,

@@ -35,7 +35,7 @@ function App() {
             <Route path="/karatedo" element={<KaratedoInfo />} />
             <Route path="/kobudo" element={<KobudoInfo />} />
             <Route path="/kendoIaido" element={<KendoIaidoInfo />} />
-            <Route path="/dojos/dojo" element={<DojosInfo />} />
+            <Route path="/dojos/dojo/:id" element={<DojosInfo />} />
           </Route>
 
           {/* Admin */}

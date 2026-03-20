@@ -1,9 +1,45 @@
+import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 export default function Kobudo() {
 
     const navigate = useNavigate();
+
+    const cardsKobudo: CardComponentProps[] = [
+        {
+            title: "Bo (Bastón)",
+            description: 'Arma de 1.8m, base del kobudo tradicional',
+            icon: "棒",
+            bgIcon: "bg-linear-to-br from-yellow-500 to-yellow-600",
+            bg: "bg-linear-to-br from-yellow-50 to-yellow-100",
+            border: "border-yellow-200",
+        },
+        {
+            title: "Sai (Tridente)",
+            description: 'Arma de metal para defensa y ataque',
+            icon: "釵",
+            bgIcon: "bg-linear-to-br from-blue-500 to-blue-800",
+            bg: "bg-linear-to-br from-blue-50 to-blue-100",
+            border: "border-blue-200",
+        },
+        {
+            title: "Tonfa",
+            description: "Originalmente mango de molino, ahora arma policial",
+            icon: "トンファー",
+            bgIcon: "bg-linear-to-br from-red-500 to-red-800",
+            bg: "bg-linear-to-br from-red-50 to-red-100",
+            border: "border-red-200",
+        },
+        {
+            title: "Nunchaku",
+            description: "Dos palos unidos por cadena o cuerda",
+            icon: "ヌンチャク",
+            bgIcon: "bg-linear-to-br from-purple-600 to-purple-800",
+            bg: "bg-linear-to-br from-purple-100 to-purple-300",
+            border: "border-purple-200",
+        }
+    ];
 
     return (
         <section id="kobudo" className="py-16 sm:py-15 bg-white">
@@ -69,45 +105,9 @@ export default function Kobudo() {
 
                         {/* Main Weapons */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-                            <div className="flex items-start space-x-3 bg-yellow-50 p-4 rounded-xl">
-                                <div className="h-23 w-23 rounded-full bg-yellow-500 flex items-center justify-center shrink-0">
-                                    <span className="text-white font-bold text-lg">棒</span>
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-gray-900">Bo (Bastón)</h4>
-                                    <p className="text-gray-600 text-sm">Arma de 1.8m, base del kobudo tradicional</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start space-x-3 bg-blue-50 p-4 rounded-xl">
-                                <div className="h-23 w-23 rounded-full bg-blue-500 flex items-center justify-center shrink-0">
-                                    <span className="text-white font-bold text-lg">釵</span>
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-gray-900">Sai (Tridente)</h4>
-                                    <p className="text-gray-600 text-sm">Arma de metal para defensa y ataque</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start space-x-3 bg-red-50 p-4 rounded-xl">
-                                <div className="h-23 w-23 rounded-full bg-red-500 flex items-center justify-center shrink-0">
-                                    <span className="text-white font-bold text-lg">トンファー</span>
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-gray-900">Tonfa</h4>
-                                    <p className="text-gray-600 text-sm">Originalmente mango de molino, ahora arma policial</p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-start space-x-3 bg-purple-50 p-4 rounded-xl">
-                                <div className="h-23 w-23 rounded-full bg-purple-500 flex items-center justify-center shrink-0">
-                                    <span className="text-white font-bold text-lg">ヌンチャク</span>
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-gray-900">Nunchaku</h4>
-                                    <p className="text-gray-600 text-sm">Dos palos unidos por cadena o cuerda</p>
-                                </div>
-                            </div>
+                            {cardsKobudo.map((card, index) => (
+                                <CardComponent card={card} key={index} />
+                            ))}
                         </div>
 
                         <div className="h-37 w-37 mx-auto hidden lg:block">
