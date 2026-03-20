@@ -16,7 +16,7 @@ export default function TabsComponent({ tabs }: TabsComponentProps) {
     <>
 
       <Tabs defaultValue={defaultTabLabel} className="w-full px-8">
-        <TabsList className="">
+        <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-8">
           {tabs && tabs.map((tab: TabsProperties, index: number) => (
             <TabsTrigger 
               value={tab.label} 

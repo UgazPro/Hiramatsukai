@@ -109,8 +109,8 @@ export default function KaratedoInfo() {
                                         key={section.id}
                                         onClick={() => setActiveSection(section.id)}
                                         className={`flex items-center gap-3 px-6 py-4 rounded-xl font-medium transition-all duration-300 ${isActive
-                                            ? 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg'
-                                            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                                                ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
+                                                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                                             }`}
                                     >
                                         <Icon className="h-5 w-5" />
