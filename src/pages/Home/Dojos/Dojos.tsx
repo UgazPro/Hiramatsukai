@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import InformationSchema from "@/components/informationSchemas/InformationSchema";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
@@ -6,6 +6,7 @@ import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useDojos } from "@/hooks/useDojos";
 
 const MAX_DOJOS = 4;
+const FALLBACK_DOJO_IMAGE = "https://blog.marti.mx/wp-content/uploads/2023/01/conoce-que-es-karate-jpg.webp";
 
 export default function Dojos() {
 
@@ -15,7 +16,17 @@ export default function Dojos() {
     const { data: dojos = [], isLoading, isError } = useDojos();
 
     const hasMoreThanFour = dojos.length > MAX_DOJOS;
-    const visibleDojos = showAllDojos ? dojos : dojos.slice(0, MAX_DOJOS);
+    const visibleDojos = useMemo(
+        () => (showAllDojos ? dojos : dojos.slice(0, MAX_DOJOS)),
+        [showAllDojos, dojos]
+    );
+
+    const setImageDojo = (logo: string): string => {
+        if(logo && logo.trim() !== "") {
+            return `${import.meta.env.VITE_API_URL}/api${logo}`
+        }
+        return FALLBACK_DOJO_IMAGE;
+    }
 
     if (isLoading) return <SpinnerComponent />;
     if (isError) return <SpinnerComponent />;
@@ -50,14 +61,14 @@ export default function Dojos() {
                                     }}
                                 >
                                     <InformationSchema
-                                        img="https://blog.marti.mx/wp-content/uploads/2023/01/conoce-que-es-karate-jpg.webp"
+                                        img={setImageDojo(dojo.logo)}
                                         dojo={dojo.dojo}
                                         address={dojo.address}
                                     />
                                 </div>
                             ))}
                         </div>
-                        
+
                     </div>
 
                 </div>

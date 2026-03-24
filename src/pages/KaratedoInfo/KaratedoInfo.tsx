@@ -367,7 +367,7 @@ export default function KaratedoInfo() {
                             <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-white px-8">
                                 Probar Clase de Prueba
                             </Button>
-                            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10">
+                            <Button size="lg" variant="outline" className="border-2 border-white text-black hover:bg-white/10">
                                 Solicitar Información
                             </Button>
                         </div>

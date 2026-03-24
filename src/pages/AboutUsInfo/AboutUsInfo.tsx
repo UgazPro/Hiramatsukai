@@ -70,14 +70,14 @@ export default function AboutUsInfo() {
         }
     ];
 
-    const timeline = [
-        { year: "1997", event: "Fundación oficial de Hiramatsukai en Okinawa" },
-        { year: "2002", event: "Primera certificación internacional de instructores" },
-        { year: "2008", event: "Expansión a América con 5 dojos afiliados" },
-        { year: "2014", event: "Reconocimiento por la Federación Mundial de Kobudo" },
-        { year: "2019", event: "Celebración del 25° aniversario con seminario mundial" },
-        { year: "2023", event: "Más de 3000 estudiantes en 15 países" }
-    ];
+    // const timeline = [
+    //     { year: "1997", event: "Fundación oficial de Hiramatsukai en Okinawa" },
+    //     { year: "2002", event: "Primera certificación internacional de instructores" },
+    //     { year: "2008", event: "Expansión a América con 5 dojos afiliados" },
+    //     { year: "2014", event: "Reconocimiento por la Federación Mundial de Kobudo" },
+    //     { year: "2019", event: "Celebración del 25° aniversario con seminario mundial" },
+    //     { year: "2023", event: "Más de 3000 estudiantes en 15 países" }
+    // ];
 
     const arts = [
         {
@@ -107,13 +107,13 @@ export default function AboutUsInfo() {
         <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
             {/* Hero con Carousel */}
             <section className="relative">
-                <div className="h-[600px] md:h-[700px]">
+                <div className="h-150 md:h-175">
                     <CarouselComponent />
                 </div>
             </section>
 
             {/* Introducción */}
-            <section className="py-20 bg-white">
+            <section className="bg-white">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center">
                         <Shield className="h-16 w-16 text-yellow-600 mx-auto mb-6" />

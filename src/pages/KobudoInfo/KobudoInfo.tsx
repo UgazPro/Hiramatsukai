@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Target, Shield, Zap, Swords, Book, Users, Award, Globe, Sword } from "lucide-react";
+import { Target, Shield, Zap, Book, Globe, Sword } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 
 export default function KobudoInfo() {
@@ -363,7 +363,7 @@ export default function KobudoInfo() {
                             <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-white px-8">
                                 Inscribirse en Kobudo
                             </Button>
-                            <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10">
+                            <Button size="lg" variant="outline" className="border-2 border-white text-black hover:bg-white/10">
                                 Seminario de Armas
                             </Button>
                         </div>

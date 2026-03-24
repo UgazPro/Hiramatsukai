@@ -75,7 +75,7 @@ export default function Header() {
                     <Link
                         to={"/login"}
                         style={{ fontFamily: "JetBrains Mono" }}
-                        className="text-white lg:pr-10 cursor-pointer text-xs md:text-base"
+                        className="text-white cursor-pointer text-xs md:text-base border text-center rounded-full px-4 py-2 "
                     >
                         Iniciar Sesión
                     </Link>
