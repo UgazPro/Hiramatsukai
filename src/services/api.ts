@@ -1,11 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAuthStore } from "@/stores/auth.store";
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}/api`,
+    baseURL: `https://qjf5hfj3-3000.use2.devtunnels.ms/api`,
+    // baseURL: `${import.meta.env.VITE_API_URL}/api`,
 });
 
 export const getDataApi = async (url: string) => {
+    try {
+        return await api.get(url).then((res) => {
+            return res.data;
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getImagesApi = async (url: string) => {
     try {
         return await api.get(url).then((res) => {
             return res.data;
@@ -41,9 +53,9 @@ export const deleteDataApi = async (endpoint: string, data: number) => {
     })
 }
 
-export const postDataImageApi = async ( url: string, data: any, img?: File | null, ) => {
-  try {
-    const formData = new FormData();
+export const postDataImageApi = async (url: string, data: any, img?: File | null,) => {
+    try {
+        const formData = new FormData();
 
         if (img) {
             formData.append("profileImg", img);
@@ -81,46 +93,46 @@ export const postDataImageApi = async ( url: string, data: any, img?: File | nul
     }
 };
 
-export const putDataImageApi = async ( url: string, data: any, img?: File | null, ) => {
-  try {
-    const formData = new FormData();
+export const putDataImageApi = async (url: string, data: any, img?: File | null,) => {
+    try {
+        const formData = new FormData();
 
-    if (img) {
-      formData.append("profileImg", img);
+        if (img) {
+            formData.append("profileImg", img);
+        }
+
+        Object.entries(data).forEach(([key, value]) => {
+
+            if (key === "id") return;
+
+            if (Array.isArray(value)) {
+                formData.append(key, JSON.stringify(value));
+                return;
+            }
+
+
+            if (value instanceof Date) {
+                formData.append(key, value.toISOString());
+                return;
+            }
+
+            if (typeof value === "number") {
+                formData.append(key, value.toString());
+                return;
+            }
+
+            if (value === null || value === undefined) {
+                return;
+            }
+
+            formData.append(key, value as string);
+        });
+
+        return await api.put(url, formData).then((res) => res.data);
+    } catch (error) {
+        console.error("postDataImageApi error:", error);
+        throw error;
     }
-
-    Object.entries(data).forEach(([key, value]) => {
-
-      if(key === "id") return;
-
-      if (Array.isArray(value)) {
-        formData.append(key, JSON.stringify(value));
-        return;
-      }
-
-
-      if (value instanceof Date) {
-        formData.append(key, value.toISOString());
-        return;
-      }
-
-      if (typeof value === "number") {
-        formData.append(key, value.toString());
-        return;
-      }
-
-      if (value === null || value === undefined) {
-        return;
-      }
-
-      formData.append(key, value as string);
-    });
-
-    return await api.put(url, formData).then((res) => res.data);
-  } catch (error) {
-    console.error("postDataImageApi error:", error);
-    throw error;
-  }
 };
 
 // Interceptors

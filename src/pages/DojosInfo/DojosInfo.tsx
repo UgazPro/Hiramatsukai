@@ -4,8 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import { MdWhatsapp } from "react-icons/md";
 import {
-  MapPin, Phone, Mail, Globe, Clock,
+  MapPin, Mail, Globe, Clock,
   Sword, Target, Zap, Instagram, Facebook, Youtube, Twitter, ChevronRight,
   CheckCircle, GraduationCap,
   ShieldCheck, Play, Medal, Flag, Target as TargetLucide, UserCheck, Book,
@@ -16,6 +17,12 @@ import CarouselComponent from "@/components/CarouselComponent";
 import { useDojosInfo } from "@/hooks/useDojos";
 import { useParams } from "react-router";
 import { DojoMaster, DojoSchedule, IDojoInfo, Rank } from "@/services/dojos/dojo.interface";
+import { formatPhoneNumber } from "@/helpers/formatter";
+import { useForm } from "react-hook-form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const dojoData = {
   japaneseName: "龍の道",
@@ -234,6 +241,15 @@ const dojoData = {
 
 const FALLBACK_DOJO_IMAGE = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80";
 
+interface ContactFormValues {
+  name: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  martialArtInterest: string;
+  message: string;
+}
+
 
 export default function DojoPage() {
   const [activeDiscipline, setActiveDiscipline] = useState("karatedo");
@@ -290,20 +306,148 @@ export default function DojoPage() {
 
     return (
       <>
-        {Object.entries(groupedSchedule).map(([day, daySchedules]) => (
-          <div key={day} className="mb-3">
-            <p className="text-gray-700 font-medium">{day}</p>
-            <div className="pl-2">
-              {daySchedules.map((item, index) => (
-                <p key={`${day}-${item.name}-${item.startTime}-${index}`} className="text-gray-700">
-                  {item.name}: {item.startTime} - {item.endTime}
-                </p>
-              ))}
-            </div>
-          </div>
-        ))}
+        {schedule.length > 0 ? (
+
+          <>
+            {Object.entries(groupedSchedule).map(([day, daySchedules]) => (
+              <div key={day} className="mb-3">
+                <p className="text-gray-700 font-medium">{day}</p>
+                <div className="pl-2">
+                  {daySchedules.map((item, index) => (
+                    <p key={`${day}-${item.name}-${item.startTime}-${index}`} className="text-gray-700">
+                      {item.name}: {item.startTime} - {item.endTime}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </>
+        ) : (
+          <p className="text-gray-500 text-sm lg:text-base">No hay horarios disponibles</p>
+        )
+        }
       </>
     )
+  }
+
+  const getSocialMediaStyle = (socialMedia: string) => {
+    const social = socialMedia.trim().toLowerCase();
+
+    if (social === "facebook") {
+      return {
+        cardClass: "bg-blue-600/90 border-blue-300/60 hover:bg-blue-600 text-white",
+        Icon: Facebook,
+      };
+    }
+
+    if (social === "youtube") {
+      return {
+        cardClass: "bg-red-600/90 border-red-300/60 hover:bg-red-600 text-white",
+        Icon: Youtube,
+      };
+    }
+
+    if (social === "instagram") {
+      return {
+        cardClass: "bg-linear-to-br from-pink-500 via-fuchsia-500 to-orange-400 border-pink-200/60 hover:opacity-95 text-white",
+        Icon: Instagram,
+      };
+    }
+
+    if (social === "twitter" || social === "x") {
+      return {
+        cardClass: "bg-sky-500/90 border-sky-300/60 hover:bg-sky-500 text-white",
+        Icon: Twitter,
+      };
+    }
+
+    return {
+      cardClass: "bg-gray-700/90 border-gray-300/40 hover:bg-gray-700 text-white",
+      Icon: Globe,
+    };
+  }
+
+  const getSocialMediaLink = (socialMedia: string, link: string, directUrl: string) => {
+    const value = link.trim();
+
+    if (!value) return "#";
+
+    if (value.startsWith("http://") || value.startsWith("https://")) {
+      return value;
+    }
+
+    const social = socialMedia.trim().toLowerCase();
+
+    if (directUrl.trim() !== '') return directUrl;
+
+    if (social === "instagram") {
+      const handle = value.replace(/^@/, "");
+      return `https://www.instagram.com/${handle}`;
+    }
+
+    if (social === "facebook") {
+      return `https://www.facebook.com/${value}`;
+    }
+
+    if (social === "youtube") {
+      return `https://www.youtube.com/${value}`;
+    }
+
+    if (social === "twitter" || social === "x") {
+      const handle = value.replace(/^@/, "");
+      return `https://x.com/${handle}`;
+    }
+
+    return `https://${value}`;
+  }
+
+  const getWhatsAppLink = (phone: string, dojoName?: string) => {
+    const cleanPhone = phone.replace(/\D/g, "");
+
+    if (!cleanPhone) {
+      return "#";
+    }
+
+    const message = dojoName
+      ? `Hola, quiero saber mas informacion. Estoy interesado en las clases de ${dojoName}.`
+      : "Hola, quiero saber mas informacion. Estoy interesado en las clases.";
+
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
+  }
+
+  const contactForm = useForm<ContactFormValues>({
+    defaultValues: {
+      name: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      martialArtInterest: "",
+      message: "",
+    },
+  });
+
+  const handleContactSubmit = (values: ContactFormValues) => {
+    const selectedDiscipline = dojoData.disciplines.find((disc) => disc.id === values.martialArtInterest)?.name;
+
+    const contactMessage = [
+      `Hola, soy ${values.name} ${values.lastName}.`,
+      "Quiero saber mas informacion sobre las clases.",
+      selectedDiscipline ? `Arte de interes: ${selectedDiscipline}.` : "",
+      values.email ? `Email: ${values.email}.` : "",
+      values.phone ? `Telefono: ${values.phone}.` : "",
+      values.message ? `Mensaje: ${values.message}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const cleanPhone = dojo?.phone.replace(/\D/g, "");
+
+    if (!cleanPhone) {
+      return;
+    }
+
+    const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(contactMessage)}`;
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   }
 
   const currentDiscipline = dojoData.disciplines.find(d => d.id === activeDiscipline);
@@ -812,7 +956,7 @@ export default function DojoPage() {
               </TabsContent>
 
               {/* Pestaña: Contacto */}
-              <TabsContent value="contact" className="space-y-12 mt-8">
+              <TabsContent value="contact" className="space-y-12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {/* Información de Contacto */}
                   <div>
@@ -827,19 +971,27 @@ export default function DojoPage() {
                         </div>
                         <div>
                           <h3 className="font-bold text-gray-900">Dirección</h3>
-                          <p className="text-gray-700">{dojo.address}</p>
+                          <p className="text-gray-700 text-sm lg:text-base">{dojo.address}</p>
                         </div>
                       </div>
 
-                      <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
-                        <div className="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
-                          <Phone className="h-6 w-6 text-yellow-600" />
+                      <a
+                        href={getWhatsAppLink(dojo.phone, dojo.dojo)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                      >
+                        <span className="font-semibold text-green-600">Haz click aqui para ir al chat de WhatsApp</span>
+                        <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl transition-colors duration-300 hover:bg-green-50">
+                          <div className="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                            <MdWhatsapp className="h-6 w-6 text-green-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-gray-900">Teléfonos</h3>
+                            <p className="text-gray-700 text-sm lg:text-base">{formatPhoneNumber(dojo.phone)}</p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="font-bold text-gray-900">Teléfonos</h3>
-                          <p className="text-gray-700">{dojo.phone}</p>
-                        </div>
-                      </div>
+                      </a>
 
                       <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
                         <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
@@ -847,7 +999,7 @@ export default function DojoPage() {
                         </div>
                         <div>
                           <h3 className="font-bold text-gray-900">Email</h3>
-                          <p className="text-gray-700">{dojo.email}</p>
+                          <p className="text-gray-700 text-sm lg:text-base">{dojo.email}</p>
                         </div>
                       </div>
 
@@ -866,81 +1018,152 @@ export default function DojoPage() {
                   {/* Formulario de Contacto */}
                   <div>
                     <Card className="border-2 border-gray-200">
-                      <CardContent className="p-8">
-                        <h3 className="text-xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
+                      <CardContent className="px-4">
+                        <h3 className="text-xl font-bold text-gray-900 mb-4 text-center lg:text-left" style={{ fontFamily: "Kavoon" }}>
                           Solicitar Información
                         </h3>
 
-                        <form className="space-y-4">
-                          <div className="grid grid-cols-2 gap-4">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Nombre *</label>
-                              <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-lg" required />
+                        <Form {...contactForm}>
+                          <form onSubmit={contactForm.handleSubmit(handleContactSubmit)} className="space-y-4">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                              <FormField
+                                control={contactForm.control}
+                                name="name"
+                                rules={{ required: "El nombre es obligatorio" }}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Nombre *</FormLabel>
+                                    <FormControl>
+                                      <Input placeholder="Nombre" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+
+                              <FormField
+                                control={contactForm.control}
+                                name="lastName"
+                                rules={{ required: "Los apellidos son obligatorios" }}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Apellidos *</FormLabel>
+                                    <FormControl>
+                                      <Input placeholder="Apellidos" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
                             </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Apellidos *</label>
-                              <input type="text" className="w-full px-3 py-2 border border-gray-300 rounded-lg" required />
-                            </div>
-                          </div>
 
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                            <input type="email" className="w-full px-3 py-2 border border-gray-300 rounded-lg" required />
-                          </div>
+                            <FormField
+                              control={contactForm.control}
+                              name="email"
+                              rules={{ required: "El email es obligatorio" }}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Email *</FormLabel>
+                                  <FormControl>
+                                    <Input type="email" placeholder="correo@ejemplo.com" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
 
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
-                            <input type="tel" className="w-full px-3 py-2 border border-gray-300 rounded-lg" />
-                          </div>
+                            <FormField
+                              control={contactForm.control}
+                              name="phone"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Teléfono</FormLabel>
+                                  <FormControl>
+                                    <Input type="tel" placeholder="0400-0000000" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
 
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Arte Marcial de Interés</label>
-                            <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
-                              <option value="">Selecciona una opción</option>
-                              {dojoData.disciplines.map((disc) => (
-                                <option key={disc.id} value={disc.id}>{disc.name}</option>
-                              ))}
-                            </select>
-                          </div>
+                            <FormField
+                              control={contactForm.control}
+                              name="martialArtInterest"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Arte Marcial de Interés</FormLabel>
+                                  <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
+                                      <SelectTrigger className="w-full">
+                                        <SelectValue placeholder="Selecciona una opción" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      {dojoData.disciplines.map((disc) => (
+                                        <SelectItem key={disc.id} value={disc.id}>{disc.name}</SelectItem>
+                                      ))}
+                                    </SelectContent>
+                                  </Select>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
 
-                          <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Mensaje *</label>
-                            <textarea rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-lg" required />
-                          </div>
+                            <FormField
+                              control={contactForm.control}
+                              name="message"
+                              rules={{ required: "El mensaje es obligatorio" }}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Mensaje *</FormLabel>
+                                  <FormControl>
+                                    <Textarea rows={4} placeholder="Cuéntanos en qué podemos ayudarte" {...field} />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
 
-                          <Button type="submit" className="w-full bg-red-600 hover:bg-red-700 text-white">
-                            Enviar Solicitud
-                          </Button>
-                        </form>
+                            <Button type="submit" className="w-full bg-red-600 hover:bg-red-700 text-white">
+                              Enviar Solicitud
+                            </Button>
+                          </form>
+                        </Form>
                       </CardContent>
                     </Card>
                   </div>
                 </div>
 
                 {/* Redes Sociales */}
-                <section className="bg-gray-900 text-white rounded-2xl p-8">
+                <section className="bg-gray-200 text-gray-900 rounded-2xl p-8">
                   <h2 className="text-2xl font-bold text-center mb-8" style={{ fontFamily: "Kavoon" }}>
                     Síguenos en Redes Sociales
                   </h2>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {Object.entries(dojoData.socialMedia).map(([platform, data]) => {
-                      const Icon = platform === "instagram" ? Instagram :
-                        platform === "facebook" ? Facebook :
-                          platform === "youtube" ? Youtube : Twitter;
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {dojo.socialMedia.map((data) => {
+                      const socialConfig = getSocialMediaStyle(data.socialMedia);
+                      const socialLink = getSocialMediaLink(data.socialMedia, data.link, data.directUrl);
+                      const Icon = socialConfig.Icon;
+
                       return (
-                        <Card key={platform} className="bg-white/10 backdrop-blur-sm border-white/20">
-                          <CardContent className="p-6 text-center">
-                            <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
-                              <Icon className="h-8 w-8 text-white" />
-                            </div>
-                            <h3 className="font-bold text-lg mb-1 capitalize">{platform}</h3>
-                            <p className="text-white/80 mb-3">{data.handle}</p>
-                            <p className="text-white/60 text-sm">
-                              {platform === "youtube" ? `${data} suscriptores` : `${data} seguidores`}
-                            </p>
-                          </CardContent>
-                        </Card>
+                        <a
+                          key={data.socialMedia}
+                          href={socialLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block"
+                        >
+                          <Card className={`${socialConfig.cardClass} backdrop-blur-sm transition-transform duration-300 hover:scale-[1.02] cursor-pointer`}>
+                            <CardContent className="p-6 text-center">
+                              <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
+                                <Icon className="h-8 w-8 text-white" />
+                              </div>
+                              <h3 className="font-bold text-lg mb-1 capitalize">{data.socialMedia}</h3>
+                              <p className="text-white/90 mb-3 truncate">{data.link}</p>
+                            </CardContent>
+                          </Card>
+                        </a>
                       );
                     })}
                   </div>

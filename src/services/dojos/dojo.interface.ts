@@ -33,12 +33,20 @@ export interface IDojoInfo extends IDojo {
     founded: Date;
     slogan: string;
     translate: string;
+    socialMedia: DojoSocialMedia[];
     createdAt: Date;
     Schedules: DojoSchedule[];
     dojoImages: DojoImage[];
     totalStudents: number;
     masters: DojoMaster[];
 }
+
+export interface DojoSocialMedia {
+    link:        string;
+    socialMedia: string;
+    directUrl: string;
+}
+
 
 export interface DojoImage {
     id: number;
