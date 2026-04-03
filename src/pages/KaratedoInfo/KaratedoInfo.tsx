@@ -4,11 +4,20 @@ import { Swords, Target, Users, Award, BookOpen, Shield, Activity, Brain, Heart,
 import CarouselComponent from "@/components/CarouselComponent";
 import { ProgressStepper } from "@/components/progressStepper/Progress-stepper";
 import { karatedoInfoData, katas, ProgressSteps, progressData } from "./KaratedoInfo.data";
+import { AnimatePresence, motion } from "motion/react";
 
+type SectionId = "fundamentos" | "katas" | "beneficios" | "filosofia";
+
+const TAB_SECTIONS: { id: SectionId; label: string; icon: typeof BookOpen }[] = [
+    { id: "fundamentos", label: "Fundamentos", icon: BookOpen },
+    { id: "katas", label: "Katas", icon: Target },
+    { id: "beneficios", label: "Beneficios", icon: Award },
+    { id: "filosofia", label: "Filosofía", icon: Brain },
+];
 
 export default function KaratedoInfo() {
 
-    const [activeSection, setActiveSection] = useState("fundamentos");
+    const [activeSection, setActiveSection] = useState<SectionId>("fundamentos");
     const [activeHistory, setActiveHistory] = useState<ProgressSteps>("nahate");
 
     const principles = [
@@ -92,30 +101,35 @@ export default function KaratedoInfo() {
                 ))}
             </div>
 
-            <section className="py-12 bg-gray-50">
+            <section className="pt-10 bg-gray-50">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto">
-                        <div className="flex flex-wrap gap-2 justify-center">
-                            {[
-                                { id: "fundamentos", label: "Fundamentos", icon: BookOpen },
-                                { id: "katas", label: "Katas", icon: Target },
-                                { id: "beneficios", label: "Beneficios", icon: Award },
-                                { id: "filosofia", label: "Filosofía", icon: Brain }
-                            ].map((section) => {
+                        <div className="grid grid-cols-2 lg:flex flex-wrap gap-2 justify-center">
+                            {TAB_SECTIONS.map((section) => {
                                 const Icon = section.icon;
                                 const isActive = activeSection === section.id;
                                 return (
-                                    <button
+                                    <motion.button
                                         key={section.id}
+                                        type="button"
+                                        initial={false}
                                         onClick={() => setActiveSection(section.id)}
-                                        className={`flex items-center gap-3 px-6 py-4 rounded-xl font-medium transition-all duration-300 ${isActive
-                                                ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
-                                                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                                        className={`relative overflow-hidden flex items-center gap-3 px-6 py-4 rounded-xl font-medium transition-all duration-300 ${isActive
+                                            ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
+                                            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                                             }`}
                                     >
                                         <Icon className="h-5 w-5" />
                                         {section.label}
-                                    </button>
+
+                                        {isActive ? (
+                                            <motion.span
+                                                layoutId="karatedo-tab-underline"
+                                                className="absolute left-0 right-0 bottom-0"
+                                                transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                                            />
+                                        ) : null}
+                                    </motion.button>
                                 );
                             })}
                         </div>
@@ -123,165 +137,186 @@ export default function KaratedoInfo() {
                 </div>
             </section>
 
-            {activeSection === "fundamentos" && (
-                <section className="py-20">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-6xl mx-auto">
-                            <div className="text-center mb-16">
-                                <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
-                                    Principios <span className="text-red-600">Fundamentales</span>
-                                </h2>
-                                <p className="text-xl text-gray-700">
-                                    La esencia del Goju-Ryu reside en el equilibrio perfecto
-                                </p>
-                            </div>
+            <AnimatePresence mode="wait" initial={false}>
+                {activeSection === "fundamentos" && (
+                    <motion.section
+                        key="fundamentos"
+                        className="py-10"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -14 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                        <div className="container mx-auto px-4">
+                            <div className="">
+                                <div className="text-center mb-8">
+                                    <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                                        Principios <span className="text-red-600">Fundamentales</span>
+                                    </h2>
+                                    <p className="text-xl text-gray-700">
+                                        La esencia del Goju-Ryu reside en el equilibrio perfecto
+                                    </p>
+                                </div>
 
-                            <div className="grid md:grid-cols-3 gap-8 mb-16">
-                                {principles.map((principle, index) => {
-                                    const Icon = principle.icon;
-                                    return (
-                                        <div key={index} className={`bg-linear-to-b from-${principle.color}-50 to-white rounded-2xl p-8 border border-${principle.color}-100`}>
-                                            <div className={`inline-block p-4 bg-${principle.color}-100 rounded-2xl mb-6`}>
-                                                <Icon className={`h-8 w-8 text-${principle.color}-600`} />
+                                <div className="grid md:grid-cols-3 gap-8 mb-8">
+                                    {principles.map((principle, index) => {
+                                        const Icon = principle.icon;
+                                        return (
+                                            <div key={index} className={`bg-linear-to-b from-${principle.color}-50 to-white rounded-2xl p-8 border border-${principle.color}-100`}>
+                                                <div className={`inline-block p-4 bg-${principle.color}-100 rounded-2xl mb-6`}>
+                                                    <Icon className={`h-8 w-8 text-${principle.color}-600`} />
+                                                </div>
+                                                <h3 className="text-2xl font-bold text-gray-900 mb-3">{principle.title}</h3>
+                                                <p className="text-gray-700 mb-6">{principle.description}</p>
+                                                <ul className="space-y-2">
+                                                    {principle.examples.map((example, idx) => (
+                                                        <li key={idx} className="text-gray-600 flex items-center">
+                                                            <div className={`h-1.5 w-1.5 bg-${principle.color}-500 rounded-full mr-3`}></div>
+                                                            {example}
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
-                                            <h3 className="text-2xl font-bold text-gray-900 mb-3">{principle.title}</h3>
-                                            <p className="text-gray-700 mb-6">{principle.description}</p>
-                                            <ul className="space-y-2">
-                                                {principle.examples.map((example, idx) => (
-                                                    <li key={idx} className="text-gray-600 flex items-center">
-                                                        <div className={`h-1.5 w-1.5 bg-${principle.color}-500 rounded-full mr-3`}></div>
-                                                        {example}
-                                                    </li>
+                                        );
+                                    })}
+                                </div>
+
+                                {/* Técnicas básicas */}
+                                <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
+                                    <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: "Kavoon" }}>
+                                        Técnicas <span className="text-red-600">Esenciales</span>
+                                    </h3>
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        <div className="">
+                                            <h4 className="text-xl font-bold text-gray-900 mb-4">Kihon (Básicos)</h4>
+                                            <div className="space-y-4">
+                                                {[
+                                                    "Dachi (Posturas): Sanchin, Zenkutsu, Shiko",
+                                                    "Tsuki (Golpes): Seiken, Tate, Ura",
+                                                    "Uke (Bloqueos): Age, Soto, Uchi, Gedan",
+                                                    "Geri (Patadas): Mae, Yoko, Mawashi, Ushiro"
+                                                ].map((item, index) => (
+                                                    <div key={index} className="flex items-start">
+                                                        <div className="h-2 w-2 bg-red-500 rounded-full mt-2 mr-3"></div>
+                                                        <span className="text-gray-700">{item}</span>
+                                                    </div>
                                                 ))}
+                                            </div>
+                                        </div>
+                                        <div className="">
+                                            <h4 className="text-xl font-bold text-gray-900 mb-4">Kumite (Combate)</h4>
+                                            <div className="space-y-4">
+                                                {[
+                                                    "Gohon Kumite (5 pasos)",
+                                                    "Sanbon Kumite (3 pasos)",
+                                                    "Kihon Ippon Kumite (Un paso básico)",
+                                                    "Jiyu Kumite (Combate libre controlado)"
+                                                ].map((item, index) => (
+                                                    <div key={index} className="flex items-start">
+                                                        <div className="h-2 w-2 bg-blue-500 rounded-full mt-2 mr-3"></div>
+                                                        <span className="text-gray-700">{item}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.section>
+                )}
+
+                {/* Sección: Katas */}
+                {activeSection === "katas" && (
+                    <motion.section
+                        key="katas"
+                        className="py-10 bg-gray-50"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -14 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                        <div className="container mx-auto px-4">
+                            <div className="w-full px-4">
+                                <div className="text-center mb-16">
+                                    <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                                        Katas <span className="text-red-600">Tradicionales</span>
+                                    </h2>
+                                    <p className="text-xl text-gray-700">
+                                        Formas preestablecidas que preservan las técnicas ancestrales
+                                    </p>
+                                </div>
+
+                                <div className="grid md:grid-cols-4 gap-8">
+                                    {katas.map((kata, index) => (
+                                        <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                                            <div className="flex items-start justify-between mb-4">
+                                                <h3 className="text-xl font-bold text-gray-900">{kata.name}</h3>
+                                                <Target className="h-8 w-8 text-red-500" />
+                                            </div>
+                                            <p className="text-gray-700 mb-4">{kata.description}</p>
+                                            <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
+                                                <strong>Propósito:</strong> {kata.purpose}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Kata Sanchin especial */}
+                                <div className="mt-16 bg-linear-to-r from-red-500 to-red-600 rounded-3xl p-8 text-white">
+                                    <div className="grid lg:grid-cols-2 gap-8 items-center">
+                                        <div>
+                                            <h3 className="text-3xl font-bold mb-4" style={{ fontFamily: "Kavoon" }}>
+                                                Kata <span className="text-yellow-300">Sanchin</span>
+                                            </h3>
+                                            <p className="mb-6 opacity-90">
+                                                Considerado el kata más importante del Goju-Ryu, Sanchin significa
+                                                "tres batallas" y representa la lucha por controlar cuerpo,
+                                                respiración y mente.
+                                            </p>
+                                            <ul className="space-y-2">
+                                                <li className="flex items-center">
+                                                    <div className="h-2 w-2 bg-yellow-300 rounded-full mr-3"></div>
+                                                    <span>Desarrollo de la postura Sanchin</span>
+                                                </li>
+                                                <li className="flex items-center">
+                                                    <div className="h-2 w-2 bg-yellow-300 rounded-full mr-3"></div>
+                                                    <span>Respiración Ibuki (sonora)</span>
+                                                </li>
+                                                <li className="flex items-center">
+                                                    <div className="h-2 w-2 bg-yellow-300 rounded-full mr-3"></div>
+                                                    <span>Endurecimiento del cuerpo (Kote Kitae)</span>
+                                                </li>
                                             </ul>
                                         </div>
-                                    );
-                                })}
-                            </div>
-
-                            {/* Técnicas básicas */}
-                            <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
-                                <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: "Kavoon" }}>
-                                    Técnicas <span className="text-red-600">Esenciales</span>
-                                </h3>
-                                <div className="grid md:grid-cols-2 gap-8">
-                                    <div>
-                                        <h4 className="text-xl font-bold text-gray-900 mb-4">Kihon (Básicos)</h4>
-                                        <div className="space-y-4">
-                                            {[
-                                                "Dachi (Posturas): Sanchin, Zenkutsu, Shiko",
-                                                "Tsuki (Golpes): Seiken, Tate, Ura",
-                                                "Uke (Bloqueos): Age, Soto, Uchi, Gedan",
-                                                "Geri (Patadas): Mae, Yoko, Mawashi, Ushiro"
-                                            ].map((item, index) => (
-                                                <div key={index} className="flex items-start">
-                                                    <div className="h-2 w-2 bg-red-500 rounded-full mt-2 mr-3"></div>
-                                                    <span className="text-gray-700">{item}</span>
+                                        <div className="flex justify-center">
+                                            <div className="h-64 w-64 rounded-full border-4 border-yellow-300 flex items-center justify-center">
+                                                <div className="text-center">
+                                                    <div className="text-6xl mb-2">三</div>
+                                                    <p className="text-lg">Sanchin</p>
+                                                    <p className="text-sm opacity-80">Tres Batallas</p>
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h4 className="text-xl font-bold text-gray-900 mb-4">Kumite (Combate)</h4>
-                                        <div className="space-y-4">
-                                            {[
-                                                "Gohon Kumite (5 pasos)",
-                                                "Sanbon Kumite (3 pasos)",
-                                                "Kihon Ippon Kumite (Un paso básico)",
-                                                "Jiyu Kumite (Combate libre controlado)"
-                                            ].map((item, index) => (
-                                                <div key={index} className="flex items-start">
-                                                    <div className="h-2 w-2 bg-blue-500 rounded-full mt-2 mr-3"></div>
-                                                    <span className="text-gray-700">{item}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            )}
-
-            {/* Sección: Katas */}
-            {activeSection === "katas" && (
-                <section className="py-20 bg-gray-50">
-                    <div className="container mx-auto px-4">
-                        <div className="w-full px-4">
-                            <div className="text-center mb-16">
-                                <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
-                                    Katas <span className="text-red-600">Tradicionales</span>
-                                </h2>
-                                <p className="text-xl text-gray-700">
-                                    Formas preestablecidas que preservan las técnicas ancestrales
-                                </p>
-                            </div>
-
-                            <div className="grid md:grid-cols-4 gap-8">
-                                {katas.map((kata, index) => (
-                                    <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-                                        <div className="flex items-start justify-between mb-4">
-                                            <h3 className="text-xl font-bold text-gray-900">{kata.name}</h3>
-                                            <Target className="h-8 w-8 text-red-500" />
-                                        </div>
-                                        <p className="text-gray-700 mb-4">{kata.description}</p>
-                                        <div className="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
-                                            <strong>Propósito:</strong> {kata.purpose}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Kata Sanchin especial */}
-                            <div className="mt-16 bg-linear-to-r from-red-500 to-red-600 rounded-3xl p-8 text-white">
-                                <div className="grid lg:grid-cols-2 gap-8 items-center">
-                                    <div>
-                                        <h3 className="text-3xl font-bold mb-4" style={{ fontFamily: "Kavoon" }}>
-                                            Kata <span className="text-yellow-300">Sanchin</span>
-                                        </h3>
-                                        <p className="mb-6 opacity-90">
-                                            Considerado el kata más importante del Goju-Ryu, Sanchin significa
-                                            "tres batallas" y representa la lucha por controlar cuerpo,
-                                            respiración y mente.
-                                        </p>
-                                        <ul className="space-y-2">
-                                            <li className="flex items-center">
-                                                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-3"></div>
-                                                <span>Desarrollo de la postura Sanchin</span>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-3"></div>
-                                                <span>Respiración Ibuki (sonora)</span>
-                                            </li>
-                                            <li className="flex items-center">
-                                                <div className="h-2 w-2 bg-yellow-300 rounded-full mr-3"></div>
-                                                <span>Endurecimiento del cuerpo (Kote Kitae)</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="flex justify-center">
-                                        <div className="h-64 w-64 rounded-full border-4 border-yellow-300 flex items-center justify-center">
-                                            <div className="text-center">
-                                                <div className="text-6xl mb-2">三</div>
-                                                <p className="text-lg">Sanchin</p>
-                                                <p className="text-sm opacity-80">Tres Batallas</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            )}
+                    </motion.section>
+                )}
 
-            {/* Sección: Beneficios */}
-            {activeSection === "beneficios" && (
-                <section className="py-20">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-6xl mx-auto">
-                            <div className="text-center mb-16">
+                {/* Sección: Beneficios */}
+                {activeSection === "beneficios" && (
+                    <motion.section
+                        key="beneficios"
+                        className="py-10"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -14 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                        <div className="container mx-auto px-4">
+                            <div className="text-center mb-8">
                                 <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                                     Beneficios <span className="text-red-600">Integrales</span>
                                 </h2>
@@ -290,7 +325,7 @@ export default function KaratedoInfo() {
                                 </p>
                             </div>
 
-                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                                 {benefits.map((benefit, index) => {
                                     const Icon = benefit.icon;
                                     return (
@@ -348,12 +383,69 @@ export default function KaratedoInfo() {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            )}
+                    </motion.section>
+                )}
+
+                {activeSection === "filosofia" && (
+                    <motion.section
+                        key="filosofia"
+                        className="py-10 bg-gray-50"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -14 }}
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                        <div className="container px-4">
+                            <div className="">
+                                <div className="text-center mb-12">
+                                    <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                                        Filosofía <span className="text-red-600">Hiramatsukai</span>
+                                    </h2>
+                                    <p className="text-xl text-gray-700">
+                                        Mente, cuerpo y espíritu en armonía.
+                                    </p>
+                                </div>
+
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-5">Dojo Kun</h3>
+                                        <ul className="space-y-3 text-gray-700 italic leading-relaxed">
+                                            <li>Lealtad por mi maestro, mi escuela y los principios de mi arte.</li>
+                                            <li>Siempre me esforzare por lo bueno y rechazare lo malo.</li>
+                                            <li>Trabajare por la creacion de la armonia entre todas las personas.</li>
+                                            <li>Nunca utilizare la violencia.</li>
+                                            <li>Respetare la vida y lo natural.</li>
+                                        </ul>
+                                    </div>
+
+                                    <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-5">Hiramatsukai</h3>
+
+                                        <div className="mb-5 rounded-xl border border-gray-200 bg-gray-50 p-4">
+                                            <p className="text-xs uppercase tracking-wider text-gray-500 mb-2">Texto original (japones romanizado)</p>
+                                            <p className="text-gray-700 italic leading-relaxed">
+                                                Hichiareva Venezuela Kyode Nanno Hedatariga Arimashoka.
+                                                Karate Toa Hitoni Utaradu Hitoni Utado Koto Nakiwuo Mototo Surunari.
+                                            </p>
+                                        </div>
+
+                                        <div className="rounded-xl border border-red-200 bg-red-50 p-4">
+                                            <p className="text-xs uppercase tracking-wider text-red-700 mb-2">Traduccion al espanol</p>
+                                            <p className="text-gray-700 italic leading-relaxed">
+                                                Trabajaremos por Venezuela juntos como hermanos, por el bien y por la paz.
+                                                La verdad del karate es: si me atacas, me defiendo; si te rindes, me voy.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.section>
+                )}
+            </AnimatePresence>
 
             {/* CTA Final */}
-            <section className="py-20 bg-linear-to-r from-gray-900 to-gray-800">
+            <section className="py-10 bg-linear-to-r from-gray-900 to-gray-800">
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center text-white">
                         <Swords className="h-16 w-16 mx-auto mb-6" />

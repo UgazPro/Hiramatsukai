@@ -1,4 +1,5 @@
 import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
+import Reveal from "@/components/animation/Reveal";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
@@ -48,7 +49,7 @@ export default function Kobudo() {
                     <div className="lg:w-1/2 w-full space-y-9 order-2 lg:order-1">
 
                         {/* First Image */}
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full">
+                        <Reveal className="relative rounded-2xl overflow-hidden shadow-2xl w-full" y={20}>
                             <img
                                 src="/Hiramatsukai.jpg"
                                 alt="Práctica de Kobudo"
@@ -62,10 +63,10 @@ export default function Kobudo() {
                             <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                                 Kobudo Okinawense
                             </div>
-                        </div>
+                        </Reveal>
 
                         {/* Second Image */}
-                        <div className="relative rounded-2xl overflow-hidden shadow-2xl w-full">
+                        <Reveal className="relative rounded-2xl overflow-hidden shadow-2xl w-full" y={20} delay={0.12}>
                             <img
                                 src="/Hiramatsukai.jpg"
                                 alt="Práctica de Kobudo"
@@ -78,11 +79,11 @@ export default function Kobudo() {
                             <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                                 Kobudo Okinawense
                             </div>
-                        </div>
+                        </Reveal>
 
                     </div>
 
-                    <div className="lg:w-1/2 w-full space-y-6 order-1 lg:order-2">
+                    <Reveal className="lg:w-1/2 w-full space-y-6 order-1 lg:order-2" y={24}>
 
                         <div className="flex items-center gap-2">
 
@@ -104,21 +105,23 @@ export default function Kobudo() {
                         {/* Main Weapons */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                             {cardsKobudo.map((card, index) => (
-                                <CardComponent card={card} key={index} />
+                                <Reveal key={index} delay={index * 0.08} y={16}>
+                                    <CardComponent card={card} />
+                                </Reveal>
                             ))}
                         </div>
 
                         <div className="h-37 w-37 mx-auto hidden lg:block">
                             <img src="gi.jpg" alt="Karategi para entrenamiento tradicional" />
                         </div>
-                    </div>
+                    </Reveal>
                 </div>
 
-                <div className="mt-10 text-center">
+                <Reveal className="mt-10 text-center" y={14}>
                     <Button asChild variant="link" style={{ fontFamily: "JetBrains Mono" }}>
                         <Link to="/kobudo">Descubre mas sobre el KOBUDO</Link>
                     </Button>
-                </div>
+                </Reveal>
 
             </div>
         </section>
