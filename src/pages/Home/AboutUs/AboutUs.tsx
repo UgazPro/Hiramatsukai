@@ -41,7 +41,7 @@ export default function AboutUs() {
                         </Button>
 
                         <Button
-                            onClick={() => navigate('/about-us')}
+                            onClick={() => navigate('/nosotros')}
                             size="lg"
                             variant="clickRed"
                             className="border-2 border-white text-white hover:bg-gray-500 px-8 py-6 text-base"
@@ -51,7 +51,7 @@ export default function AboutUs() {
                         </Button>
                     </div>
                 </div>
-            </div>
+        </div>
         </section>
     );
 }

@@ -784,9 +784,9 @@ export default function DojoPage() {
                               className="w-full h-full object-cover"
                             />
                           </div>
-                          <h3 className="text-xl font-bold text-gray-900">{master.name}</h3>
+                          <h3 className="text-xl font-bold text-gray-900">{master.userRanks[0].rank.rank_name} {master.name}</h3>
                           <p className="text-red-600 font-medium">{master.rol.rol}</p>
-                          <Badge className="mt-2 bg-gray-900 text-white">{setRankText(master.userRanks[0].rank)}</Badge>
+                          {/* <Badge className="mt-2 bg-gray-900 text-white">{setRankText(master.userRanks[0].rank)}</Badge> */}
                         </div>
 
                         <div className="space-y-4">

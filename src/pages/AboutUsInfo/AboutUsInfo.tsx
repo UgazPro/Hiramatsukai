@@ -415,27 +415,6 @@ export default function AboutUsInfo() {
                                     );
                                 })}
                             </div>
-
-                            {/* Galería de fotos */}
-                            <div>
-                                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: "Kavoon" }}>
-                                    Galería <span className="text-red-600">Hiramatsukai</span>
-                                </h3>
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                    {[1, 2, 3, 4].map((item) => (
-                                        <div key={item} className="aspect-square bg-linear-to-br from-gray-200 to-gray-300 rounded-xl overflow-hidden">
-                                            <div className="h-full flex items-center justify-center">
-                                                <div className="text-center">
-                                                    <div className="text-4xl mb-2">
-                                                        {item === 1 ? "🥋" : item === 2 ? "⚔️" : item === 3 ? "🎯" : "🌟"}
-                                                    </div>
-                                                    <p className="text-sm text-gray-600">Foto {item}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </section>
