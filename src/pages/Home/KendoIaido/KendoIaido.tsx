@@ -1,10 +1,8 @@
 import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 export default function KendoIaido() {
-    
-    const navigate = useNavigate();
 
     const cardsKendoIaido: CardComponentProps[] = [
         {
@@ -43,7 +41,7 @@ export default function KendoIaido() {
 
     return (
 
-        <section id="kendoIaido" className="py-16 sm:py-10 bg-linear-to-b from-gray-100 to-white">
+        <section id="kendoIaido" aria-labelledby="kendoiaido-title" className="py-16 sm:py-10 bg-linear-to-b from-gray-100 to-white">
 
             <div className="container mx-auto px-4">
 
@@ -55,10 +53,10 @@ export default function KendoIaido() {
                             <div className="flex items-center gap-2">
 
                                 <div className="h-11 w-11 lg:hidden">
-                                    <img src="kendoiaido.jpg" alt="" className="rounded-full" />
+                                    <img src="kendoiaido.jpg" alt="Practica de Kendo e Iaido" className="rounded-full" />
                                 </div>
 
-                                <h2 className="text-2xl lg:text-4xl font-bold text-gray-900">
+                                <h2 id="kendoiaido-title" className="text-2xl lg:text-4xl font-bold text-gray-900">
                                     Kendo & Iaido
                                 </h2>
 
@@ -77,7 +75,7 @@ export default function KendoIaido() {
                             </div>
 
                             <div className="h-40 w-40 mx-auto lg:block hidden">
-                                <img src="kendoiaido.jpg" alt="" className="rounded-full" />
+                                <img src="kendoiaido.jpg" alt="Emblema de entrenamiento de espada japonesa" className="rounded-full" />
                             </div>
 
                         </div>
@@ -130,12 +128,8 @@ export default function KendoIaido() {
             </div>
 
             <div className="mt-10 text-center">
-                <Button
-                    variant={`link`}
-                    style={{ fontFamily: 'JetBrains Mono' }}
-                    onClick={() => navigate('/kendoiaido')}
-                >
-                    Descubre más sobre el KOBUDO
+                <Button asChild variant="link" style={{ fontFamily: "JetBrains Mono" }}>
+                    <Link to="/kendoIaido">Descubre mas sobre KENDO IAIDO</Link>
                 </Button>
             </div>
 

@@ -1,10 +1,8 @@
 import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 export default function Kobudo() {
-
-    const navigate = useNavigate();
 
     const cardsKobudo: CardComponentProps[] = [
         {
@@ -42,7 +40,7 @@ export default function Kobudo() {
     ];
 
     return (
-        <section id="kobudo" className="py-16 sm:py-15 bg-white">
+        <section id="kobudo" aria-labelledby="kobudo-title" className="py-16 sm:py-15 bg-white">
             <div className="container mx-auto px-4">
 
                 <div className="flex flex-col lg:flex-row-reverse items-start gap-8 lg:gap-12">
@@ -89,10 +87,10 @@ export default function Kobudo() {
                         <div className="flex items-center gap-2">
 
                             <div className="h-11 w-11 lg:hidden">
-                                <img src="gi.jpg" alt="" />
+                                <img src="gi.jpg" alt="Karategi para practica de Kobudo" />
                             </div>
 
-                            <h2 className="text-2xl lg:text-4xl font-bold text-gray-900 text-right">
+                            <h2 id="kobudo-title" className="text-2xl lg:text-4xl font-bold text-gray-900 text-right">
                                 Kobudo Okinawense
                             </h2>
 
@@ -111,18 +109,14 @@ export default function Kobudo() {
                         </div>
 
                         <div className="h-37 w-37 mx-auto hidden lg:block">
-                            <img src="gi.jpg" alt="" />
+                            <img src="gi.jpg" alt="Karategi para entrenamiento tradicional" />
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-10 text-center">
-                    <Button
-                        variant={`link`}
-                        style={{ fontFamily: 'JetBrains Mono' }}
-                        onClick={() => navigate('/kobudo')}
-                    >
-                        Descubre más sobre el KOBUDO
+                    <Button asChild variant="link" style={{ fontFamily: "JetBrains Mono" }}>
+                        <Link to="/kobudo">Descubre mas sobre el KOBUDO</Link>
                     </Button>
                 </div>
 

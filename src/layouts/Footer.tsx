@@ -15,13 +15,13 @@ export default function Footer() {
                 </Link>
 
                 <div className="space-x-5 flex">
-                    <a href="https://www.instagram.com/hiramatsukai?igsh=amY5NGdpMTQ5eXVh" target="_blank">
+                    <a href="https://www.instagram.com/hiramatsukai?igsh=amY5NGdpMTQ5eXVh" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Hiramatsukai">
                         <FaInstagram
                             size={'30px'}
                             className="cursor-pointer"
                         />
                     </a>
-                    <a href="https://www.facebook.com/share/18DmkvAqxX/" target="_blank">
+                    <a href="https://www.facebook.com/share/18DmkvAqxX/" target="_blank" rel="noopener noreferrer" aria-label="Facebook de Hiramatsukai">
                         <FaFacebook
                             size={'30px'}
                             className="cursor-pointer"

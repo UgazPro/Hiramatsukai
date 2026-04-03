@@ -7,7 +7,7 @@ import AboutUs from "./AboutUs/AboutUs";
 export default function Home() {
 
     return (
-        <main className="flex-1 w-full">
+        <main id="main-content" className="flex-1 w-full" aria-label="Pagina principal de Hiramatsukai">
             
             <AboutUs />
 

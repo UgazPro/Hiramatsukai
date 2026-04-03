@@ -16,7 +16,7 @@ import {
 import CarouselComponent from "@/components/CarouselComponent";
 import { useDojosInfo } from "@/hooks/useDojos";
 import { useParams } from "react-router";
-import { DojoMaster, DojoSchedule, IDojoInfo, Rank } from "@/services/dojos/dojo.interface";
+import { DojoMaster, DojoSchedule, IDojoInfo } from "@/services/dojos/dojo.interface";
 import { formatPhoneNumber } from "@/helpers/formatter";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -282,15 +282,15 @@ export default function DojoPage() {
     return `Desde ${foundedYear} · ${yearsAgo} años de tradición`;
   }
 
-  const returnTitle = (code: string) => {
-    const rename = code.slice(1);
-    const grade = code[0]
-    return `${rename} ${grade == 'K' ? 'Kyu' : 'Dan'}`
-  }
+  // const returnTitle = (code: string) => {
+  //   const rename = code.slice(1);
+  //   const grade = code[0]
+  //   return `${rename} ${grade == 'K' ? 'Kyu' : 'Dan'}`
+  // }
 
-  const setRankText = (rank: Rank): string => {
-    return `${rank.rank_name} · ${returnTitle(rank.code)}`;
-  }
+  // const setRankText = (rank: Rank): string => {
+  //   return `${rank.rank_name} · ${returnTitle(rank.code)}`;
+  // }
 
   const setDojoSchedule = (schedule: DojoSchedule[]) => {
     const groupedSchedule = schedule.reduce<Record<string, DojoSchedule[]>>((acc, item) => {

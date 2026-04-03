@@ -19,12 +19,14 @@ import Profile from './pages/Admin/Profile/Profile';
 import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
 import DojosInfo from './pages/DojosInfo/DojosInfo';
 import ProtectedRoute from './ProtectedRoute';
+import RouteSeo from './components/seo/RouteSeo';
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
+        <RouteSeo />
         <Routes>
           
           {/* Users */}

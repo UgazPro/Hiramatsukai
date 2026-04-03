@@ -1,15 +1,13 @@
 import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 export default function Karatedo() {
-
-  const navigate = useNavigate();
 
   const cardsKarate: CardComponentProps[] = [
     {
       title: "Fuerza (Go)",
-      description: '"Técnicas lineales y poderosas',
+      description: 'Tecnicas lineales y poderosas',
       icon: "力",
       bgIcon: "bg-linear-to-br from-red-500 to-red-800",
       bg: "bg-linear-to-br from-red-200 to-red-300",
@@ -27,7 +25,7 @@ export default function Karatedo() {
 
   return (
 
-    <section id="karate" className="py-16 sm:py-10 bg-muted">
+    <section id="karate" aria-labelledby="karatedo-title" className="py-16 sm:py-10 bg-muted">
 
       <div className="container mx-auto px-4">
 
@@ -40,10 +38,10 @@ export default function Karatedo() {
               <div className="flex items-center gap-2">
 
                 <div className="h-15 w-15 lg:hidden">
-                  <img src="oki2.png" alt="" />
+                  <img src="oki2.png" alt="Emblema de Goju-Ryu Karate-Do" />
                 </div>
 
-                <h2 className="text-2xl lg:text-4xl font-bold text-gray-900">
+                <h2 id="karatedo-title" className="text-2xl lg:text-4xl font-bold text-gray-900">
                   Goju-Ryu Karate-Do
                 </h2>
 
@@ -63,7 +61,7 @@ export default function Karatedo() {
               </div>
 
               <div className="h-50 w-50 mx-auto hidden lg:block">
-                <img src="oki2.png" alt="" />
+                <img src="oki2.png" alt="Emblema tradicional de Okinawa" />
               </div>
 
             </div>
@@ -108,12 +106,8 @@ export default function Karatedo() {
       </div>
 
       <div className="mt-10 text-center">
-        <Button
-          variant={`link`}
-          style={{ fontFamily: 'JetBrains Mono' }}
-          onClick={() => navigate('/karatedo')}
-        >
-          Descubre más sobre el KARATEDO
+        <Button asChild variant="link" style={{ fontFamily: "JetBrains Mono" }}>
+          <Link to="/karatedo">Descubre mas sobre el KARATEDO</Link>
         </Button>
       </div>
 

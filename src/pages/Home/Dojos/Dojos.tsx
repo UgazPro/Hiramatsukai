@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import InformationSchema from "@/components/informationSchemas/InformationSchema";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useDojos } from "@/hooks/useDojos";
 
@@ -11,7 +11,6 @@ const FALLBACK_DOJO_IMAGE = "https://blog.marti.mx/wp-content/uploads/2023/01/co
 export default function Dojos() {
 
     const [showAllDojos, setShowAllDojos] = useState(false);
-    const navigate = useNavigate();
 
     const { data: dojos = [], isLoading, isError } = useDojos();
 
@@ -33,13 +32,13 @@ export default function Dojos() {
 
     return (
 
-        <section id="dojos" className="px-4 md:px-16 py-10 bg-muted">
+        <section id="dojos" aria-labelledby="dojos-title" className="px-4 md:px-16 py-10 bg-muted">
 
             <div className="container mx-auto">
 
                 <div className="mx-auto text-center">
 
-                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl animate-fade-in">
+                    <h2 id="dojos-title" className="text-3xl font-bold tracking-tight sm:text-4xl animate-fade-in">
                         Dojos Afiliados
                     </h2>
 
@@ -50,24 +49,26 @@ export default function Dojos() {
 
                     <div className="mt-10">
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <ul id="dojo-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                             {visibleDojos.map((dojo, index) => (
-                                <div
-                                    key={dojo.code}
-                                    onClick={() => navigate(`/dojos/dojo/${dojo.code}`)}
-                                    className="transition-all duration-700 ease-in-out animate-slide-up"
-                                    style={{
-                                        transitionDelay: `${index * 100}ms`,
-                                    }}
-                                >
-                                    <InformationSchema
-                                        img={setImageDojo(dojo.logo)}
-                                        dojo={dojo.dojo}
-                                        address={dojo.address}
-                                    />
-                                </div>
+                                <li key={dojo.code} className="list-none">
+                                    <Link
+                                        to={`/dojos/dojo/${dojo.code}`}
+                                        className="block transition-all duration-700 ease-in-out animate-slide-up focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"
+                                        style={{
+                                            transitionDelay: `${index * 100}ms`,
+                                        }}
+                                        aria-label={`Ver informacion del dojo ${dojo.dojo}`}
+                                    >
+                                        <InformationSchema
+                                            img={setImageDojo(dojo.logo)}
+                                            dojo={dojo.dojo}
+                                            address={dojo.address}
+                                        />
+                                    </Link>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
 
                     </div>
 
@@ -80,6 +81,8 @@ export default function Dojos() {
                             variant="clickRed"
                             style={{ fontFamily: "JetBrains Mono" }}
                             size="lg"
+                            aria-expanded={showAllDojos}
+                            aria-controls="dojo-list"
                             className="text-sm font-normal px-4 py-4 hover:scale-105 active:scale-95 transition-transform duration-300"
                         >
                             <span className="flex items-center gap-2">
