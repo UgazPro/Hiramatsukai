@@ -189,7 +189,7 @@ export default function KobudoInfo() {
                                     layout
                                     initial={false}
                                     onClick={() => setSelectedWeapon(weapon.id)}
-                                    className={`relative overflow-hidden flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 border ${isSelected
+                                    className={`relative cursor-pointer overflow-hidden flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 border ${isSelected
                                         ? "text-white shadow-lg scale-105 border-transparent"
                                         : "bg-white text-gray-700 hover:bg-gray-50 border-gray-200"
                                         }`}
