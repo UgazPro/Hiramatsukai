@@ -19,18 +19,20 @@ import Profile from './pages/Admin/Profile/Profile';
 import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
 import DojosInfo from './pages/DojosInfo/DojosInfo';
 import ProtectedRoute from './ProtectedRoute';
+import RouteSeo from './components/seo/RouteSeo';
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
+        <RouteSeo />
         <Routes>
           
           {/* Users */}
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/about-us" element={<AboutUsInfo />} />
+            <Route path="/nosotros" element={<AboutUsInfo />} />
             <Route path="/login" element={<Login />} />
             <Route path="/karatedo" element={<KaratedoInfo />} />
             <Route path="/kobudo" element={<KobudoInfo />} />

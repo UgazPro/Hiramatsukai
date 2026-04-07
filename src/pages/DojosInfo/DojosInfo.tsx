@@ -16,7 +16,7 @@ import {
 import CarouselComponent from "@/components/CarouselComponent";
 import { useDojosInfo } from "@/hooks/useDojos";
 import { useParams } from "react-router";
-import { DojoMaster, DojoSchedule, IDojoInfo, Rank } from "@/services/dojos/dojo.interface";
+import { DojoMaster, DojoSchedule, IDojoInfo } from "@/services/dojos/dojo.interface";
 import { formatPhoneNumber } from "@/helpers/formatter";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -282,15 +282,15 @@ export default function DojoPage() {
     return `Desde ${foundedYear} · ${yearsAgo} años de tradición`;
   }
 
-  const returnTitle = (code: string) => {
-    const rename = code.slice(1);
-    const grade = code[0]
-    return `${rename} ${grade == 'K' ? 'Kyu' : 'Dan'}`
-  }
+  // const returnTitle = (code: string) => {
+  //   const rename = code.slice(1);
+  //   const grade = code[0]
+  //   return `${rename} ${grade == 'K' ? 'Kyu' : 'Dan'}`
+  // }
 
-  const setRankText = (rank: Rank): string => {
-    return `${rank.rank_name} · ${returnTitle(rank.code)}`;
-  }
+  // const setRankText = (rank: Rank): string => {
+  //   return `${rank.rank_name} · ${returnTitle(rank.code)}`;
+  // }
 
   const setDojoSchedule = (schedule: DojoSchedule[]) => {
     const groupedSchedule = schedule.reduce<Record<string, DojoSchedule[]>>((acc, item) => {
@@ -784,9 +784,9 @@ export default function DojoPage() {
                               className="w-full h-full object-cover"
                             />
                           </div>
-                          <h3 className="text-xl font-bold text-gray-900">{master.name}</h3>
+                          <h3 className="text-xl font-bold text-gray-900">{master.userRanks[0].rank.rank_name} {master.name}</h3>
                           <p className="text-red-600 font-medium">{master.rol.rol}</p>
-                          <Badge className="mt-2 bg-gray-900 text-white">{setRankText(master.userRanks[0].rank)}</Badge>
+                          {/* <Badge className="mt-2 bg-gray-900 text-white">{setRankText(master.userRanks[0].rank)}</Badge> */}
                         </div>
 
                         <div className="space-y-4">

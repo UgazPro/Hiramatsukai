@@ -1,15 +1,14 @@
 import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
+import Reveal from "@/components/animation/Reveal";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 export default function Karatedo() {
-
-  const navigate = useNavigate();
 
   const cardsKarate: CardComponentProps[] = [
     {
       title: "Fuerza (Go)",
-      description: '"Técnicas lineales y poderosas',
+      description: 'Tecnicas lineales y poderosas',
       icon: "力",
       bgIcon: "bg-linear-to-br from-red-500 to-red-800",
       bg: "bg-linear-to-br from-red-200 to-red-300",
@@ -27,7 +26,7 @@ export default function Karatedo() {
 
   return (
 
-    <section id="karate" className="py-16 sm:py-10 bg-muted">
+    <section id="karate" aria-labelledby="karatedo-title" className="py-16 sm:py-10 bg-muted">
 
       <div className="container mx-auto px-4">
 
@@ -35,15 +34,15 @@ export default function Karatedo() {
 
           <div className="lg:w-1/2 w-full order-1 lg:order-2">
 
-            <div className="space-y-6">
+            <Reveal className="space-y-6" y={24}>
 
               <div className="flex items-center gap-2">
 
                 <div className="h-15 w-15 lg:hidden">
-                  <img src="oki2.png" alt="" />
+                  <img src="oki2.png" alt="Emblema de Goju-Ryu Karate-Do" />
                 </div>
 
-                <h2 className="text-2xl lg:text-4xl font-bold text-gray-900">
+                <h2 id="karatedo-title" className="text-2xl lg:text-4xl font-bold text-gray-900">
                   Goju-Ryu Karate-Do
                 </h2>
 
@@ -58,21 +57,23 @@ export default function Karatedo() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                 {cardsKarate.map((card, index) => (
-                  <CardComponent card={card} key={index} />
+                  <Reveal key={index} delay={index * 0.08} y={16}>
+                    <CardComponent card={card} />
+                  </Reveal>
                 ))}
               </div>
 
               <div className="h-50 w-50 mx-auto hidden lg:block">
-                <img src="oki2.png" alt="" />
+                <img src="oki2.png" alt="Emblema tradicional de Okinawa" />
               </div>
 
-            </div>
+            </Reveal>
           </div>
 
           <div className="lg:w-1/2 w-full space-y-9 order-2 lg:order-1">
 
             {/* First Image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            <Reveal className="relative rounded-2xl overflow-hidden shadow-2xl" y={20}>
               <img
                 src="/Hiramatsukai.jpg"
                 alt="Practicantes de Goju-Ryu"
@@ -84,10 +85,10 @@ export default function Karatedo() {
               <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                 Goju-Ryu
               </div>
-            </div>
+            </Reveal>
 
             {/* Second Image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            <Reveal className="relative rounded-2xl overflow-hidden shadow-2xl" y={20} delay={0.12}>
               <img
                 src="/Hiramatsukai.jpg"
                 alt="Practicantes de Goju-Ryu"
@@ -99,7 +100,7 @@ export default function Karatedo() {
               <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                 Goju-Ryu
               </div>
-            </div>
+            </Reveal>
 
           </div>
 
@@ -107,15 +108,11 @@ export default function Karatedo() {
 
       </div>
 
-      <div className="mt-10 text-center">
-        <Button
-          variant={`link`}
-          style={{ fontFamily: 'JetBrains Mono' }}
-          onClick={() => navigate('/karatedo')}
-        >
-          Descubre más sobre el KARATEDO
+      <Reveal className="mt-10 text-center" y={14}>
+        <Button asChild variant="link" style={{ fontFamily: "JetBrains Mono" }}>
+          <Link to="/karatedo">Descubre mas sobre el KARATEDO</Link>
         </Button>
-      </div>
+      </Reveal>
 
     </section>
   );

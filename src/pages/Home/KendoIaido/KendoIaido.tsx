@@ -1,10 +1,9 @@
 import { CardComponent, CardComponentProps } from "@/components/card/CardComponent";
+import Reveal from "@/components/animation/Reveal";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 
 export default function KendoIaido() {
-    
-    const navigate = useNavigate();
 
     const cardsKendoIaido: CardComponentProps[] = [
         {
@@ -43,22 +42,22 @@ export default function KendoIaido() {
 
     return (
 
-        <section id="kendoIaido" className="py-16 sm:py-10 bg-linear-to-b from-gray-100 to-white">
+        <section id="kendoIaido" aria-labelledby="kendoiaido-title" className="py-16 sm:py-10 bg-linear-to-b from-gray-100 to-white">
 
             <div className="container mx-auto px-4">
 
                 <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
 
                     <div className="lg:w-1/2 w-full order-1 lg:order-2">
-                        <div className="space-y-6">
+                        <Reveal className="space-y-6" y={24}>
 
                             <div className="flex items-center gap-2">
 
                                 <div className="h-11 w-11 lg:hidden">
-                                    <img src="kendoiaido.jpg" alt="" className="rounded-full" />
+                                    <img src="kendoiaido.jpg" alt="Practica de Kendo e Iaido" className="rounded-full" />
                                 </div>
 
-                                <h2 className="text-2xl lg:text-4xl font-bold text-gray-900">
+                                <h2 id="kendoiaido-title" className="text-2xl lg:text-4xl font-bold text-gray-900">
                                     Kendo & Iaido
                                 </h2>
 
@@ -72,20 +71,22 @@ export default function KendoIaido() {
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
                                 {cardsKendoIaido.map((card, index) => (
-                                    <CardComponent card={card} key={index} />
+                                    <Reveal key={index} delay={index * 0.08} y={16}>
+                                        <CardComponent card={card} />
+                                    </Reveal>
                                 ))}
                             </div>
 
                             <div className="h-40 w-40 mx-auto lg:block hidden">
-                                <img src="kendoiaido.jpg" alt="" className="rounded-full" />
+                                <img src="kendoiaido.jpg" alt="Emblema de entrenamiento de espada japonesa" className="rounded-full" />
                             </div>
 
-                        </div>
+                        </Reveal>
                     </div>
 
                     <div className="lg:w-1/2 w-full space-y-9 order-2 lg:order-1">
 
-                        <div className="relative rounded-2xl overflow-hidden">
+                        <Reveal className="relative rounded-2xl overflow-hidden" y={20}>
                             <img
                                 src="/Hiramatsukai.jpg"
                                 alt="Práctica de Kendo"
@@ -102,9 +103,9 @@ export default function KendoIaido() {
                                 <h3 className="font-bold text-lg">Combate con Shinai</h3>
                                 <p className="text-sm opacity-90">Armadura tradicional (Bogu)</p>
                             </div>
-                        </div>
+                        </Reveal>
 
-                        <div className="relative rounded-2xl overflow-hidden">
+                        <Reveal className="relative rounded-2xl overflow-hidden" y={20} delay={0.12}>
                             <img
                                 src="/Hiramatsukai.jpg"
                                 alt="Práctica de Iaido"
@@ -121,7 +122,7 @@ export default function KendoIaido() {
                                 <h3 className="font-bold text-lg">Arte del Desenvaine</h3>
                                 <p className="text-sm opacity-90">Katana tradicional</p>
                             </div>
-                        </div>
+                        </Reveal>
 
                     </div>
 
@@ -129,15 +130,11 @@ export default function KendoIaido() {
 
             </div>
 
-            <div className="mt-10 text-center">
-                <Button
-                    variant={`link`}
-                    style={{ fontFamily: 'JetBrains Mono' }}
-                    onClick={() => navigate('/kendoiaido')}
-                >
-                    Descubre más sobre el KOBUDO
+            <Reveal className="mt-10 text-center" y={14}>
+                <Button asChild variant="link" style={{ fontFamily: "JetBrains Mono" }}>
+                    <Link to="/kendoIaido">Descubre mas sobre KENDO IAIDO</Link>
                 </Button>
-            </div>
+            </Reveal>
 
         </section>
     );

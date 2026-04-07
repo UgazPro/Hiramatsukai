@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
+import Reveal from "@/components/animation/Reveal";
 import InformationSchema from "@/components/informationSchemas/InformationSchema";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router";
+import { AnimatePresence, motion } from "motion/react"
+import { Link } from "react-router";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useDojos } from "@/hooks/useDojos";
 
@@ -11,7 +13,6 @@ const FALLBACK_DOJO_IMAGE = "https://blog.marti.mx/wp-content/uploads/2023/01/co
 export default function Dojos() {
 
     const [showAllDojos, setShowAllDojos] = useState(false);
-    const navigate = useNavigate();
 
     const { data: dojos = [], isLoading, isError } = useDojos();
 
@@ -33,53 +34,68 @@ export default function Dojos() {
 
     return (
 
-        <section id="dojos" className="px-4 md:px-16 py-10 bg-muted">
+        <section id="dojos" aria-labelledby="dojos-title" className="px-4 md:px-16 py-10 bg-muted">
 
             <div className="container mx-auto">
 
                 <div className="mx-auto text-center">
 
-                    <h2 className="text-3xl font-bold tracking-tight sm:text-4xl animate-fade-in">
-                        Dojos Afiliados
-                    </h2>
+                    <Reveal y={18}>
+                        <h2 id="dojos-title" className="text-3xl font-bold tracking-tight sm:text-4xl">
+                            Dojos Afiliados
+                        </h2>
+                    </Reveal>
 
-                    <p className="mt-6 text-lg leading-8 text-muted-foreground animate-fade-in-delay">
-                        ¿Interesado en unirte a alguna de nuestras escuelas? Contáctanos para
-                        más información sobre clases y horarios.
-                    </p>
+                    <Reveal y={14} delay={0.08}>
+                        <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                            ¿Interesado en unirte a alguna de nuestras escuelas? Contáctanos para
+                            más información sobre clases y horarios.
+                        </p>
+                    </Reveal>
 
                     <div className="mt-10">
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {visibleDojos.map((dojo, index) => (
-                                <div
-                                    key={dojo.code}
-                                    onClick={() => navigate(`/dojos/dojo/${dojo.code}`)}
-                                    className="transition-all duration-700 ease-in-out animate-slide-up"
-                                    style={{
-                                        transitionDelay: `${index * 100}ms`,
-                                    }}
-                                >
-                                    <InformationSchema
-                                        img={setImageDojo(dojo.logo)}
-                                        dojo={dojo.dojo}
-                                        address={dojo.address}
-                                    />
-                                </div>
-                            ))}
-                        </div>
+                        <ul id="dojo-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <AnimatePresence mode="popLayout">
+                                {visibleDojos.map((dojo, index) => (
+                                    <motion.li
+                                        key={dojo.code}
+                                        layout
+                                        initial={{ opacity: 0, y: 22, scale: 0.98 }}
+                                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                                        exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                                        transition={{ duration: 0.35, delay: index * 0.05, ease: "easeOut" }}
+                                        className="list-none"
+                                    >
+                                        <Link
+                                            to={`/dojos/dojo/${dojo.code}`}
+                                            className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"
+                                            aria-label={`Ver informacion del dojo ${dojo.dojo}`}
+                                        >
+                                            <InformationSchema
+                                                img={setImageDojo(dojo.logo)}
+                                                dojo={dojo.dojo}
+                                                address={dojo.address}
+                                            />
+                                        </Link>
+                                    </motion.li>
+                                ))}
+                            </AnimatePresence>
+                        </ul>
 
                     </div>
 
                 </div>
 
                 {hasMoreThanFour && (
-                    <div className="mt-10 w-full text-center">
+                    <Reveal className="mt-10 w-full text-center" y={12}>
                         <Button
                             onClick={() => setShowAllDojos((prev) => !prev)}
                             variant="clickRed"
                             style={{ fontFamily: "JetBrains Mono" }}
                             size="lg"
+                            aria-expanded={showAllDojos}
+                            aria-controls="dojo-list"
                             className="text-sm font-normal px-4 py-4 hover:scale-105 active:scale-95 transition-transform duration-300"
                         >
                             <span className="flex items-center gap-2">
@@ -100,7 +116,7 @@ export default function Dojos() {
                                 </svg>
                             </span>
                         </Button>
-                    </div>
+                    </Reveal>
                 )}
             </div>
 
