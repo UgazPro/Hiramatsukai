@@ -16,7 +16,7 @@ export const ActivitySchema = z.object({
 
     description: z.string().nonempty("Descripción Requerida"),
 
-    ActivityDojos: z.array
+    dojoIds: z.array(z.string()).nonempty("Dojos Requeridos")
 
 });
 

@@ -56,7 +56,11 @@ export const useActivitiesStore = create<ActivitiesStore>((set) => ({
     }),
 
     usingForm: false,
-    openForm: () => set({ usingForm: true }),
+    openForm: () => set({ 
+        usingForm: true,
+        mode: "create",
+        selectedActivity: null
+    }),
     closeForm: () => set({ usingForm: false }),
 
     currentDate: new Date(),

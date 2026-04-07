@@ -8,11 +8,11 @@ import { activityScreen } from "@/stores/activities.store";
 
 interface Actions {
   startEdit: (activity: IActivity) => void;
-  setSelectedActivity: (activity: IActivity) => void; 
+  setSelectedActivity: (activity: IActivity) => void;
   setScreen: (screen: activityScreen) => void;
 }
 
-export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen } : Actions): Column<IActivity>[] => [
+export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen }: Actions): Column<IActivity>[] => [
   {
     header: "Actividad",
     render: (a) => <p className="font-medium">{a.name}</p>,
@@ -23,7 +23,7 @@ export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen
     render: (a) => (
       <div>
         <FieldBadge
-          label={a.ActivityDojos.length > 1 ? 'Organizacional' : 'Interna'}
+          label={a.type}
           color="blue"
         />
       </div>

@@ -1,4 +1,4 @@
-
+import { IDojo } from "../dojos/dojo.interface";
 
 export interface IActivity {
   id: number;
@@ -8,13 +8,11 @@ export interface IActivity {
   price: number;
   latitude: number;
   longitude: number;
-  dojosId?: number;
-  dojoIds?: number[];
+  dojoIds: number[];
   createdDate: Date;
-  dojos: {};
   type: string;
   description: string;
-  ActivityDojos: [];
+  ActivityDojos: IDojo[];
 }
 
 

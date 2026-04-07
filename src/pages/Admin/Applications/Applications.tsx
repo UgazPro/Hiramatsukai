@@ -16,45 +16,23 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import {
   Calendar,
   Users,
   Award,
   ChevronDown,
   ChevronRight,
-  Search,
-  Filter,
-  Plus,
+  Search, Plus,
   Clock,
   User,
-  BookOpen,
-  Target,
-  Shield,
-  CheckCircle,
+  BookOpen, CheckCircle,
   XCircle,
-  History,
-  Star,
-  CalendarDays,
-  Medal,
-  GraduationCap,
-  FileText,
-  Edit,
-  Eye,
-  Download,
-  Printer
+  History, CalendarDays, GraduationCap, Edit,
+  Eye
 } from "lucide-react";
-import { format, differenceInMonths, differenceInDays } from "date-fns";
+import { format, differenceInMonths } from "date-fns";
 import { es } from "date-fns/locale";
 
 // ================ INTERFACES ================
@@ -306,8 +284,9 @@ export default function Applications() {
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-6">
-      {/* Header */}
+    
+    <div className="p-4 md:p-10">
+
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Sistema de Postulaciones</h1>
@@ -315,10 +294,10 @@ export default function Applications() {
             Gestiona exámenes, postulaciones e historial de alumnos
           </p>
         </div>
-        
+
         {/* Botón de acción según pestaña */}
         {activeTab === 'postulaciones' && (
-          <Button 
+          <Button
             className="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white shadow-md hover:shadow-lg transition-all"
             onClick={() => setShowPostulacionModal(true)}
           >
@@ -333,11 +312,10 @@ export default function Applications() {
         <Button
           variant={activeTab === 'examenes' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('examenes')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${
-            activeTab === 'examenes' 
-              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md' 
-              : 'text-gray-700 hover:bg-gray-200'
-          }`}
+          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'examenes'
+            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
+            : 'text-gray-700 hover:bg-gray-200'
+            }`}
         >
           <Calendar className="h-4 w-4 mr-2" />
           Próximos Exámenes
@@ -345,11 +323,10 @@ export default function Applications() {
         <Button
           variant={activeTab === 'postulaciones' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('postulaciones')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${
-            activeTab === 'postulaciones' 
-              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md' 
-              : 'text-gray-700 hover:bg-gray-200'
-          }`}
+          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'postulaciones'
+            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
+            : 'text-gray-700 hover:bg-gray-200'
+            }`}
         >
           <Users className="h-4 w-4 mr-2" />
           Postulaciones
@@ -357,11 +334,10 @@ export default function Applications() {
         <Button
           variant={activeTab === 'historial' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('historial')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${
-            activeTab === 'historial' 
-              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md' 
-              : 'text-gray-700 hover:bg-gray-200'
-          }`}
+          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'historial'
+            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
+            : 'text-gray-700 hover:bg-gray-200'
+            }`}
         >
           <History className="h-4 w-4 mr-2" />
           Historial
@@ -369,11 +345,10 @@ export default function Applications() {
         <Button
           variant={activeTab === 'alumnos' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('alumnos')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${
-            activeTab === 'alumnos' 
-              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md' 
-              : 'text-gray-700 hover:bg-gray-200'
-          }`}
+          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'alumnos'
+            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
+            : 'text-gray-700 hover:bg-gray-200'
+            }`}
         >
           <GraduationCap className="h-4 w-4 mr-2" />
           Alumnos
@@ -401,7 +376,7 @@ export default function Applications() {
                     </div>
                     <h3 className="font-bold text-xl text-gray-900 mt-4">{examen.nombre}</h3>
                   </div>
-                  
+
                   <div className="p-6 space-y-4">
                     <div className="flex items-center gap-3">
                       <CalendarDays className="h-5 w-5 text-gray-500" />
@@ -410,7 +385,7 @@ export default function Applications() {
                         <p className="font-semibold text-gray-900">{formatFecha(examen.fecha)}</p>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center gap-3">
                       <Users className="h-5 w-5 text-gray-500" />
                       <div>
@@ -420,15 +395,15 @@ export default function Applications() {
                     </div>
 
                     <div className="pt-4 flex gap-3">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100"
                         onClick={() => setSelectedExamen(examen)}
                       >
                         <Eye className="h-4 w-4 mr-2" />
                         Ver detalles
                       </Button>
-                      <Button 
+                      <Button
                         className="flex-1 bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white"
                         onClick={() => {
                           setActiveTab('postulaciones');
@@ -550,7 +525,7 @@ export default function Applications() {
               <Card key={examen.id} className="border border-gray-300 overflow-hidden">
                 <CardContent className="p-0">
                   {/* Cabecera del examen (siempre visible) */}
-                  <div 
+                  <div
                     className="p-5 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer flex justify-between items-center"
                     onClick={() => setExpandedExamen(expandedExamen === examen.id ? null : examen.id)}
                   >
@@ -583,8 +558,8 @@ export default function Applications() {
                     <div className="p-5 border-t border-gray-200 bg-white">
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {examen.participantes.map((participante) => (
-                          <div 
-                            key={participante.id} 
+                          <div
+                            key={participante.id}
                             className="p-4 border border-gray-200 rounded-lg hover:border-amber-400 transition-colors"
                           >
                             <div className="flex items-center justify-between mb-2">
@@ -636,8 +611,8 @@ export default function Applications() {
             {/* Grid de alumnos */}
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {alumnosMock.map((alumno) => (
-                <Card 
-                  key={alumno.id} 
+                <Card
+                  key={alumno.id}
                   className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer group"
                   onClick={() => {
                     setSelectedAlumno(alumno);
@@ -654,12 +629,12 @@ export default function Applications() {
                         </div>
                         <div className={`absolute -bottom-1 -right-1 h-5 w-5 rounded-full border-2 border-white ${alumno.gradoActualColor}`} />
                       </div>
-                      
+
                       <h3 className="font-bold text-gray-900 group-hover:text-amber-700 transition-colors">
                         {alumno.nombre} {alumno.apellido}
                       </h3>
                       <p className="text-sm text-gray-600 mt-1">C.I: {alumno.cedula}</p>
-                      
+
                       <div className="mt-3">
                         <Badge className={getCinturonColor(alumno.gradoActual)}>
                           {alumno.gradoActual}
@@ -686,7 +661,7 @@ export default function Applications() {
           <DialogHeader>
             <DialogTitle className="text-2xl font-bold text-gray-900">Nueva Postulación</DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-6 py-4">
             {/* Selección de examen */}
             <div className="space-y-2">
@@ -760,16 +735,16 @@ export default function Applications() {
             {/* Bunkai */}
             <div className="space-y-2">
               <Label className="text-gray-900">Bunkai a presentar</Label>
-              <Input 
-                placeholder="Descripción del bunkai" 
+              <Input
+                placeholder="Descripción del bunkai"
                 className="border-gray-300"
               />
             </div>
 
             {/* Botones */}
             <div className="flex justify-end gap-3 pt-4">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => setShowPostulacionModal(false)}
                 className="border-gray-300 text-gray-700 hover:bg-gray-100"
               >
@@ -791,7 +766,7 @@ export default function Applications() {
               Historial de {selectedAlumno?.nombre} {selectedAlumno?.apellido}
             </DialogTitle>
           </DialogHeader>
-          
+
           <div className="space-y-6 py-4">
             {/* Información del alumno */}
             <div className="flex items-center gap-6 p-4 bg-gradient-to-r from-amber-50 to-red-50 rounded-lg border border-gray-200">
@@ -816,7 +791,7 @@ export default function Applications() {
             {/* Historial de exámenes */}
             <h4 className="font-semibold text-lg text-gray-900">Exámenes Presentados</h4>
             <div className="space-y-4">
-              {examenesHistorial.flatMap(examen => 
+              {examenesHistorial.flatMap(examen =>
                 examen.participantes
                   .filter(p => p.nombre.includes(selectedAlumno?.nombre || ''))
                   .map(participante => (

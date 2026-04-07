@@ -10,6 +10,7 @@ export const activityLeftFields: ( dojosOptions: any[], isAdmin: boolean ) => Fo
     options: [
       { label: "Organizacional", value: "Organizacional" },
       { label: "Interna", value: "Interna" },
+      { label: "Examen", value: "Examen" },
     ],
   },
   {

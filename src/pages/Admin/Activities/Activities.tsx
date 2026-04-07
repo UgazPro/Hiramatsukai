@@ -15,16 +15,17 @@ import ActivityForm from "./ActivityForm/ActivityForm";
 
 export default function Activities() {
 
-  const { data: activities = [], isLoading } = useActivities();
+  const { activitiesData, isLoading, setIncludePast, setStartDate, setEndDate } = useActivities();
 
-  const { currentDate, setCurrentDate, selectedActivity, setSelectedActivity, showCalendar, toggleCalendar, cSelectedActivity, setCSelectedActivity, finishForm, usingForm, openForm, startEdit, screen, setScreen } = useActivitiesStore();
+  const { currentDate, setCurrentDate, selectedActivity, setSelectedActivity, showCalendar, toggleCalendar, cSelectedActivity, setCSelectedActivity, finishForm, usingForm, openForm, startEdit, startCreate, screen, setScreen } = useActivitiesStore();
 
   const columns = getActivitiesColumns({ startEdit, setSelectedActivity, setScreen });
 
-  useEffect( () => {
-  
+  useEffect(() => {
+
     console.log(selectedActivity);
-  
+    console.log(activitiesData);
+
   }, [selectedActivity]);
 
   return (
@@ -56,7 +57,7 @@ export default function Activities() {
                     <Button
                       variant='secondary'
                       size="sm"
-                      onClick={() => openForm()}
+                      onClick={() => startCreate()}
                       className={`rounded-none border-r border-gray-300 bg-amber-500 text-white hover:bg-amber-600`}
                     >
                       <PlusCircle /> Nueva Actividad
@@ -88,7 +89,7 @@ export default function Activities() {
 
                 <div className={'flex-1'}>
                   <TableComponent
-                    data={activities}
+                    data={activitiesData ? activitiesData.pages.flat() : []}
                     columns={columns}
                     onRowClick={(activity) => {
                       setCSelectedActivity(activity);
@@ -104,7 +105,7 @@ export default function Activities() {
                   styles={`${showCalendar ? 'w-80' : 'w-0'} overflow-hidden transition-all ease-in-out duration-500 `}
                   currentDate={currentDate}
                   setCurrentDate={setCurrentDate}
-                  activities={activities}
+                  activities={activitiesData ? activitiesData.pages.flat() : []}
                   cSelectedActivity={cSelectedActivity}
                   setCSelectedActivity={setCSelectedActivity}
                   GoToTodayButton
@@ -123,7 +124,7 @@ export default function Activities() {
 
         }
 
-        toggle={ screen === "detail" ? true : false }
+        toggle={screen === "detail" ? true : false}
 
       />
 
