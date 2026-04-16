@@ -7,7 +7,6 @@ import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import DialogComponent from "@/components/dialog/DialogComponent";
 import StudentsForm from "./StudentForm/StudentsForm";
 import StudentLongCardView from "./StudentViews/StudentLongCardView";
-import StudentsFilter from "./StudentFilters/StudentsFilter";
 import StudentsHeader from "./StudentViews/StudentsHeader";
 import StudentsNoResults from "./StudentViews/StudentsNoResults";
 import StudentDetailView from "./StudentDetailView/StudentDetailView";
@@ -47,9 +46,6 @@ export default function Students() {
                 className="max-w-6xl"
                 dialogDescription="Complete los campos para agregar un nuevo estudiante al dojo"
               />
-
-              {/* Filter */}
-              <StudentsFilter />
 
               {/* Views */}
               {viewMode === "list" && (

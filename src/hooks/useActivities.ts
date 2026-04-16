@@ -1,51 +1,38 @@
+import { useQuery } from "@tanstack/react-query";
+import { getActivities, ActivitiesFilter } from "@/services/activities/activity.service";
+import { useActivitiesStore } from "@/stores/activities.store";
 import { IActivity } from "@/services/activities/activity.interface";
-import {
-  ActivitiesFilter,
-  getActivities,
-} from "@/services/activities/activity.service";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
 
 export const useActivities = () => {
-    
-  const [includePast, setIncludePast] = useState(false);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const { filters } = useActivitiesStore();
 
-  const { data: activitiesData, isLoading } = useInfiniteQuery<IActivity[]>({
-    queryKey: ["activities", { includePast, startDate, endDate }],
+  const { data, isLoading, refetch } = useQuery<IActivity[]>({
+    queryKey: [
+      "activities",
+      filters.includePast,
+      filters.startDate?.toISOString(),
+      filters.endDate?.toISOString(),
+    ],
     queryFn: async () => {
-      const filters: ActivitiesFilter = {
-        includePast
+      const apiFilters: ActivitiesFilter = {
+        includePast: filters.includePast,
+        dateRange:
+          filters.startDate && filters.endDate
+            ? {
+                startDate: filters.startDate,
+                endDate: filters.endDate,
+              }
+            : null,
       };
-      if (startDate && endDate) {
-        filters.dateRange = {
-          startDate,
-          endDate,
-        };
-      }
-      return await getActivities(filters);
-    },
-    initialPageParam: 1,
-    enabled: true,
-    getNextPageParam: (lastPage) => {
-      return lastPage.length > 0
-        ? { page: lastPage.length / 10 + 1 }
-        : undefined;
-    },
 
-    staleTime: 1000 * 60 * 5,
+      return await getActivities(apiFilters);
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutos
   });
 
   return {
-    includePast,
-    setIncludePast,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-
-    activitiesData, 
-    isLoading
+    activitiesData: data ?? [],
+    isLoading,
+    refetch,
   };
 };

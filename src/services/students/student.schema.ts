@@ -40,11 +40,10 @@ export const studentSchema = z.object({
   martialArtRank: z.array(martialArtRankSchema)
     .refine(
       ranks => {
-        // al menos una pareja completa
+
         const hasCompletePair = ranks.some(r => r.martialArtId > 0 && r.rankId > 0);
         if (!hasCompletePair) return false;
 
-        // ninguna pareja incompleta
         const hasIncompletePair = ranks.some(r => 
           (r.martialArtId > 0 && r.rankId === 0) ||
           (r.martialArtId === 0 && r.rankId > 0)

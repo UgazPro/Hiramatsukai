@@ -19,23 +19,28 @@ export const formatDateOnly = (value: Date | string): string => {
 
 const activitiesUrl = "/activities";
 
-export const getActivities = async (filters?: ActivitiesFilter): Promise<IActivity[]> => {
+export const getActivities = async (
+  filters?: ActivitiesFilter
+): Promise<IActivity[]> => {
   let param = "";
   if (filters) {
     const queryParams = new URLSearchParams();
-    if (filters.dateRange) {
+
+    if (filters.dateRange?.startDate && filters.dateRange?.endDate) {
       queryParams.append(
         "startDate",
-        formatDateOnly(filters.dateRange.startDate),
+        formatDateOnly(filters.dateRange.startDate)
       );
       queryParams.append(
         "endDate",
-        formatDateOnly(filters.dateRange.endDate),
+        formatDateOnly(filters.dateRange.endDate)
       );
     }
-    if (filters.includePast) {
+
+    if (filters.includePast !== undefined && filters.includePast !== null) {
       queryParams.append("includePast", filters.includePast.toString());
     }
+
     param = queryParams.toString();
   }
 

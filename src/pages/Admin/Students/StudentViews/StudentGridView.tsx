@@ -1,4 +1,4 @@
-import { DeleteStudentDialog } from "@/components/deleteStudentDialog";
+import { DeleteDialog } from "@/components/deleteDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -116,12 +116,13 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                         {/* Buttons */}
                         <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
                             <div className="flex justify-between gap-2">
-                                <DeleteStudentDialog 
-                                    studentName={`${student.name} ${student.lastName}`}
+                                <DeleteDialog 
+                                    whatsDeleting={`${student.name} ${student.lastName}`}
                                     onConfirm={() => deleteStudent(student.id)}
                                     buttonText="Eliminar"
                                     buttonStyles="border-red-300 text-red-700 hover:bg-red-100 hover:border-red-400 flex-1"
                                     buttonType='outline'
+                                    preposition="a"
                                 />
                     
                                 <Button

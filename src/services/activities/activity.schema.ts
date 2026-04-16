@@ -10,13 +10,17 @@ export const ActivitySchema = z.object({
 
     place: z.string().nonempty("Lugar Requerido"),
 
-    price: z.number("Precio Requerido").optional(),
+    price: z.number("Precio Requerido"),
 
     type: z.string().nonempty("Tipo de Actividad Requerido"),
 
     description: z.string().nonempty("Descripción Requerida"),
 
-    dojoIds: z.array(z.string()).nonempty("Dojos Requeridos")
+    dojoIds: z.array(z.number()).min(1, "Seleccione al menos un dojo"),
+
+    latitude: z.number(),
+
+    longitude: z.number(),
 
 });
 

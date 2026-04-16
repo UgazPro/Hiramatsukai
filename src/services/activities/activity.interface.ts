@@ -15,8 +15,17 @@ export interface IActivity {
   ActivityDojos: IDojo[];
 }
 
-
-
+export interface IActivityCreate { 
+  name: string;
+  date: Date;
+  place: string;
+  price: number;
+  latitude: number;
+  longitude: number;
+  dojoIds: number[];
+  type: string;
+  description: string;  
+}
 
 
 

@@ -2,15 +2,16 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-interface Props {
-  studentName: string;
+interface DeleteDialogProps {
+  whatsDeleting: string;
   onConfirm: () => void;
   buttonStyles?: string;
   buttonText?: string;
   buttonType?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | "clickRed" | null;
+  preposition?: string;
 }
 
-export function DeleteStudentDialog({ studentName, onConfirm, buttonStyles, buttonText, buttonType }: Props) {
+export function DeleteDialog({ whatsDeleting, onConfirm, buttonStyles, buttonText, buttonType, preposition }: DeleteDialogProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -32,7 +33,7 @@ export function DeleteStudentDialog({ studentName, onConfirm, buttonStyles, butt
           </AlertDialogTitle>
 
           <AlertDialogDescription>
-            Esta acción eliminará a <b>{studentName}</b> permanentemente.
+            Esta acción eliminará {preposition} <b>{whatsDeleting}</b> permanentemente.
             No se puede deshacer.
           </AlertDialogDescription>
         </AlertDialogHeader>

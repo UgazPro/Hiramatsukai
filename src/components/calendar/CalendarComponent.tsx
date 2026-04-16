@@ -29,7 +29,7 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
         );
     };
 
-    // Generar días del mes para el calendario
+    // Generate days of the month for the calendar
     const getDaysInMonth = (date: Date) => {
         const year = date.getFullYear();
         const month = date.getMonth();
@@ -59,7 +59,7 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
         }
 
         // Days of the next month
-        const totalCells = 42; // 6 semanas * 7 días
+        const totalCells = 42; // 6 weeks * 7 days
         const remainingCells = totalCells - days.length;
         for (let i = 1; i <= remainingCells; i++) {
             days.push({
@@ -133,31 +133,28 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
                                 <div
                                     key={index}
                                     className={`
-                          h-12 p-1 rounded-lg transition-all duration-200 hover:cursor-pointer
-                          ${!day.isCurrentMonth ? 'text-gray-400' : 'text-gray-900'}
-                          ${isToday ? 'border-amber-500 bg-amber-50' : 'border-gray-200'}
-                          ${hasActivities ? 'bg-blue-50 hover:bg-blue-100 cursor-pointer' : 'hover:bg-gray-50'}
-                          ${isSelectedActivityDay ? 'ring-2 ring-amber-500 bg-amber-100' : ''}
-                          flex flex-col items-center justify-start
-                        `}
+                                        h-12 p-1 rounded-lg transition-all duration-200 hover:cursor-pointer
+                                        ${!day.isCurrentMonth ? 'text-gray-400' : 'text-gray-900'}
+                                        ${isToday ? 'border-amber-500 bg-amber-50' : 'border-gray-200'}
+                                        ${hasActivities ? 'bg-blue-50 hover:bg-blue-100 cursor-pointer' : 'hover:bg-gray-50'}
+                                        ${isSelectedActivityDay ? 'ring-2 ring-amber-500 bg-amber-100' : ''}
+                                        flex flex-col items-center justify-start
+                                    `}
                                 >
                                     <div className="text-sm font-medium">{format(day.date, 'd')}</div>
                                     {hasActivities && (
                                         <div className="flex flex-wrap gap-0.5 mt-1 justify-center">
-                                            {day.activities.slice(0, 2).map((act: any, idx: number) => (
+                                            {day.activities.slice(0, 1).map((act: any, idx: number) => (
                                                 <div
                                                     key={idx}
                                                     className={`h-1.5 w-1.5 rounded-full ${act.type === 'examen' ? 'bg-red-500' :
-                                                        act.type === 'torneo' ? 'bg-blue-500' :
-                                                            act.type === 'seminario' ? 'bg-purple-500' :
-                                                                act.type === 'clase_especial' ? 'bg-amber-500' : 'bg-green-500'
+                                                        act.type === 'Organizacional' ? 'bg-blue-500' :
+                                                            act.type === 'Interna' ? 'bg-purple-500' :
+                                                                act.type === 'Examen' ? 'bg-amber-500' : 'bg-green-500'
                                                         }`}
                                                     title={act.name}
                                                 />
                                             ))}
-                                            {day.activities.length > 2 && (
-                                                <div className="text-xs text-gray-500">+{day.activities.length - 2}</div>
-                                            )}
                                         </div>
                                     )}
                                 </div>

@@ -1,4 +1,4 @@
-import { DeleteStudentDialog } from "@/components/deleteStudentDialog";
+import { DeleteDialog } from "@/components/deleteDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -152,12 +152,13 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
 
 
                                     <div className="flex items-center gap-2 pt-2">
-                                        <DeleteStudentDialog
-                                            studentName={`${student.name} ${student.lastName}`}
+                                        <DeleteDialog
+                                            whatsDeleting={`${student.name} ${student.lastName}`}
                                             onConfirm={() => deleteStudent(student.id)}
                                             buttonText="Eliminar"
                                             buttonStyles="border-red-300 text-red-700 hover:bg-red-100 hover:border-red-400 flex-1"
                                             buttonType='outline'
+                                            preposition="a"
                                         />
                                         <Button
                                             size="sm"

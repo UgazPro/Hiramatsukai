@@ -5,8 +5,9 @@ import { useUserData } from "@/helpers/token";
 import { useDojos } from "@/hooks/useDojos";
 import { useCreateActivity, useUpdateActivity } from "@/queries/useActivityMutations";
 import { activityLeftFields, activityRightFields } from "@/services/activities/activitiesForm.data";
-import { ActivityFormValues } from "@/services/activities/activity.schema";
+import { ActivityFormValues, ActivitySchema } from "@/services/activities/activity.schema";
 import { useActivitiesStore } from "@/stores/activities.store";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -24,6 +25,7 @@ export default function ActivityForm() {
     const { mutateAsync: updateActivity } = useUpdateActivity();
 
     const form = useForm<ActivityFormValues>({
+        resolver: zodResolver(ActivitySchema),
         defaultValues: {
             name: '',
             date: new Date(),
@@ -32,12 +34,15 @@ export default function ActivityForm() {
             type: '',
             description: '',
             dojoIds: [],
+            latitude: 0,
+            longitude: 0,
         }
     });
 
     useEffect(() => {
 
-        if (!selectedActivity || mode !== "edit") return;
+        if (mode !== "edit") return;
+        if (!selectedActivity) return;
 
         console.log(selectedActivity);
 
@@ -49,7 +54,7 @@ export default function ActivityForm() {
                 price: selectedActivity.price,
                 type: selectedActivity.type,
                 description: selectedActivity.description,
-                dojoIds: selectedActivity.dojoIds.map((id) => String(id)),
+                dojoIds: selectedActivity.ActivityDojos?.map((dojo: any) => (dojo.dojo.id)) ?? [],
             });
         }
 
@@ -59,7 +64,8 @@ export default function ActivityForm() {
 
         console.log(data);
 
-        const payload: any = {
+        const payload = {
+            ...(mode === "edit" && selectedActivity?.id ? { id: selectedActivity.id } : {}),
             name: data.name,
             date: data.date,
             place: data.place,
@@ -73,17 +79,27 @@ export default function ActivityForm() {
             longitude: 0,
         };
 
-        console.log(payload);
-
         if (mode === "create") {
             await createActivity(payload);
         } else {
-            await updateActivity({ id: selectedActivity!.id, data: { ...payload } });
+            const { id, ...updatePayload } = payload;
+            await updateActivity({ data: updatePayload, id: selectedActivity!.id });
         }
+
+        console.log(payload);
+        console.log(selectedActivity);
 
         finishForm();
 
     };
+
+    const dojosSeledted = form.watch("dojoIds");
+
+
+    useEffect(() => {
+    console.log(dojosSeledted);
+
+    },[dojosSeledted])
 
     return (
 
@@ -119,7 +135,7 @@ export default function ActivityForm() {
                         type="submit"
                         className="bg-red-700 hover:bg-red-800 cursor-pointer"
                     >
-                        {"Guardar Actividad"}
+                        {mode === "create" ? "Guardar Actividad" : "Actualizar Actividad"}
                     </Button>
                 </div>
 

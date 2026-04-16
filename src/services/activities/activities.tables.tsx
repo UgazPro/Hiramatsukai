@@ -5,14 +5,16 @@ import { CalendarDays, Clock, Edit, Eye, Trash } from "lucide-react";
 import { IActivity } from "./activity.interface";
 import FieldBadge from "@/components/table/RenderTableComponents";
 import { activityScreen } from "@/stores/activities.store";
+import { DeleteDialog } from "@/components/deleteDialog";
 
 interface Actions {
   startEdit: (activity: IActivity) => void;
   setSelectedActivity: (activity: IActivity) => void;
   setScreen: (screen: activityScreen) => void;
+  deleteActivity: (id: number) => void;
 }
 
-export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen }: Actions): Column<IActivity>[] => [
+export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen, deleteActivity }: Actions): Column<IActivity>[] => [
   {
     header: "Actividad",
     render: (a) => <p className="font-medium">{a.name}</p>,
@@ -51,7 +53,7 @@ export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen
     header: "Acciones",
     headerClassName: "",
     className: "",
-    render: (a) => (
+    render: (activity) => (
       <>
         <Button
           size="sm"
@@ -59,7 +61,7 @@ export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen
           className="border-gray-300 text-gray-700 hover:bg-gray-100"
           onClick={(e) => {
             e.stopPropagation();
-            setSelectedActivity(a);
+            setSelectedActivity(activity);
             setScreen("detail");
           }}
         >
@@ -71,21 +73,16 @@ export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen
           className="border-gray-300 text-gray-700 hover:bg-gray-100"
           onClick={(e) => {
             e.stopPropagation();
-            startEdit(a);
+            startEdit(activity);
           }}
         >
           <Edit />
         </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          className="border-gray-300 text-gray-700 hover:bg-gray-100"
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <Trash />
-        </Button>
+        <DeleteDialog
+          preposition="la actividad"
+          whatsDeleting={`${activity.name}`}
+          onConfirm={() => deleteActivity(activity.id)}
+        />
       </>
     ),
   },
