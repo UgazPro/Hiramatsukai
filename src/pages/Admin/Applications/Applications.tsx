@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,21 +18,18 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import {
-  Calendar,
-  Users,
-  Award,
-  ChevronDown,
-  ChevronRight,
-  Search, Plus,
-  Clock,
-  User,
-  BookOpen, CheckCircle,
-  XCircle,
-  History, CalendarDays, GraduationCap, Edit,
-  Eye
+  Calendar, ChevronRight, Plus, User, CheckCircle,
+  XCircle
 } from "lucide-react";
 import { format, differenceInMonths } from "date-fns";
 import { es } from "date-fns/locale";
+import NextExams from "./NextExams/NextExams";
+import ApplyStudents from "./ApplyStudents/ApplyStudents";
+import ApplicationsHistory from "./History/ApplicationsHistory";
+import ApplicationsStudentsHistory from "./Students/ApplicationsStudentsHistory";
+import { applicationsTabs, TabType } from "./ApplicationsTabs";
+import TabsComponent from "@/components/tabs/TabsComponent";
+import { useActivities } from "@/hooks/useActivities";
 
 // ================ INTERFACES ================
 interface Alumno {
@@ -233,9 +230,9 @@ const katasMock: Kata[] = [
 ];
 
 // ================ COMPONENTES ================
-type TabType = 'examenes' | 'postulaciones' | 'historial' | 'alumnos';
 
 export default function Applications() {
+
   const [activeTab, setActiveTab] = useState<TabType>('examenes');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedExamen, setSelectedExamen] = useState<Examen | null>(null);
@@ -244,14 +241,8 @@ export default function Applications() {
   const [showPostulacionModal, setShowPostulacionModal] = useState(false);
   const [showAlumnoModal, setShowAlumnoModal] = useState(false);
 
-  // Formulario de postulación
-  const [formPostulacion, setFormPostulacion] = useState({
-    alumnoId: '',
-    examenId: '',
-    gradoAspira: '',
-    kata: '',
-    bunkai: ''
-  });
+  const { activitiesData, isLoading } = useActivities();
+  const filteredActivities = activitiesData.filter(activity => activity.type === 'Examen');
 
   // Formatear fecha
   const formatFecha = (fecha: string) => {
@@ -273,17 +264,8 @@ export default function Applications() {
     return colors[grado] || 'bg-gray-100 text-gray-800';
   };
 
-  // Calcular tiempo desde último examen
-  const calcularTiempoUltimoExamen = (fechaUltimoExamen: string) => {
-    const meses = differenceInMonths(new Date(), new Date(fechaUltimoExamen));
-    if (meses < 12) return `${meses} meses`;
-    const años = Math.floor(meses / 12);
-    const mesesRestantes = meses % 12;
-    return mesesRestantes > 0 ? `${años} año${años > 1 ? 's' : ''} ${mesesRestantes} meses` : `${años} año${años > 1 ? 's' : ''}`;
-  };
-
   return (
-    
+
     <div className="p-4 md:p-10">
 
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
@@ -294,10 +276,12 @@ export default function Applications() {
           </p>
         </div>
 
+        <button onClick={() => console.log("Actividades:", filteredActivities)}>Hola</button>
+
         {/* Botón de acción según pestaña */}
         {activeTab === 'postulaciones' && (
           <Button
-            className="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white shadow-md hover:shadow-lg transition-all"
+            className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white shadow-md hover:shadow-lg transition-all"
             onClick={() => setShowPostulacionModal(true)}
           >
             <Plus className="h-4 w-4 mr-2" />
@@ -307,351 +291,50 @@ export default function Applications() {
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 mb-8 p-1 bg-gray-100 rounded-xl border border-gray-300 max-w-2xl">
-        <Button
-          variant={activeTab === 'examenes' ? 'default' : 'ghost'}
-          onClick={() => setActiveTab('examenes')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'examenes'
-            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
-            : 'text-gray-700 hover:bg-gray-200'
-            }`}
-        >
-          <Calendar className="h-4 w-4 mr-2" />
-          Próximos Exámenes
-        </Button>
-        <Button
-          variant={activeTab === 'postulaciones' ? 'default' : 'ghost'}
-          onClick={() => setActiveTab('postulaciones')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'postulaciones'
-            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
-            : 'text-gray-700 hover:bg-gray-200'
-            }`}
-        >
-          <Users className="h-4 w-4 mr-2" />
-          Postulaciones
-        </Button>
-        <Button
-          variant={activeTab === 'historial' ? 'default' : 'ghost'}
-          onClick={() => setActiveTab('historial')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'historial'
-            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
-            : 'text-gray-700 hover:bg-gray-200'
-            }`}
-        >
-          <History className="h-4 w-4 mr-2" />
-          Historial
-        </Button>
-        <Button
-          variant={activeTab === 'alumnos' ? 'default' : 'ghost'}
-          onClick={() => setActiveTab('alumnos')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'alumnos'
-            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
-            : 'text-gray-700 hover:bg-gray-200'
-            }`}
-        >
-          <GraduationCap className="h-4 w-4 mr-2" />
-          Alumnos
-        </Button>
-      </div>
+      <TabsComponent
+        tabs={applicationsTabs}
+        activeTab={activeTab}
+        onChange={setActiveTab}
+        className="mb-8 max-w-3xl"
+      />
 
       {/* Contenido según pestaña */}
       <div className="space-y-6">
         {/* Pestaña: Próximos Exámenes */}
         {activeTab === 'examenes' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {examenesProximos.map((examen) => (
-              <Card key={examen.id} className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 overflow-hidden group">
-                <CardContent className="p-0">
-                  <div className="bg-gradient-to-r from-amber-50 to-red-50 p-6 border-b border-gray-200">
-                    <div className="flex justify-between items-start">
-                      <div className="h-14 w-14 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-0.5">
-                        <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                          <Award className="h-7 w-7 text-amber-600" />
-                        </div>
-                      </div>
-                      <Badge className="bg-amber-100 text-amber-800 border-amber-200">
-                        {examen.grado}
-                      </Badge>
-                    </div>
-                    <h3 className="font-bold text-xl text-gray-900 mt-4">{examen.nombre}</h3>
-                  </div>
-
-                  <div className="p-6 space-y-4">
-                    <div className="flex items-center gap-3">
-                      <CalendarDays className="h-5 w-5 text-gray-500" />
-                      <div>
-                        <p className="text-sm text-gray-500">Fecha del examen</p>
-                        <p className="font-semibold text-gray-900">{formatFecha(examen.fecha)}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                      <Users className="h-5 w-5 text-gray-500" />
-                      <div>
-                        <p className="text-sm text-gray-500">Participantes</p>
-                        <p className="font-semibold text-gray-900">{examen.participantes.length} postulados</p>
-                      </div>
-                    </div>
-
-                    <div className="pt-4 flex gap-3">
-                      <Button
-                        variant="outline"
-                        className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100"
-                        onClick={() => setSelectedExamen(examen)}
-                      >
-                        <Eye className="h-4 w-4 mr-2" />
-                        Ver detalles
-                      </Button>
-                      <Button
-                        className="flex-1 bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white"
-                        onClick={() => {
-                          setActiveTab('postulaciones');
-                          setSelectedExamen(examen);
-                        }}
-                      >
-                        <Plus className="h-4 w-4 mr-2" />
-                        Postular
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <NextExams
+            setActiveTab={setActiveTab}
+            examenesProximos={examenesProximos}
+            setSelectedExamen={setSelectedExamen}
+          />
         )}
 
         {/* Pestaña: Postulaciones */}
-        {activeTab === 'postulaciones' && (
-          <div className="space-y-6">
-            {/* Filtros y búsqueda */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input
-                  placeholder="Buscar postulante..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white border-gray-300"
-                />
-              </div>
-              <Select defaultValue="todos">
-                <SelectTrigger className="w-full sm:w-48 border-gray-300">
-                  <SelectValue placeholder="Filtrar por grado" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="todos">Todos los grados</SelectItem>
-                  <SelectItem value="amarillo">Amarillo</SelectItem>
-                  <SelectItem value="naranja">Naranja</SelectItem>
-                  <SelectItem value="verde">Verde</SelectItem>
-                  <SelectItem value="azul">Azul</SelectItem>
-                  <SelectItem value="marron">Marrón</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Grid de postulaciones */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {postulacionesMock.map((postulacion) => (
-                <Card key={postulacion.id} className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 group">
-                  <CardContent className="p-0">
-                    <div className="p-5 bg-gradient-to-br from-white to-amber-50 border-b border-gray-200">
-                      <div className="flex items-center gap-3">
-                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-0.5">
-                          <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                            <User className="h-7 w-7 text-amber-600" />
-                          </div>
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-lg text-gray-900">
-                            {postulacion.alumnoNombre} {postulacion.alumnoApellido}
-                          </h3>
-                          <div className="flex gap-2 mt-1">
-                            <Badge className={getCinturonColor(postulacion.gradoActual)}>
-                              {postulacion.gradoActual}
-                            </Badge>
-                            <ChevronRight className="h-4 w-4 text-gray-400" />
-                            <Badge className={getCinturonColor(postulacion.gradoAspira)}>
-                              {postulacion.gradoAspira}
-                            </Badge>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="p-5 space-y-4">
-                      <div>
-                        <p className="text-sm text-gray-500 mb-1">Kata a presentar</p>
-                        <div className="flex items-center gap-2">
-                          <BookOpen className="h-4 w-4 text-amber-600" />
-                          <span className="font-medium text-gray-900">{postulacion.kata}</span>
-                        </div>
-                      </div>
-
-                      <div>
-                        <p className="text-sm text-gray-500 mb-1">Bunkai</p>
-                        <p className="text-sm text-gray-700 line-clamp-2">{postulacion.bunkai}</p>
-                      </div>
-
-                      <div className="flex items-center gap-2 text-sm">
-                        <Clock className="h-4 w-4 text-gray-500" />
-                        <span className="text-gray-600">
-                          Último examen: <span className="font-semibold text-gray-900">{postulacion.tiempoUltimoExamen}</span>
-                        </span>
-                      </div>
-
-                      <div className="pt-4 flex gap-2">
-                        <Button variant="outline" size="sm" className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100">
-                          <Eye className="h-4 w-4 mr-2" />
-                          Ver
-                        </Button>
-                        <Button size="sm" className="flex-1 bg-amber-600 hover:bg-amber-700 text-white">
-                          <Edit className="h-4 w-4 mr-2" />
-                          Editar
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
+        <ApplyStudents
+          activeTab={activeTab}
+          postulacionesMock={postulacionesMock}
+          getCinturonColor={getCinturonColor}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
 
         {/* Pestaña: Historial */}
-        {activeTab === 'historial' && (
-          <div className="space-y-4">
-            {examenesHistorial.map((examen) => (
-              <Card key={examen.id} className="border border-gray-300 overflow-hidden">
-                <CardContent className="p-0">
-                  {/* Cabecera del examen (siempre visible) */}
-                  <div
-                    className="p-5 bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer flex justify-between items-center"
-                    onClick={() => setExpandedExamen(expandedExamen === examen.id ? null : examen.id)}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="h-12 w-12 rounded-full bg-gradient-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center">
-                        <Award className="h-6 w-6 text-amber-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-lg text-gray-900">{examen.nombre}</h3>
-                        <div className="flex items-center gap-3 text-sm text-gray-600">
-                          <Calendar className="h-4 w-4" />
-                          <span>{formatFecha(examen.fecha)}</span>
-                          <span className="text-gray-300">|</span>
-                          <Users className="h-4 w-4" />
-                          <span>{examen.participantes.length} participantes</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      {expandedExamen === examen.id ? (
-                        <ChevronDown className="h-5 w-5 text-gray-600" />
-                      ) : (
-                        <ChevronRight className="h-5 w-5 text-gray-600" />
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Participantes (expandible) */}
-                  {expandedExamen === examen.id && (
-                    <div className="p-5 border-t border-gray-200 bg-white">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                        {examen.participantes.map((participante) => (
-                          <div
-                            key={participante.id}
-                            className="p-4 border border-gray-200 rounded-lg hover:border-amber-400 transition-colors"
-                          >
-                            <div className="flex items-center justify-between mb-2">
-                              <h4 className="font-semibold text-gray-900">{participante.nombre}</h4>
-                              {participante.aprobado ? (
-                                <Badge className="bg-green-100 text-green-800 border-green-200">
-                                  <CheckCircle className="h-3 w-3 mr-1" />
-                                  Aprobado
-                                </Badge>
-                              ) : (
-                                <Badge className="bg-red-100 text-red-800 border-red-200">
-                                  <XCircle className="h-3 w-3 mr-1" />
-                                  No aprobado
-                                </Badge>
-                              )}
-                            </div>
-                            <div className="flex items-center gap-2 text-sm">
-                              <Badge className={getCinturonColor(participante.gradoActual)}>
-                                {participante.gradoActual}
-                              </Badge>
-                              <ChevronRight className="h-3 w-3 text-gray-400" />
-                              <Badge className={getCinturonColor(participante.gradoObtenido)}>
-                                {participante.gradoObtenido}
-                              </Badge>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
+        <ApplicationsHistory
+          activeTab={activeTab}
+          examenesHistorial={examenesHistorial}
+          getCinturonColor={getCinturonColor}
+          setExpandedExamen={setExpandedExamen}
+          expandedExamen={expandedExamen}
+        />
 
         {/* Pestaña: Alumnos */}
-        {activeTab === 'alumnos' && (
-          <div className="space-y-6">
-            {/* Búsqueda */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                placeholder="Buscar alumno..."
-                className="pl-10 bg-white border-gray-300"
-              />
-            </div>
-
-            {/* Grid de alumnos */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {alumnosMock.map((alumno) => (
-                <Card
-                  key={alumno.id}
-                  className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer group"
-                  onClick={() => {
-                    setSelectedAlumno(alumno);
-                    setShowAlumnoModal(true);
-                  }}
-                >
-                  <CardContent className="p-5">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="relative mb-4">
-                        <div className="h-20 w-20 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-1">
-                          <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                            <User className="h-10 w-10 text-amber-600" />
-                          </div>
-                        </div>
-                        <div className={`absolute -bottom-1 -right-1 h-5 w-5 rounded-full border-2 border-white ${alumno.gradoActualColor}`} />
-                      </div>
-
-                      <h3 className="font-bold text-gray-900 group-hover:text-amber-700 transition-colors">
-                        {alumno.nombre} {alumno.apellido}
-                      </h3>
-                      <p className="text-sm text-gray-600 mt-1">C.I: {alumno.cedula}</p>
-
-                      <div className="mt-3">
-                        <Badge className={getCinturonColor(alumno.gradoActual)}>
-                          {alumno.gradoActual}
-                        </Badge>
-                      </div>
-
-                      <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200">
-                          Ver historial →
-                        </Badge>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        )}
+        <ApplicationsStudentsHistory
+          activeTab={activeTab}
+          alumnosMock={alumnosMock}
+          setSelectedAlumno={setSelectedAlumno}
+          setShowAlumnoModal={setShowAlumnoModal}
+          getCinturonColor={getCinturonColor}
+        />
       </div>
 
       {/* Modal de Nueva Postulación */}
@@ -749,7 +432,7 @@ export default function Applications() {
               >
                 Cancelar
               </Button>
-              <Button className="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white">
+              <Button className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white">
                 Crear Postulación
               </Button>
             </div>
@@ -768,8 +451,8 @@ export default function Applications() {
 
           <div className="space-y-6 py-4">
             {/* Información del alumno */}
-            <div className="flex items-center gap-6 p-4 bg-gradient-to-r from-amber-50 to-red-50 rounded-lg border border-gray-200">
-              <div className="h-20 w-20 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-1">
+            <div className="flex items-center gap-6 p-4 bg-linear-to-r from-amber-50 to-red-50 rounded-lg border border-gray-200">
+              <div className="h-20 w-20 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-1">
                 <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
                   <User className="h-10 w-10 text-amber-600" />
                 </div>

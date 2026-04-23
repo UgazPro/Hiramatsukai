@@ -95,7 +95,7 @@ export default function Karatedo() {
                 className="w-full h-[400px] lg:h-[250px] object-cover object-center"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent pointer-events-none" />
 
               <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                 Goju-Ryu
