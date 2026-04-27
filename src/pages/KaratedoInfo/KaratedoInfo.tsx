@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Swords, Target, Users, Award, BookOpen, Shield, Activity, Brain, Heart, Zap } from "lucide-react";
+import { Target, Users, Award, BookOpen, Shield, Activity, Brain, Heart, Zap } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 import { ProgressStepper } from "@/components/progressStepper/Progress-stepper";
 import { karatedoInfoData, katas, ProgressSteps, progressData } from "./KaratedoInfo.data";
@@ -237,7 +237,7 @@ export default function KaratedoInfo() {
                         transition={{ duration: 0.3, ease: "easeOut" }}
                     >
                         <div className="container mx-auto px-4">
-                            <div className="w-full px-4">
+                            <div className="w-full">
                                 <div className="text-center mb-16">
                                     <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                                         Katas <span className="text-red-600">Tradicionales</span>
@@ -351,10 +351,15 @@ export default function KaratedoInfo() {
                                         <div className="space-y-3">
                                             {[
                                                 "10° Kyu (Blanco) - Principiante",
-                                                "8° Kyu (Amarillo) - Fundamentos básicos",
-                                                "6° Kyu (Verde) - Técnicas intermedias",
-                                                "4° Kyu (Azul) - Katas básicos completos",
-                                                "2° Kyu (Marrón) - Preparación para cinturón negro"
+                                                "9° Kyu (Blanco Punta Amarilla) - Principiante",
+                                                "8° Kyu (Blanco Raya Amarilla) - Principiante",
+                                                "7° Kyu (Amarillo) - Fundamentos básicos",
+                                                "6° Kyu (Verde) - Sempai (intermedio)",
+                                                "5° Kyu (Azul) - Sempai avanzado",
+                                                "3° Kyu (Marrón) - Sendoin",
+                                                "2° Kyu (Marrón Punta Negra) - Sendoin",
+                                                "1° Kyu (Marrón Raya Negra) - Sendoin",
+                                                "0° Kyu (Negro) - Shidoin Shodan Ho"
                                             ].map((item, index) => (
                                                 <div key={index} className="flex items-center">
                                                     <div className="h-2 w-2 bg-yellow-500 rounded-full mr-3"></div>
@@ -367,11 +372,16 @@ export default function KaratedoInfo() {
                                         <h4 className="text-xl font-bold text-gray-900 mb-4">Dan (Grados Superiores)</h4>
                                         <div className="space-y-3">
                                             {[
-                                                "1° Dan (Shodan) - Principio del aprendizaje",
-                                                "3° Dan (Sandan) - Instructor asistente",
-                                                "5° Dan (Godan) - Instructor principal",
+                                                "1° Dan (Shodan) - Instructor inicial",
+                                                "2° Dan (Nidan) - Instructor asistente",
+                                                "3° Dan (Sandan) - Instructor",
+                                                "4° Dan (Yondan) - Instructor",
+                                                "5° Dan (Godan) - Maestro",
+                                                "6° Dan (Rokudan) - Maestro",
                                                 "7° Dan (Nanadan) - Maestro (Kyoshi)",
-                                                "8° Dan (Hachidan) - Gran Maestro (Hanshi)"
+                                                "8° Dan (Hachidan) - Gran Maestro (Hanshi)",
+                                                "9° Dan (Kudan) - Gran Maestro (Hanshi)",
+                                                "10° Dan (Judan) - Gran Maestro",
                                             ].map((item, index) => (
                                                 <div key={index} className="flex items-center">
                                                     <div className="h-2 w-2 bg-red-500 rounded-full mr-3"></div>
@@ -418,7 +428,7 @@ export default function KaratedoInfo() {
                                         </ul>
                                     </div>
 
-                                    <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                                    <div className="bg-white rounded-2xl lg:p-8 p-2 shadow-lg border border-gray-100">
                                         <h3 className="text-2xl font-bold text-gray-900 mb-5">Hiramatsukai</h3>
 
                                         <div className="mb-5 rounded-xl border border-gray-200 bg-gray-50 p-4">
@@ -443,32 +453,6 @@ export default function KaratedoInfo() {
                     </motion.section>
                 )}
             </AnimatePresence>
-
-            {/* CTA Final */}
-            <section className="py-10 bg-linear-to-r from-gray-900 to-gray-800">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-4xl mx-auto text-center text-white">
-                        <Swords className="h-16 w-16 mx-auto mb-6" />
-                        <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: "Kavoon" }}>
-                            Comienza tu Camino en el <span className="text-yellow-400">Goju-Ryu</span>
-                        </h2>
-                        <p className="text-xl mb-8 opacity-90">
-                            Entrenamiento tradicional, instructores certificados, filosofía de vida
-                        </p>
-                        <div className="flex flex-wrap gap-4 justify-center">
-                            <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-white px-8">
-                                Probar Clase de Prueba
-                            </Button>
-                            <Button size="lg" variant="outline" className="border-2 border-white text-black hover:bg-white/10">
-                                Solicitar Información
-                            </Button>
-                        </div>
-                        <p className="mt-8 text-gray-400">
-                            Clases para todas las edades • Grupos reducidos • Seguimiento personalizado
-                        </p>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 }

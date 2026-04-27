@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Target, Shield, Book } from "lucide-react";
+import { Book } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 import { AnimatePresence, motion } from "motion/react";
 import { GiSai } from "react-icons/gi";
@@ -80,10 +79,18 @@ export default function KobudoInfo() {
     ];
 
     const katas = [
-        { name: "Shushi no Kon", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
-        { name: "Chikin no Sai", weapon: "Sai", level: "Intermedio", style: "Matayoshi" },
-        { name: "Hamahiga no Tonfa", weapon: "Tonfa", level: "Intermedio", style: "Jinbukai" },
-        { name: "Maezato no Nunchaku", weapon: "Nunchaku", level: "Básico", style: "Matayoshi" },
+        { name: "Bo ich", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
+        { name: "Bo ni", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
+        { name: "Fukyu no Kata", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
+        { name: "Bo san", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
+
+        { name: "Tawada no Sai sho", weapon: "Sai", level: "Intermedio", style: "Matayoshi" },
+        { name: "Toyama no Sai", weapon: "Sai", level: "Intermedio", style: "Matayoshi" },
+        { name: "Nisho Sai", weapon: "Sai", level: "Intermedio", style: "Matayoshi" },
+
+        { name: "Hiramatsu no Tonfa sho", weapon: "Tonfa", level: "Intermedio", style: "Jinbukai" },
+
+        { name: "Nunchaku sho", weapon: "Nunchaku", level: "Básico", style: "Matayoshi" },
         { name: "Chatan Yara no Kai", weapon: "Kai", level: "Avanzado", style: "Matayoshi" }
     ];
 
@@ -104,17 +111,16 @@ export default function KobudoInfo() {
     };
 
     return (
-
         <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
             <section className="relative">
-                <div className="h-[600px] md:h-[700px]">
+                <div className="pb-4">
                     <CarouselComponent />
                 </div>
             </section>
 
             {/* Introducción */}
             <section className="bg-white">
-                <div className="px-10">
+                <div className="lg:px-10 px-4">
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                         <div>
                             <div className="inline-block px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-bold mb-6">
@@ -133,24 +139,16 @@ export default function KobudoInfo() {
                                 armas tradicionales, preservando las katas originales y las aplicaciones
                                 prácticas de cada arma.
                             </p>
-                            <div className="flex flex-wrap gap-4">
-                                <Button size="lg" className="bg-blue-500 hover:bg-blue-600 text-white px-8">
-                                    Aprender Kobudo
-                                </Button>
-                                <Button size="lg" variant="outline" className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50">
-                                    Ver Demostración
-                                </Button>
-                            </div>
                         </div>
                         <div className="relative">
                             <div className="bg-linear-to-br from-blue-500 to-blue-600 rounded-3xl p-1">
                                 <div className="bg-white rounded-2xl p-8">
                                     <div className="aspect-square rounded-xl overflow-hidden bg-linear-to-br from-blue-50 to-white flex items-center justify-center">
                                         <div className="text-center">
-                                            <div className="grid grid-cols-2 gap-4">
+                                            <div className="grid grid-cols-3 gap-4">
                                                 <GiBo className="h-12 w-12 text-blue-500" />
                                                 <GiSai className="h-12 w-12 text-blue-500" />
-                                                <Target className="h-12 w-12 text-blue-500" />
+                                                {/* <Target className="h-12 w-12 text-blue-500" /> */}
                                                 <GiNunchaku className="h-12 w-12 text-blue-500" />
                                             </div>
                                             <h3 className="text-2xl font-bold text-gray-900 mt-4" style={{ fontFamily: "Kavoon" }}>
@@ -166,7 +164,7 @@ export default function KobudoInfo() {
             </section>
 
             {/* Selección de Armas Principales */}
-            <section className="p-10 bg-gray-50">
+            <section className="lg:p-10 p-4 bg-gray-50">
                 <div className="text-center mb-8">
                     <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                         Armas <span className="text-blue-600">Principales</span>
@@ -178,7 +176,7 @@ export default function KobudoInfo() {
 
                 {/* Selector de Armas */}
                 <div className="mb-8">
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <div className="flex md:grid md:grid-cols-5 gap-4 overflow-x-auto pb-2 md:overflow-visible md:pb-0">
                         {mainWeapons.map((weapon) => {
                             const Icon = weapon.icon;
                             const isSelected = selectedWeapon === weapon.id;
@@ -189,7 +187,7 @@ export default function KobudoInfo() {
                                     layout
                                     initial={false}
                                     onClick={() => setSelectedWeapon(weapon.id)}
-                                    className={`relative cursor-pointer overflow-hidden flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 border ${isSelected
+                                    className={`relative min-w-44 md:min-w-0 cursor-pointer overflow-hidden flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 border ${isSelected
                                         ? "text-white shadow-lg scale-105 border-transparent"
                                         : "bg-white text-gray-700 hover:bg-gray-50 border-gray-200"
                                         }`}
@@ -306,7 +304,7 @@ export default function KobudoInfo() {
             </section>
 
             {/* Armas Adicionales */}
-            <section className="px-10">
+            <section className="lg:px-10 px-4">
                 <div className="text-center mb-4">
                     <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                         Armas <span className="text-blue-600">Adicionales</span>
@@ -335,7 +333,7 @@ export default function KobudoInfo() {
             </section>
 
             {/* Sistema de Grados */}
-            <section className="p-10 bg-linear-to-b from-gray-50 to-white">
+            <section className="lg:p-10 p-4 bg-linear-to-b from-gray-50 to-white">
                 <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
                     <div className="text-center mb-12">
                         <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
@@ -376,32 +374,6 @@ export default function KobudoInfo() {
                                 Kai y armas adicionales. Maestría en el sistema completo.
                             </p>
                         </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* CTA Final */}
-            <section className="py-10 bg-linear-to-r from-gray-900 to-gray-800">
-                <div className="container mx-auto px-8">
-                    <div className="text-center text-white">
-                        <Shield className="h-16 w-16 mx-auto mb-6" />
-                        <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: "Kavoon" }}>
-                            Domina el Arte de las <span className="text-yellow-400">Armas Tradicionales</span>
-                        </h2>
-                        <p className="text-xl mb-8 opacity-90">
-                            Entrenamiento riguroso, historia viva, técnica depurada
-                        </p>
-                        <div className="flex flex-wrap gap-4 justify-center">
-                            <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-white px-8">
-                                Inscribirse en Kobudo
-                            </Button>
-                            <Button size="lg" variant="outline" className="border-2 border-white text-black hover:bg-white/10">
-                                Seminario de Armas
-                            </Button>
-                        </div>
-                        <p className="mt-8 text-gray-400">
-                            Equipo profesional incluido • Clases especializadas • Certificación internacional
-                        </p>
                     </div>
                 </div>
             </section>

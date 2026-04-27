@@ -2,7 +2,7 @@ import { DeleteDialog } from "@/components/deleteDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { calculateAge } from "@/helpers/formatter";
+import { calculateAge, formatNumberWithDots, formatPhoneNumber } from "@/helpers/formatter";
 import { useDeleteStudent } from "@/queries/useStudentMutations";
 import { IStudent } from "@/services/students/student.interface";
 import { useStudentsStore } from "@/stores/students.store";
@@ -26,7 +26,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
             {filteredStudents.map((student) => (
                 <Card 
                     key={student.id} 
-                    className="border border-gray-300 bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer"
+                    className="border border-gray-300 bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
                     onClick={() => {
                         selectStudent(student);
                         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -64,8 +64,8 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                         <div className="p-6 space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <p className="text-sm text-gray-500 mb-1">ID</p>
-                                    <p className="font-mono text-sm text-gray-900 font-semibold">{student.identification}</p>
+                                    <p className="text-sm text-gray-500 mb-1">Cédula</p>
+                                    <p className="font-mono text-sm text-gray-900 font-semibold">{formatNumberWithDots(student.identification)}</p>
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500 mb-1">Edad</p>
@@ -86,7 +86,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                     <p className="text-sm text-gray-500 mb-1">Dojo</p>
                                     <div className="flex items-center gap-2">
                                         <School className="h-4 w-4 text-gray-500" />
-                                        <span className="font-medium text-gray-900">{student.dojo.dojo}</span>
+                                        <span className="font-medium text-gray-900 text-xs">{student.dojo.dojo}</span>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-500">Teléfono</p>
-                                        <p className="font-medium text-gray-900">{student.phone}</p>
+                                        <p className="font-medium text-gray-900 text-xs">{formatPhoneNumber(student.phone)}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-3">
@@ -107,7 +107,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-500">Email</p>
-                                        <p className="font-medium text-gray-900 truncate">{student.email}</p>
+                                        <p className="font-medium text-gray-900 truncate text-xs">{student.email}</p>
                                     </div>
                                 </div>
                             </div>

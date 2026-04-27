@@ -2,7 +2,7 @@ import { DeleteDialog } from "@/components/deleteDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { calculateAge, dateFormatter, howLongHasSomeonePracticeInMonths } from "@/helpers/formatter";
+import { calculateAge, dateFormatter, formatNumberWithDots, formatPhoneNumber, howLongHasSomeonePracticeInMonths } from "@/helpers/formatter";
 import { useDeleteStudent } from "@/queries/useStudentMutations";
 import { IStudent } from "@/services/students/student.interface";
 import { useStudentsStore } from "@/stores/students.store";
@@ -35,9 +35,9 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
                         }}
                     >
                         <CardContent className="p-0">
-                            <div className="flex flex-col md:flex-row items-start md:items-center gap-4 p-6">
+                            <div className="grid grid-cols-6 gap-2 px-6">
 
-                                <div className="flex items-center gap-4 min-w-70 flex-1">
+                                <div className="col-span-2 flex items-center gap-3 min-w-70 flex-1">
                                     <div className="relative">
                                         <div className="h-16 w-16 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5">
                                             <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
@@ -59,9 +59,9 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
 
                                     <div className="flex-1">
                                         <div className="flex items-center gap-2 mb-1">
-                                            <h3 className="font-bold text-xl text-gray-900 group-hover:text-amber-700 transition-colors">
+                                            <p className="font-bold text-xl text-gray-900 group-hover:text-amber-700 transition-colors whitespace-nowrap max-w-40 overflow-hidden text-ellipsis">
                                                 {student.name} {student.lastName}
-                                            </h3>
+                                            </p>
                                             <Badge className={`${student.rol.rol === 'Instructor'
                                                 ? 'bg-red-100 text-red-800 border-red-200'
                                                 : 'bg-amber-100 text-amber-800 border-amber-200'
@@ -69,10 +69,10 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
                                                 {student.rol.rol}
                                             </Badge>
                                         </div>
-                                        <div className="flex items-center gap-3 text-sm text-gray-600">
+                                        <div className="flex items-center gap-2 text-sm text-gray-600">
                                             <div className="flex items-center gap-1">
                                                 <Shield className="h-3 w-3" />
-                                                <span>ID: {student.identification}</span>
+                                                <span>Cédula: {formatNumberWithDots(student.identification)}</span>
                                             </div>
                                             <div className="flex items-center gap-1">
                                                 <Cake className="h-3 w-3" />
@@ -80,19 +80,19 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
                                             </div>
                                             <div className="flex items-center gap-1">
                                                 <span className="text-gray-400">|</span>
-                                                <span>@{student.username}</span>
+                                                <span className="text-xs whitespace-nowrap overflow-hidden max-w-24">@{student.username}</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <div className="flex-1 min-w-50">
+                                <div className="">
                                     <div className="space-y-2">
                                         <div className="flex items-center gap-2">
                                             <School className="h-4 w-4 text-amber-600" />
                                             <div>
-                                                <p className="text-sm text-gray-500">Dojo asignado</p>
+                                                <p className="text-sm text-gray-500">Dojo</p>
                                                 <p className="font-semibold text-gray-900">{student.dojo.dojo}</p>
                                             </div>
                                         </div>
@@ -104,7 +104,7 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
                                 </div>
 
 
-                                <div className="flex-1 min-w-55">
+                                <div className="">
                                     <div className="space-y-3">
                                         <div className="flex items-center gap-3">
                                             <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
@@ -112,7 +112,7 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
                                             </div>
                                             <div>
                                                 <p className="text-xs text-gray-500">Teléfono</p>
-                                                <p className="font-medium text-gray-900">{student.phone}</p>
+                                                <p className="font-medium text-gray-900">{formatPhoneNumber(student.phone)}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-3">
@@ -121,14 +121,14 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
                                             </div>
                                             <div>
                                                 <p className="text-xs text-gray-500">Email</p>
-                                                <p className="font-medium text-gray-900 truncate">{student.email}</p>
+                                                <p className="font-medium text-gray-900 truncate text-sm max-w-36 overflow-hidden">{student.email}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
 
-                                <div className="flex flex-col gap-3 min-w-45">
+                                <div className="flex flex-col justify-center items-center gap-3">
                                     <div className="space-y-2">
                                         <div className="flex items-center gap-2">
                                             <Calendar className="h-4 w-4 text-gray-500" />
@@ -149,30 +149,31 @@ export default function StudentLongCardView({ filteredStudents }: StudentLongCar
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
 
-                                    <div className="flex items-center gap-2 pt-2">
-                                        <DeleteDialog
-                                            whatsDeleting={`${student.name} ${student.lastName}`}
-                                            onConfirm={() => deleteStudent(student.id)}
-                                            buttonText="Eliminar"
-                                            buttonStyles="border-red-300 text-red-700 hover:bg-red-100 hover:border-red-400 flex-1"
-                                            buttonType='outline'
-                                            preposition="a"
-                                        />
-                                        <Button
-                                            size="sm"
-                                            variant="outline"
-                                            className="h-8 border-amber-300 text-amber-700 hover:bg-amber-50 hover:border-amber-400"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                startEdit(student);
-                                            }}
-                                        >
-                                            <Edit className="h-3 w-3" />
-                                            Editar
-                                        </Button>
-                                    </div>
+                                <div className="flex flex-col gap-2">
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        className="h-8 border-amber-300 text-amber-700 hover:bg-amber-50 hover:border-amber-400"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            startEdit(student);
+                                        }}
+                                    >
+                                        <Edit className="h-3 w-3" />
+                                        Editar
+                                    </Button>
+
+                                    <DeleteDialog
+                                        whatsDeleting={`${student.name} ${student.lastName}`}
+                                        onConfirm={() => deleteStudent(student.id)}
+                                        buttonText="Eliminar"
+                                        buttonStyles="border-red-300 text-red-700 hover:bg-red-100 hover:border-red-400"
+                                        buttonType='outline'
+                                        preposition="a"
+                                    />
                                 </div>
                             </div>
                         </CardContent>

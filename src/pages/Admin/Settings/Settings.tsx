@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DojoBody, DojoScheduleBody, DojoSocialMedia, IDojoInfo, IDojoMartialArts } from "@/services/dojos/dojo.interface";
-import { useCreateDojoSchedules, useDeleteDojoSchedule, useDojoMartialArts, useDojoMonthlyPayments, useDojoPaymentMethods, useDojosInfo, useUpdateDojoSchedules } from "@/hooks/useDojos";
+import { useCreateDojoSchedules, useDeleteDojoSchedule, useDojoMartialArts, useDojoMonthlyPayments, useDojoPaymentMethods, useDojosInfo, useUpdateDojoInfo, useUpdateDojoSchedules } from "@/hooks/useDojos";
 import { IToken, useUserData } from "@/helpers/token";
 import { Controller, useForm } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
@@ -64,6 +64,7 @@ export default function DojoConfigPage() {
   const createSchedulesMutation = useCreateDojoSchedules();
   const updateSchedulesMutation = useUpdateDojoSchedules();
   const deleteScheduleMutation = useDeleteDojoSchedule();
+  const updateDojoInfoMutation = useUpdateDojoInfo();
   const { data: paymentMethods = [], isLoading: isPaymentMethodsLoading } = useDojoPaymentMethods();
   const { data: monthlyPayments = [], isLoading: isMonthlyPaymentsLoading } = useDojoMonthlyPayments();
 
@@ -138,13 +139,25 @@ export default function DojoConfigPage() {
     return FALLBACK_DOJO_IMAGE;
   }
 
-  const updateDojo = (data: DojoBody) => {
+  const updateDojo = async (data: DojoBody) => {
+    console.log(dojo);
+    console.log(user.dojoId);
+    
+    if (!dojo?.id) return;
+
     const payload = {
       ...data,
       socialMedia: socialMedia,
       martialArts: martialArts.map(ma => ma.id),
     }
-    console.log(payload);
+
+console.log(payload);
+
+
+    await updateDojoInfoMutation.mutateAsync({
+      dojoId: dojo.id,
+      dojoInfo: payload,
+    });
   }
 
   const saveSchedule = async (schedules: DojoScheduleBody[]) => {
@@ -218,7 +231,7 @@ export default function DojoConfigPage() {
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">
       {/* Header */}
-      <div className="max-w-7xl mx-auto">
+      <div className="">
         <div className="flex items-center justify-between mb-8">
 
           <div className="text-center">
@@ -238,7 +251,7 @@ export default function DojoConfigPage() {
         </div>
 
         <Tabs defaultValue="info" className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-3">
+          <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-10 lg:mb-3">
             <TabsTrigger value="info" className="flex items-center gap-2">
               <Globe className="h-4 w-4" />
               Información
@@ -325,7 +338,7 @@ export default function DojoConfigPage() {
                       </DropdownMenu>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
                       {martialArts.map((ma, index) => (
                         <div className="space-y-2" key={index}>
                           <div className="flex items-center justify-between">
@@ -333,7 +346,7 @@ export default function DojoConfigPage() {
 
                             <Tooltip>
                               <TooltipTrigger asChild>
-                                <Button variant="ghost" type="button" size="icon" className="ml-auto" onClick={() => setMartialArts(prev => prev.filter(m => m.id !== ma.id))}>
+                                <Button variant="ghost" type="button" size="icon" className="lg:ml-auto" onClick={() => setMartialArts(prev => prev.filter(m => m.id !== ma.id))}>
                                   <X className="h-4 w-4 text-red-600" />
                                 </Button>
                               </TooltipTrigger>

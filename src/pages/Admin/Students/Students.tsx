@@ -28,11 +28,8 @@ export default function Students() {
       {isLoading && <SpinnerComponent />}
 
       <PageTransitionComponent
-
         primaryChildren={
-
           <div className="p-4">
-
             <>
               {/* Header */}
               <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openForm} />
