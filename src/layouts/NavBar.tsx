@@ -6,7 +6,6 @@ export default function NavBar() {
 
     const [open, setOpen] = useState(false);
 
-    // Este efecto solo maneja el estado de scroll, NO cierra el menú
     useEffect(() => {
         const handleScroll = () => {
             setOpen(false);
@@ -14,7 +13,7 @@ export default function NavBar() {
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []); // Sin dependencias, se ejecuta solo una vez
+    }, []);
 
     const handleScroll = (id: string) => {
         const section = document.getElementById(id);

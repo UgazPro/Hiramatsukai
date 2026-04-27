@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ViewMode } from "@/services/students/student.interface";
 import { IdCard, LayoutGrid, List, UserPlus } from "lucide-react";
+import { useStudentsStore } from "@/stores/students.store";
+import SearchFilterComponent from "@/components/Filters/SearchFilter";
 
 interface StudentsHeaderProps {
     viewMode: ViewMode;
@@ -9,6 +11,8 @@ interface StudentsHeaderProps {
 }
 
 export default function StudentsHeader({ viewMode, setViewMode, openCreateStudent }: StudentsHeaderProps) {
+
+    const { searchTerm, setSearchTerm } = useStudentsStore();
 
     const views = [
         { key: "list", icon: List },
@@ -29,6 +33,14 @@ export default function StudentsHeader({ viewMode, setViewMode, openCreateStuden
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
 
+                {/* Filter */}
+                <SearchFilterComponent 
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    placeHolder="Buscar por nombre, apellido, cédula o email..."
+                    width="w-92"
+                />
+
                 <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
 
                     {views.map(({ key, icon: Icon }) => (
@@ -37,7 +49,7 @@ export default function StudentsHeader({ viewMode, setViewMode, openCreateStuden
                             variant={viewMode === key ? "secondary" : "ghost"}
                             size="sm"
                             onClick={() => setViewMode(key as ViewMode)}
-                            className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-amber-500 text-white hover:bg-amber-600" : "text-gray-700 hover:bg-gray-100" }`}
+                            className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-amber-500 text-white hover:bg-amber-600" : "text-gray-700 hover:bg-gray-100"}`}
                         >
                             <Icon className="h-4 w-4" />
                         </Button>

@@ -2,7 +2,7 @@ import { Column } from "@/components/table/TableComponent";
 import { IStudent, userRolesNames } from "./student.interface";
 import { Button } from "@/components/ui/button";
 import { Edit, User, Phone, Calendar } from "lucide-react";
-import { DeleteStudentDialog } from "@/components/deleteStudentDialog";
+import { DeleteDialog } from "@/components/deleteDialog";
 import { calculateAge, dateFormatter } from "@/helpers/formatter";
 import FieldBadge from "@/components/table/RenderTableComponents";
 
@@ -131,8 +131,9 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
                         <Edit className="h-4 w-4" />
                     </Button>
 
-                    <DeleteStudentDialog
-                        studentName={`${student.name} ${student.lastName}`}
+                    <DeleteDialog
+                        preposition="a"
+                        whatsDeleting={`${student.name} ${student.lastName}`}
                         onConfirm={() => deleteStudent(student.id)}
                     />
                 </div>
