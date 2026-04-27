@@ -45,8 +45,8 @@ export const putDataApi = async (endpoint: string, data: any) => {
     })
 }
 
-export const deleteDataApi = async (endpoint: string, data: number) => {
-    return await api.delete(`${endpoint}/${data}`).then((response) => {
+export const deleteDataApi = async (endpoint: string) => {
+    return await api.delete(`${endpoint}`).then((response) => {
         return response.data;
     }).catch((err) => {
         return err.response.data;

@@ -9,7 +9,6 @@ import KendoIaidoInfo from './pages/KendoIaidoInfo/KendoIaidoInfo';
 import AdminPanel from './pages/Admin/AdminPanel/AdminPanel';
 import AdminLayout from './layouts/AdminLayout';
 import Students from './pages/Admin/Students/Students';
-import Schedule from './pages/Admin/Schedule/Schedule';
 import Activities from './pages/Admin/Activities/Activities';
 import Training from './pages/Admin/Training/Training';
 import Applications from './pages/Admin/Applications/Applications';
@@ -46,7 +45,7 @@ function App() {
           }>
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/admin/alumnos" element={<Students />} />
-            <Route path="/admin/horario" element={<Schedule />} />
+            {/* <Route path="/admin/horario" element={<Schedule />} /> */}
             <Route path="/admin/actividades" element={<Activities />} />
             <Route path="/admin/entrenamientos" element={<Training />} />
             <Route path="/admin/postulaciones" element={<Applications />} />

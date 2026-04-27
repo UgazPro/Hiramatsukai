@@ -23,6 +23,16 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { AnimatePresence, motion } from "motion/react";
+
+type MainTabId = "about" | "masters" | "gallery" | "contact";
+
+const MAIN_TAB_SECTIONS: { id: MainTabId; label: string; icon: typeof Globe }[] = [
+  { id: "about", label: "Dojo", icon: ShieldCheck },
+  { id: "masters", label: "Maestros", icon: UsersLucide },
+  { id: "gallery", label: "Galeria", icon: Play },
+  { id: "contact", label: "Contacto", icon: Mail },
+];
 
 const dojoData = {
   japaneseName: "龍の道",
@@ -253,13 +263,11 @@ interface ContactFormValues {
 
 export default function DojoPage() {
   const [activeDiscipline, setActiveDiscipline] = useState("karatedo");
-  const [activeTab, setActiveTab] = useState("about");
+  const [activeTab, setActiveTab] = useState<MainTabId>("about");
 
   const { id } = useParams();
 
   const dojo: IDojoInfo | undefined = useDojosInfo(id || "").data;
-
-  console.log(dojo);
 
   const getBannerDojo = (dojo: IDojoInfo): string => {
     const findBanner = dojo.dojoImages.find(img => img.type === "banner");
@@ -281,16 +289,6 @@ export default function DojoPage() {
     const yearsAgo = currentYear - foundedYear;
     return `Desde ${foundedYear} · ${yearsAgo} años de tradición`;
   }
-
-  // const returnTitle = (code: string) => {
-  //   const rename = code.slice(1);
-  //   const grade = code[0]
-  //   return `${rename} ${grade == 'K' ? 'Kyu' : 'Dan'}`
-  // }
-
-  // const setRankText = (rank: Rank): string => {
-  //   return `${rank.rank_name} · ${returnTitle(rank.code)}`;
-  // }
 
   const setDojoSchedule = (schedule: DojoSchedule[]) => {
     const groupedSchedule = schedule.reduce<Record<string, DojoSchedule[]>>((acc, item) => {
@@ -314,9 +312,12 @@ export default function DojoPage() {
                 <p className="text-gray-700 font-medium">{day}</p>
                 <div className="pl-2">
                   {daySchedules.map((item, index) => (
-                    <p key={`${day}-${item.name}-${item.startTime}-${index}`} className="text-gray-700">
-                      {item.name}: {item.startTime} - {item.endTime}
-                    </p>
+                    <div key={`${day}-${item.name}-${item.startTime}-${index}`} className="text-gray-700 flex items-center gap-2">
+                      <p>{item.name}: {item.startTime} - {item.endTime}</p> 
+                      <p>|</p>
+                      <img src={item.martialArts.icon} alt="" className='w-8 h-8' /> 
+                      <p>{item.martialArts.martialArt}</p>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -488,20 +489,50 @@ export default function DojoPage() {
           {/* Navegación Principal */}
           <div className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
             <div className="container mx-auto px-4">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="w-full text-xs lg:text-base grid grid-cols-4 h-14">
-                  <TabsTrigger value="about" className="">Dojo</TabsTrigger>
-                  <TabsTrigger value="masters" className="">Maestros</TabsTrigger>
-                  <TabsTrigger value="gallery" className="">Galería</TabsTrigger>
-                  <TabsTrigger value="contact" className="">Contacto</TabsTrigger>
-                </TabsList>
-              </Tabs>
+              <div className="grid grid-cols-2 lg:flex items-center justify-center gap-4 py-2">
+                {MAIN_TAB_SECTIONS.map((section) => {
+                  const Icon = section.icon;
+                  const isActive = activeTab === section.id;
+
+                  return (
+                    <motion.button
+                      key={section.id}
+                      type="button"
+                      initial={false}
+                      onClick={() => setActiveTab(section.id)}
+                      className={`relative overflow-hidden lg:w-1/4 flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-medium text-sm lg:text-base transition-all duration-300 ${isActive
+                        ? "bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg"
+                        : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-200"
+                        }`}
+                    >
+                      <Icon className="h-4 w-4" />
+                      {section.label}
+
+                      {isActive ? (
+                        <motion.span
+                          layoutId="dojosinfo-tab-underline"
+                          className="absolute left-0 right-0 bottom-0"
+                          transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                        />
+                      ) : null}
+                    </motion.button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
           <main className="container mx-auto px-4 py-8">
-            {/* Contenido Principal dentro de Tabs */}
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -14 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                {/* Contenido Principal dentro de Tabs */}
+                <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as MainTabId)} className="w-full">
 
               {/* Pestaña: El Dojo */}
               <TabsContent value="about" className="space-y-12 mt-8">
@@ -1190,7 +1221,9 @@ export default function DojoPage() {
                 </Card>
               </TabsContent>
 
-            </Tabs>
+                </Tabs>
+              </motion.div>
+            </AnimatePresence>
           </main>
         </>
       )}
