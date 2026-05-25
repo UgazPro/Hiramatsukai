@@ -4,95 +4,14 @@ import CarouselComponent from "@/components/CarouselComponent";
 import { AnimatePresence, motion } from "motion/react";
 import { GiSai } from "react-icons/gi";
 import { GiNunchaku } from "react-icons/gi";
-import { GiStickGrenade } from "react-icons/gi";
 import { GiBo } from "react-icons/gi";
+import { mainWeapons, additionalWeapons, katas } from "./kobudoInfo.data";
+import { GiStickGrenade } from "react-icons/gi";
 import { GiBaton } from "react-icons/gi";
 
 export default function KobudoInfo() {
 
     const [selectedWeapon, setSelectedWeapon] = useState("bo");
-
-    const mainWeapons = [
-        {
-            id: "bo",
-            name: "Bo",
-            description: "Bastón largo de 1.8 metros",
-            icon: GiBo,
-            length: "180 cm",
-            material: "Roble rojo o blanco",
-            origin: "Palo de caminante o herramienta agrícola",
-            techniques: ["Tsuki (estocadas)", "Uchi (golpes)", "Barridos", "Bloqueos"],
-            color: "yellow"
-        },
-        {
-            id: "sai",
-            name: "Sai",
-            description: "Tridente de metal para defensa",
-            icon: GiSai,
-            length: "45-50 cm",
-            material: "Acero forjado",
-            origin: "Herramienta agrícola o de pesca",
-            techniques: ["Atrapamiento", "Golpes de punta", "Bloqueos", "Desarmes"],
-            color: "blue"
-        },
-        {
-            id: "tonfa",
-            name: "Tonfa",
-            description: "Porra con mango lateral",
-            icon: GiBaton,
-            length: "50-60 cm",
-            material: "Madera dura (roble)",
-            origin: "Mango de molino de arroz",
-            techniques: ["Rotaciones", "Golpes potentes", "Bloqueos", "Controles"],
-            color: "red"
-        },
-        {
-            id: "nunchaku",
-            name: "Nunchaku",
-            description: "Dos palos unidos por cadena o cuerda",
-            icon: GiNunchaku,
-            length: "30 cm cada palo",
-            material: "Madera dura y cadena de acero",
-            origin: "Trilladora de arroz",
-            techniques: ["Golpes giratorios", "Bloqueos", "Atrapamientos", "Fintas"],
-            color: "purple"
-        },
-        {
-            id: "kai",
-            name: "Kai",
-            description: "Remo okyanawense",
-            icon: GiStickGrenade,
-            length: "160-180 cm",
-            material: "Madera de camelia",
-            origin: "Remo de pescador",
-            techniques: ["Cortes amplios", "Barridos", "Golpes de hoja", "Defensa marítima"],
-            color: "green"
-        }
-    ];
-
-    const additionalWeapons = [
-        { name: "Korunkua", type: "Báculo", description: "Báculo utilizado por ancianos" },
-        { name: "Tekko", type: "Puño de hierro", description: "Armadura de mano metálica" },
-        { name: "Kama", type: "Hoz", description: "Herramienta agrícola de doble filo" },
-        { name: "Tinbei", type: "Escudo y lanza", description: "Escudo de caparazón con lanza corta" },
-        { name: "Sansetsukon", type: "Nunchaku triple", description: "Tres secciones unidas por cadenas" }
-    ];
-
-    const katas = [
-        { name: "Bo ich", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
-        { name: "Bo ni", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
-        { name: "Fukyu no Kata", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
-        { name: "Bo san", weapon: "Bo", level: "Avanzado", style: "Matayoshi" },
-
-        { name: "Tawada no Sai sho", weapon: "Sai", level: "Intermedio", style: "Matayoshi" },
-        { name: "Toyama no Sai", weapon: "Sai", level: "Intermedio", style: "Matayoshi" },
-        { name: "Nisho Sai", weapon: "Sai", level: "Intermedio", style: "Matayoshi" },
-
-        { name: "Hiramatsu no Tonfa sho", weapon: "Tonfa", level: "Intermedio", style: "Jinbukai" },
-
-        { name: "Nunchaku sho", weapon: "Nunchaku", level: "Básico", style: "Matayoshi" },
-        { name: "Chatan Yara no Kai", weapon: "Kai", level: "Avanzado", style: "Matayoshi" }
-    ];
 
     const selectedWeaponData = mainWeapons.find(w => w.id === selectedWeapon);
     const accentByWeapon: Record<string, string> = {
@@ -121,7 +40,7 @@ export default function KobudoInfo() {
             {/* Introducción */}
             <section className="bg-white">
                 <div className="lg:px-10 px-4">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    <div className="grid lg:grid-cols-2 lg:gap-12 items-center mb-6 lg:mb-0">
                         <div>
                             <div className="inline-block px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-bold mb-6">
                                 Línea Matayoshi-Jinbukai
@@ -141,15 +60,18 @@ export default function KobudoInfo() {
                             </p>
                         </div>
                         <div className="relative">
-                            <div className="bg-linear-to-br from-blue-500 to-blue-600 rounded-3xl p-1">
-                                <div className="bg-white rounded-2xl p-8">
+                            <div className="">
+                                <div className="bg-white rounded-2xl p-4 border-4 border-blue-600">
                                     <div className="aspect-square rounded-xl overflow-hidden bg-linear-to-br from-blue-50 to-white flex items-center justify-center">
                                         <div className="text-center">
                                             <div className="grid grid-cols-3 gap-4">
-                                                <GiBo className="h-12 w-12 text-blue-500" />
-                                                <GiSai className="h-12 w-12 text-blue-500" />
-                                                {/* <Target className="h-12 w-12 text-blue-500" /> */}
-                                                <GiNunchaku className="h-12 w-12 text-blue-500" />
+                                                <GiBo className="h-12 w-full text-blue-500 " />
+                                                <GiSai className="h-12 w-full text-blue-500 " />
+                                                <GiNunchaku className="h-12 w-full text-blue-500 " />
+                                                <div className="flex items-center justify-around col-span-3 ">
+                                                    <GiBaton className="h-12 w-12 text-blue-500" />
+                                                    <GiStickGrenade className="h-12 w-12 text-blue-500" />
+                                                </div>
                                             </div>
                                             <h3 className="text-2xl font-bold text-gray-900 mt-4" style={{ fontFamily: "Kavoon" }}>
                                                 5 Armas Principales
@@ -314,7 +236,7 @@ export default function KobudoInfo() {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6">
                     {additionalWeapons.map((weapon, index) => (
                         <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                             <div className="text-center">
