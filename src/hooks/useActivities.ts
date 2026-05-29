@@ -1,5 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getActivities, ActivitiesFilter } from "@/services/activities/activity.service";
+import {
+  getActivities,
+  ActivitiesFilter,
+  getStudentsAsignedToExam,
+} from "@/services/activities/activity.service";
 import { useActivitiesStore } from "@/stores/activities.store";
 import { IActivity } from "@/services/activities/activity.interface";
 
@@ -32,6 +36,21 @@ export const useActivities = () => {
 
   return {
     activitiesData: data ?? [],
+    isLoading,
+    refetch,
+  };
+};
+
+export const useStudentsAsignedToExam = (examId: number) => {
+  const { data, isLoading, refetch } = useQuery<IActivity[]>({
+    queryKey: ["studentsAsignedToExam", examId],
+    queryFn: async () => {
+      return await getStudentsAsignedToExam(examId);
+    },
+  });
+
+  return {
+    studentsAsignedToExam: data ?? [],
     isLoading,
     refetch,
   };

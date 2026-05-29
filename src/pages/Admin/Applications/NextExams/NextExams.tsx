@@ -5,8 +5,7 @@ import {
     Users,
     Award, Plus, CalendarDays, Eye
 } from "lucide-react";
-import { format } from "date-fns";
-import { es } from "date-fns/locale";
+import { dateFormatterIntoLong } from "@/helpers/formatter";
 
 interface NextExamsProps {
     setActiveTab: any;
@@ -15,10 +14,6 @@ interface NextExamsProps {
 }
 
 export default function NextExams({ setActiveTab, examenesProximos, setSelectedExamen }: NextExamsProps) {
-
-    const formatFecha = (fecha: string) => {
-        return format(new Date(fecha), "dd 'de' MMMM 'de' yyyy", { locale: es });
-    };
 
     return (
         <>
@@ -45,7 +40,7 @@ export default function NextExams({ setActiveTab, examenesProximos, setSelectedE
                                     <CalendarDays className="h-5 w-5 text-gray-500" />
                                     <div>
                                         <p className="text-sm text-gray-500">Fecha del examen</p>
-                                        <p className="font-semibold text-gray-900">{formatFecha(examen.fecha)}</p>
+                                        <p className="font-semibold text-gray-900">{dateFormatterIntoLong(examen.fecha)}</p>
                                     </div>
                                 </div>
 

@@ -34,7 +34,7 @@ export function dateFormatter(date: Date) {
   }
 }
 
-export const dateFormatterIntoLong = (fecha: Date) => {
+export const dateFormatterIntoLong = (fecha: Date | string) => {
   try {
     return format(new Date(fecha), "dd 'de' MMMM 'de' yyyy", { locale: es });
   } catch {

@@ -18,10 +18,9 @@ export const formatDateOnly = (value: Date | string): string => {
 };
 
 const activitiesUrl = "/activities";
+const studentsAsignedToExamUrl = "/applied-students";
 
-export const getActivities = async (
-  filters?: ActivitiesFilter
-): Promise<IActivity[]> => {
+export const getActivities = async (filters?: ActivitiesFilter): Promise<IActivity[]> => {
   let param = "";
   if (filters) {
     const queryParams = new URLSearchParams();
@@ -47,3 +46,15 @@ export const getActivities = async (
   const url = `${activitiesUrl}${param ? `?${param}` : ""}`;
   return await getDataApi(url);
 };
+
+export const getStudentsAsignedToExam = async (examId: number): Promise<IActivity[]> => {
+  const url = `${studentsAsignedToExamUrl}?examId=${examId}`;
+  return await getDataApi(url);
+}
+
+
+
+
+
+
+

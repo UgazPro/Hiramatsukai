@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,8 +21,6 @@ import {
   Calendar, ChevronRight, Plus, User, CheckCircle,
   XCircle
 } from "lucide-react";
-import { format, differenceInMonths } from "date-fns";
-import { es } from "date-fns/locale";
 import NextExams from "./NextExams/NextExams";
 import ApplyStudents from "./ApplyStudents/ApplyStudents";
 import ApplicationsHistory from "./History/ApplicationsHistory";
@@ -30,6 +28,7 @@ import ApplicationsStudentsHistory from "./Students/ApplicationsStudentsHistory"
 import { applicationsTabs, TabType } from "./ApplicationsTabs";
 import TabsComponent from "@/components/tabs/TabsComponent";
 import { useActivities } from "@/hooks/useActivities";
+import { dateFormatterIntoLong } from "@/helpers/formatter";
 
 // ================ INTERFACES ================
 interface Alumno {
@@ -244,11 +243,6 @@ export default function Applications() {
   const { activitiesData, isLoading } = useActivities();
   const filteredActivities = activitiesData.filter(activity => activity.type === 'Examen');
 
-  // Formatear fecha
-  const formatFecha = (fecha: string) => {
-    return format(new Date(fecha), "dd 'de' MMMM 'de' yyyy", { locale: es });
-  };
-
   // Obtener color del cinturón
   const getCinturonColor = (grado: string) => {
     const colors: Record<string, string> = {
@@ -355,7 +349,7 @@ export default function Applications() {
                 <SelectContent>
                   {examenesProximos.map((examen) => (
                     <SelectItem key={examen.id} value={examen.id.toString()}>
-                      {examen.nombre} - {formatFecha(examen.fecha)}
+                      {examen.nombre} - {dateFormatterIntoLong(examen.fecha)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -484,7 +478,7 @@ export default function Applications() {
                             <p className="font-semibold text-gray-900">{examen.nombre}</p>
                             <div className="flex items-center gap-3 mt-1">
                               <Calendar className="h-4 w-4 text-gray-500" />
-                              <span className="text-sm text-gray-600">{formatFecha(examen.fecha)}</span>
+                              <span className="text-sm text-gray-600">{dateFormatterIntoLong(examen.fecha)}</span>
                             </div>
                           </div>
                           <div className="text-right">
