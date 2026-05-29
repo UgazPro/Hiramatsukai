@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -21,7 +21,7 @@ import {
   Calendar, ChevronRight, Plus, User, CheckCircle,
   XCircle
 } from "lucide-react";
-import { format, differenceInMonths } from "date-fns";
+import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import NextExams from "./NextExams/NextExams";
 import ApplyStudents from "./ApplyStudents/ApplyStudents";
@@ -250,7 +250,7 @@ export default function Applications() {
   };
 
   // Obtener color del cinturón
-  const getCinturonColor = (grado: string) => {
+  const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
       'Blanco': 'bg-gray-100 text-gray-800',
       'Amarillo': 'bg-yellow-100 text-yellow-800',
@@ -276,7 +276,7 @@ export default function Applications() {
           </p>
         </div>
 
-        <button onClick={() => console.log("Actividades:", filteredActivities)}>Hola</button>
+        <Button variant="clickRed">Nueva Postulación</Button>
 
         {/* Botón de acción según pestaña */}
         {activeTab === 'postulaciones' && (
@@ -313,7 +313,7 @@ export default function Applications() {
         <ApplyStudents
           activeTab={activeTab}
           postulacionesMock={postulacionesMock}
-          getCinturonColor={getCinturonColor}
+          getBeltColor={getBeltColor}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />
@@ -322,7 +322,7 @@ export default function Applications() {
         <ApplicationsHistory
           activeTab={activeTab}
           examenesHistorial={examenesHistorial}
-          getCinturonColor={getCinturonColor}
+          getBeltColor={getBeltColor}
           setExpandedExamen={setExpandedExamen}
           expandedExamen={expandedExamen}
         />
@@ -333,7 +333,7 @@ export default function Applications() {
           alumnosMock={alumnosMock}
           setSelectedAlumno={setSelectedAlumno}
           setShowAlumnoModal={setShowAlumnoModal}
-          getCinturonColor={getCinturonColor}
+          getBeltColor={getBeltColor}
         />
       </div>
 
@@ -463,7 +463,7 @@ export default function Applications() {
                 </h3>
                 <p className="text-gray-600">C.I: {selectedAlumno?.cedula}</p>
                 <div className="flex gap-2 mt-2">
-                  <Badge className={getCinturonColor(selectedAlumno?.gradoActual || '')}>
+                  <Badge className={getBeltColor(selectedAlumno?.gradoActual || '')}>
                     Grado actual: {selectedAlumno?.gradoActual}
                   </Badge>
                 </div>
@@ -489,11 +489,11 @@ export default function Applications() {
                           </div>
                           <div className="text-right">
                             <div className="flex items-center gap-2">
-                              <Badge className={getCinturonColor(participante.gradoActual)}>
+                              <Badge className={getBeltColor(participante.gradoActual)}>
                                 {participante.gradoActual}
                               </Badge>
                               <ChevronRight className="h-4 w-4 text-gray-400" />
-                              <Badge className={getCinturonColor(participante.gradoObtenido)}>
+                              <Badge className={getBeltColor(participante.gradoObtenido)}>
                                 {participante.gradoObtenido}
                               </Badge>
                             </div>

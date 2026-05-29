@@ -21,12 +21,12 @@ import {
 interface ApplyStudentsProps {
     activeTab: string;
     postulacionesMock: any[];
-    getCinturonColor: (grado: string) => string;
+    getBeltColor: (grado: string) => string;
     searchTerm: string;
     setSearchTerm: (term: string) => void;
 }
 
-export default function ApplyStudents({ activeTab, postulacionesMock, getCinturonColor, searchTerm, setSearchTerm }: ApplyStudentsProps) {
+export default function ApplyStudents({ activeTab, postulacionesMock, getBeltColor, searchTerm, setSearchTerm }: ApplyStudentsProps) {
 
     return (
         <>
@@ -75,11 +75,11 @@ export default function ApplyStudents({ activeTab, postulacionesMock, getCinturo
                                                     {postulacion.alumnoNombre} {postulacion.alumnoApellido}
                                                 </h3>
                                                 <div className="flex gap-2 mt-1">
-                                                    <Badge className={getCinturonColor(postulacion.gradoActual)}>
+                                                    <Badge className={getBeltColor(postulacion.gradoActual)}>
                                                         {postulacion.gradoActual}
                                                     </Badge>
                                                     <ChevronRight className="h-4 w-4 text-gray-400" />
-                                                    <Badge className={getCinturonColor(postulacion.gradoAspira)}>
+                                                    <Badge className={getBeltColor(postulacion.gradoAspira)}>
                                                         {postulacion.gradoAspira}
                                                     </Badge>
                                                 </div>

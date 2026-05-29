@@ -27,35 +27,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Calendar as CalendarIcon,
   Search,
   User,
   Phone,
   Mail,
-  DollarSign,
   CheckCircle,
   XCircle,
   AlertCircle,
   Clock,
   CreditCard,
-  Banknote,
   Receipt,
   Printer,
   Download,
   FileText,
   ChevronLeft,
   ChevronRight,
-  Filter,
   CalendarDays,
-  Users,
-  TrendingUp,
-  Wallet,
-  PiggyBank,
-  History,
   Eye
 } from "lucide-react";
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, isSameMonth } from "date-fns";
-import { es } from "date-fns/locale";
+import { format } from "date-fns";
 
 // ================ INTERFACES ================
 interface Alumno {

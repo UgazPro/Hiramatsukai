@@ -16,10 +16,10 @@ interface ApplicationsHistoryProps {
     examenesHistorial: any[];
     setExpandedExamen: (id: number | null) => void;
     expandedExamen: number | null;
-    getCinturonColor: (grado: string) => string;
+    getBeltColor: (grado: string) => string;
 }
 
-export default function ApplicationsHistory({ activeTab, examenesHistorial, setExpandedExamen, expandedExamen, getCinturonColor }: ApplicationsHistoryProps) {
+export default function ApplicationsHistory({ activeTab, examenesHistorial, setExpandedExamen, expandedExamen, getBeltColor }: ApplicationsHistoryProps) {
 
     const formatFecha = (fecha: string) => {
         return format(new Date(fecha), "dd 'de' MMMM 'de' yyyy", { locale: es });
@@ -85,11 +85,11 @@ export default function ApplicationsHistory({ activeTab, examenesHistorial, setE
                                                         )}
                                                     </div>
                                                     <div className="flex items-center gap-2 text-sm">
-                                                        <Badge className={getCinturonColor(participante.gradoActual)}>
+                                                        <Badge className={getBeltColor(participante.gradoActual)}>
                                                             {participante.gradoActual}
                                                         </Badge>
                                                         <ChevronRight className="h-3 w-3 text-gray-400" />
-                                                        <Badge className={getCinturonColor(participante.gradoObtenido)}>
+                                                        <Badge className={getBeltColor(participante.gradoObtenido)}>
                                                             {participante.gradoObtenido}
                                                         </Badge>
                                                     </div>

@@ -1,4 +1,4 @@
-import { Building2, CreditCard, Mail, Phone, Plus, UserCircle } from "lucide-react";
+import { Building2, CreditCard, Mail, PenSquare, Phone, Plus, UserCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MonthlyPaymentBody, MonthlyPayments, PaymentMethodBody, PaymentMethods } from "@/services/dojos/payments.interface";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,8 @@ interface PaymentsSettingsProps {
     isPaymentMethodsLoading: boolean;
     onCreateMonthlyPayment?: (data: MonthlyPaymentBody) => void | Promise<void>;
     onCreatePaymentMethod?: (data: PaymentMethodBody) => void | Promise<void>;
+    onUpdateMonthlyPayment?: (id: number, data: MonthlyPaymentBody) => void | Promise<void>;
+    onUpdatePaymentMethod?: (id: number, data: PaymentMethodBody) => void | Promise<void>;
 }
 
 export const PaymentsSettings = ({
@@ -32,27 +34,68 @@ export const PaymentsSettings = ({
     isPaymentMethodsLoading,
     onCreateMonthlyPayment,
     onCreatePaymentMethod,
+    onUpdateMonthlyPayment,
+    onUpdatePaymentMethod,
 }: PaymentsSettingsProps) => {
     const [monthlyFormOpen, setMonthlyFormOpen] = useState(false);
     const [paymentMethodFormOpen, setPaymentMethodFormOpen] = useState(false);
+    const [selectedMonthlyPayment, setSelectedMonthlyPayment] = useState<MonthlyPayments | null>(null);
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<PaymentMethods | null>(null);
 
 
     const openMonthlyForm = () => {
+        setSelectedMonthlyPayment(null);
         setMonthlyFormOpen(true);
     }
 
     const openPaymentMethodForm = () => {
+        setSelectedPaymentMethod(null);
         setPaymentMethodFormOpen(true);
     }
 
-    const handleCreateMonthlyPayment = async (data: MonthlyPaymentBody) => {
-        await onCreateMonthlyPayment?.(data);
-        setMonthlyFormOpen(false);
+    const openMonthlyEditForm = (monthlyPayment: MonthlyPayments) => {
+        setSelectedMonthlyPayment(monthlyPayment);
+        setMonthlyFormOpen(true);
     }
 
-    const handleCreatePaymentMethod = async (data: PaymentMethodBody) => {
-        await onCreatePaymentMethod?.(data);
+    const openPaymentMethodEditForm = (paymentMethod: PaymentMethods) => {
+        setSelectedPaymentMethod(paymentMethod);
+        setPaymentMethodFormOpen(true);
+    }
+
+    const closeMonthlyForm = () => {
+        setMonthlyFormOpen(false);
+        setSelectedMonthlyPayment(null);
+    }
+
+    const closePaymentMethodForm = () => {
         setPaymentMethodFormOpen(false);
+        setSelectedPaymentMethod(null);
+    }
+
+    const handleSaveMonthlyPayment = async (data: MonthlyPaymentBody) => {
+        if (selectedMonthlyPayment && onUpdateMonthlyPayment) {
+            await onUpdateMonthlyPayment(selectedMonthlyPayment.id, data);
+        } else {
+            await onCreateMonthlyPayment?.(data);
+        }
+
+        closeMonthlyForm();
+    }
+
+    const handleSavePaymentMethod = async (data: PaymentMethodBody) => {
+        if (selectedPaymentMethod && onUpdatePaymentMethod) {
+            await onUpdatePaymentMethod(selectedPaymentMethod.id, data);
+        } else {
+            await onCreatePaymentMethod?.(data);
+        }
+
+        closePaymentMethodForm();
+    }
+
+    const namePaymentMethod = (method: PaymentMethods) => {
+        const find = methods.find(m => m.value === method.payment_method);
+        return find ? find.name : method.payment_method;
     }
 
     return (
@@ -74,8 +117,11 @@ export const PaymentsSettings = ({
             <CardContent>
                 {monthlyFormOpen && (
                     <MonthlyPaymentForm
-                        onCancel={() => setMonthlyFormOpen(false)}
-                        onSubmit={handleCreateMonthlyPayment}
+                        key={selectedMonthlyPayment ? `monthly-${selectedMonthlyPayment.id}` : "monthly-new"}
+                        initialData={selectedMonthlyPayment}
+                        onCancel={closeMonthlyForm}
+                        onSubmit={handleSaveMonthlyPayment}
+                        submitText={selectedMonthlyPayment ? "Actualizar mensualidad" : "Guardar mensualidad"}
                     />
                 )}
                 {isMonthlyPaymentsLoading ? (
@@ -100,6 +146,14 @@ export const PaymentsSettings = ({
 
                                     <div className="text-sm text-gray-700 space-y-2">
                                         <p className="font-semibold text-gray-900 text-xl">{item.amount}$</p>
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => openMonthlyEditForm(item)}
+                                        >
+                                            <PenSquare className="h-4 w-4 mr-2" />
+                                            Editar
+                                        </Button>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -125,8 +179,11 @@ export const PaymentsSettings = ({
             <CardContent>
                 {paymentMethodFormOpen && (
                     <PaymentMethodForm
-                        onCancel={() => setPaymentMethodFormOpen(false)}
-                        onSubmit={handleCreatePaymentMethod}
+                        key={selectedPaymentMethod ? `payment-method-${selectedPaymentMethod.id}` : "payment-method-new"}
+                        initialData={selectedPaymentMethod}
+                        onCancel={closePaymentMethodForm}
+                        onSubmit={handleSavePaymentMethod}
+                        submitText={selectedPaymentMethod ? "Actualizar método" : "Guardar método"}
                     />
                 )}
 
@@ -142,9 +199,19 @@ export const PaymentsSettings = ({
                         {paymentMethods.map((method) => (
                             <Card key={method.id}>
                                 <CardContent className="space-y-1">
-                                    <div className="flex items-center gap-2">
-                                        <CreditCard className="h-4 w-4 text-yellow-600" />
-                                        <p className="font-semibold text-gray-900">{method.payment_method}</p>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                            <CreditCard className="h-4 w-4 text-yellow-600" />
+                                            <p className="font-semibold text-gray-900">{namePaymentMethod(method)}</p>
+                                        </div>
+                                        <Button
+                                            size="sm"
+                                            variant="outline"
+                                            onClick={() => openPaymentMethodEditForm(method)}
+                                        >
+                                            <PenSquare className="h-4 w-4 mr-2" />
+                                            Editar
+                                        </Button>
                                     </div>
 
                                     <div className="text-sm text-gray-700 space-y-2">
@@ -191,13 +258,15 @@ export const PaymentsSettings = ({
 
 
 interface MonthlyPaymentFormProps {
+    initialData?: MonthlyPayments | null;
     onSubmit: (data: MonthlyPaymentBody) => void | Promise<void>;
     onCancel: () => void;
+    submitText: string;
 }
 
-const MonthlyPaymentForm = ({ onSubmit, onCancel }: MonthlyPaymentFormProps) => {
-    const [amount, setAmount] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
+const MonthlyPaymentForm = ({ initialData, onSubmit, onCancel, submitText }: MonthlyPaymentFormProps) => {
+    const [amount, setAmount] = useState<string>(initialData ? String(initialData.amount) : "");
+    const [description, setDescription] = useState<string>(initialData?.description || "");
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -241,7 +310,7 @@ const MonthlyPaymentForm = ({ onSubmit, onCancel }: MonthlyPaymentFormProps) => 
                     Cancelar
                 </Button>
                 <Button type="submit">
-                    Guardar mensualidad
+                    {submitText}
                 </Button>
             </div>
         </form>
@@ -250,27 +319,48 @@ const MonthlyPaymentForm = ({ onSubmit, onCancel }: MonthlyPaymentFormProps) => 
 
 
 interface PaymentMethodFormProps {
+    initialData?: PaymentMethods | null;
     onSubmit: (data: PaymentMethodBody) => void | Promise<void>;
     onCancel: () => void;
+    submitText: string;
 }
 
-const PaymentMethodForm = ({ onSubmit, onCancel }: PaymentMethodFormProps) => {
+const PaymentMethodForm = ({ initialData, onSubmit, onCancel, submitText }: PaymentMethodFormProps) => {
     const [formData, setFormData] = useState<PaymentMethodBody>({
-        payment_method: "",
-        bank: "",
-        identification: "",
-        account: "",
-        phone: "",
-        email: "",
+        payment_method: initialData?.payment_method || "",
+        bank: initialData?.bank || "",
+        identification: initialData?.identification || "",
+        account: initialData?.account || "",
+        phone: initialData?.phone || "",
+        email: initialData?.email || "",
     });
 
     const updateField = <K extends keyof PaymentMethodBody>(field: K, value: PaymentMethodBody[K]) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     }
 
+    const isPagoMovil = formData.payment_method === "pago_movil";
+    const isTransferencia = formData.payment_method === "transferencia";
+    const isZelle = formData.payment_method === "zelle";
+
+    const showBank = isPagoMovil || isTransferencia;
+    const showIdentification = isPagoMovil || isTransferencia;
+    const showPhone = isPagoMovil;
+    const showAccount = isTransferencia;
+    const showEmail = isZelle;
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        await onSubmit(formData);
+        const payload: PaymentMethodBody = {
+            payment_method: formData.payment_method,
+            bank: showBank ? formData.bank : "",
+            identification: showIdentification ? formData.identification : "",
+            account: showAccount ? formData.account : "",
+            phone: showPhone ? formData.phone : "",
+            email: showEmail ? formData.email : "",
+        };
+
+        await onSubmit(payload);
     }
 
     return (
@@ -295,77 +385,97 @@ const PaymentMethodForm = ({ onSubmit, onCancel }: PaymentMethodFormProps) => {
                     </Select>
                 </div>
 
-                <div className="space-y-2">
-                    <Label>Banco</Label>
-                    <Select
-                        value={formData.bank}
-                        onValueChange={(value) => updateField("bank", value)}
-                    >
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Selecciona un banco" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectGroup>
-                                {BankData.map((item) => (
-                                    <SelectItem key={item.bank} value={item.bank}>{item.bank}</SelectItem>
-                                ))}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div>
+                {showBank && (
+                    <div className="space-y-2">
+                        <Label>Banco</Label>
+                        <Select
+                            value={formData.bank}
+                            onValueChange={(value) => updateField("bank", value)}
+                        >
+                            <SelectTrigger className="w-full">
+                                <SelectValue placeholder="Selecciona un banco" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    {BankData.map((item) => (
+                                        <SelectItem key={item.bank} value={item.bank}>{item.bank}</SelectItem>
+                                    ))}
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                )}
 
-                <div className="space-y-2">
-                    <Label htmlFor="payment-identification">Identificación</Label>
-                    <Input
-                        id="payment-identification"
-                        value={formData.identification}
-                        onChange={(e) => updateField("identification", e.target.value)}
-                        placeholder="Ej. V-12345678"
-                        required
-                    />
-                </div>
+                {showIdentification && (
+                    <div className="space-y-2">
+                        <Label htmlFor="payment-identification">Cédula</Label>
+                        <Input
+                            id="payment-identification"
+                            value={formData.identification}
+                            onChange={(e) => updateField("identification", e.target.value)}
+                            placeholder="Ej. V-12345678"
+                            required
+                        />
+                    </div>
+                )}
 
-                <div className="space-y-2">
-                    <Label htmlFor="payment-account">Cuenta</Label>
-                    <Input
-                        id="payment-account"
-                        value={formData.account}
-                        onChange={(e) => updateField("account", e.target.value)}
-                        placeholder="Número de cuenta"
-                        required
-                    />
-                </div>
+                {showAccount && (
+                    <div className="space-y-2">
+                        <Label htmlFor="payment-account">Cuenta</Label>
+                        <Input
+                            id="payment-account"
+                            value={formData.account}
+                            onChange={(e) => updateField("account", e.target.value)}
+                            placeholder="Número de cuenta"
+                            required
+                        />
+                    </div>
+                )}
 
-                <div className="space-y-2">
-                    <Label htmlFor="payment-phone">Teléfono</Label>
-                    <Input
-                        id="payment-phone"
-                        value={formData.phone}
-                        onChange={(e) => updateField("phone", e.target.value)}
-                        placeholder="Ej. 0412xxxxxxx"
-                        required
-                    />
-                </div>
+                {showPhone && (
+                    <div className="space-y-2">
+                        <Label htmlFor="payment-phone">Teléfono</Label>
+                        <Input
+                            id="payment-phone"
+                            value={formData.phone}
+                            onChange={(e) => updateField("phone", e.target.value)}
+                            placeholder="Ej. 0412xxxxxxx"
+                            required
+                        />
+                    </div>
+                )}
 
-                <div className="space-y-2">
-                    <Label htmlFor="payment-email">Email</Label>
-                    <Input
-                        id="payment-email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => updateField("email", e.target.value)}
-                        placeholder="correo@dominio.com"
-                        required
-                    />
-                </div>
+                {showEmail && (
+                    <div className="space-y-2">
+                        <Label htmlFor="payment-email">Email</Label>
+                        <Input
+                            id="payment-email"
+                            type="email"
+                            value={formData.email}
+                            onChange={(e) => updateField("email", e.target.value)}
+                            placeholder="correo@dominio.com"
+                            required
+                        />
+                    </div>
+                )}
             </div>
 
             <div className="flex justify-end gap-2">
                 <Button type="button" variant="secondary" onClick={onCancel}>
                     Cancelar
                 </Button>
-                <Button type="submit" disabled={!formData.payment_method || !formData.bank}>
-                    Guardar método
+                <Button
+                    type="submit"
+                    disabled={
+                        !formData.payment_method ||
+                        (showBank && !formData.bank) ||
+                        (showIdentification && !formData.identification) ||
+                        (showPhone && !formData.phone) ||
+                        (showAccount && !formData.account) ||
+                        (showEmail && !formData.email)
+                    }
+                >
+                    {submitText}
                 </Button>
             </div>
         </form>

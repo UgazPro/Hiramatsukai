@@ -13,6 +13,12 @@ h1,h2,h3,h4,button,p {
 
 
 
+.interpolate{
+    interpolate-size: allow-keywords;
+}
 
+.animationOpacity{
+    animation: fadeIn 0.2s ease-in-out;
+}
 
 

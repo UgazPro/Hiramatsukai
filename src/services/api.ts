@@ -3,8 +3,8 @@ import { useAuthStore } from "@/stores/auth.store";
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: `https://bj8nvndr-3000.use2.devtunnels.ms/api`,
-    // baseURL: `${import.meta.env.VITE_API_URL}/api`,
+    // baseURL: `https://bj8nvndr-3000.use2.devtunnels.ms/api`,
+    baseURL: `${import.meta.env.VITE_API_URL}/api`,
 });
 
 export const getDataApi = async (url: string) => {
@@ -156,6 +156,7 @@ api.interceptors.response.use(
             useAuthStore.getState().logout();
             window.location.href = "/login";
         }
+
         return Promise.reject(error);
     },
 );

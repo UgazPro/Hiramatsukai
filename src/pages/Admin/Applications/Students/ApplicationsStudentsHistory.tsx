@@ -10,10 +10,10 @@ interface ApplicationsStudentsHistoryProps {
     alumnosMock: any[];
     setSelectedAlumno: (alumno: any) => void;
     setShowAlumnoModal: (show: boolean) => void;
-    getCinturonColor: (grado: string) => string;
+    getBeltColor: (grado: string) => string;
 }
 
-export default function ApplicationsStudentsHistory({ activeTab, alumnosMock, setSelectedAlumno, setShowAlumnoModal, getCinturonColor }: ApplicationsStudentsHistoryProps) {
+export default function ApplicationsStudentsHistory({ activeTab, alumnosMock, setSelectedAlumno, setShowAlumnoModal, getBeltColor }: ApplicationsStudentsHistoryProps) {
 
 
 
@@ -58,7 +58,7 @@ export default function ApplicationsStudentsHistory({ activeTab, alumnosMock, se
                                         <p className="text-sm text-gray-600 mt-1">C.I: {alumno.cedula}</p>
 
                                         <div className="mt-3">
-                                            <Badge className={getCinturonColor(alumno.gradoActual)}>
+                                            <Badge className={getBeltColor(alumno.gradoActual)}>
                                                 {alumno.gradoActual}
                                             </Badge>
                                         </div>

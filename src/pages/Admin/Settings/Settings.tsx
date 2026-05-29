@@ -9,10 +9,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DojoBody, DojoScheduleBody, DojoSocialMedia, IDojoInfo, IDojoMartialArts } from "@/services/dojos/dojo.interface";
-import { useCreateDojoSchedules, useDeleteDojoSchedule, useDojoMartialArts, useDojoMonthlyPayments, useDojoPaymentMethods, useDojosInfo, useUpdateDojoInfo, useUpdateDojoSchedules } from "@/hooks/useDojos";
+import { useCreateDojoMonthlyPayment, useCreateDojoPaymentMethod, useCreateDojoSchedules, useDeleteDojoSchedule, useDojoMartialArts, useDojoMonthlyPayments, useDojoPaymentMethods, useDojosInfo, useUpdateDojoInfo, useUpdateDojoMonthlyPayment, useUpdateDojoPaymentMethod, useUpdateDojoSchedules } from "@/hooks/useDojos";
 import { IToken, useUserData } from "@/helpers/token";
 import { Controller, useForm } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
+import { MonthlyPaymentBody, PaymentMethodBody } from "@/services/dojos/payments.interface";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -64,12 +65,42 @@ export default function DojoConfigPage() {
   const createSchedulesMutation = useCreateDojoSchedules();
   const updateSchedulesMutation = useUpdateDojoSchedules();
   const deleteScheduleMutation = useDeleteDojoSchedule();
+  const createPaymentMethodMutation = useCreateDojoPaymentMethod();
+  const createMonthlyPaymentMutation = useCreateDojoMonthlyPayment();
+  const updatePaymentMethodMutation = useUpdateDojoPaymentMethod();
+  const updateMonthlyPaymentMutation = useUpdateDojoMonthlyPayment();
   const updateDojoInfoMutation = useUpdateDojoInfo();
   const { data: paymentMethods = [], isLoading: isPaymentMethodsLoading } = useDojoPaymentMethods();
   const { data: monthlyPayments = [], isLoading: isMonthlyPaymentsLoading } = useDojoMonthlyPayments();
 
   const martialArtsOptions: IDojoMartialArts[] = useDojoMartialArts().data || [];
   const [martialArts, setMartialArts] = useState<IDojoMartialArts[]>([]);
+
+  const normalizeSocialMedia = (items: DojoSocialMedia[] = []) => {
+    return [...items]
+      .map((item) => ({
+        socialMedia: item.socialMedia,
+        link: item.link || "",
+        directUrl: item.directUrl || "",
+      }))
+      .sort((a, b) => a.socialMedia.localeCompare(b.socialMedia));
+  };
+
+  const normalizeMartialArtsIds = (items: IDojoMartialArts[] = []) => {
+    return items.map((item) => item.id).sort((a, b) => a - b);
+  };
+
+  const hasSocialMediaChanges = dojo
+    ? JSON.stringify(normalizeSocialMedia(socialMedia)) !==
+      JSON.stringify(normalizeSocialMedia(dojo.socialMedia || []))
+    : false;
+
+  const hasMartialArtsChanges = dojo
+    ? JSON.stringify(normalizeMartialArtsIds(martialArts)) !==
+      JSON.stringify(normalizeMartialArtsIds(dojo.dojoMartialArts || []))
+    : false;
+
+  const hasMainInfoChanges = form.formState.isDirty || hasSocialMediaChanges || hasMartialArtsChanges;
 
   const handleChangeSocialMedia = (name: string, value: string) => {
     const determinated = value.includes('https') ? 'directUrl' : 'link';
@@ -181,6 +212,22 @@ console.log(payload);
     await deleteScheduleMutation.mutateAsync({ scheduleId });
   }
 
+  const createPaymentMethod = async (paymentMethodData: PaymentMethodBody) => {
+    await createPaymentMethodMutation.mutateAsync(paymentMethodData);
+  }
+
+  const createMonthlyPayment = async (monthlyPaymentData: MonthlyPaymentBody) => {
+    await createMonthlyPaymentMutation.mutateAsync(monthlyPaymentData);
+  }
+
+  const updatePaymentMethod = async (id: number, paymentMethodData: PaymentMethodBody) => {
+    await updatePaymentMethodMutation.mutateAsync({ id, paymentMethodData });
+  }
+
+  const updateMonthlyPayment = async (id: number, monthlyPaymentData: MonthlyPaymentBody) => {
+    await updateMonthlyPaymentMutation.mutateAsync({ id, monthlyPaymentData });
+  }
+
   if (isDojoLoading) {
     return (
       <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">
@@ -243,6 +290,7 @@ console.log(payload);
 
           <Button
             onClick={handleSaveAll}
+            disabled={!dojo?.id || !hasMainInfoChanges || updateDojoInfoMutation.isPending}
             className="bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white"
           >
             <Save className="h-4 w-4 mr-2" />
@@ -563,6 +611,10 @@ console.log(payload);
               paymentMethods={paymentMethods}
               isMonthlyPaymentsLoading={isMonthlyPaymentsLoading}
               isPaymentMethodsLoading={isPaymentMethodsLoading}
+              onCreateMonthlyPayment={createMonthlyPayment}
+              onCreatePaymentMethod={createPaymentMethod}
+              onUpdateMonthlyPayment={updateMonthlyPayment}
+              onUpdatePaymentMethod={updatePaymentMethod}
             />
           </TabsContent>
         </Tabs>

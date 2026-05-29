@@ -44,7 +44,7 @@ export default function FloatingButtons() {
 
     return (
         
-        <div className=" fixed bottom-6 left-6 z-50 flex flex-col gap-3 w-full">
+        <div className=" fixed bottom-6 left-6 z-50 flex flex-col gap-3 w-auto">
 
             {/* Go-back Button (only if there's a previous history) */}
             {showBackButton && location.pathname !== '/' && (

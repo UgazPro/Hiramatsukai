@@ -1,6 +1,6 @@
 import { deleteDataApi, getDataApi, getImagesApi, postDataApi, putDataApi } from "../api";
 import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IDojoRanks } from "./dojo.interface";
-import { PaymentMethods } from "./payments.interface";
+import { MonthlyPaymentBody, MonthlyPayments, PaymentMethodBody, PaymentMethods } from "./payments.interface";
 
 const dojosUrl = '/dojos';
 const paymentsUrl = '/payments';
@@ -63,6 +63,23 @@ export const deleteScheduleDojos = async (scheduleId: number) => {
 export const getPaymentMethods = async () => {
     return await getDataApi(`${paymentsUrl}/methods`) as Promise<PaymentMethods[]>;
 }
+
+export const createPaymentMethod = async (paymentMethodData: PaymentMethodBody) => {
+    return await postDataApi(`${paymentsUrl}/methods`, paymentMethodData) as Promise<PaymentMethods>;
+}
+
+export const updatePaymentMethod = async (id: number, paymentMethodData: PaymentMethodBody) => {
+    return await putDataApi(`${paymentsUrl}/methods/${id}`, paymentMethodData) as Promise<PaymentMethods>;
+}
+
 export const getMonthlyPayments = async () => {
-    return await getDataApi(`${paymentsUrl}/monthly`);
+    return await getDataApi(`${paymentsUrl}/monthly`) as Promise<MonthlyPayments[]>;
+}
+
+export const postMonthlyPayments = async (data: MonthlyPaymentBody) => {
+    return await postDataApi(`${paymentsUrl}/monthly`, data) as Promise<MonthlyPayments>;
+}
+
+export const updateMonthlyPayments = async (id: number, data: MonthlyPaymentBody) => {
+    return await putDataApi(`${paymentsUrl}/monthly/${id}`, data) as Promise<MonthlyPayments>;
 }
