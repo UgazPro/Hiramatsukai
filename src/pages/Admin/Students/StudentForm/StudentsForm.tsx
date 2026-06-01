@@ -76,7 +76,7 @@ export default function StudentsForm() {
                 })),
             });
 
-            setImagePreview(selectedStudent.profileImg || null);
+            // setImagePreview(selectedStudent.profileImg || '');
         }
 
     }, [mode, selectedStudent, roles, dojos]);

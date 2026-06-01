@@ -11,7 +11,7 @@ export default function PageTransitionComponent({ primaryChildren, secondaryChil
         <div className="relative w-screen h-full overflow-hidden">
 
             <div 
-                className={`flex w-[188%] h-full transition-transform duration-500 ease-in-out ${toggle ? '-translate-x-1/2' : 'translate-x-0'}`}
+                className={`flex w-[190%] h-full transition-transform duration-500 ease-in-out ${toggle ? '-translate-x-1/2' : 'translate-x-0'}`}
             >
 
                 <div className="w-1/2 shrink-0 h-full overflow-auto">{primaryChildren}</div>

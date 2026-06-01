@@ -83,10 +83,10 @@ export default function Header() {
 
                 {location.pathname.includes("/admin") && isAuthenticated && (
                     <div className="flex flex-col items-end">
-                        <p className="text-white text-2xl">
+                        <p className="text-white lg:text-2xl text-sm">
                             {userName} {userLastName}
                         </p>
-                        <p className="text-white">{userRole}</p>
+                        <p className="text-white lg:text-normal text-sm">{userRole}</p>
                     </div>
                 )}
             </div>

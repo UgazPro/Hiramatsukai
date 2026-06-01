@@ -37,7 +37,7 @@ export default function AdminSidebar() {
       )}
 
       <div
-        className="hidden group w-16 hover:w-70 transition-all duration-300 ease-in-out bg-black text-white pl-3 p-4 flex-col justify-between md:flex fixed top-0 left-0 h-full z-50"
+        className="hidden group w-16 hover:w-70 transition-all duration-300 ease-in-out bg-black text-white pl-3 p-4 flex-col justify-between md:flex absolute bottom-0 lg:top-0 left-0 h-full z-50"
       >
         <div className="w-full">
           {/* Logo/Header */}
@@ -104,7 +104,7 @@ export default function AdminSidebar() {
       </div>
 
       {/* Mobile Sidebar */}
-      <div className="md:hidden fixed top-0 left-0 z-50 w-full h-16 bg-black text-white">
+      <div className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-black text-white">
         <div className="grid h-full grid-cols-5 mx-auto">
           {sidebarData.slice(0, 5).map((item, index) => (
             <Link

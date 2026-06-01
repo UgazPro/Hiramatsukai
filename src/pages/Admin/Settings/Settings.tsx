@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
-import { ArrowLeft, Save, Clock, MapPin, Phone, Mail, Globe, Users, Calendar, Shield, Bell, Image, DollarSign, BookOpen, Target, TrendingUp, X, Plus, Trash2, Edit
+import { useEffect, useState } from "react";
+import {
+  Save, Clock, MapPin, Phone, Mail, Globe, Users, Image, DollarSign, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,200 +8,230 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Switch } from "@/components/ui/switch";
+import { DojoBody, DojoScheduleBody, DojoSocialMedia, IDojoInfo, IDojoMartialArts } from "@/services/dojos/dojo.interface";
+import { useCreateDojoSchedules, useDeleteDojoSchedule, useDojoMartialArts, useDojoMonthlyPayments, useDojoPaymentMethods, useDojosInfo, useUpdateDojoInfo, useUpdateDojoSchedules } from "@/hooks/useDojos";
+import { IToken, useUserData } from "@/helpers/token";
+import { Controller, useForm } from "react-hook-form";
+import { Separator } from "@/components/ui/separator";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { CalendarFieldComponent } from "@/components/form/renderFormComponents/CalendarFieldComponent";
+
+import Schedule from "../Schedule/Schedule";
+import { PaymentsSettings } from "../Payments/PaymentsSettings";
+
+const FALLBACK_DOJO_IMAGE = "https://blog.marti.mx/wp-content/uploads/2023/01/conoce-que-es-karate-jpg.webp";
+
 
 export default function DojoConfigPage() {
-  const navigate = useNavigate();
 
-  // Estado principal del dojo
-  const [dojoData, setDojoData] = useState({
-    name: "Hiramatsukai Dojo Central",
-    slogan: "Tradición, disciplina y excelencia en artes marciales",
-    description: "Dojo tradicional especializado en Karatedo, Kobudo y Kendo. Más de 30 años formando practicantes de excelencia.",
-    address: "Calle del Dojo 123, Barrio Tradicional, Ciudad",
-    phone: "+34 912 345 678",
-    email: "info@hiramatsukai.com",
-    website: "www.hiramatsukai.com",
-    instagram: "@hiramatsukai_dojo",
-    facebook: "Hiramatsukai Dojo Oficial",
-    logo: "https://api.dicebear.com/7.x/shapes/svg?seed=hiramatsukai&backgroundColor=ffd700",
-    banner: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+  const user: IToken = useUserData() as IToken;
+
+  const { data: dojo, isLoading: isDojoLoading } = useDojosInfo(user.dojo.code || "");
+
+  const form = useForm<DojoBody>({
+    defaultValues: {
+      dojo: dojo?.dojo || "",
+      address: dojo?.address || "",
+      addressShort: dojo?.addressShort || "",
+      code: dojo?.code || "",
+      phone: dojo?.phone || "",
+      email: dojo?.email || "",
+      description: dojo?.description || "",
+      founded: dojo?.founded || "",
+      slogan: dojo?.slogan || "",
+      translate: dojo?.translate || "",
+      latitude: dojo?.latitude || 0,
+      longitude: dojo?.longitude || 0,
+      martialArts: dojo?.dojoMartialArts.map(ma => ma.id) || [],
+      socialMedia: dojo?.socialMedia || [],
+    }
   });
 
-  // Horarios de entrenamiento
-  const [schedule, setSchedule] = useState([
-    { id: 1, day: "Lunes", time: "18:00 - 20:00", activity: "Karatedo - Todos los niveles", instructor: "Sensei Juan" },
-    { id: 2, day: "Martes", time: "18:00 - 20:00", activity: "Kobudo - Intermedios", instructor: "Sensei María" },
-    { id: 3, day: "Miércoles", time: "18:00 - 20:00", activity: "Kendo - Principiantes", instructor: "Sensei Carlos" },
-    { id: 4, day: "Jueves", time: "18:00 - 20:00", activity: "Karatedo - Avanzados", instructor: "Sensei Juan" },
-    { id: 5, day: "Viernes", time: "17:00 - 19:00", activity: "Entrenamiento libre", instructor: "Todos" },
-    { id: 6, day: "Sábado", time: "10:00 - 12:00", activity: "Clase familiar", instructor: "Sensei María" }
-  ]);
+  const [socialMedia, setSocialMedia] = useState<DojoSocialMedia[]>([]);
 
-  // Instructores
-  const [instructors, setInstructors] = useState([
-    { id: 1, name: "Sensei Juan Pérez", rank: "7° Dan", specialty: "Karatedo Goju-Ryu", bio: "Más de 25 años de experiencia" },
-    { id: 2, name: "Sensei María López", rank: "5° Dan", specialty: "Kobudo Okinawense", bio: "Especialista en armas tradicionales" },
-    { id: 3, name: "Sensei Carlos Sato", rank: "6° Dan", specialty: "Kendo & Iaido", bio: "Maestro certificado por la AJKF" }
-  ]);
+  const typesSocialMedia = ["Facebook", "Instagram", "TikTok", "YouTube"];
+  const createSchedulesMutation = useCreateDojoSchedules();
+  const updateSchedulesMutation = useUpdateDojoSchedules();
+  const deleteScheduleMutation = useDeleteDojoSchedule();
+  const updateDojoInfoMutation = useUpdateDojoInfo();
+  const { data: paymentMethods = [], isLoading: isPaymentMethodsLoading } = useDojoPaymentMethods();
+  const { data: monthlyPayments = [], isLoading: isMonthlyPaymentsLoading } = useDojoMonthlyPayments();
 
-  // Precios y membresías
-  const [pricing, setPricing] = useState([
-    { id: 1, name: "Mensual Individual", price: "€50", description: "Acceso a todas las clases regulares" },
-    { id: 2, name: "Mensual Familiar", price: "€120", description: "Para 3 o más miembros de la familia" },
-    { id: 3, name: "Clase Suelta", price: "€15", description: "Por sesión individual" },
-    { id: 4, name: "Trimestral", price: "€135", description: "Ahorra 10% (€45/mes)" }
-  ]);
+  const martialArtsOptions: IDojoMartialArts[] = useDojoMartialArts().data || [];
+  const [martialArts, setMartialArts] = useState<IDojoMartialArts[]>([]);
 
-  // Configuración general
-  const [config, setConfig] = useState({
-    onlineBooking: true,
-    automaticReminders: true,
-    publicSchedule: true,
-    newStudentRegistration: true,
-    maintenanceMode: false,
-    maxStudentsPerClass: 20,
-    minAge: 6,
-    trialClass: true,
-    trialClassPrice: "Gratis"
-  });
+  const handleChangeSocialMedia = (name: string, value: string) => {
+    const determinated = value.includes('https') ? 'directUrl' : 'link';
 
-  // Estados para edición
-  const [editingSchedule, setEditingSchedule] = useState<number | null>(null);
-  const [editingInstructor, setEditingInstructor] = useState<number | null>(null);
-  const [editingPrice, setEditingPrice] = useState<number | null>(null);
+    setSocialMedia(prev => prev.map(sm => {
+      if (sm.socialMedia === name) {
+        return { ...sm, [determinated]: value };
+      }
+      return sm;
+    }))
+  }
 
-  // Estados temporales para edición
-  const [tempSchedule, setTempSchedule] = useState<any>(null);
-  const [tempInstructor, setTempInstructor] = useState<any>(null);
-  const [tempPrice, setTempPrice] = useState<any>(null);
+  const addNewSocialMedia = (type: string) => {
+    if (socialMedia.some(sm => sm.socialMedia === type)) return;
+    setSocialMedia(prev => [...prev, { socialMedia: type, link: "", directUrl: "" }]);
+  }
 
-  // Manejar cambios en datos básicos
-  const handleDojoDataChange = (field: string, value: string) => {
-    setDojoData(prev => ({ ...prev, [field]: value }));
-  };
+  const addMartialArt = (type: IDojoMartialArts) => {
+    if (martialArts.some(ma => ma.id === type.id)) return;
+    setMartialArts(prev => [...prev, type]);
+  }
 
-  // Horarios - CRUD
-  const handleAddSchedule = () => {
-    const newId = schedule.length > 0 ? Math.max(...schedule.map(s => s.id)) + 1 : 1;
-    setSchedule(prev => [...prev, {
-      id: newId,
-      day: "Nuevo día",
-      time: "00:00 - 00:00",
-      activity: "Nueva actividad",
-      instructor: "Nuevo instructor"
-    }]);
-    setEditingSchedule(newId);
-    setTempSchedule({
-      day: "Nuevo día",
-      time: "00:00 - 00:00",
-      activity: "Nueva actividad",
-      instructor: "Nuevo instructor"
-    });
-  };
+  useEffect(() => {
+    if (dojo) {
+      form.reset({
+        dojo: dojo.dojo,
+        address: dojo.address,
+        addressShort: dojo.addressShort,
+        code: dojo.code,
+        phone: dojo.phone,
+        email: dojo.email,
+        description: dojo.description,
+        founded: dojo.founded,
+        slogan: dojo.slogan,
+        translate: dojo.translate,
+        latitude: dojo.latitude,
+        longitude: dojo.longitude,
+        martialArts: dojo.dojoMartialArts.map(ma => ma.id),
+        socialMedia: dojo.socialMedia,
+      });
 
-  const handleEditSchedule = (id: number) => {
-    const scheduleItem = schedule.find(s => s.id === id);
-    if (scheduleItem) {
-      setEditingSchedule(id);
-      setTempSchedule({ ...scheduleItem });
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSocialMedia(dojo.socialMedia);
+      setMartialArts(dojo.dojoMartialArts);
     }
-  };
-
-  const handleSaveSchedule = () => {
-    if (editingSchedule && tempSchedule) {
-      setSchedule(prev => prev.map(s =>
-        s.id === editingSchedule ? { id: editingSchedule, ...tempSchedule } : s
-      ));
-      setEditingSchedule(null);
-      setTempSchedule(null);
-    }
-  };
-
-  const handleDeleteSchedule = (id: number) => {
-    if (confirm("¿Eliminar este horario?")) {
-      setSchedule(prev => prev.filter(s => s.id !== id));
-    }
-  };
-
-  // Instructores - CRUD
-  const handleAddInstructor = () => {
-    const newId = instructors.length > 0 ? Math.max(...instructors.map(i => i.id)) + 1 : 1;
-    setInstructors(prev => [...prev, {
-      id: newId,
-      name: "Nuevo Instructor",
-      rank: "Nuevo Rango",
-      specialty: "Nueva Especialidad",
-      bio: "Nueva biografía"
-    }]);
-    setEditingInstructor(newId);
-    setTempInstructor({
-      name: "Nuevo Instructor",
-      rank: "Nuevo Rango",
-      specialty: "Nueva Especialidad",
-      bio: "Nueva biografía"
-    });
-  };
-
-  const handleSaveInstructor = () => {
-    if (editingInstructor && tempInstructor) {
-      setInstructors(prev => prev.map(i =>
-        i.id === editingInstructor ? { id: editingInstructor, ...tempInstructor } : i
-      ));
-      setEditingInstructor(null);
-      setTempInstructor(null);
-    }
-  };
-
-  const handleDeleteInstructor = (id: number) => {
-    if (confirm("¿Eliminar este instructor?")) {
-      setInstructors(prev => prev.filter(i => i.id !== id));
-    }
-  };
-
-  // Precios - CRUD
-  const handleAddPrice = () => {
-    const newId = pricing.length > 0 ? Math.max(...pricing.map(p => p.id)) + 1 : 1;
-    setPricing(prev => [...prev, {
-      id: newId,
-      name: "Nuevo Plan",
-      price: "€0",
-      description: "Nueva descripción"
-    }]);
-    setEditingPrice(newId);
-    setTempPrice({
-      name: "Nuevo Plan",
-      price: "€0",
-      description: "Nueva descripción"
-    });
-  };
-
-  const handleSavePrice = () => {
-    if (editingPrice && tempPrice) {
-      setPricing(prev => prev.map(p =>
-        p.id === editingPrice ? { id: editingPrice, ...tempPrice } : p
-      ));
-      setEditingPrice(null);
-      setTempPrice(null);
-    }
-  };
-
-  const handleDeletePrice = (id: number) => {
-    if (confirm("¿Eliminar este precio?")) {
-      setPricing(prev => prev.filter(p => p.id !== id));
-    }
-  };
+  }, [dojo, form])
 
   // Guardar toda la configuración
   const handleSaveAll = () => {
     // Aquí iría la lógica para guardar en backend
-    alert("Configuración guardada exitosamente");
+    form.handleSubmit(updateDojo)();
   };
+
+  const setImageDojo = (logo: string): string => {
+    if (logo && logo.trim() !== "") {
+      return `${import.meta.env.VITE_API_URL}/api${logo}`
+    }
+    return FALLBACK_DOJO_IMAGE;
+  }
+
+  const getBannerDojo = (dojo: IDojoInfo | undefined): string => {
+    if (!dojo) return FALLBACK_DOJO_IMAGE;
+    const findBanner = dojo.dojoImages.find(img => img.type === "banner");
+    if (findBanner && findBanner.url && findBanner.url.trim() !== "") {
+      return `${import.meta.env.VITE_API_URL}/api${findBanner.url}`
+    }
+    return FALLBACK_DOJO_IMAGE;
+  }
+
+  const updateDojo = async (data: DojoBody) => {
+    console.log(dojo);
+    console.log(user.dojoId);
+    
+    if (!dojo?.id) return;
+
+    const payload = {
+      ...data,
+      socialMedia: socialMedia,
+      martialArts: martialArts.map(ma => ma.id),
+    }
+
+console.log(payload);
+
+
+    await updateDojoInfoMutation.mutateAsync({
+      dojoId: dojo.id,
+      dojoInfo: payload,
+    });
+  }
+
+  const saveSchedule = async (schedules: DojoScheduleBody[]) => {
+    if (!dojo?.id || schedules.length === 0) return;
+    await createSchedulesMutation.mutateAsync({
+      dojoId: dojo.id,
+      schedules,
+    });
+  }
+
+  const updateSchedule = async (scheduleId: number, schedule: DojoScheduleBody) => {
+    if (!dojo?.id) return;
+
+    await updateSchedulesMutation.mutateAsync({
+      dojoId: dojo.id,
+      schedules: [{ ...schedule, id: scheduleId }],
+    });
+  }
+
+  const deleteSchedule = async (scheduleId: number) => {
+    await deleteScheduleMutation.mutateAsync({ scheduleId });
+  }
+
+  if (isDojoLoading) {
+    return (
+      <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">
+        <div className="max-w-7xl mx-auto space-y-6">
+          <div className="flex items-center justify-between mb-8">
+            <div className="space-y-2">
+              <div className="h-8 w-72 bg-gray-200 rounded-md animate-pulse" />
+              <div className="h-4 w-60 bg-gray-200 rounded-md animate-pulse" />
+            </div>
+            <div className="h-10 w-36 bg-gray-200 rounded-md animate-pulse" />
+          </div>
+
+          <div className="h-10 w-full md:w-2/3 bg-gray-200 rounded-md animate-pulse" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card>
+              <CardHeader>
+                <div className="h-6 w-40 bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-4 w-56 bg-gray-200 rounded-md animate-pulse" />
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-28 w-full bg-gray-200 rounded-md animate-pulse" />
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <div className="h-6 w-52 bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-4 w-64 bg-gray-200 rounded-md animate-pulse" />
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-24 w-full bg-gray-200 rounded-md animate-pulse" />
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
+                  <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">
       {/* Header */}
-      <div className="max-w-7xl mx-auto">
+      <div className="">
         <div className="flex items-center justify-between mb-8">
 
           <div className="text-center">
@@ -221,7 +251,7 @@ export default function DojoConfigPage() {
         </div>
 
         <Tabs defaultValue="info" className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-8">
+          <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-10 lg:mb-3">
             <TabsTrigger value="info" className="flex items-center gap-2">
               <Globe className="h-4 w-4" />
               Información
@@ -234,19 +264,15 @@ export default function DojoConfigPage() {
               <Users className="h-4 w-4" />
               Instructores
             </TabsTrigger>
-            <TabsTrigger value="pricing" className="flex items-center gap-2">
+            <TabsTrigger value="plans" className="flex items-center gap-2">
               <DollarSign className="h-4 w-4" />
-              Precios
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
-              <SettingsIcon className="h-4 w-4" />
-              Ajustes
+              Planes
             </TabsTrigger>
           </TabsList>
 
           {/* Información Básica */}
           <TabsContent value="info" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <form onSubmit={form.handleSubmit(updateDojo)} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Información General */}
               <Card>
                 <CardHeader>
@@ -257,29 +283,82 @@ export default function DojoConfigPage() {
                   <div className="space-y-2">
                     <Label htmlFor="dojo-name">Nombre del Dojo</Label>
                     <Input
-                      id="dojo-name"
-                      value={dojoData.name}
-                      onChange={(e) => handleDojoDataChange("name", e.target.value)}
+                      {...form.register("dojo")}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="translate">Traducción <span className="text-xs text-gray-400">(Traducción o Significado del dojo)</span> </Label>
+                    <Input
+                      {...form.register("translate")}
                     />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="slogan">Slogan o Lema</Label>
                     <Input
-                      id="slogan"
-                      value={dojoData.slogan}
-                      onChange={(e) => handleDojoDataChange("slogan", e.target.value)}
+                      {...form.register("slogan")}
+                    />
+                  </div>
+
+                  <div className="space-y-2 relative">
+                    <Label>Fecha de Fundación del Dojo</Label>
+                    <Controller
+                      control={form.control}
+                      name='founded'
+                      render={({ field: controllerField }) => (
+                        <CalendarFieldComponent
+                          value={controllerField.value as Date}
+                          onChange={controllerField.onChange}
+                        />
+                      )}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="description">Descripción</Label>
+                    <Label htmlFor="description">Descripción <span className="text-gray-600 text-xs">(Opcional)</span></Label>
                     <Textarea
-                      id="description"
-                      value={dojoData.description}
-                      onChange={(e) => handleDojoDataChange("description", e.target.value)}
+                      {...form.register("description")}
                       rows={4}
                     />
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="martialArts">Artes Marciales</Label>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button size="sm" type="button">Abrir</Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          {martialArtsOptions.map((type, index) => (
+                            <DropdownMenuItem onClick={() => addMartialArt(type)} key={index} disabled={martialArts.some(ma => ma.id === type.id)}>{type.martialArt}</DropdownMenuItem>
+                          ))}
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+
+                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                      {martialArts.map((ma, index) => (
+                        <div className="space-y-2" key={index}>
+                          <div className="flex items-center justify-between">
+                            <Label><img src={ma.icon} alt={ma.martialArt} className="h-8 w-8" /> {ma.martialArt}</Label>
+
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button variant="ghost" type="button" size="icon" className="lg:ml-auto" onClick={() => setMartialArts(prev => prev.filter(m => m.id !== ma.id))}>
+                                  <X className="h-4 w-4 text-red-600" />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>Eliminar Arte Marcial</p>
+                              </TooltipContent>
+                            </Tooltip>
+
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -292,14 +371,24 @@ export default function DojoConfigPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="address" className="flex items-center gap-2">
+                    <Label htmlFor="addressShort" className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
-                      Dirección
+                      Dirección Resumida
                     </Label>
                     <Input
-                      id="address"
-                      value={dojoData.address}
-                      onChange={(e) => handleDojoDataChange("address", e.target.value)}
+                      id="addressShort"
+                      {...form.register("addressShort")}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="addressShort" className="flex items-center gap-2">
+                      <MapPin className="h-4 w-4" />
+                      Dirección Completa
+                    </Label>
+                    <Textarea
+                      {...form.register("address")}
+                      rows={4}
                     />
                   </div>
 
@@ -311,8 +400,7 @@ export default function DojoConfigPage() {
                       </Label>
                       <Input
                         id="phone"
-                        value={dojoData.phone}
-                        onChange={(e) => handleDojoDataChange("phone", e.target.value)}
+                        {...form.register("phone")}
                       />
                     </div>
 
@@ -324,38 +412,50 @@ export default function DojoConfigPage() {
                       <Input
                         id="email"
                         type="email"
-                        value={dojoData.email}
-                        onChange={(e) => handleDojoDataChange("email", e.target.value)}
+                        {...form.register("email")}
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="website">Sitio Web</Label>
-                    <Input
-                      id="website"
-                      value={dojoData.website}
-                      onChange={(e) => handleDojoDataChange("website", e.target.value)}
-                    />
-                  </div>
+                  <Separator />
+                  <div className="flex items-center justify-between">
+                    <Label>Redes Sociales</Label>
 
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button size="sm" type="button">Agregar Nueva</Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        {typesSocialMedia.map((type, index) => (
+                          <DropdownMenuItem onClick={() => addNewSocialMedia(type)} key={index} disabled={socialMedia.some(sm => sm.socialMedia === type)}>{type}</DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Instagram</Label>
-                      <Input
-                        value={dojoData.instagram}
-                        onChange={(e) => handleDojoDataChange("instagram", e.target.value)}
-                        placeholder="@usuario"
-                      />
-                    </div>
+                    {socialMedia.map((sm, index) => (
+                      <div className="space-y-2" key={index}>
+                        <div className="flex items-center justify-between">
+                          <Label>{sm.socialMedia}</Label>
 
-                    <div className="space-y-2">
-                      <Label>Facebook</Label>
-                      <Input
-                        value={dojoData.facebook}
-                        onChange={(e) => handleDojoDataChange("facebook", e.target.value)}
-                      />
-                    </div>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button variant="ghost" type="button" size="icon" className="ml-auto" onClick={() => setSocialMedia(prev => prev.filter(s => s.socialMedia !== sm.socialMedia))}>
+                                <X className="h-4 w-4 text-red-600" />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Eliminar Red Social</p>
+                            </TooltipContent>
+                          </Tooltip>
+
+                        </div>
+                        <Input
+                          value={sm.directUrl !== '' ? sm.directUrl : sm.link}
+                          onChange={(e) => handleChangeSocialMedia(sm.socialMedia, e.target.value)}
+                        />
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
@@ -380,7 +480,7 @@ export default function DojoConfigPage() {
                       </div>
                       <div className="h-40 bg-white rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
                         <img
-                          src={dojoData.logo}
+                          src={setImageDojo(dojo?.logo || "")}
                           alt="Logo"
                           className="max-h-full max-w-full object-contain p-4"
                         />
@@ -396,7 +496,7 @@ export default function DojoConfigPage() {
                       </div>
                       <div className="h-40 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
                         <img
-                          src={dojoData.banner}
+                          src={getBannerDojo(dojo)}
                           alt="Banner"
                           className="h-full w-full object-cover"
                         />
@@ -405,166 +505,18 @@ export default function DojoConfigPage() {
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            </form>
           </TabsContent>
 
           {/* Horarios */}
           <TabsContent value="schedule" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>Horarios de Entrenamiento</CardTitle>
-                    <CardDescription>Gestiona los horarios de tus clases</CardDescription>
-                  </div>
-                  <Button onClick={handleAddSchedule} size="sm">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Nuevo Horario
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left py-3 px-4">Día</th>
-                        <th className="text-left py-3 px-4">Horario</th>
-                        <th className="text-left py-3 px-4">Actividad</th>
-                        <th className="text-left py-3 px-4">Instructor</th>
-                        <th className="text-left py-3 px-4">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {schedule.map((item) => (
-                        <tr key={item.id} className="border-b hover:bg-gray-50">
-                          {editingSchedule === item.id ? (
-                            <>
-                              <td className="py-3 px-4">
-                                <Input
-                                  value={tempSchedule?.day || ""}
-                                  onChange={(e) => setTempSchedule(prev => ({ ...prev, day: e.target.value }))}
-                                  className="w-full"
-                                />
-                              </td>
-                              <td className="py-3 px-4">
-                                <Input
-                                  value={tempSchedule?.time || ""}
-                                  onChange={(e) => setTempSchedule(prev => ({ ...prev, time: e.target.value }))}
-                                  className="w-full"
-                                />
-                              </td>
-                              <td className="py-3 px-4">
-                                <Input
-                                  value={tempSchedule?.activity || ""}
-                                  onChange={(e) => setTempSchedule(prev => ({ ...prev, activity: e.target.value }))}
-                                  className="w-full"
-                                />
-                              </td>
-                              <td className="py-3 px-4">
-                                <Input
-                                  value={tempSchedule?.instructor || ""}
-                                  onChange={(e) => setTempSchedule(prev => ({ ...prev, instructor: e.target.value }))}
-                                  className="w-full"
-                                />
-                              </td>
-                              <td className="py-3 px-4">
-                                <div className="flex gap-2">
-                                  <Button size="sm" onClick={handleSaveSchedule}>
-                                    <Save className="h-3 w-3" />
-                                  </Button>
-                                  <Button size="sm" variant="outline" onClick={() => setEditingSchedule(null)}>
-                                    <X className="h-3 w-3" />
-                                  </Button>
-                                </div>
-                              </td>
-                            </>
-                          ) : (
-                            <>
-                              <td className="py-3 px-4 font-medium">{item.day}</td>
-                              <td className="py-3 px-4">{item.time}</td>
-                              <td className="py-3 px-4">{item.activity}</td>
-                              <td className="py-3 px-4">{item.instructor}</td>
-                              <td className="py-3 px-4">
-                                <div className="flex gap-2">
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    onClick={() => handleEditSchedule(item.id)}
-                                  >
-                                    <Edit className="h-3 w-3" />
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                                    onClick={() => handleDeleteSchedule(item.id)}
-                                  >
-                                    <Trash2 className="h-3 w-3" />
-                                  </Button>
-                                </div>
-                              </td>
-                            </>
-                          )}
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Configuración de horarios */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Configuración de Horarios</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-medium">Horario público</h4>
-                    <p className="text-sm text-gray-500">Mostrar horarios en la web pública</p>
-                  </div>
-                  <Switch
-                    checked={config.publicSchedule}
-                    onCheckedChange={(checked) => setConfig(prev => ({ ...prev, publicSchedule: checked }))}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-medium">Reserva online</h4>
-                    <p className="text-sm text-gray-500">Permitir reservar clases online</p>
-                  </div>
-                  <Switch
-                    checked={config.onlineBooking}
-                    onCheckedChange={(checked) => setConfig(prev => ({ ...prev, onlineBooking: checked }))}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="max-students">Máximo estudiantes por clase</Label>
-                    <Input
-                      id="max-students"
-                      type="number"
-                      value={config.maxStudentsPerClass}
-                      onChange={(e) => setConfig(prev => ({ ...prev, maxStudentsPerClass: parseInt(e.target.value) }))}
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="min-age">Edad mínima</Label>
-                    <Input
-                      id="min-age"
-                      type="number"
-                      value={config.minAge}
-                      onChange={(e) => setConfig(prev => ({ ...prev, minAge: parseInt(e.target.value) }))}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <Schedule
+              martialArtsOptions={dojo?.dojoMartialArts || []}
+              schedules={dojo?.Schedules || []}
+              submitSchedule={saveSchedule}
+              updateSchedule={updateSchedule}
+              deleteSchedule={deleteSchedule}
+            />
           </TabsContent>
 
           {/* Instructores */}
@@ -576,94 +528,27 @@ export default function DojoConfigPage() {
                     <CardTitle>Instructores del Dojo</CardTitle>
                     <CardDescription>Gestiona la información de tus instructores</CardDescription>
                   </div>
-                  <Button onClick={handleAddInstructor} size="sm">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Nuevo Instructor
-                  </Button>
                 </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {instructors.map((instructor) => (
+                  {dojo?.masters.map((instructor) => (
                     <Card key={instructor.id} className="relative">
-                      {editingInstructor === instructor.id ? (
-                        <CardContent className="pt-6 space-y-4">
-                          <div className="space-y-2">
-                            <Label>Nombre</Label>
-                            <Input
-                              value={tempInstructor?.name || ""}
-                              onChange={(e) => setTempInstructor(prev => ({ ...prev, name: e.target.value }))}
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Rango (Dan)</Label>
-                            <Input
-                              value={tempInstructor?.rank || ""}
-                              onChange={(e) => setTempInstructor(prev => ({ ...prev, rank: e.target.value }))}
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Especialidad</Label>
-                            <Input
-                              value={tempInstructor?.specialty || ""}
-                              onChange={(e) => setTempInstructor(prev => ({ ...prev, specialty: e.target.value }))}
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Biografía</Label>
-                            <Textarea
-                              value={tempInstructor?.bio || ""}
-                              onChange={(e) => setTempInstructor(prev => ({ ...prev, bio: e.target.value }))}
-                              rows={3}
-                            />
-                          </div>
-                          <div className="flex gap-2">
-                            <Button size="sm" onClick={handleSaveInstructor}>
-                              Guardar
-                            </Button>
-                            <Button size="sm" variant="outline" onClick={() => setEditingInstructor(null)}>
-                              Cancelar
-                            </Button>
+                      <>
+                        <CardContent className="pt-6">
+                          <div className="space-y-3">
+                            <div className="text-center">
+                              <div className="h-16 w-16 mx-auto rounded-full bg-linear-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white text-xl font-bold mb-2">
+                                {instructor.name.charAt(0)}
+                              </div>
+                              <h3 className="font-bold text-lg">{instructor.name}</h3>
+                              <p className="text-yellow-600 font-medium">{instructor.userRanks[0].rank.rank_name}</p>
+                              {/* <p className="text-sm text-gray-600">{instructor.specialty}</p> */}
+                            </div>
+                            {/* <p className="text-sm text-gray-700">{instructor.bio}</p> */}
                           </div>
                         </CardContent>
-                      ) : (
-                        <>
-                          <CardContent className="pt-6">
-                            <div className="space-y-3">
-                              <div className="text-center">
-                                <div className="h-16 w-16 mx-auto rounded-full bg-linear-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white text-xl font-bold mb-2">
-                                  {instructor.name.charAt(0)}
-                                </div>
-                                <h3 className="font-bold text-lg">{instructor.name}</h3>
-                                <p className="text-yellow-600 font-medium">{instructor.rank}</p>
-                                <p className="text-sm text-gray-600">{instructor.specialty}</p>
-                              </div>
-                              <p className="text-sm text-gray-700">{instructor.bio}</p>
-                            </div>
-                          </CardContent>
-                          <div className="absolute top-2 right-2 flex gap-1">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 w-8 p-0"
-                              onClick={() => {
-                                setEditingInstructor(instructor.id);
-                                setTempInstructor({ ...instructor });
-                              }}
-                            >
-                              <Edit className="h-3 w-3" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
-                              onClick={() => handleDeleteInstructor(instructor.id)}
-                            >
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </>
-                      )}
+                      </>
                     </Card>
                   ))}
                 </div>
@@ -671,261 +556,17 @@ export default function DojoConfigPage() {
             </Card>
           </TabsContent>
 
-          {/* Precios */}
-          <TabsContent value="pricing" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>Planes y Precios</CardTitle>
-                    <CardDescription>Gestiona los planes de membresía</CardDescription>
-                  </div>
-                  <Button onClick={handleAddPrice} size="sm">
-                    <Plus className="h-4 w-4 mr-2" />
-                    Nuevo Plan
-                  </Button>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {pricing.map((plan) => (
-                    <Card key={plan.id} className="relative">
-                      {editingPrice === plan.id ? (
-                        <CardContent className="pt-6 space-y-4">
-                          <div className="space-y-2">
-                            <Label>Nombre del Plan</Label>
-                            <Input
-                              value={tempPrice?.name || ""}
-                              onChange={(e) => setTempPrice(prev => ({ ...prev, name: e.target.value }))}
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Precio</Label>
-                            <Input
-                              value={tempPrice?.price || ""}
-                              onChange={(e) => setTempPrice(prev => ({ ...prev, price: e.target.value }))}
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Descripción</Label>
-                            <Textarea
-                              value={tempPrice?.description || ""}
-                              onChange={(e) => setTempPrice(prev => ({ ...prev, description: e.target.value }))}
-                              rows={3}
-                            />
-                          </div>
-                          <div className="flex gap-2">
-                            <Button size="sm" onClick={handleSavePrice}>
-                              Guardar
-                            </Button>
-                            <Button size="sm" variant="outline" onClick={() => setEditingPrice(null)}>
-                              Cancelar
-                            </Button>
-                          </div>
-                        </CardContent>
-                      ) : (
-                        <>
-                          <CardContent className="pt-6">
-                            <div className="space-y-3">
-                              <div className="flex items-start justify-between">
-                                <div>
-                                  <h3 className="font-bold text-lg">{plan.name}</h3>
-                                  <p className="text-sm text-gray-600">{plan.description}</p>
-                                </div>
-                                <span className="text-2xl font-bold text-yellow-600">{plan.price}</span>
-                              </div>
-                            </div>
-                          </CardContent>
-                          <div className="absolute top-2 right-2 flex gap-1">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 w-8 p-0"
-                              onClick={() => {
-                                setEditingPrice(plan.id);
-                                setTempPrice({ ...plan });
-                              }}
-                            >
-                              <Edit className="h-3 w-3" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
-                              onClick={() => handleDeletePrice(plan.id)}
-                            >
-                              <Trash2 className="h-3 w-3" />
-                            </Button>
-                          </div>
-                        </>
-                      )}
-                    </Card>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Configuración de precios */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Configuración de Precios</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-medium">Clase de prueba gratuita</h4>
-                    <p className="text-sm text-gray-500">Ofrecer una clase de prueba gratis</p>
-                  </div>
-                  <Switch
-                    checked={config.trialClass}
-                    onCheckedChange={(checked) => setConfig(prev => ({ ...prev, trialClass: checked }))}
-                  />
-                </div>
-
-                {config.trialClass && (
-                  <div className="space-y-2">
-                    <Label htmlFor="trial-price">Precio de clase de prueba</Label>
-                    <Input
-                      id="trial-price"
-                      value={config.trialClassPrice}
-                      onChange={(e) => setConfig(prev => ({ ...prev, trialClassPrice: e.target.value }))}
-                    />
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* Ajustes Generales */}
-          <TabsContent value="settings" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Configuración del Sistema */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <SettingsIcon className="h-5 w-5" />
-                    Configuración del Sistema
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium">Modo mantenimiento</h4>
-                      <p className="text-sm text-gray-500">Bloquear el acceso público temporalmente</p>
-                    </div>
-                    <Switch
-                      checked={config.maintenanceMode}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, maintenanceMode: checked }))}
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium">Registro de nuevos estudiantes</h4>
-                      <p className="text-sm text-gray-500">Permitir registro online</p>
-                    </div>
-                    <Switch
-                      checked={config.newStudentRegistration}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, newStudentRegistration: checked }))}
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h4 className="font-medium">Recordatorios automáticos</h4>
-                      <p className="text-sm text-gray-500">Enviar recordatorios de clases</p>
-                    </div>
-                    <Switch
-                      checked={config.automaticReminders}
-                      onCheckedChange={(checked) => setConfig(prev => ({ ...prev, automaticReminders: checked }))}
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Seguridad */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Shield className="h-5 w-5" />
-                    Seguridad y Acceso
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <Button variant="outline" className="w-full justify-start">
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    Registrar de Acceso
-                  </Button>
-
-                  <Button variant="outline" className="w-full justify-start">
-                    <Target className="h-4 w-4 mr-2" />
-                    Permisos de Usuarios
-                  </Button>
-
-                  <Button variant="outline" className="w-full justify-start">
-                    <TrendingUp className="h-4 w-4 mr-2" />
-                    Análisis de Actividad
-                  </Button>
-
-                  <Button variant="outline" className="w-full justify-start">
-                    <Bell className="h-4 w-4 mr-2" />
-                    Configuración de Alertas
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {/* Backup y Exportación */}
-              <Card className="lg:col-span-2">
-                <CardHeader>
-                  <CardTitle>Backup y Exportación</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Button variant="outline" className="h-auto py-4 flex flex-col items-center justify-center">
-                      <Save className="h-8 w-8 mb-2" />
-                      <span>Backup Completo</span>
-                      <span className="text-xs text-gray-500">Todo el sistema</span>
-                    </Button>
-
-                    <Button variant="outline" className="h-auto py-4 flex flex-col items-center justify-center">
-                      <Users className="h-8 w-8 mb-2" />
-                      <span>Exportar Estudiantes</span>
-                      <span className="text-xs text-gray-500">Lista CSV/Excel</span>
-                    </Button>
-
-                    <Button variant="outline" className="h-auto py-4 flex flex-col items-center justify-center">
-                      <Calendar className="h-8 w-8 mb-2" />
-                      <span>Exportar Horarios</span>
-                      <span className="text-xs text-gray-500">Calendario</span>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+          {/* Planes */}
+          <TabsContent value="plans" className="space-y-6">
+            <PaymentsSettings
+              monthlyPayments={monthlyPayments}
+              paymentMethods={paymentMethods}
+              isMonthlyPaymentsLoading={isMonthlyPaymentsLoading}
+              isPaymentMethodsLoading={isPaymentMethodsLoading}
+            />
           </TabsContent>
         </Tabs>
       </div>
     </div>
-  );
-}
-
-// Icono personalizado para Settings
-function SettingsIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
-      <circle cx="12" cy="12" r="3" />
-    </svg>
   );
 }

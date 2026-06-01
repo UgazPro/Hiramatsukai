@@ -106,3 +106,31 @@ export interface Rank {
     martialArtId: number;
 }
 
+
+//Body
+
+export interface DojoBody {
+    dojo: string;
+    address: string;
+    addressShort: string;
+    code: string;
+    phone: string;
+    email: string;
+    description: string;
+    founded: string | Date;
+    slogan: string;
+    translate: string;
+    latitude: number;
+    longitude: number;
+    martialArts: number[];
+    socialMedia: DojoSocialMedia[];
+}
+
+export interface DojoScheduleBody {
+    id?: number;
+    name: string;
+    day: string;
+    startTime: string;
+    endTime: string;
+    martialArtId: number;
+}

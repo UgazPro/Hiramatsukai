@@ -3,7 +3,7 @@ import { IStudent, userRolesNames } from "./student.interface";
 import { Button } from "@/components/ui/button";
 import { Edit, User, Phone, Calendar } from "lucide-react";
 import { DeleteDialog } from "@/components/deleteDialog";
-import { calculateAge, dateFormatter } from "@/helpers/formatter";
+import { calculateAge, dateFormatter, formatNumberWithDots, formatPhoneNumber } from "@/helpers/formatter";
 import FieldBadge from "@/components/table/RenderTableComponents";
 
 interface Actions {
@@ -52,9 +52,9 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
         },
 
         {
-            header: "Identificación",
+            header: "Cédula",
             render: (s) => (
-                <span className="font-mono text-gray-800">{s.identification}</span>
+                <span className="font-mono text-gray-800">{formatNumberWithDots(s.identification)}</span>
             ),
         },
 
@@ -88,7 +88,7 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
             render: (s) => (
                 <div className="flex items-center gap-2">
                     <Phone className="h-3 w-3 text-gray-500" />
-                    <span className="text-sm text-gray-700">{s.phone}</span>
+                    <span className="text-sm text-gray-700">{formatPhoneNumber(s.phone)}</span>
                 </div>
             ),
         },

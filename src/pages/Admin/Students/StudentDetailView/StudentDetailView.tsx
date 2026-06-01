@@ -6,7 +6,7 @@ import { X, User, Mail, MapPin, Phone, Cake, Calendar, Clock, Award, Star, FileT
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useStudentsStore } from "@/stores/students.store";
-import { calculateMartialTime, dateFormatterIntoLong } from "@/helpers/formatter";
+import { calculateMartialTime, dateFormatterIntoLong, formatNumberWithDots, formatPhoneNumber } from "@/helpers/formatter";
 
 export default function StudentDetailView() {
 
@@ -47,7 +47,7 @@ export default function StudentDetailView() {
 
     return (
 
-        <div className="min-h-full p-6 relative w-full max-w-6xl mx-auto my-6 bg-white shadow-xl border border-gray-200 rounded-xl">
+        <div className="min-h-full p-6 relative w-full max-w-7xl mx-auto my-6 bg-white shadow-xl border border-gray-200 rounded-xl">
 
             {/* Header */}
             <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-300 rounded-lg">
@@ -72,13 +72,17 @@ export default function StudentDetailView() {
                                     {selectedStudent!.name} {selectedStudent!.lastName}
                                 </h2>
                                 <div className="flex items-center gap-3 mt-2">
-                                    <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-base px-3 py-1">
-                                        <Shield className="h-4 w-4 mr-1" />
-                                        {selectedStudent!.userRanks[0].rank.belt}
-                                    </Badge>
-                                    <Badge className="bg-gray-100 text-gray-800 border-gray-200">
-                                        {selectedStudent!.userRanks[0].rank.code}
-                                    </Badge>
+                                    {selectedStudent!.userRanks.length > 0 && (
+                                        <>
+                                            <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-base px-3 py-1">
+                                                <Shield className="h-4 w-4 mr-1" />
+                                                {selectedStudent!.userRanks[0].rank.belt}
+                                            </Badge>
+                                            <Badge className="bg-gray-100 text-gray-800 border-gray-200">
+                                                {selectedStudent!.userRanks[0].rank.code}
+                                            </Badge>
+                                        </>
+                                    )}
                                     {selectedStudent!.active ? (
                                         <Badge className="bg-green-100 text-green-800 border-green-200">
                                             <CheckCircle className="h-3 w-3 mr-1" />
@@ -117,21 +121,26 @@ export default function StudentDetailView() {
                                 <h3 className="text-lg font-semibold text-gray-900">Información Personal</h3>
                             </div>
                             <div className="space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <p className="text-sm text-gray-500 mb-1">Cédula</p>
-                                        <p className="font-mono font-medium text-gray-900">{selectedStudent!.identification}</p>
+                                        <p className="font-mono font-medium text-gray-900">{formatNumberWithDots(selectedStudent!.identification)}</p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-500 mb-1">Sexo</p>
                                         <p className="font-medium text-gray-900">{selectedStudent!.sex}</p>
                                     </div>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-500 mb-1">Fecha de Nacimiento</p>
+                                    <div>
+                                        <p className="text-sm text-gray-500 mb-1">Fecha de Nacimiento</p>
+                                        <div className="flex items-center gap-2">
+                                            <Cake className="h-4 w-4 text-gray-500" />
+                                            <p className="font-medium text-gray-900">{dateFormatterIntoLong(selectedStudent!.birthday)}</p>
+                                        </div>
+                                    </div>
+                                    {/* <div>
+                                    <p className="text-sm text-gray-500 mb-1">Fecha de Inscripción</p>
                                     <div className="flex items-center gap-2">
                                         <Cake className="h-4 w-4 text-gray-500" />
-                                        <p className="font-medium text-gray-900">{dateFormatterIntoLong(selectedStudent!.birthday)}</p>
+                                        <p className="font-medium text-gray-900">{dateFormatterIntoLong(selectedStudent!.enrollmentDate)}</p>
                                     </div>
                                 </div>
                                 <div>
@@ -140,8 +149,8 @@ export default function StudentDetailView() {
                                         <Clock className="h-4 w-4 text-gray-500" />
                                         <p className="font-medium text-gray-900">{calculateMartialTime(selectedStudent!.enrollmentDate).text}</p>
                                     </div>
+                                </div> */}
                                 </div>
-                            </div>
                         </CardContent>
                     </Card>
 
@@ -167,7 +176,7 @@ export default function StudentDetailView() {
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-sm text-gray-500 mb-1">Teléfono</p>
-                                        <p className="font-medium text-gray-900">{selectedStudent!.phone}</p>
+                                        <p className="font-medium text-gray-900">{formatPhoneNumber(selectedStudent!.phone)}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
@@ -194,12 +203,12 @@ export default function StudentDetailView() {
                             </div>
                             <div className="space-y-4">
                                 <div>
-                                    <p className="text-sm text-gray-500 mb-1">Dojo Asignado</p>
+                                    <p className="text-sm text-gray-500 mb-1">Dojo</p>
                                     <div className="flex items-center gap-2">
                                         <div className="h-8 w-8 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center">
                                             <Target className="h-4 w-4 text-amber-600" />
                                         </div>
-                                        <p className="font-semibold text-gray-900 text-lg">{selectedStudent!.dojo.dojo}</p>
+                                        <p className="font-semibold text-gray-900">{selectedStudent!.dojo.dojo}</p>
                                     </div>
                                 </div>
                                 <div>
@@ -207,6 +216,13 @@ export default function StudentDetailView() {
                                     <div className="flex items-center gap-2">
                                         <Calendar className="h-4 w-4 text-gray-500" />
                                         <p className="font-medium text-gray-900">{dateFormatterIntoLong(selectedStudent!.enrollmentDate)}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-500 mb-1">Tiempo Practicando</p>
+                                    <div className="flex items-center gap-2">
+                                        <Clock className="h-4 w-4 text-gray-500" />
+                                        <p className="font-medium text-gray-900">{calculateMartialTime(selectedStudent!.enrollmentDate).text}</p>
                                     </div>
                                 </div>
                             </div>

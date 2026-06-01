@@ -2,6 +2,7 @@ import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "@/stores/auth.store";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -26,5 +27,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     );
   }
 
-  return <>{children}</>;
+  return <>
+    <TooltipProvider>{children}</TooltipProvider>
+  </>;
 }
