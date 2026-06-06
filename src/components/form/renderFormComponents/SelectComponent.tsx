@@ -25,6 +25,11 @@ interface FormSelectFormProps {
     disabled?: boolean;
 }
 
+const triggerClass =
+  "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg w-full overflow-hidden";
+const labelClass =
+  "text-sm font-medium text-[var(--blueColor)]";
+
 export function SelectComponentForm({ form, label, placeholder, name, options, disabled }: FormSelectFormProps) {
 
     const isNumberSelect = typeof options?.[0]?.value === 'number';
@@ -35,7 +40,7 @@ export function SelectComponentForm({ form, label, placeholder, name, options, d
             name={name}
             render={({ field }) => (
                 <FormItem className="w-full">
-                    <FormLabel>{label}</FormLabel>
+                    <FormLabel className={labelClass}>{label}</FormLabel>
 
                     <Select
                         key={String(field.value)}
@@ -46,7 +51,7 @@ export function SelectComponentForm({ form, label, placeholder, name, options, d
                         disabled={disabled}
                     >
                         <FormControl className="w-full">
-                            <SelectTrigger className="w-full overflow-hidden">
+                            <SelectTrigger className={triggerClass}>
                                 <SelectValue placeholder={placeholder} />
                             </SelectTrigger>
                         </FormControl>

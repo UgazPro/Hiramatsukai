@@ -1,5 +1,6 @@
-import { getDataApi } from "../api";
-import { IActivity } from "./activity.interface";
+import { getDataApi, postDataApi } from "../api";
+import { IActivity, IExam } from "./activity.interface";
+import { getUserDataSafe } from "@/helpers/token";
 
 export interface ActivitiesFilter {
   dateRange?: DateRange | null;
@@ -18,9 +19,11 @@ export const formatDateOnly = (value: Date | string): string => {
 };
 
 const activitiesUrl = "/activities";
-const studentsAsignedToExamUrl = "/applied-students";
+const studentsAsignedToExamUrl = "/activities/applied-students";
 
-export const getActivities = async (filters?: ActivitiesFilter): Promise<IActivity[]> => {
+export const getActivities = async (
+  filters?: ActivitiesFilter,
+): Promise<IActivity[]> => {
   let param = "";
   if (filters) {
     const queryParams = new URLSearchParams();
@@ -28,12 +31,9 @@ export const getActivities = async (filters?: ActivitiesFilter): Promise<IActivi
     if (filters.dateRange?.startDate && filters.dateRange?.endDate) {
       queryParams.append(
         "startDate",
-        formatDateOnly(filters.dateRange.startDate)
+        formatDateOnly(filters.dateRange.startDate),
       );
-      queryParams.append(
-        "endDate",
-        formatDateOnly(filters.dateRange.endDate)
-      );
+      queryParams.append("endDate", formatDateOnly(filters.dateRange.endDate));
     }
 
     if (filters.includePast !== undefined && filters.includePast !== null) {
@@ -47,14 +47,52 @@ export const getActivities = async (filters?: ActivitiesFilter): Promise<IActivi
   return await getDataApi(url);
 };
 
-export const getStudentsAsignedToExam = async (examId: number): Promise<IActivity[]> => {
-  const url = `${studentsAsignedToExamUrl}?examId=${examId}`;
+// Exams
+
+export const getUpcomingExams = async (): Promise<IActivity[]> => {
+  const apiFilters: ActivitiesFilter = {
+    includePast: false,
+  };
+  const activities = await getActivities(apiFilters);
+  return activities.filter((a: IActivity) => a.type === "Examen");
+};
+
+// Applied Students (postulaciones)
+export const getAppliedStudents = async (activityId?: number) => {
+  const url = activityId
+    ? `${studentsAsignedToExamUrl}?activityId=${activityId}`
+    : studentsAsignedToExamUrl;
   return await getDataApi(url);
-}
+};
 
+export const getAppliedStudentSuggestions = async () => {
+  const user = getUserDataSafe();
+  const params = user?.dojoId ? `?dojoId=${user.dojoId}` : "";
+  return await getDataApi(`${studentsAsignedToExamUrl}/suggestions${params}`);
+};
 
+export const createAppliedStudent = async (data: {
+  activityId: number;
+  appliedStudents: { userId: number; martialArtId: number }[];
+}) => {
+  return await postDataApi(studentsAsignedToExamUrl, data);
+};
 
+// Exams History
 
+export const getPastExams = async (): Promise<IActivity[]> => {
+  const apiFilters: ActivitiesFilter = {
+    includePast: true,
+  };
+  const activities = await getActivities(apiFilters);
+  const now = new Date();
+  return activities.filter(
+    (a: IActivity) => a.type === "Examen" && new Date(a.date) < now,
+  );
+};
 
-
-
+export const getExamsByActivity = async (
+  activityId: number,
+): Promise<IExam[]> => {
+  return await getDataApi(`${activitiesUrl}/exams?activityId=${activityId}`);
+};
