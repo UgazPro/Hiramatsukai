@@ -10,7 +10,7 @@ import { calculateMartialTime, dateFormatterIntoLong, formatNumberWithDots, form
 
 export default function StudentDetailView() {
 
-    const { selectedStudent, setScreen } = useStudentsStore();
+    const { selectedStudent, setScreen, startEdit } = useStudentsStore();
 
     const datosFicticios = {
         identification: "123456789",
@@ -450,7 +450,10 @@ export default function StudentDetailView() {
                         >
                             Cerrar
                         </Button>
-                        <Button className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white">
+                        <Button
+                            className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white"
+                            onClick={() => startEdit(selectedStudent!)}
+                        >
                             <Edit className="h-4 w-4 mr-2" />
                             Editar Información
                         </Button>

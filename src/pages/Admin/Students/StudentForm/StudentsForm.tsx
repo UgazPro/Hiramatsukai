@@ -161,70 +161,85 @@ export default function StudentsForm() {
 
     return (
 
-        <Form {...form}>
+        <div className="p-6 w-full max-w-5xl mx-auto">
+            <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
+                <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 px-6 py-4">
+                    <h2 className="text-xl font-bold text-gray-900">
+                        {mode === "create" ? "Nuevo Estudiante" : "Editar Estudiante"}
+                    </h2>
+                    <p className="text-sm text-gray-600 mt-0.5">
+                        {mode === "create"
+                            ? "Complete los campos para agregar un nuevo estudiante al dojo"
+                            : "Modifique los campos del estudiante"}
+                    </p>
+                </div>
 
-            <form onSubmit={form.handleSubmit(sendForm)}>
+                <div className="p-5">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(sendForm)}>
+                            <div className="grid grid-cols-3 gap-4">
 
-                <div className="grid grid-cols-3 gap-6 my-6">
-
-                    {/* Left */}
-                    <div className="space-y-4">
-                        <FormComponent
-                            form={form}
-                            fields={studentLeftFields}
-                            otherType={
-                                <ProfilePictureComponent
-                                    imagePreview={imagePreview}
-                                    handleImageChange={handleImageChange}
-                                    handleRemoveFoto={handleRemoveFoto}
+                                {/* Left */}
+                                <FormComponent
+                                    form={form}
+                                    fields={studentLeftFields}
+                                    className="!p-4 !space-y-3"
+                                    otherType={
+                                        <ProfilePictureComponent
+                                            imagePreview={imagePreview}
+                                            handleImageChange={handleImageChange}
+                                            handleRemoveFoto={handleRemoveFoto}
+                                        />
+                                    }
                                 />
-                            }
-                        />
-                    </div>
 
-                    {/* Middle */}
-                    <FormComponent
-                        form={form}
-                        fields={studentMiddleFields}
-                    />
+                                {/* Middle */}
+                                <FormComponent
+                                    form={form}
+                                    fields={studentMiddleFields}
+                                    className="!p-4 !space-y-3"
+                                />
 
-                    {/* Right */}
-                    <FormComponent
-                        form={form}
-                        fields={studentRightFields(
-                            dojosOptions,
-                            roles,
-                            user?.rol.rol === "Administrador"
-                        )}
-                        otherType={
-                            <MartialRanksComponent
-                                dojoMartialArts={dojoMartialArts}
-                                martialArtsOptions={martialArtsOptions}
-                                ranksOptions={ranksOptions}
-                                form={form}
-                            />
-                        }
-                    />
+                                {/* Right */}
+                                <FormComponent
+                                    form={form}
+                                    fields={studentRightFields(
+                                        dojosOptions,
+                                        roles,
+                                        user?.rol.rol === "Administrador"
+                                    )}
+                                    className="!p-4 !space-y-3"
+                                    otherType={
+                                        <MartialRanksComponent
+                                            dojoMartialArts={dojoMartialArts}
+                                            martialArtsOptions={martialArtsOptions}
+                                            ranksOptions={ranksOptions}
+                                            form={form}
+                                        />
+                                    }
+                                />
 
+                            </div>
+
+                            <div className="flex justify-end space-x-4 pt-5 border-t border-gray-200 mt-5">
+                                <Button
+                                    type="button" variant="outline" className="cursor-pointer"
+                                    onClick={finishForm}
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-red-700 hover:bg-red-800 cursor-pointer"
+                                >
+                                    {mode === "create" ? "Guardar Estudiante" : "Actualizar Estudiante"}
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
                 </div>
-
-                <div className="flex justify-end space-x-4">
-                    <Button
-                        type="button" variant="outline" className="cursor-pointer"
-                        onClick={finishForm}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button
-                        type="submit"
-                        className="bg-red-700 hover:bg-red-800 cursor-pointer"
-                    >
-                        {mode === "create" ? "Guardar Estudiante" : "Actualizar Estudiante"}
-                    </Button>
-                </div>
-
-            </form>
-        </Form>
+            </div>
+        </div>
 
     );
 
