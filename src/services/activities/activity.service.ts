@@ -96,3 +96,13 @@ export const getExamsByActivity = async (
 ): Promise<IExam[]> => {
   return await getDataApi(`${activitiesUrl}/exams?activityId=${activityId}`);
 };
+
+export const getExamsByUser = async (userId: number): Promise<IExam[]> => {
+  return await getDataApi(`${activitiesUrl}/exams?userId=${userId}`);
+};
+
+export const saveExam = async (data: {
+  exams: { martialArtId: number; userId: number; status: "Aprobado" | "Reprobado" }[];
+}) => {
+  return await postDataApi(`${activitiesUrl}/exams`, data);
+};

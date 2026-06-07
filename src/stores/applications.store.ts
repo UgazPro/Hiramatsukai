@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type AppScreen = "list" | "postulationForm" | "examDetail";
+export type AppScreen = "list" | "postulationForm" | "examDetail" | "studentDetail";
 
 interface ApplicationsStore {
   screen: AppScreen;
@@ -12,6 +12,9 @@ interface ApplicationsStore {
   selectedExamActivityId: number | null;
   openExamDetail: (activityId: number) => void;
   closeExamDetail: () => void;
+  selectedStudentId: number | null;
+  openStudentDetail: (studentId: number) => void;
+  closeStudentDetail: () => void;
 }
 
 export const useApplicationsStore = create<ApplicationsStore>((set) => ({
@@ -43,5 +46,17 @@ export const useApplicationsStore = create<ApplicationsStore>((set) => ({
     set({
       screen: "list",
       selectedExamActivityId: null,
+    }),
+
+  selectedStudentId: null,
+  openStudentDetail: (studentId) =>
+    set({
+      screen: "studentDetail",
+      selectedStudentId: studentId,
+    }),
+  closeStudentDetail: () =>
+    set({
+      screen: "list",
+      selectedStudentId: null,
     }),
 }));

@@ -8,6 +8,8 @@ import {
   createAppliedStudent,
   getPastExams,
   getExamsByActivity,
+  getExamsByUser,
+  saveExam,
 } from "@/services/activities/activity.service";
 import { useActivitiesStore } from "@/stores/activities.store";
 import { IActivity, IExam } from "@/services/activities/activity.interface";
@@ -125,6 +127,33 @@ export const useExamsByActivity = (activityId: number | null) => {
     exams: data ?? [],
     isLoading,
   };
+};
+
+export const useExamsByUser = (userId: number | null) => {
+  const { data, isLoading } = useQuery<IExam[]>({
+    queryKey: ["examsByUser", userId],
+    queryFn: () => getExamsByUser(userId!),
+    enabled: Boolean(userId),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    exams: data ?? [],
+    isLoading,
+  };
+};
+
+export const useSaveExam = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: saveExam,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["appliedStudents"] });
+      qc.invalidateQueries({ queryKey: ["examsByActivity"] });
+      qc.invalidateQueries({ queryKey: ["examsByUser"] });
+    },
+  });
 };
 
 
