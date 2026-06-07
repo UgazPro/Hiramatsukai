@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import NextExams from "./NextExams/NextExams";
+import NextExamDetail from "./NextExams/NextExamDetail";
 import ApplyStudents from "./ApplyStudents/ApplyStudents";
 import ApplicationsHistory from "./History/ApplicationsHistory";
 import ApplicationsStudentsHistory from "./Students/ApplicationsStudentsHistory";
@@ -55,7 +56,8 @@ export default function Applications() {
     if (screen === "postulationForm") return <PostulationForm />;
     if (screen === "examDetail") return <ExamDetail />;
     if (screen === "studentDetail") return <StudentDetail />;
-    return <StudentDetail />;
+    if (screen === "nextExamDetail") return <NextExamDetail />;
+    return null;
   };
 
   return (
@@ -135,7 +137,7 @@ export default function Applications() {
 
         secondaryChildren={renderSecondaryChildren()}
 
-        toggle={screen === "postulationForm" || screen === "examDetail" || screen === "studentDetail"}
+        toggle={screen === "postulationForm" || screen === "examDetail" || screen === "studentDetail" || screen === "nextExamDetail"}
       />
 
     </div>

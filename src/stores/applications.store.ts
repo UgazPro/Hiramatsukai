@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import { IActivity } from "@/services/activities/activity.interface";
 
-export type AppScreen = "list" | "postulationForm" | "examDetail" | "studentDetail";
+export type AppScreen = "list" | "postulationForm" | "examDetail" | "studentDetail" | "nextExamDetail";
 
 interface ApplicationsStore {
   screen: AppScreen;
@@ -15,6 +16,10 @@ interface ApplicationsStore {
   selectedStudentId: number | null;
   openStudentDetail: (studentId: number) => void;
   closeStudentDetail: () => void;
+  selectedNextExamId: number | null;
+  selectedNextExamData: IActivity | null;
+  openNextExamDetail: (activity: IActivity) => void;
+  closeNextExamDetail: () => void;
 }
 
 export const useApplicationsStore = create<ApplicationsStore>((set) => ({
@@ -58,5 +63,20 @@ export const useApplicationsStore = create<ApplicationsStore>((set) => ({
     set({
       screen: "list",
       selectedStudentId: null,
+    }),
+
+  selectedNextExamId: null,
+  selectedNextExamData: null,
+  openNextExamDetail: (activity) =>
+    set({
+      screen: "nextExamDetail",
+      selectedNextExamId: activity.id,
+      selectedNextExamData: activity,
+    }),
+  closeNextExamDetail: () =>
+    set({
+      screen: "list",
+      selectedNextExamId: null,
+      selectedNextExamData: null,
     }),
 }));

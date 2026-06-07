@@ -15,7 +15,7 @@ interface NextExamsProps {
 
 export default function NextExams({ setActiveTab, upcomingExams, setSelectedExamen, isLoading }: NextExamsProps) {
 
-    const { openPostulationForm } = useApplicationsStore();
+    const { openPostulationForm, openNextExamDetail } = useApplicationsStore();
     
     if (isLoading) {
         return (
@@ -36,14 +36,14 @@ export default function NextExams({ setActiveTab, upcomingExams, setSelectedExam
         );
     }
 
-    const sorted = [...upcomingExams].sort(
+    const sortedExams = [...upcomingExams].sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
     );
-    const nextExamId = sorted[0]?.id;
+    const nextExamId = sortedExams[0]?.id;
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {upcomingExams.map((examen) => {
+            {sortedExams.map((examen) => {
                 const isNextExam = examen.id === nextExamId;
                 return (
                 <Card key={examen.id} className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 overflow-hidden group">
@@ -80,7 +80,7 @@ export default function NextExams({ setActiveTab, upcomingExams, setSelectedExam
                                 <Button
                                     variant="outline"
                                     className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100"
-                                    onClick={() => setSelectedExamen(examen)}
+                                    onClick={() => openNextExamDetail(examen)}
                                 >
                                     <Eye className="h-4 w-4 mr-2" />
                                     Ver detalles

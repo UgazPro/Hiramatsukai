@@ -57,6 +57,15 @@ export const getUpcomingExams = async (): Promise<IActivity[]> => {
   return activities.filter((a: IActivity) => a.type === "Examen");
 };
 
+export const getCurrentActivity = async (dojoId?: number) => {
+  const url = dojoId ? `/activities/current?dojoId=${dojoId}` : '/activities/current';
+  return await getDataApi(url);
+};
+
+export const getActivityAttendance = async (activityId: number) => {
+  return await getDataApi(`/activities/attendance/${activityId}`);
+};
+
 // Applied Students (postulaciones)
 export const getAppliedStudents = async (activityId?: number) => {
   const url = activityId

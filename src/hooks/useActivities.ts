@@ -68,6 +68,8 @@ export const useAppliedStudents = (activityId?: number) => {
     queryKey: ["appliedStudents", activityId],
     queryFn: () => getAppliedStudents(activityId),
     staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 30,
+    refetchIntervalInBackground: false,
   });
 
   return {
@@ -81,6 +83,8 @@ export const useAppliedStudentSuggestions = () => {
     queryKey: ["appliedStudentSuggestions"],
     queryFn: getAppliedStudentSuggestions,
     staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 30,
+    refetchIntervalInBackground: false,
   });
 
   return {
