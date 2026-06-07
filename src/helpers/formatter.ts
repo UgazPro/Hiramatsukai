@@ -93,3 +93,11 @@ export const formatPhoneNumber = (phone: string): string => {
 export const formatNumberWithDots = (num: number | string): string => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+
+export const timeFormatter = (date: Date | string) => {
+    try {
+        return format(new Date(date), "HH:mm 'hrs'", { locale: es });
+    } catch {
+        return "Hora inválida";
+    }
+};

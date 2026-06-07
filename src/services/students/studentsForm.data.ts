@@ -1,14 +1,15 @@
 import { FormField } from "@/components/form/formComponent.interface";
 
-export const studentLeftFields: FormField[] = [
+// === PASO 1: Datos Personales ===
+
+export const step1Col1Fields: FormField[] = [
   { type: "text", name: "username", label: "Nombre de Usuario" },
   { type: "text", name: "name", label: "Nombres" },
   { type: "text", name: "lastName", label: "Apellidos" },
   { type: "text", name: "identification", label: "Cédula" },
-  { type: "other", name: "profileImg", label: "Foto del Estudiante" },
 ];
 
-export const studentMiddleFields: FormField[] = [
+export const step1Col2Fields: FormField[] = [
   { type: "date", name: "birthday", label: "Fecha de Nacimiento" },
   {
     type: "select",
@@ -22,10 +23,16 @@ export const studentMiddleFields: FormField[] = [
   },
   { type: "text", name: "email", label: "Correo Electrónico" },
   { type: "text", name: "phone", label: "Teléfono" },
+];
+
+export const step1Col3Fields: FormField[] = [
+  { type: "other", name: "profileImg", label: "Foto del Estudiante" },
   { type: "textarea", name: "address", label: "Dirección" },
 ];
 
-export const studentRightFields: (dojosOptions: any[], roles: any[], isAdmin: boolean) => FormField[] = (dojosOptions: any[], roles: any[], isAdmin: boolean) => [
+// === PASO 2: Datos del Dojo ===
+
+export const step2Col1Fields: (dojosOptions: any[], roles: any[], isAdmin: boolean) => FormField[] = (dojosOptions, roles, isAdmin) => [
   {
     type: "select",
     name: "dojoId",
@@ -41,20 +48,20 @@ export const studentRightFields: (dojosOptions: any[], roles: any[], isAdmin: bo
     placeholder: "Seleccione un rol",
     options: roles.map(r => ({ label: r.rol, value: r.id })),
   },
+];
+
+export const step2Col2Fields: FormField[] = [
   {
     type: "date",
     name: "enrollmentDate",
     label: "Fecha de Inscripción",
   },
+];
+
+export const step2Col3Fields: FormField[] = [
   {
     type: "other",
     name: "martialArtRank",
     label: "Artes Marciales y Rangos",
-  }
+  },
 ];
-
-
-
-
-
-

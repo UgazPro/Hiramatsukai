@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getRoles, getUsers } from "@/services/students/student.service";
+import { getRoles, getUserAllInfo, getUsers } from "@/services/students/student.service";
+import { IStudentAllInfo } from "@/services/students/student.interface";
 import { getUserDataSafe } from "@/helpers/token";
 
 export const useStudents = () => {
@@ -10,6 +11,8 @@ export const useStudents = () => {
     queryKey: ["students", dojoId],
     queryFn: () => getUsers(dojoId),
     staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 60,
+    refetchIntervalInBackground: false,
   });
 };
 
@@ -17,6 +20,15 @@ export const useRoles = () => {
   return useQuery({
     queryKey: ["roles"],
     queryFn: getRoles,
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useStudentAllInfo = (userId: number | null) => {
+  return useQuery<IStudentAllInfo>({
+    queryKey: ["studentAllInfo", userId],
+    queryFn: () => getUserAllInfo(userId!),
+    enabled: Boolean(userId),
     staleTime: 1000 * 60 * 5,
   });
 };

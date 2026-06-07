@@ -5,8 +5,10 @@ export const useCreateStudent = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ data, imageFile }: { data: any; imageFile: File | null }) =>
-    postDataImageApi("/users", data, imageFile),
+    mutationFn: ({ data, imageFile }: { data: any; imageFile: File | null }) => {
+      const payload = { userData: JSON.stringify(data) };
+      return postDataImageApi("/users", payload, imageFile);
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["students"] });
     },
@@ -17,8 +19,11 @@ export const useUpdateStudent = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ data, imageFile }: { data: any; imageFile: File | null }) =>
-    putDataImageApi(`/users/${data.id}`, data, imageFile),
+    mutationFn: ({ data, imageFile }: { data: any; imageFile: File | null }) => {
+      const { id, ...dataWithoutId } = data;
+      const payload = { userData: JSON.stringify(dataWithoutId) };
+      return putDataImageApi(`/users/${id}`, payload, imageFile);
+    },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["students"] });
     },

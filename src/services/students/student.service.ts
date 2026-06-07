@@ -13,6 +13,10 @@ export const getRoles = async () : Promise<IRol[]> => {
     return await getDataApi(rolesUrl);
 }
 
+export const getUserAllInfo = async (userId: number) => {
+    return await getDataApi(`${usersUrl}/detail/${userId}`);
+}
+
 
 
 
