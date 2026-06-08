@@ -9,7 +9,7 @@ export function DetailLayout({ header, children, footer }: DetailLayoutProps) {
         <div className="min-h-full p-6 w-full max-w-6xl mx-auto my-6 bg-white shadow-xl border border-gray-200 rounded-xl">
             {header}
 
-            <div className="p-6 space-y-8">
+            <div className="py-6 space-y-8">
                 {children}
             </div>
 

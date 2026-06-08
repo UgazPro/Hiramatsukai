@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, DollarSign, Building2, Users, Clock, Tag } from "lucide-react";
+import { Calendar, MapPin, DollarSign, Building2, Users, Tag } from "lucide-react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useActivitiesStore } from "@/stores/activities.store";
@@ -68,7 +69,7 @@ export default function ActivityDetailView() {
 
     <DetailLayout header={header} footer={footer}>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
 
         <DetailSection icon={<Calendar className="h-5 w-5 text-amber-600" />} title="Información de la actividad">
           <div className="space-y-4">
@@ -96,11 +97,11 @@ export default function ActivityDetailView() {
           </div>
         </DetailSection>
 
-        <DetailSection icon={<Building2 className="h-5 w-5 text-amber-600" />} title="Dojo creador">
+        {/* <DetailSection icon={<Building2 className="h-5 w-5 text-amber-600" />} title="Dojo creador">
 
           <InfoItem
             label="Dojo"
-            value={(selectedActivity.dojos as any)?.dojo || "No definido"}
+            value={(selectedActivity.dojoIds as any)?.dojo || "No definido"}
             icon={<Building2 className="h-4 w-4" />}
           />
 
@@ -111,7 +112,7 @@ export default function ActivityDetailView() {
               icon={<Clock className="h-4 w-4" />}
             />
           </div>
-        </DetailSection>
+        </DetailSection> */}
 
       </div>
 

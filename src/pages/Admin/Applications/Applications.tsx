@@ -22,7 +22,7 @@ export default function Applications() {
 
   const [activeTab, setActiveTab] = useState<TabType>('examenes');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedExamen, setSelectedExamen] = useState<any>(null);
+  // const [selectedExamen, setSelectedExamen] = useState<any>(null);
 
   const { screen, openPostulationForm } = useApplicationsStore();
   const { upcomingExams, isLoading } = useUpcomingExams();
@@ -102,7 +102,7 @@ export default function Applications() {
                 <NextExams
                   setActiveTab={setActiveTab}
                   upcomingExams={upcomingExams}
-                  setSelectedExamen={setSelectedExamen}
+                  // setSelectedExamen={setSelectedExamen}
                   isLoading={isLoading}
                 />
               )}
@@ -122,7 +122,7 @@ export default function Applications() {
               <ApplicationsHistory
                 activeTab={activeTab}
                 getBeltColor={getBeltColor}
-                martialArtsMap={martialArtsMap}
+                // martialArtsMap={martialArtsMap}
               />
 
               {/* Pestaña: Alumnos */}

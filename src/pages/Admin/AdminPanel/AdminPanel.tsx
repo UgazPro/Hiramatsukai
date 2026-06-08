@@ -33,7 +33,7 @@ export default function AdminPanel() {
   const {
     user, totalEstudiantes, advancedCount, birthdays, nextExams,
     nextActivities, classesThisMonth, monthlyIncome, weeklyAttendance,
-    averageAttendance, currentActivity, upcomingClassesNext, isLoading,
+    averageAttendance, upcomingClassesNext, isLoading,
   } = useDashboard();
 
   const [currentTime, setCurrentTime] = useState(new Date());

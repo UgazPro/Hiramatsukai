@@ -1,5 +1,10 @@
 import { isSameDay } from "date-fns";
 
+interface DayCell<T> {
+  date: Date;
+  items: T[];
+}
+
 export const buildMonthGrid = <T>(
   date: Date,
   events: { date: Date; items: T[] }[]
@@ -7,10 +12,10 @@ export const buildMonthGrid = <T>(
   const year = date.getFullYear();
   const month = date.getMonth();
 
-  const firstDay = new Date(year, month, 1);
+  // const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
 
-  const days:any[] = [];
+  const days: DayCell<T>[] = [];
 
   for (let d = 1; d <= lastDay.getDate(); d++) {
     const current = new Date(year, month, d);

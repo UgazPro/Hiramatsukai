@@ -24,10 +24,12 @@ export interface IStudent {
     enrollmentDate: Date;
     rol: IRol;
     dojo: IDojo;
-    userRanks: [{
-        martialArt: IDojoMartialArts;
-        rank: IStudentRanks;
-    }]
+    userRanks: StudentRanks[];
+}
+
+export interface StudentRanks {
+    martialArt: IDojoMartialArts;
+    rank: IStudentRanks;
 }
 
 export interface IStudentsGroup {
@@ -86,9 +88,32 @@ export interface IStudentAllInfo {
     activityAttendanceHistory: IActivityAttendanceItem[];
 }
 
+//Postulaciones
 
+export interface ISuggestionStudentApplied {
+    id:                    number;
+    name:                  string;
+    lastName:              string;
+    enrollmentDate:        Date;
+    identification:        string;
+    birthday:              Date;
+    suggestedByMartialArt: SuggestedByMartialArt[];
+    suggested:             boolean;
+}
 
+export interface SuggestedByMartialArt {
+    martialArtId:    number;
+    martialArt:      string;
+    lastExamDate:    null;
+    postulationRank: PostulationRank;
+    suggested:       boolean;
+}
 
-
-
-
+export interface PostulationRank {
+    id:           number;
+    martialArtId: number;
+    code:         string;
+    rank_name:    string;
+    belt:         string;
+    icon:         string;
+}
