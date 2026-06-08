@@ -27,6 +27,43 @@ export interface IActivityCreate {
   description: string;  
 }
 
+export interface IExam {
+  id: number;
+  status: "Aprobado" | "Reprobado" | "Pendiente";
+  activity: {
+    id: number;
+    name: string;
+    description: string;
+    date: Date;
+  };
+  user: {
+    id: number;
+    name: string;
+    lastName: string;
+  };
+  ranks: {
+    id: number;
+    belt: string;
+    code: string;
+    rank_name: string;
+    martialArt: {
+      id: number;
+      martialArt: string;
+    };
+  };
+  previousRank: {
+    id: number;
+    belt: string;
+    code: string;
+    rank_name: string;
+    martialArt: {
+      id: number;
+      martialArt: string;
+    };
+  };
+  createdAt: Date;
+}
+
 
 
 

@@ -50,6 +50,42 @@ export interface IStudentRanks {
     code?: string;
 }
 
+export interface IExamHistoryItem {
+    activity: {
+        id: number;
+        name: string;
+        date: Date;
+    };
+    martialArt: IDojoMartialArts;
+    rank: IDojoRanks;
+    approved: boolean;
+}
+
+export interface IActivityAttendanceItem {
+    id: number;
+    userId: number;
+    activityId: number;
+    activity: {
+        id: number;
+        name: string;
+        date: Date;
+        place: string;
+    };
+}
+
+export interface IStudentAllInfo {
+    attendancePercentage: number;
+    paymentStatus: 'AL_DIA' | 'DEUDA';
+    examsHistory: IExamHistoryItem[];
+    upcomingExam: {
+        id: number;
+        name: string;
+        date: Date;
+        place: string;
+    } | null;
+    activityAttendanceHistory: IActivityAttendanceItem[];
+}
+
 
 
 

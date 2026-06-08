@@ -1,7 +1,7 @@
 import { IStudent, ViewMode } from "@/services/students/student.interface";
 import { create } from "zustand";
 
-type StudentScreen = "list" | "detail" | "edit";
+type StudentScreen = "list" | "detail" | "edit" | "form";
 
 interface StudentsStore {
 
@@ -23,10 +23,6 @@ interface StudentsStore {
 
   searchTerm: string;
   setSearchTerm: (v: string) => void;
-
-  usingForm: boolean;
-  openForm: () => void;
-  closeForm: () => void;
 }
 
 export const useStudentsStore = create<StudentsStore>((set) => ({
@@ -46,26 +42,22 @@ export const useStudentsStore = create<StudentsStore>((set) => ({
   startCreate: () => set({
     mode: "create",
     selectedStudent: null,
-    usingForm: true,
+    screen: "form",
   }),
 
   startEdit: (student) => set({
     mode: "edit",
     selectedStudent: student,
-    usingForm: true,
+    screen: "form",
   }),
 
   finishForm: () => set({
-    usingForm: false,
+    screen: "list",
     selectedStudent: null,
     mode: "create",
   }),
 
   searchTerm: "",
   setSearchTerm: (v) => set({ searchTerm: v }),
-
-  usingForm: false,
-  openForm: () => set({ usingForm: true }),
-  closeForm: () => set({ usingForm: false }),
 
 }));

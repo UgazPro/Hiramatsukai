@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Plus, Users } from "lucide-react";
+import { useStudentsStore } from "@/stores/students.store";
 
-interface StudentsNoResultsProps {
-    openCreateStudent: () => void;
-}
+export default function StudentsNoResults() {
 
-export default function StudentsNoResults({ openCreateStudent } : StudentsNoResultsProps) {
+    const { startCreate } = useStudentsStore();
 
     return (
 
@@ -21,7 +20,7 @@ export default function StudentsNoResults({ openCreateStudent } : StudentsNoResu
             <div className="flex gap-3 justify-center">
                 <Button
                     className="bg-amber-600 hover:bg-amber-700 text-white"
-                    onClick={openCreateStudent}
+                    onClick={startCreate}
                 >
                     <Plus className="h-4 w-4 mr-2" />
                     Crear nuevo estudiante

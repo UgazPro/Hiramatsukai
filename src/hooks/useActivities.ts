@@ -1,7 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
-import { getActivities, ActivitiesFilter } from "@/services/activities/activity.service";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  getActivities,
+  ActivitiesFilter,
+  getUpcomingExams,
+  getAppliedStudents,
+  getAppliedStudentSuggestions,
+  createAppliedStudent,
+  getPastExams,
+  getExamsByActivity,
+  getExamsByUser,
+  saveExam,
+} from "@/services/activities/activity.service";
 import { useActivitiesStore } from "@/stores/activities.store";
-import { IActivity } from "@/services/activities/activity.interface";
+import { IActivity, IExam } from "@/services/activities/activity.interface";
 
 export const useActivities = () => {
   const { filters } = useActivitiesStore();
@@ -36,3 +47,117 @@ export const useActivities = () => {
     refetch,
   };
 };
+
+// Exams
+export const useUpcomingExams = () => {
+  const { data, isLoading } = useQuery<IActivity[]>({
+    queryKey: ["upcomingExams"],
+    queryFn: getUpcomingExams,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    upcomingExams: data ?? [],
+    isLoading,
+  };
+};
+
+// Applied Students
+export const useAppliedStudents = (activityId?: number) => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["appliedStudents", activityId],
+    queryFn: () => getAppliedStudents(activityId),
+    staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 30,
+    refetchIntervalInBackground: false,
+  });
+
+  return {
+    appliedStudents: data ?? [],
+    isLoading,
+  };
+};
+
+export const useAppliedStudentSuggestions = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["appliedStudentSuggestions"],
+    queryFn: getAppliedStudentSuggestions,
+    staleTime: 1000 * 60 * 5,
+    refetchInterval: 1000 * 30,
+    refetchIntervalInBackground: false,
+  });
+
+  return {
+    suggestions: data ?? [],
+    isLoading,
+  };
+};
+
+export const useCreateAppliedStudent = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: createAppliedStudent,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["appliedStudents"] });
+      qc.invalidateQueries({ queryKey: ["appliedStudentSuggestions"] });
+    },
+  });
+};
+
+// Exams History
+export const useExamsHistory = () => {
+  const { data, isLoading } = useQuery<IActivity[]>({
+    queryKey: ["examsHistory"],
+    queryFn: getPastExams,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    pastExams: data ?? [],
+    isLoading,
+  };
+};
+
+export const useExamsByActivity = (activityId: number | null) => {
+  const { data, isLoading } = useQuery<IExam[]>({
+    queryKey: ["examsByActivity", activityId],
+    queryFn: () => getExamsByActivity(activityId!),
+    enabled: Boolean(activityId),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    exams: data ?? [],
+    isLoading,
+  };
+};
+
+export const useExamsByUser = (userId: number | null) => {
+  const { data, isLoading } = useQuery<IExam[]>({
+    queryKey: ["examsByUser", userId],
+    queryFn: () => getExamsByUser(userId!),
+    enabled: Boolean(userId),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    exams: data ?? [],
+    isLoading,
+  };
+};
+
+export const useSaveExam = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: saveExam,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["appliedStudents"] });
+      qc.invalidateQueries({ queryKey: ["examsByActivity"] });
+      qc.invalidateQueries({ queryKey: ["examsByUser"] });
+    },
+  });
+};
+
+

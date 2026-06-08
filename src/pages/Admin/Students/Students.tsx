@@ -4,7 +4,6 @@ import { useStudents } from "@/hooks/useStudents";
 import { useFilteredStudents } from "@/hooks/useFilteredStudents";
 import { useStudentsStore } from "@/stores/students.store";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
-import DialogComponent from "@/components/dialog/DialogComponent";
 import StudentsForm from "./StudentForm/StudentsForm";
 import StudentLongCardView from "./StudentViews/StudentLongCardView";
 import StudentsHeader from "./StudentViews/StudentsHeader";
@@ -16,7 +15,7 @@ export default function Students() {
 
   const { data: students = [], isLoading } = useStudents();
 
-  const { viewMode, setViewMode, usingForm, openForm, screen, finishForm } = useStudentsStore();
+  const { viewMode, setViewMode, screen, startCreate } = useStudentsStore();
 
   const filteredStudents = useFilteredStudents(students);
 
@@ -32,17 +31,7 @@ export default function Students() {
           <div className="p-4">
             <>
               {/* Header */}
-              <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} openCreateStudent={openForm} />
-
-              {/* Form */}
-              <DialogComponent
-                openDialog={usingForm}
-                onClose={finishForm}
-                dialogTitle="Nuevo Estudiante"
-                children={<StudentsForm />}
-                className="max-w-6xl"
-                dialogDescription="Complete los campos para agregar un nuevo estudiante al dojo"
-              />
+              <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} />
 
               {/* Views */}
               {viewMode === "list" && (
@@ -63,7 +52,7 @@ export default function Students() {
               )}
 
               {/* View if no results are found */}
-              {filteredStudents.length === 0 && <StudentsNoResults openCreateStudent={openForm} />}
+              {filteredStudents.length === 0 && <StudentsNoResults />}
 
             </>
 
@@ -75,11 +64,12 @@ export default function Students() {
           <div>
 
             {screen === "detail" && <div className="h-full overflow-y-auto"><StudentDetailView /></div>}
+            {screen === "form" && <div className="h-full overflow-y-auto"><StudentsForm /></div>}
 
           </div>
         }
 
-        toggle={screen === "detail" ? true : false}
+        toggle={screen === "detail" || screen === "form"}
       />
 
     </div>

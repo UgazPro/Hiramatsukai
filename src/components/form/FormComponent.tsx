@@ -8,26 +8,35 @@ import { Controller } from "react-hook-form";
 import ErrorMessage from "./renderFormComponents/ErrorMessage";
 import { MultiSelectField } from "./renderFormComponents/MultiSelectField";
 
+const inputClass =
+  "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg";
+const labelClass =
+  "text-sm font-medium text-[var(--blueColor)]";
+const sectionClass =
+  "bg-white shadow-sm border border-gray-200 rounded-xl p-6 space-y-5";
+
 interface FormComponentProps {
     fields: FormField[];
     form: any;
     otherType?: React.ReactNode;
+    className?: string;
 }
 
-export function FormComponent({ fields, form, otherType }: FormComponentProps) {
+export function FormComponent({ fields, form, otherType, className }: FormComponentProps) {
 
     return (
 
-        <div className="space-y-8">
+        <div className={`${sectionClass} ${className ?? ""}`}>
 
             {fields.map((field) => {
 
                 switch (field.type) {
                     case "text":
                         return (
-                            <div key={field.name} className="space-y-2 relative">
-                                <Label>{field.label}</Label>
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
                                 <Input
+                                    className={inputClass}
                                     type={field.inputType ?? "text"}
                                     {...form.register(field.name)}
                                 />
@@ -38,16 +47,19 @@ export function FormComponent({ fields, form, otherType }: FormComponentProps) {
 
                     case "textarea":
                         return (
-                            <div key={field.name} className="space-y-2 relative">
-                                <Label>{field.label}</Label>
-                                <Textarea {...form.register(field.name)} />
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
+                                <Textarea
+                                  className={inputClass}
+                                  {...form.register(field.name)}
+                                />
                                 {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
                             </div>
                         );
 
                     case "select":
                         return (
-                            <div key={field.name} className="space-y-2 relative">
+                            <div key={field.name} className="space-y-1.5 relative">
 
                                 <SelectComponentForm
                                     form={form}
@@ -64,8 +76,8 @@ export function FormComponent({ fields, form, otherType }: FormComponentProps) {
 
                     case "date":
                         return (
-                            <div key={field.name} className="space-y-2 relative">
-                                <Label>{field.label}</Label>
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
                                 <Controller
                                     control={form.control}
                                     name={field.name}
@@ -82,7 +94,7 @@ export function FormComponent({ fields, form, otherType }: FormComponentProps) {
 
                     case "multiselect":
                         return (
-                            <div key={field.name} className="space-y-2 relative">
+                            <div key={field.name} className="space-y-1.5 relative">
                                 <MultiSelectField
                                     form={form}
                                     name={field.name}
@@ -102,7 +114,7 @@ export function FormComponent({ fields, form, otherType }: FormComponentProps) {
 
                     case "other":
                         return (
-                            <div key={field.name} className="space-y-2 relative">
+                            <div key={field.name} className="space-y-1.5 relative">
                                 {otherType}
                             </div>
                         );

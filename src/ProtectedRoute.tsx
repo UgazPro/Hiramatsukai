@@ -1,4 +1,3 @@
-// ProtectedRoute.tsx
 import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "@/stores/auth.store";

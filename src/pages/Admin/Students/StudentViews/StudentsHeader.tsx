@@ -7,12 +7,11 @@ import SearchFilterComponent from "@/components/Filters/SearchFilter";
 interface StudentsHeaderProps {
     viewMode: ViewMode;
     setViewMode: (view: ViewMode) => void;
-    openCreateStudent: () => void;
 }
 
-export default function StudentsHeader({ viewMode, setViewMode, openCreateStudent }: StudentsHeaderProps) {
+export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeaderProps) {
 
-    const { searchTerm, setSearchTerm } = useStudentsStore();
+    const { searchTerm, setSearchTerm, startCreate } = useStudentsStore();
 
     const views = [
         { key: "list", icon: List },
@@ -59,7 +58,7 @@ export default function StudentsHeader({ viewMode, setViewMode, openCreateStuden
 
                 <Button
                     className="bg-linear-to-r from-yellow-600 to-yellow-400 hover:from-yellow-400 hover:to-yellow-600 text-white shadow-md hover:shadow-lg transition-colors ease-in-out"
-                    onClick={openCreateStudent}
+                    onClick={startCreate}
                 >
                     <UserPlus className="h-4 w-4 mr-2" />
                     Nuevo Estudiante
