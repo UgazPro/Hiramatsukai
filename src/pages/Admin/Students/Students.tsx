@@ -15,7 +15,8 @@ export default function Students() {
 
   const { data: students = [], isLoading } = useStudents();
 
-  const { viewMode, setViewMode, screen, startCreate } = useStudentsStore();
+  // const { viewMode, setViewMode, screen, startCreate } = useStudentsStore();
+  const { viewMode, setViewMode, screen } = useStudentsStore();
 
   const filteredStudents = useFilteredStudents(students);
 

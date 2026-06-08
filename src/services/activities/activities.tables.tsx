@@ -1,7 +1,7 @@
 import { Column } from "@/components/table/TableComponent";
 import { Button } from "@/components/ui/button";
 import { format, parseISO } from "date-fns";
-import { CalendarDays, Clock, Edit, Eye, Trash } from "lucide-react";
+import { CalendarDays, Clock, Edit, Eye } from "lucide-react";
 import { IActivity } from "./activity.interface";
 import FieldBadge from "@/components/table/RenderTableComponents";
 import { activityScreen } from "@/stores/activities.store";
