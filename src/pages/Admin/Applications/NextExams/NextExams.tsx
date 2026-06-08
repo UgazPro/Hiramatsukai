@@ -9,11 +9,11 @@ import { TabType } from "../ApplicationsTabs";
 interface NextExamsProps {
     setActiveTab: (tab: TabType) => void;
     upcomingExams: IActivity[];
-    setSelectedExamen: (examen: IActivity) => void;
+    // setSelectedExamen: (examen: IActivity) => void;
     isLoading: boolean;
 }
 
-export default function NextExams({ setActiveTab, upcomingExams, setSelectedExamen, isLoading }: NextExamsProps) {
+export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedExamen, */ isLoading }: NextExamsProps) {
 
     const { openPostulationForm, openNextExamDetail } = useApplicationsStore();
     
@@ -91,7 +91,7 @@ export default function NextExams({ setActiveTab, upcomingExams, setSelectedExam
                                     onClick={() => {
                                         if (!isNextExam) return;
                                         setActiveTab('postulaciones');
-                                        setSelectedExamen(examen);
+                                        // setSelectedExamen(examen);
                                         openPostulationForm(examen.id);
                                     }}
                                 >

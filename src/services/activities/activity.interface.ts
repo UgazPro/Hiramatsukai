@@ -12,8 +12,20 @@ export interface IActivity {
   createdDate: Date;
   type: string;
   description: string;
-  ActivityDojos: IDojo[];
+  ActivityDojos: IDojo[] | IDojoEdit[]; 
 }
+
+export interface IDojoEdit {
+  dojo: Dojo;
+}
+
+export interface Dojo {
+  id:      number;
+  dojo:    string;
+  address: string;
+}
+
+
 
 export interface IActivityCreate { 
   name: string;

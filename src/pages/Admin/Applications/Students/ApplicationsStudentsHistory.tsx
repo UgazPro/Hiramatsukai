@@ -4,13 +4,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
     Search,
-    User,
     Loader2,
     GraduationCap,
     ChevronRight,
 } from "lucide-react";
 import { useStudents } from "@/hooks/useStudents";
 import { useApplicationsStore } from "@/stores/applications.store";
+import { IStudent, StudentRanks } from "@/services/students/student.interface";
 
 interface ApplicationsStudentsHistoryProps {
     activeTab: string;
@@ -25,8 +25,8 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
 
     const students = useMemo(
         () =>
-            (allUsers as any[]).filter(
-                (u: any) => u.rol?.rol === "Estudiante" && !u.deleted || u.rol?.rol === "Líder Instructor" && !u.deleted || u.rol?.rol === "Instructor" && !u.deleted,
+            (allUsers as IStudent[]).filter(
+                (u: IStudent) => u.rol?.rol === "Estudiante" && !u.deleted || u.rol?.rol === "Líder Instructor" && !u.deleted || u.rol?.rol === "Instructor" && !u.deleted,
             ),
         [allUsers],
     );
@@ -37,7 +37,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
 
     const filteredStudents = useMemo(
         () =>
-            students.filter((s: any) => {
+            students.filter((s: IStudent) => {
                 if (!searchTerm) return true;
                 const q = searchTerm.toLowerCase();
                 const fullName = `${s.name} ${s.lastName}`.toLowerCase();
@@ -91,7 +91,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                             </div>
 
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                                {filteredStudents.map((student: any) => (
+                                {filteredStudents.map((student: IStudent) => (
                                     <Card
                                         key={student.id}
                                         className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer group"
@@ -138,10 +138,10 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                                     0 && (
                                                         <div className="mt-3 flex flex-wrap justify-center gap-1">
                                                             {(
-                                                                student.userRanks as any[]
+                                                                student.userRanks as StudentRanks[]
                                                             ).map(
                                                                 (
-                                                                    ur: any,
+                                                                    ur: StudentRanks,
                                                                     i: number,
                                                                 ) => (
                                                                     <Badge
