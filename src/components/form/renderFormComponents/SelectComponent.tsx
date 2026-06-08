@@ -1,6 +1,5 @@
 import { FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useEffect } from 'react';
 import { Label } from '@/components/ui/label';
 
 export interface IOptions {
@@ -74,9 +73,6 @@ export function SelectComponentForm({ form, label, placeholder, name, options, d
 }
 
 export function SelectComponent({ label, value, placeholder, options, onChange, disabled }: FormSelectProps) {
-    useEffect(() => {
-        console.log(value);
-    }, [value])
 
     return (
         <div className='space-y-2 w-40'>

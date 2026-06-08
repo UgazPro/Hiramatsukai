@@ -31,11 +31,6 @@ export const useAxiosInterceptor = () => {
 
         interceptorId = api.interceptors.response.use(
             (response) => {
-                // console.log(response);
-
-                // if (response.status === 401) {
-                //     navigate('/login')
-                // }
 
                 if (isMutationMethod(response.config.method)) {
                     const message = response.data;

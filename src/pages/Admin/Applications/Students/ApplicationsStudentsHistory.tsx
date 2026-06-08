@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -30,10 +30,6 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
             ),
         [allUsers],
     );
-
-        useEffect(() => {
-        console.log(students);
-    }, [activeTab]);
 
     const filteredStudents = useMemo(
         () =>

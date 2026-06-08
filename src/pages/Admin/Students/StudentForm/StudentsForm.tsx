@@ -170,8 +170,6 @@ export default function StudentsForm() {
 
     const sendForm = async (data: StudentFormValues) => {
 
-        console.log(data);
-
         const payload = {
             ...(mode === "edit" && selectedStudent?.id ? { id: selectedStudent.id } : {}),
             identification: data.identification,
@@ -189,8 +187,6 @@ export default function StudentsForm() {
             martialArtRank: data.martialArtRank.filter(m => m.martialArtId > 0 && m.rankId > 0),
         };
 
-        console.log(payload);
-
         if (mode === "create") {
             await createStudent({ data: payload, imageFile });
         } else {
@@ -199,9 +195,6 @@ export default function StudentsForm() {
                 imageFile
             });
         }
-
-
-        console.log(payload);
 
         finishForm();
     };
