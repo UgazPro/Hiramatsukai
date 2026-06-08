@@ -8,6 +8,8 @@ export const ActivitySchema = z.object({
         message: "Fecha de la Actividad inválida",
     }),
 
+    time: z.string().regex(/^\d{2}:\d{2}$/, "Hora inválida (HH:mm)"),
+
     place: z.string().nonempty("Lugar Requerido"),
 
     price: z.number("Precio Requerido"),

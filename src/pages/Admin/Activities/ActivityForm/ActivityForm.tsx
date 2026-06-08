@@ -8,6 +8,8 @@ import { activityLeftFields, activityRightFields } from "@/services/activities/a
 import { ActivityFormValues, ActivitySchema } from "@/services/activities/activity.schema";
 import { useActivitiesStore } from "@/stores/activities.store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
+import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -30,6 +32,7 @@ export default function ActivityForm() {
         defaultValues: {
             name: '',
             date: new Date(),
+            time: '',
             place: '',
             price: 0,
             type: '',
@@ -45,12 +48,12 @@ export default function ActivityForm() {
         if (mode !== "edit") return;
         if (!selectedActivity) return;
 
-        console.log(selectedActivity);
-
         if (mode === "edit" && selectedActivity) {
+            const activityDate = new Date(selectedActivity.date);
             form.reset({
                 name: selectedActivity.name,
-                date: selectedActivity.date,
+                date: activityDate,
+                time: format(activityDate, "HH:mm"),
                 place: selectedActivity.place,
                 price: selectedActivity.price,
                 type: selectedActivity.type,
@@ -63,12 +66,14 @@ export default function ActivityForm() {
 
     const sendForm = async (data: ActivityFormValues) => {
 
-        console.log(data);
+        const [hours, minutes] = data.time.split(":").map(Number);
+        const dateWithTime = new Date(data.date);
+        dateWithTime.setHours(hours, minutes, 0, 0);
 
         const payload = {
             ...(mode === "edit" && selectedActivity?.id ? { id: selectedActivity.id } : {}),
             name: data.name,
-            date: data.date,
+            date: dateWithTime,
             place: data.place,
             price: data.price ?? 0,
             type: data.type,
@@ -87,62 +92,86 @@ export default function ActivityForm() {
             await updateActivity({ data: updatePayload, id: selectedActivity!.id });
         }
 
-        console.log(payload);
-        console.log(selectedActivity);
-
         finishForm();
 
     };
 
-    const dojosSeledted = form.watch("dojoIds");
-
-
-    useEffect(() => {
-    console.log(dojosSeledted);
-
-    },[dojosSeledted])
-
     return (
 
-        <Form {...form}>
+        <div className="p-6 w-full max-w-5xl mx-auto">
+            <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
 
-            <form onSubmit={form.handleSubmit(sendForm)}>
+                {/* Header */}
+                <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 px-6 py-4">
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h2 className="text-xl font-bold text-gray-900">
+                                {mode === "create" ? "Nueva Actividad" : "Editar Actividad"}
+                            </h2>
+                            <p className="text-sm text-gray-600 mt-0.5">
+                                {mode === "create"
+                                    ? "Complete los campos para agregar una nueva actividad"
+                                    : "Modifique los campos de la actividad"}
+                            </p>
+                        </div>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            className="text-gray-600 hover:text-gray-900"
+                            onClick={finishForm}
+                        >
+                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            Volver
+                        </Button>
+                    </div>
+                </div>
 
-                <div className="grid grid-cols-2 gap-6 my-6">
+                <div className="p-5">
 
-                    <FormComponent
-                        form={form}
-                        fields={activityLeftFields(
-                            dojosOptions,
-                            user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor",
-                        )}
-                    />
+                    <Form {...form}>
 
-                    <FormComponent
-                        form={form}
-                        fields={activityRightFields}
-                    />
+                        <form onSubmit={form.handleSubmit(sendForm)}>
+
+                            <div className="grid grid-cols-2 gap-6 my-6">
+
+                                <FormComponent
+                                    form={form}
+                                    fields={activityLeftFields(
+                                        dojosOptions,
+                                        user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor",
+                                    )}
+                                />
+
+                                <FormComponent
+                                    form={form}
+                                    fields={activityRightFields}
+                                />
+
+                            </div>
+
+                            <div className="flex justify-end space-x-4 pt-5 border-t border-gray-200">
+                                <Button
+                                    type="button" variant="outline" className="cursor-pointer"
+                                    onClick={() => finishForm()}
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-red-700 hover:bg-red-800 cursor-pointer"
+                                >
+                                    {mode === "create" ? "Guardar Actividad" : "Actualizar Actividad"}
+                                </Button>
+                            </div>
+
+                        </form>
+
+                    </Form>
 
                 </div>
 
-                <div className="flex justify-end space-x-4">
-                    <Button
-                        type="button" variant="outline" className="cursor-pointer"
-                        onClick={() => finishForm()}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button
-                        type="submit"
-                        className="bg-red-700 hover:bg-red-800 cursor-pointer"
-                    >
-                        {mode === "create" ? "Guardar Actividad" : "Actualizar Actividad"}
-                    </Button>
-                </div>
-
-            </form>
-
-        </Form>
+            </div>
+        </div>
 
     );
 

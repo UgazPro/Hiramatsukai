@@ -13,9 +13,10 @@ interface CalendarComponentProps {
     cSelectedActivity?: IActivity | null;
     setCSelectedActivity?: (activity: IActivity) => void;
     GoToTodayButton?: boolean;
+    onDayClick?: (date: Date) => void;
 }
 
-export default function CalendarComponent({ styles, currentDate, setCurrentDate, activities, cSelectedActivity, setCSelectedActivity, GoToTodayButton }: CalendarComponentProps) {
+export default function CalendarComponent({ styles, currentDate, setCurrentDate, activities, cSelectedActivity, setCSelectedActivity, GoToTodayButton, onDayClick }: CalendarComponentProps) {
 
     const nextMonth = () => setCurrentDate(addMonths(currentDate, 1));
     const prevMonth = () => setCurrentDate(subMonths(currentDate, 1));
@@ -132,6 +133,7 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
                             return (
                                 <div
                                     key={index}
+                                    onClick={() => onDayClick?.(day.date)}
                                     className={`
                                         h-12 p-1 rounded-lg transition-all duration-200 hover:cursor-pointer
                                         ${!day.isCurrentMonth ? 'text-gray-400' : 'text-gray-900'}

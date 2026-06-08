@@ -1,6 +1,6 @@
 import { IOptions } from "./renderFormComponents/SelectComponent";
 
-export type FieldType = "text" | "textarea" | "select" | "date" | "multiselect" | "other";
+export type FieldType = "text" | "textarea" | "select" | "date" | "time" | "multiselect" | "other";
 
 export interface BaseField {
   name: string;
@@ -29,6 +29,10 @@ export interface DateField extends BaseField {
   type: "date";
 }
 
+export interface TimeField extends BaseField {
+  type: "time";
+}
+
 export interface OtherField extends BaseField {
     type: "other";
 }
@@ -44,4 +48,4 @@ export interface MultiSelectField {
 }
 
 
-export type FormField = TextField | TextareaField | SelectField | DateField | OtherField | MultiSelectField;
+export type FormField = TextField | TextareaField | SelectField | DateField | TimeField | OtherField | MultiSelectField;

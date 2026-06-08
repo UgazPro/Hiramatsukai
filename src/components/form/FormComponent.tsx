@@ -92,6 +92,19 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                             </div>
                         );
 
+                    case "time":
+                        return (
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
+                                <Input
+                                    className={inputClass}
+                                    type="time"
+                                    {...form.register(field.name)}
+                                />
+                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                            </div>
+                        );
+
                     case "multiselect":
                         return (
                             <div key={field.name} className="space-y-1.5 relative">
