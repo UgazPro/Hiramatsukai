@@ -9,7 +9,7 @@ interface CalendarComponentProps {
     styles?: string;
     currentDate: Date;
     setCurrentDate: (date: Date) => void;
-    activities?: any;
+    activities?: IActivity[];
     cSelectedActivity?: IActivity | null;
     setCSelectedActivity?: (activity: IActivity) => void;
     GoToTodayButton?: boolean;
@@ -24,9 +24,9 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
         setCSelectedActivity!(null!);
     }
     const getActivitiesForDay = (date: Date) => {
-        return activities.filter((activity: { date: { toString: () => string; }; }) =>
+        return activities?.filter((activity: IActivity) =>
             isSameDay(parseISO(activity.date.toString()), date)
-        );
+        ) ?? [];
     };
 
     // Generate days of the month for the calendar
@@ -144,7 +144,7 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
                                     <div className="text-sm font-medium">{format(day.date, 'd')}</div>
                                     {hasActivities && (
                                         <div className="flex flex-wrap gap-0.5 mt-1 justify-center">
-                                            {day.activities.slice(0, 1).map((act: any, idx: number) => (
+                                            {day.activities.slice(0, 1).map((act: IActivity, idx: number) => (
                                                 <div
                                                     key={idx}
                                                     className={`h-1.5 w-1.5 rounded-full ${act.type === 'examen' ? 'bg-red-500' :
