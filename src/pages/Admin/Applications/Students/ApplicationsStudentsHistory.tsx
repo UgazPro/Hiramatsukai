@@ -14,10 +14,10 @@ import { useApplicationsStore } from "@/stores/applications.store";
 
 interface ApplicationsStudentsHistoryProps {
     activeTab: string;
-    getCinturonColor: (grado: string) => string;
+    getBeltColor: (grado: string) => string;
 }
 
-export default function ApplicationsStudentsHistory({ activeTab, getCinturonColor, }: ApplicationsStudentsHistoryProps) {
+export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }: ApplicationsStudentsHistoryProps) {
 
     const { openStudentDetail } = useApplicationsStore();
     const { data: allUsers = [], isLoading } = useStudents();
@@ -146,7 +146,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getCinturonColo
                                                                 ) => (
                                                                     <Badge
                                                                         key={i}
-                                                                        className={getCinturonColor(
+                                                                        className={getBeltColor(
                                                                             ur.rank
                                                                                 ?.belt ??
                                                                             "",

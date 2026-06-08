@@ -19,11 +19,11 @@ import { dateFormatterIntoLong } from "@/helpers/formatter";
 
 interface ApplicationsHistoryProps {
     activeTab: string;
-    getCinturonColor: (grado: string) => string;
+    getBeltColor: (grado: string) => string;
     martialArtsMap: Record<number, string>;
 }
 
-export default function ApplicationsHistory({ activeTab, getCinturonColor, martialArtsMap }: ApplicationsHistoryProps) {
+export default function ApplicationsHistory({ activeTab, getBeltColor, martialArtsMap }: ApplicationsHistoryProps) {
     const { openExamDetail } = useApplicationsStore();
     const { pastExams, isLoading } = useExamsHistory();
     const [expandedExamen, setExpandedExamen] = useState<number | null>(null);
@@ -158,7 +158,7 @@ export default function ApplicationsHistory({ activeTab, getCinturonColor, marti
                                                                             </div>
                                                                             <div className="flex items-center gap-2 text-sm">
                                                                                 <Badge
-                                                                                    className={getCinturonColor(
+                                                                                    className={getBeltColor(
                                                                                         exam
                                                                                             .previousRank
                                                                                             ?.belt ??
@@ -172,7 +172,7 @@ export default function ApplicationsHistory({ activeTab, getCinturonColor, marti
                                                                                 </Badge>
                                                                                 <ChevronRight className="h-3 w-3 text-gray-400" />
                                                                                 <Badge
-                                                                                    className={getCinturonColor(
+                                                                                    className={getBeltColor(
                                                                                         exam
                                                                                             .ranks
                                                                                             ?.belt ??

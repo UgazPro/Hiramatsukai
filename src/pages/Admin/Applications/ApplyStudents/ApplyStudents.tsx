@@ -28,7 +28,7 @@ interface ApplyStudentsProps {
   activeTab: string;
   appliedStudents: any[];
   isLoading: boolean;
-  getCinturonColor: (grado: string) => string;
+  getBeltColor: (grado: string) => string;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
   martialArtsMap: Record<number, string>;
@@ -38,7 +38,7 @@ export default function ApplyStudents({
   activeTab,
   appliedStudents,
   isLoading,
-  getCinturonColor,
+  getBeltColor,
   searchTerm,
   setSearchTerm,
   martialArtsMap,
@@ -176,7 +176,7 @@ export default function ApplyStudents({
                         </h3>
                         <div className="flex items-center gap-2 mt-2 flex-wrap justify-center">
                           <Badge
-                            className={getCinturonColor(
+                            className={getBeltColor(
                               postulacion.currentRank?.belt ||
                                 "",
                             )}
@@ -186,7 +186,7 @@ export default function ApplyStudents({
                           </Badge>
                           <ChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0" />
                           <Badge
-                            className={getCinturonColor(
+                            className={getBeltColor(
                               postulacion.ranks?.belt || "",
                             )}
                           >
@@ -329,7 +329,7 @@ export default function ApplyStudents({
                           <div className="flex items-center gap-3 ml-3 flex-shrink-0">
                             <div className="hidden sm:flex items-center gap-1 text-sm">
                               <Badge
-                                className={getCinturonColor(
+                                className={getBeltColor(
                                   student.currentRank?.belt ||
                                     "",
                                 )}
@@ -339,7 +339,7 @@ export default function ApplyStudents({
                               </Badge>
                               <ChevronRight className="h-3 w-3 text-gray-400" />
                               <Badge
-                                className={getCinturonColor(
+                                className={getBeltColor(
                                   student.ranks?.belt || "",
                                 )}
                               >

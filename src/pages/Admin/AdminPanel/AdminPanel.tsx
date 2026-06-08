@@ -12,7 +12,7 @@ import { es } from "date-fns/locale";
 import { useDashboard } from "@/hooks/useDashboard";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 
-const getCinturonColor = (grado: string) => {
+const getBeltColor = (grado: string) => {
   const colors: Record<string, string> = {
     Blanco: "bg-gray-100 text-gray-800 border-gray-300",
     Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
@@ -291,7 +291,7 @@ export default function AdminPanel() {
                             {cumple.nombre} {cumple.apellido}
                           </p>
                           <div className="flex items-center gap-2 text-xs">
-                            <Badge className={`${getCinturonColor(cumple.grado)} text-[10px] px-1.5 py-0`}>
+                            <Badge className={`${getBeltColor(cumple.grado)} text-[10px] px-1.5 py-0`}>
                               {cumple.grado}
                             </Badge>
                             <span className="text-gray-500">·</span>

@@ -112,7 +112,7 @@ export default function Applications() {
                 activeTab={activeTab}
                 appliedStudents={appliedStudents}
                 isLoading={isAppliedLoading}
-                getCinturonColor={getCinturonColor}
+                getBeltColor={getBeltColor}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 martialArtsMap={martialArtsMap}
@@ -121,14 +121,14 @@ export default function Applications() {
               {/* Pestaña: Historial */}
               <ApplicationsHistory
                 activeTab={activeTab}
-                getCinturonColor={getCinturonColor}
+                getBeltColor={getBeltColor}
                 martialArtsMap={martialArtsMap}
               />
 
               {/* Pestaña: Alumnos */}
               <ApplicationsStudentsHistory
                 activeTab={activeTab}
-                getCinturonColor={getCinturonColor}
+                getBeltColor={getBeltColor}
               />
             </div>
 

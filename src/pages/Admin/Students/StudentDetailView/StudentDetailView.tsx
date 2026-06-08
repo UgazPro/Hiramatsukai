@@ -15,7 +15,7 @@ import { useExamsByUser } from "@/hooks/useActivities";
 import { calculateMartialTime, dateFormatterIntoLong, formatNumberWithDots, formatPhoneNumber } from "@/helpers/formatter";
 import { useStudentAllInfo } from "@/hooks/useStudents";
 
-const getCinturonColor = (grado: string) => {
+const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
         Blanco: "bg-gray-100 text-gray-800 border-gray-300",
         Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
@@ -385,11 +385,11 @@ export default function StudentDetailView() {
                                                         </Badge>
                                                     </div>
                                                     <div className="flex items-center gap-1 flex-wrap">
-                                                        <Badge className={getCinturonColor(exam.previousRank?.belt ?? "") + " text-[10px] px-1.5 py-0"}>
+                                                        <Badge className={getBeltColor(exam.previousRank?.belt ?? "") + " text-[10px] px-1.5 py-0"}>
                                                             {exam.previousRank?.belt ?? "?"}
                                                         </Badge>
                                                         <ChevronRight className="h-2.5 w-2.5 text-gray-400" />
-                                                        <Badge className={getCinturonColor(exam.ranks?.belt ?? "") + " text-[10px] px-1.5 py-0"}>
+                                                        <Badge className={getBeltColor(exam.ranks?.belt ?? "") + " text-[10px] px-1.5 py-0"}>
                                                             {exam.ranks?.belt ?? "?"}
                                                         </Badge>
                                                         <span className="text-[10px] text-gray-400 ml-auto">

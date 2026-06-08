@@ -315,7 +315,7 @@ export default function DojoPage() {
                     <div key={`${day}-${item.name}-${item.startTime}-${index}`} className="text-gray-700 flex items-center gap-2 text-xs">
                       <p>{item.name}: {item.startTime} - {item.endTime}</p>
                       <p>|</p>
-                      <img src={item.martialArts.icon} alt="" className='w-8 h-8' />
+                      <img src={`/${item.martialArts.icon}`} alt="" className='w-8 h-8' />
                       <p>{item.martialArts.martialArt}</p>
                     </div>
                   ))}
@@ -854,7 +854,7 @@ export default function DojoPage() {
                     </div>
 
                     {/* Línea de Maestros */}
-                    <section className="bg-gray-50 rounded-2xl p-8">
+                    <section className="hidden bg-gray-50 rounded-2xl p-8">
                       <h3 className="text-2xl font-bold text-center text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
                         Línea de Transmisión
                       </h3>

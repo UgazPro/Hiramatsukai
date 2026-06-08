@@ -39,7 +39,7 @@ export default function DojoConfigPage() {
   const user: IToken = useUserData() as IToken;
 
   const { data: dojo, isLoading: isDojoLoading } = useDojosInfo(user.dojo.code || "");
-
+  
   const form = useForm<DojoBody>({
     defaultValues: {
       dojo: dojo?.dojo || "",
@@ -92,12 +92,12 @@ export default function DojoConfigPage() {
 
   const hasSocialMediaChanges = dojo
     ? JSON.stringify(normalizeSocialMedia(socialMedia)) !==
-      JSON.stringify(normalizeSocialMedia(dojo.socialMedia || []))
+    JSON.stringify(normalizeSocialMedia(dojo.socialMedia || []))
     : false;
 
   const hasMartialArtsChanges = dojo
     ? JSON.stringify(normalizeMartialArtsIds(martialArts)) !==
-      JSON.stringify(normalizeMartialArtsIds(dojo.dojoMartialArts || []))
+    JSON.stringify(normalizeMartialArtsIds(dojo.dojoMartialArts || []))
     : false;
 
   const hasMainInfoChanges = form.formState.isDirty || hasSocialMediaChanges || hasMartialArtsChanges;
@@ -173,7 +173,7 @@ export default function DojoConfigPage() {
   const updateDojo = async (data: DojoBody) => {
     console.log(dojo);
     console.log(user.dojoId);
-    
+
     if (!dojo?.id) return;
 
     const payload = {
@@ -182,7 +182,7 @@ export default function DojoConfigPage() {
       martialArts: martialArts.map(ma => ma.id),
     }
 
-console.log(payload);
+    console.log(payload);
 
 
     await updateDojoInfoMutation.mutateAsync({
@@ -226,6 +226,10 @@ console.log(payload);
 
   const updateMonthlyPayment = async (id: number, monthlyPaymentData: MonthlyPaymentBody) => {
     await updateMonthlyPaymentMutation.mutateAsync({ id, monthlyPaymentData });
+  }
+
+  const resolverImageUrl = (url: string) => {
+    return `/${url}`;
   }
 
   if (isDojoLoading) {
@@ -390,8 +394,7 @@ console.log(payload);
                       {martialArts.map((ma, index) => (
                         <div className="space-y-2" key={index}>
                           <div className="flex items-center justify-between">
-                            <Label><img src={ma.icon} alt={ma.martialArt} className="h-8 w-8" /> {ma.martialArt}</Label>
-
+                            <Label><img src={resolverImageUrl(ma.icon)} alt={ma.martialArt} className="h-8 w-8" /> {ma.martialArt}</Label>
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <Button variant="ghost" type="button" size="icon" className="lg:ml-auto" onClick={() => setMartialArts(prev => prev.filter(m => m.id !== ma.id))}>
@@ -580,23 +583,23 @@ console.log(payload);
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {dojo?.masters.map((instructor) => (
+                  {dojo && dojo.masters && dojo.masters.map((instructor) => (
                     <Card key={instructor.id} className="relative">
-                      <>
-                        <CardContent className="pt-6">
-                          <div className="space-y-3">
-                            <div className="text-center">
-                              <div className="h-16 w-16 mx-auto rounded-full bg-linear-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white text-xl font-bold mb-2">
-                                {instructor.name.charAt(0)}
-                              </div>
-                              <h3 className="font-bold text-lg">{instructor.name}</h3>
-                              <p className="text-yellow-600 font-medium">{instructor.userRanks[0].rank.rank_name}</p>
-                              {/* <p className="text-sm text-gray-600">{instructor.specialty}</p> */}
+                      <CardContent className="pt-6">
+                        <div className="space-y-3">
+                          <div className="text-center">
+                            <div className="h-16 w-16 mx-auto rounded-full bg-linear-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white text-xl font-bold mb-2">
+                              {instructor.name.charAt(0)}
                             </div>
-                            {/* <p className="text-sm text-gray-700">{instructor.bio}</p> */}
+                            <h3 className="font-bold text-lg">{instructor.name} {instructor.lastName}</h3>
+                            {instructor.userRanks[0] && (
+                              <p className="text-yellow-600 font-medium">{instructor.userRanks[0].rank.rank_name}</p>
+                            )}
+                            {/* <p className="text-sm text-gray-600">{instructor.specialty}</p> */}
                           </div>
-                        </CardContent>
-                      </>
+                          {/* <p className="text-sm text-gray-700">{instructor.bio}</p> */}
+                        </div>
+                      </CardContent>
                     </Card>
                   ))}
                 </div>

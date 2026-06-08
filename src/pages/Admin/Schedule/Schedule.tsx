@@ -101,6 +101,10 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
     cancelEditing();
   }
 
+  const resolverImageUrl = (url: string) => {
+    return `/${url}`;
+  }
+
   return (
     <div>
       <Card>
@@ -118,98 +122,98 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
         </CardHeader>
         <CardContent>
           {newSchedule.length > 0 && (
-          <div className="space-y-4 border border-gray-300 rounded-lg py-4 px-2">
-            {newSchedule.map((schedule, index) => (
-              <div key={index} className="flex items-end justify-between gap-8">
-                <div className="space-y-2 w-1/4">
-                  <Label>Dia</Label>
-                  <Select
-                    value={schedule.day}
-                    onValueChange={(value) => updateScheduleField(index, "day", value)}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Selecciona un día" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Dias</SelectLabel>
-                        <SelectItem value="Lunes">Lunes</SelectItem>
-                        <SelectItem value="Martes">Martes</SelectItem>
-                        <SelectItem value="Miércoles">Miércoles</SelectItem>
-                        <SelectItem value="Jueves">Jueves</SelectItem>
-                        <SelectItem value="Viernes">Viernes</SelectItem>
-                        <SelectItem value="Sábado">Sábado</SelectItem>
-                        <SelectItem value="Domingo">Domingo</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2 w-1/4">
-                  {/* <Label>Horario</Label> */}
-                  <div className="flex items-center gap-2">
-                    <div className="space-y-2 w-1/2">
-                      <Label htmlFor="time-picker-optional">Desde</Label>
-                      <Input
-                        type="time"
-                        step={60}
-                        value={schedule.startTime}
-                        onChange={(e) => updateScheduleField(index, "startTime", e.target.value)}
-                        className="appearance-none bg-background [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                      />
-                    </div>
-                    <div className="space-y-2 w-1/2">
-                      <Label htmlFor="time-picker-optional">Hasta</Label>
-                      <Input
-                        type="time"
-                        step={60}
-                        value={schedule.endTime}
-                        onChange={(e) => updateScheduleField(index, "endTime", e.target.value)}
-                        className="appearance-none bg-background [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                      />
+            <div className="space-y-4 border border-gray-300 rounded-lg py-4 px-2">
+              {newSchedule.map((schedule, index) => (
+                <div key={index} className="flex items-end justify-between gap-8">
+                  <div className="space-y-2 w-1/4">
+                    <Label>Dia</Label>
+                    <Select
+                      value={schedule.day}
+                      onValueChange={(value) => updateScheduleField(index, "day", value)}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecciona un día" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Dias</SelectLabel>
+                          <SelectItem value="Lunes">Lunes</SelectItem>
+                          <SelectItem value="Martes">Martes</SelectItem>
+                          <SelectItem value="Miércoles">Miércoles</SelectItem>
+                          <SelectItem value="Jueves">Jueves</SelectItem>
+                          <SelectItem value="Viernes">Viernes</SelectItem>
+                          <SelectItem value="Sábado">Sábado</SelectItem>
+                          <SelectItem value="Domingo">Domingo</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2 w-1/4">
+                    {/* <Label>Horario</Label> */}
+                    <div className="flex items-center gap-2">
+                      <div className="space-y-2 w-1/2">
+                        <Label htmlFor="time-picker-optional">Desde</Label>
+                        <Input
+                          type="time"
+                          step={60}
+                          value={schedule.startTime}
+                          onChange={(e) => updateScheduleField(index, "startTime", e.target.value)}
+                          className="appearance-none bg-background [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                        />
+                      </div>
+                      <div className="space-y-2 w-1/2">
+                        <Label htmlFor="time-picker-optional">Hasta</Label>
+                        <Input
+                          type="time"
+                          step={60}
+                          value={schedule.endTime}
+                          onChange={(e) => updateScheduleField(index, "endTime", e.target.value)}
+                          className="appearance-none bg-background [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                        />
+                      </div>
                     </div>
                   </div>
+                  <div className="space-y-2 w-1/4">
+                    <Label>Nombre/Actividad</Label>
+                    <Input
+                      value={schedule.name}
+                      onChange={(e) => updateScheduleField(index, "name", e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2 w-1/4">
+                    <Label>Arte Marcial</Label>
+                    <Select
+                      value={schedule.martialArtId.toString()}
+                      onValueChange={(value) => updateScheduleField(index, "martialArtId", Number(value))}
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecciona un arte marcial" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {martialArtsOptions.map((type, index) => (
+                            <SelectItem key={index} value={type.id.toString()}>{type.martialArt}</SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => removeSchedule(index)}>
+                    <X className="text-2xl" />
+                  </Button>
                 </div>
-                <div className="space-y-2 w-1/4">
-                  <Label>Nombre/Actividad</Label>
-                  <Input
-                    value={schedule.name}
-                    onChange={(e) => updateScheduleField(index, "name", e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2 w-1/4">
-                  <Label>Arte Marcial</Label>
-                  <Select
-                    value={schedule.martialArtId.toString()}
-                    onValueChange={(value) => updateScheduleField(index, "martialArtId", Number(value))}
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Selecciona un arte marcial" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {martialArtsOptions.map((type, index) => (
-                          <SelectItem key={index} value={type.id.toString()}>{type.martialArt}</SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => removeSchedule(index)}>
-                  <X className="text-2xl" />
+              ))}
+
+              <div className="flex items-center justify-end gap-2">
+                <Button variant="secondary" onClick={clearSchedule}>
+                  Cancelar
+                </Button>
+                <Button variant='clickRed' onClick={handleSaveSchedule}>
+                  <Save className="h-4 w-4 mr-2" />
+                  Guardar Horarios
                 </Button>
               </div>
-            ))}
-
-            <div className="flex items-center justify-end gap-2">
-              <Button variant="secondary" onClick={clearSchedule}>
-                Cancelar
-              </Button>
-              <Button variant='clickRed' onClick={handleSaveSchedule}>
-                <Save className="h-4 w-4 mr-2" />
-                Guardar Horarios
-              </Button>
             </div>
-          </div>
           )}
 
           <div className="overflow-x-auto">
@@ -308,7 +312,7 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                         <td className="py-3 px-4 font-medium">{item.day}</td>
                         <td className="py-3 px-4">{item.startTime} - {item.endTime}</td>
                         <td className="py-3 px-4">{item.name}</td>
-                        <td className="py-3 px-4 flex items-center gap-2"><img src={item.martialArts.icon} className="w-8 h-8" alt={item.martialArts.martialArt} /> {item.martialArts.martialArt}</td>
+                        <td className="py-3 px-4 flex items-center gap-2"><img src={resolverImageUrl(item.martialArts.icon)} className="w-8 h-8" alt={item.martialArts.martialArt} /> {item.martialArts.martialArt}</td>
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
                             <Button

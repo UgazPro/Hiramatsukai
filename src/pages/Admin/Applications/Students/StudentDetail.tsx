@@ -17,7 +17,7 @@ import { useApplicationsStore } from "@/stores/applications.store";
 import { useStudents } from "@/hooks/useStudents";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 
-const getCinturonColor = (grado: string) => {
+const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
         Blanco: "bg-gray-100 text-gray-800 border-gray-300",
         Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
@@ -98,7 +98,7 @@ export default function StudentDetail() {
                                         (ur: any, i: number) => (
                                             <Badge
                                                 key={i}
-                                                className={getCinturonColor(
+                                                className={getBeltColor(
                                                     ur.rank?.belt ?? "",
                                                 )}
                                             >
@@ -243,7 +243,7 @@ export default function StudentDetail() {
                                         </span>
                                         <span className="text-gray-300">|</span>
                                         <Badge
-                                            className={getCinturonColor(
+                                            className={getBeltColor(
                                                 exam.previousRank?.belt ?? "",
                                             )}
                                         >
@@ -251,7 +251,7 @@ export default function StudentDetail() {
                                         </Badge>
                                         <ChevronRight className="h-3 w-3 text-gray-400" />
                                         <Badge
-                                            className={getCinturonColor(
+                                            className={getBeltColor(
                                                 exam.ranks?.belt ?? "",
                                             )}
                                         >

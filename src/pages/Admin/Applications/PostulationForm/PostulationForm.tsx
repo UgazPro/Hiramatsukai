@@ -23,7 +23,7 @@ import {
 import { useDojoMartialArts } from "@/hooks/useDojos";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 
-const getCinturonColor = (grado: string) => {
+const getBeltColor = (grado: string) => {
   const colors: Record<string, string> = {
     Blanco: "bg-gray-100 text-gray-800 border-gray-300",
     Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
@@ -353,7 +353,7 @@ export default function PostulationForm() {
                               <div className="mt-2 flex items-center gap-2">
                                 <Badge
                                   variant="outline"
-                                  className={`text-xs ${getCinturonColor(targetInfo.postulationRank.belt)}`}
+                                  className={`text-xs ${getBeltColor(targetInfo.postulationRank.belt)}`}
                                 >
                                   {targetInfo.martialArt} →{" "}
                                   {targetInfo.postulationRank.belt}
