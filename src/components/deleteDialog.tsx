@@ -21,7 +21,7 @@ export function DeleteDialog({ whatsDeleting, onConfirm, buttonStyles, buttonTex
           onClick={(e) => e.stopPropagation()}
           className={buttonStyles}
         >
-          <Trash2 />
+          <Trash2  className="text-red-500"/>
           {buttonText}
         </Button>
       </AlertDialogTrigger>

@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useStudentsStore } from "@/stores/students.store";
 import { useDojoMartialArts, useDojoRanks, useDojos } from "@/hooks/useDojos";
 import { StudentFormValues, studentSchema } from "@/services/students/student.schema";
@@ -37,7 +37,8 @@ export default function StudentsForm() {
 
     const user = useUserData();
 
-    const { selectedStudent, mode, finishForm, setScreen } = useStudentsStore();
+    // const { selectedStudent, mode, finishForm, setScreen } = useStudentsStore();
+    const { selectedStudent, mode, finishForm } = useStudentsStore();
 
     const { mutateAsync: createStudent } = useCreateStudent();
     const { mutateAsync: updateStudent } = useUpdateStudent();
@@ -91,9 +92,9 @@ export default function StudentsForm() {
     }, [mode, selectedStudent, roles, dojos]);
 
     const returnTitle = (code: string) => {
-        const rename = code.slice(1);
-        const grade = code[0]
-        return `${rename} ${grade == 'K' ? 'Kyu' : 'Dan'}`
+        // const rename = code.slice(1);
+        // const grade = code[0]
+        return code
     }
 
     const dojosOptions = dojos.filter(dojo => user?.rol.rol === "Administrador" ? dojos.map(d => d) : dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));

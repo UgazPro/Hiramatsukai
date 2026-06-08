@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Sword, Target, Users, Award, BookOpen, Shield, Zap, Globe, Sparkles, Brain } from "lucide-react";
+import { Sword, Target, Shield, Zap, Sparkles, Brain } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 
 export default function KendoIaidoInfo() {

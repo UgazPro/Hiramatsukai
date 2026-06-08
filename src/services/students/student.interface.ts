@@ -1,3 +1,4 @@
+
 import { IDojo, IDojoMartialArts, IDojoRanks } from "../dojos/dojo.interface";
 
 export type ViewMode = "list" | "grid" | "cards" | "longCards";
@@ -116,4 +117,29 @@ export interface PostulationRank {
     rank_name:    string;
     belt:         string;
     icon:         string;
+}
+
+
+//Student DTO
+
+export interface StudentBody {
+    id?: number;
+    identification: string;
+    name: string;
+    lastName: string;
+    email: string;
+    sex: string;
+    username: string;
+    address: string;
+    phone: string;
+    dojoId: number;
+    rolId: number;
+    birthday: Date;
+    enrollmentDate: Date;
+    martialArtRank: MartialArtRank[];
+}
+
+export interface MartialArtRank {
+    martialArtId: number;
+    rankId: number;
 }
