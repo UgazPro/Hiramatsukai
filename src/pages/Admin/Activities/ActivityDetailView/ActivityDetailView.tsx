@@ -12,7 +12,7 @@ import { InfoItem } from "@/components/detailView/info/InfoItem";
 
 export default function ActivityDetailView() {
 
-  const { selectedActivity, setSelectedActivity, setScreen } = useActivitiesStore();
+  const { selectedActivity, setSelectedActivity, setScreen, startEdit } = useActivitiesStore();
 
   if (!selectedActivity) return null;
 
@@ -54,7 +54,7 @@ export default function ActivityDetailView() {
         setSelectedActivity(null!);
         setScreen("main");
       }}
-      onPrimary={() => console.log("editar actividad")}
+      onPrimary={() => startEdit(selectedActivity)}
     >
       <div className="text-sm text-gray-600">
         Creada el{" "}

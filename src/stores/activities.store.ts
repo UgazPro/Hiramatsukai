@@ -29,7 +29,7 @@ interface ActivitiesStore {
   setCurrentDate: (date: Date) => void;
 
   selectedActivity: IActivity | null;
-  setSelectedActivity: (activity: IActivity) => void;
+  setSelectedActivity: (activity: IActivity | null) => void;
 
   cSelectedActivity: IActivity | null;
   setCSelectedActivity: (activity: IActivity) => void;

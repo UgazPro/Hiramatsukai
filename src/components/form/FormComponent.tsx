@@ -31,6 +31,19 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
             {fields.map((field) => {
 
                 switch (field.type) {
+                    case "number":
+                        return (
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
+                                <Input
+                                    className={inputClass}
+                                    type="number"
+                                    {...form.register(field.name, { valueAsNumber: true })}
+                                />
+                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                            </div>
+                        );
+
                     case "text":
                         return (
                             <div key={field.name} className="space-y-1.5 relative">

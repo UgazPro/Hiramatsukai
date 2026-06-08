@@ -35,10 +35,10 @@ export default function ActivityForm() {
             date: new Date(),
             time: '',
             place: '',
-            price: 0,
             type: '',
             description: '',
             dojoIds: [],
+            price: 0,
             latitude: 0,
             longitude: 0,
         }
@@ -56,10 +56,12 @@ export default function ActivityForm() {
                 date: activityDate,
                 time: format(activityDate, "HH:mm"),
                 place: selectedActivity.place,
-                price: selectedActivity.price,
                 type: selectedActivity.type,
                 description: selectedActivity.description,
                 dojoIds: (selectedActivity.ActivityDojos as IDojoEdit[])?.map((dojo: IDojoEdit) => (dojo.dojo.id)) ?? [],
+                price: selectedActivity.price,
+                latitude: selectedActivity.latitude,
+                longitude: selectedActivity.longitude,
             });
         }
 
@@ -76,11 +78,12 @@ export default function ActivityForm() {
             name: data.name,
             date: dateWithTime,
             place: data.place,
-            price: data.price ?? 0,
             type: data.type,
             description: data.description,
 
             dojoIds: Array.isArray(data.dojoIds) ? data.dojoIds.map((d: number) => Number(d)) : [],
+
+            price: 0,
 
             latitude: 0,
             longitude: 0,
@@ -89,8 +92,7 @@ export default function ActivityForm() {
         if (mode === "create") {
             await createActivity(payload);
         } else {
-            // const { id, ...updatePayload } = payload;
-            const { ...updatePayload } = payload;
+            const { id, ...updatePayload } = payload;
             await updateActivity({ data: updatePayload, id: selectedActivity!.id });
         }
 
@@ -132,7 +134,7 @@ export default function ActivityForm() {
 
                     <Form {...form}>
 
-                        <form onSubmit={form.handleSubmit(sendForm)}>
+                        <form onSubmit={form.handleSubmit(sendForm, (errors) => console.error("Errores de validación:", errors))}>
 
                             <div className="grid grid-cols-2 gap-6 my-6">
 
