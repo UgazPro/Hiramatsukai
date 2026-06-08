@@ -16,8 +16,10 @@ import { useExamsByUser } from "@/hooks/useActivities";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { useStudents } from "@/hooks/useStudents";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
+import { IExam } from "@/services/activities/activity.interface";
+import { IStudent, StudentRanks } from "@/services/students/student.interface";
 
-const getCinturonColor = (grado: string) => {
+const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
         Blanco: "bg-gray-100 text-gray-800 border-gray-300",
         Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
@@ -37,23 +39,23 @@ export default function StudentDetail() {
     const { exams, isLoading } = useExamsByUser(selectedStudentId);
 
     const student = useMemo(
-        () => students.find((s: any) => s.id === selectedStudentId) ?? null,
+        () => students.find((s: IStudent) => s.id === selectedStudentId) ?? null,
         [students, selectedStudentId],
     );
 
     const approvedCount = exams.filter(
-        (e: any) => e.status === "Aprobado",
+        (e: IExam) => e.status === "Aprobado",
     ).length;
     const rejectedCount = exams.filter(
-        (e: any) => e.status === "Reprobado",
+        (e: IExam) => e.status === "Reprobado",
     ).length;
     const pendingCount = exams.filter(
-        (e: any) => e.status === "Pendiente",
+        (e: IExam) => e.status === "Pendiente",
     ).length;
 
-    const getInitials = (name: string, lastName: string) => {
-        return `${name?.charAt(0) ?? ""}${lastName?.charAt(0) ?? ""}`.toUpperCase();
-    };
+    // const getInitials = (name: string, lastName: string) => {
+    //     return `${name?.charAt(0) ?? ""}${lastName?.charAt(0) ?? ""}`.toUpperCase();
+    // };
 
     return (
         <div className="min-h-full p-6 w-full max-w-4xl mx-auto my-6">
@@ -94,11 +96,11 @@ export default function StudentDetail() {
                             )}
                             {student?.userRanks && student.userRanks.length > 0 && (
                                 <div className="flex flex-wrap gap-2 mt-2">
-                                    {(student.userRanks as any[]).map(
-                                        (ur: any, i: number) => (
+                                    {(student.userRanks as StudentRanks[]).map(
+                                        (ur: StudentRanks, i: number) => (
                                             <Badge
                                                 key={i}
-                                                className={getCinturonColor(
+                                                className={getBeltColor(
                                                     ur.rank?.belt ?? "",
                                                 )}
                                             >
@@ -176,7 +178,7 @@ export default function StudentDetail() {
                                 <Award className="h-5 w-5 text-amber-600" />
                                 Historial de Exámenes
                             </h3>
-                            {exams.map((exam: any) => (
+                            {exams.map((exam: IExam) => (
                                 <div
                                     key={exam.id}
                                     className={`p-5 rounded-xl border-2 transition-all ${
@@ -209,7 +211,7 @@ export default function StudentDetail() {
                                                 <p className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
                                                     <CalendarDays className="h-3 w-3" />
                                                     {dateFormatterIntoLong(
-                                                        exam.date ??
+                                                        exam.createdAt ??
                                                             exam.activity
                                                                 ?.date,
                                                     )}
@@ -243,7 +245,7 @@ export default function StudentDetail() {
                                         </span>
                                         <span className="text-gray-300">|</span>
                                         <Badge
-                                            className={getCinturonColor(
+                                            className={getBeltColor(
                                                 exam.previousRank?.belt ?? "",
                                             )}
                                         >
@@ -251,7 +253,7 @@ export default function StudentDetail() {
                                         </Badge>
                                         <ChevronRight className="h-3 w-3 text-gray-400" />
                                         <Badge
-                                            className={getCinturonColor(
+                                            className={getBeltColor(
                                                 exam.ranks?.belt ?? "",
                                             )}
                                         >

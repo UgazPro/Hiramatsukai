@@ -9,10 +9,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DojoBody, DojoScheduleBody, DojoSocialMedia, IDojoInfo, IDojoMartialArts } from "@/services/dojos/dojo.interface";
-import { useCreateDojoSchedules, useDeleteDojoSchedule, useDojoMartialArts, useDojoMonthlyPayments, useDojoPaymentMethods, useDojosInfo, useUpdateDojoInfo, useUpdateDojoSchedules } from "@/hooks/useDojos";
+import { useCreateDojoMonthlyPayment, useCreateDojoPaymentMethod, useCreateDojoSchedules, useDeleteDojoSchedule, useDojoMartialArts, useDojoMonthlyPayments, useDojoPaymentMethods, useDojosInfo, useUpdateDojoInfo, useUpdateDojoMonthlyPayment, useUpdateDojoPaymentMethod, useUpdateDojoSchedules } from "@/hooks/useDojos";
 import { IToken, useUserData } from "@/helpers/token";
 import { Controller, useForm } from "react-hook-form";
 import { Separator } from "@/components/ui/separator";
+import { MonthlyPaymentBody, PaymentMethodBody } from "@/services/dojos/payments.interface";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,7 +39,7 @@ export default function DojoConfigPage() {
   const user: IToken = useUserData() as IToken;
 
   const { data: dojo, isLoading: isDojoLoading } = useDojosInfo(user.dojo.code || "");
-
+  
   const form = useForm<DojoBody>({
     defaultValues: {
       dojo: dojo?.dojo || "",
@@ -64,12 +65,42 @@ export default function DojoConfigPage() {
   const createSchedulesMutation = useCreateDojoSchedules();
   const updateSchedulesMutation = useUpdateDojoSchedules();
   const deleteScheduleMutation = useDeleteDojoSchedule();
+  const createPaymentMethodMutation = useCreateDojoPaymentMethod();
+  const createMonthlyPaymentMutation = useCreateDojoMonthlyPayment();
+  const updatePaymentMethodMutation = useUpdateDojoPaymentMethod();
+  const updateMonthlyPaymentMutation = useUpdateDojoMonthlyPayment();
   const updateDojoInfoMutation = useUpdateDojoInfo();
   const { data: paymentMethods = [], isLoading: isPaymentMethodsLoading } = useDojoPaymentMethods();
   const { data: monthlyPayments = [], isLoading: isMonthlyPaymentsLoading } = useDojoMonthlyPayments();
 
   const martialArtsOptions: IDojoMartialArts[] = useDojoMartialArts().data || [];
   const [martialArts, setMartialArts] = useState<IDojoMartialArts[]>([]);
+
+  const normalizeSocialMedia = (items: DojoSocialMedia[] = []) => {
+    return [...items]
+      .map((item) => ({
+        socialMedia: item.socialMedia,
+        link: item.link || "",
+        directUrl: item.directUrl || "",
+      }))
+      .sort((a, b) => a.socialMedia.localeCompare(b.socialMedia));
+  };
+
+  const normalizeMartialArtsIds = (items: IDojoMartialArts[] = []) => {
+    return items.map((item) => item.id).sort((a, b) => a - b);
+  };
+
+  const hasSocialMediaChanges = dojo
+    ? JSON.stringify(normalizeSocialMedia(socialMedia)) !==
+    JSON.stringify(normalizeSocialMedia(dojo.socialMedia || []))
+    : false;
+
+  const hasMartialArtsChanges = dojo
+    ? JSON.stringify(normalizeMartialArtsIds(martialArts)) !==
+    JSON.stringify(normalizeMartialArtsIds(dojo.dojoMartialArts || []))
+    : false;
+
+  const hasMainInfoChanges = form.formState.isDirty || hasSocialMediaChanges || hasMartialArtsChanges;
 
   const handleChangeSocialMedia = (name: string, value: string) => {
     const determinated = value.includes('https') ? 'directUrl' : 'link';
@@ -142,7 +173,7 @@ export default function DojoConfigPage() {
   const updateDojo = async (data: DojoBody) => {
     console.log(dojo);
     console.log(user.dojoId);
-    
+
     if (!dojo?.id) return;
 
     const payload = {
@@ -151,7 +182,7 @@ export default function DojoConfigPage() {
       martialArts: martialArts.map(ma => ma.id),
     }
 
-console.log(payload);
+    console.log(payload);
 
 
     await updateDojoInfoMutation.mutateAsync({
@@ -179,6 +210,26 @@ console.log(payload);
 
   const deleteSchedule = async (scheduleId: number) => {
     await deleteScheduleMutation.mutateAsync({ scheduleId });
+  }
+
+  const createPaymentMethod = async (paymentMethodData: PaymentMethodBody) => {
+    await createPaymentMethodMutation.mutateAsync(paymentMethodData);
+  }
+
+  const createMonthlyPayment = async (monthlyPaymentData: MonthlyPaymentBody) => {
+    await createMonthlyPaymentMutation.mutateAsync(monthlyPaymentData);
+  }
+
+  const updatePaymentMethod = async (id: number, paymentMethodData: PaymentMethodBody) => {
+    await updatePaymentMethodMutation.mutateAsync({ id, paymentMethodData });
+  }
+
+  const updateMonthlyPayment = async (id: number, monthlyPaymentData: MonthlyPaymentBody) => {
+    await updateMonthlyPaymentMutation.mutateAsync({ id, monthlyPaymentData });
+  }
+
+  const resolverImageUrl = (url: string) => {
+    return `/${url}`;
   }
 
   if (isDojoLoading) {
@@ -243,6 +294,7 @@ console.log(payload);
 
           <Button
             onClick={handleSaveAll}
+            disabled={!dojo?.id || !hasMainInfoChanges || updateDojoInfoMutation.isPending}
             className="bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white"
           >
             <Save className="h-4 w-4 mr-2" />
@@ -342,8 +394,7 @@ console.log(payload);
                       {martialArts.map((ma, index) => (
                         <div className="space-y-2" key={index}>
                           <div className="flex items-center justify-between">
-                            <Label><img src={ma.icon} alt={ma.martialArt} className="h-8 w-8" /> {ma.martialArt}</Label>
-
+                            <Label><img src={resolverImageUrl(ma.icon)} alt={ma.martialArt} className="h-8 w-8" /> {ma.martialArt}</Label>
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <Button variant="ghost" type="button" size="icon" className="lg:ml-auto" onClick={() => setMartialArts(prev => prev.filter(m => m.id !== ma.id))}>
@@ -532,23 +583,23 @@ console.log(payload);
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {dojo?.masters.map((instructor) => (
+                  {dojo && dojo.masters && dojo.masters.map((instructor) => (
                     <Card key={instructor.id} className="relative">
-                      <>
-                        <CardContent className="pt-6">
-                          <div className="space-y-3">
-                            <div className="text-center">
-                              <div className="h-16 w-16 mx-auto rounded-full bg-linear-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white text-xl font-bold mb-2">
-                                {instructor.name.charAt(0)}
-                              </div>
-                              <h3 className="font-bold text-lg">{instructor.name}</h3>
-                              <p className="text-yellow-600 font-medium">{instructor.userRanks[0].rank.rank_name}</p>
-                              {/* <p className="text-sm text-gray-600">{instructor.specialty}</p> */}
+                      <CardContent className="pt-6">
+                        <div className="space-y-3">
+                          <div className="text-center">
+                            <div className="h-16 w-16 mx-auto rounded-full bg-linear-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white text-xl font-bold mb-2">
+                              {instructor.name.charAt(0)}
                             </div>
-                            {/* <p className="text-sm text-gray-700">{instructor.bio}</p> */}
+                            <h3 className="font-bold text-lg">{instructor.name} {instructor.lastName}</h3>
+                            {instructor.userRanks[0] && (
+                              <p className="text-yellow-600 font-medium">{instructor.userRanks[0].rank.rank_name}</p>
+                            )}
+                            {/* <p className="text-sm text-gray-600">{instructor.specialty}</p> */}
                           </div>
-                        </CardContent>
-                      </>
+                          {/* <p className="text-sm text-gray-700">{instructor.bio}</p> */}
+                        </div>
+                      </CardContent>
                     </Card>
                   ))}
                 </div>
@@ -563,6 +614,10 @@ console.log(payload);
               paymentMethods={paymentMethods}
               isMonthlyPaymentsLoading={isMonthlyPaymentsLoading}
               isPaymentMethodsLoading={isPaymentMethodsLoading}
+              onCreateMonthlyPayment={createMonthlyPayment}
+              onCreatePaymentMethod={createPaymentMethod}
+              onUpdateMonthlyPayment={updateMonthlyPayment}
+              onUpdatePaymentMethod={updatePaymentMethod}
             />
           </TabsContent>
         </Tabs>

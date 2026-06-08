@@ -9,27 +9,26 @@ import {
     ChevronDown,
     ChevronRight,
     CheckCircle,
-    XCircle,
     Loader2,
     Eye
 } from "lucide-react";
 import { useExamsHistory, useExamsByActivity } from "@/hooks/useActivities";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
+import { IExam } from "@/services/activities/activity.interface";
 
 interface ApplicationsHistoryProps {
     activeTab: string;
-    getCinturonColor: (grado: string) => string;
-    martialArtsMap: Record<number, string>;
+    getBeltColor: (grado: string) => string;
 }
 
-export default function ApplicationsHistory({ activeTab, getCinturonColor, martialArtsMap }: ApplicationsHistoryProps) {
+export default function ApplicationsHistory({ activeTab, getBeltColor }: ApplicationsHistoryProps) {
     const { openExamDetail } = useApplicationsStore();
     const { pastExams, isLoading } = useExamsHistory();
     const [expandedExamen, setExpandedExamen] = useState<number | null>(null);
     const { exams: expandedExams, isLoading: examsLoading } = useExamsByActivity(expandedExamen);
 
-    const approved = expandedExams.filter((e: any) => e.status === "Aprobado");
+    const approved = expandedExams.filter((e: IExam) => e.status === "Aprobado");
     const visibleApproved = approved.slice(0, 4);
 
     return (
@@ -58,7 +57,7 @@ export default function ApplicationsHistory({ activeTab, getCinturonColor, marti
                     )}
 
                     {!isLoading &&
-                        pastExams.map((examen: any) => {
+                        pastExams.map((examen) => {
                             const isExpanded = expandedExamen === examen.id;
                             return (
                                 <Card
@@ -133,7 +132,7 @@ export default function ApplicationsHistory({ activeTab, getCinturonColor, marti
                                                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                                                 {visibleApproved.map(
                                                                     (
-                                                                        exam: any,
+                                                                        exam: IExam,
                                                                     ) => (
                                                                         <div
                                                                             key={
@@ -158,7 +157,7 @@ export default function ApplicationsHistory({ activeTab, getCinturonColor, marti
                                                                             </div>
                                                                             <div className="flex items-center gap-2 text-sm">
                                                                                 <Badge
-                                                                                    className={getCinturonColor(
+                                                                                    className={getBeltColor(
                                                                                         exam
                                                                                             .previousRank
                                                                                             ?.belt ??
@@ -172,7 +171,7 @@ export default function ApplicationsHistory({ activeTab, getCinturonColor, marti
                                                                                 </Badge>
                                                                                 <ChevronRight className="h-3 w-3 text-gray-400" />
                                                                                 <Badge
-                                                                                    className={getCinturonColor(
+                                                                                    className={getBeltColor(
                                                                                         exam
                                                                                             .ranks
                                                                                             ?.belt ??

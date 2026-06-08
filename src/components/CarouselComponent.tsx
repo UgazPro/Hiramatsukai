@@ -68,7 +68,7 @@ export default function CarouselComponent({
 }: ImageCarouselProps) {
     
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(autoPlay);
+    // const [isPlaying, setIsPlaying] = useState(autoPlay);
     const [isHovering, setIsHovering] = useState(false);
 
     // Función para siguiente slide
@@ -83,7 +83,7 @@ export default function CarouselComponent({
 
     // Autoplay
     useState(() => {
-        if (!isPlaying) return;
+        if (!autoPlay) return;
 
         const intervalId = setInterval(() => {
             if (!isHovering) {

@@ -22,7 +22,7 @@ import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong, timeFormatter } from "@/helpers/formatter";
 import { getRankOrder } from "@/helpers/rank";
 
-const getCinturonColor = (grado: string) => {
+const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
         Blanco: "bg-gray-100 text-gray-800 border-gray-300",
         Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
@@ -91,7 +91,7 @@ function PostulantCard({ p, compact = false }: { p: any; compact?: boolean }) {
                     )}
                     <div className="flex items-center gap-1 mt-0.5 flex-wrap">
                         <Badge
-                            className={`${getCinturonColor(
+                            className={`${getBeltColor(
                                 p.currentRank?.belt ?? "",
                             )} ${
                                 compact
@@ -103,7 +103,7 @@ function PostulantCard({ p, compact = false }: { p: any; compact?: boolean }) {
                         </Badge>
                         <ChevronRight className="h-3 w-3 text-gray-400 flex-shrink-0" />
                         <Badge
-                            className={`${getCinturonColor(
+                            className={`${getBeltColor(
                                 p.ranks?.belt ?? "",
                             )} ${
                                 compact
@@ -387,7 +387,7 @@ export default function NextExamDetail() {
                                                         </p>
                                                         <div className="flex items-center gap-1 mt-1.5 flex-wrap">
                                                             <Badge
-                                                                className={getCinturonColor(
+                                                                className={getBeltColor(
                                                                     p
                                                                         .currentRank
                                                                         ?.belt ??
@@ -401,7 +401,7 @@ export default function NextExamDetail() {
                                                             </Badge>
                                                             <ChevronRight className="h-3 w-3 text-gray-400" />
                                                             <Badge
-                                                                className={getCinturonColor(
+                                                                className={getBeltColor(
                                                                     p.ranks
                                                                         ?.belt ??
                                                                         "",

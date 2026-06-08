@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
-import { ArrowLeft, Camera, Eye, EyeOff, Save, X, Mail, Phone, Calendar, User, Shield, Bell, Globe, LogOut, CreditCard, Activity, Key, Smartphone, Check, Edit
+// import { useNavigate } from "react-router";
+import { Camera, Eye, EyeOff, X, Mail, Phone, User, Shield, Bell, Activity, Key, Smartphone, Check, Edit
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
 export default function Profile() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Estado del usuario
   const [userData, setUserData] = useState({
@@ -39,7 +39,7 @@ export default function Profile() {
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
   // Estado de edición
-  const [isEditing, setIsEditing] = useState(false);
+  // const [isEditing, setIsEditing] = useState(false);
   const [editingField, setEditingField] = useState<string | null>(null);
   const [tempValue, setTempValue] = useState("");
 
@@ -104,12 +104,12 @@ export default function Profile() {
     setNotifications(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  // Cerrar sesión
-  const handleLogout = () => {
-    if (confirm("¿Estás seguro de que quieres cerrar sesión?")) {
-      navigate("/login");
-    }
-  };
+  // // Cerrar sesión
+  // const handleLogout = () => {
+  //   if (confirm("¿Estás seguro de que quieres cerrar sesión?")) {
+  //     navigate("/login");
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">

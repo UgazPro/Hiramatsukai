@@ -18,7 +18,7 @@ export const useUpdateActivity = () => {
     const qc = useQueryClient();
 
     return useMutation({
-        mutationFn: ({ id, data } : {id: number, data: IActivityCreate}) => putDataApi(`/activities/${id}`, data),
+        mutationFn: ({ id, data }: { id: number, data: IActivityCreate }) => putDataApi(`/activities/${id}`, data),
         onSuccess: () => {
             qc.invalidateQueries({ queryKey: ["activities"] });
         }
@@ -26,14 +26,14 @@ export const useUpdateActivity = () => {
 }
 
 export const useDeleteActivity = () => {
-  const qc = useQueryClient();
+    const qc = useQueryClient();
 
-  return useMutation({
-    mutationFn: (id: number) => deleteDataApi("/activities", id),
-    onSuccess: () => {
-      qc.invalidateQueries({ queryKey: ["activities"] });
-    },
-  });
+    return useMutation({
+        mutationFn: (id: number) => deleteDataApi(`/activities/${id}`),
+        onSuccess: () => {
+            qc.invalidateQueries({ queryKey: ["activities"] });
+        },
+    });
 };
 
 

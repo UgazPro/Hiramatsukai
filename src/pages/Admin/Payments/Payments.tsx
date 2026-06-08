@@ -27,35 +27,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  Calendar as CalendarIcon,
   Search,
   User,
   Phone,
   Mail,
-  DollarSign,
   CheckCircle,
   XCircle,
   AlertCircle,
   Clock,
   CreditCard,
-  Banknote,
   Receipt,
   Printer,
   Download,
   FileText,
   ChevronLeft,
   ChevronRight,
-  Filter,
   CalendarDays,
-  Users,
-  TrendingUp,
-  Wallet,
-  PiggyBank,
-  History,
   Eye
 } from "lucide-react";
-import { format, addMonths, subMonths, startOfMonth, endOfMonth, isSameMonth } from "date-fns";
-import { es } from "date-fns/locale";
+import { format } from "date-fns";
 
 // ================ INTERFACES ================
 interface Alumno {
@@ -251,61 +241,61 @@ export default function Payments() {
   const filteredAlumnos = alumnosPagosMock.filter(alumno => {
     const searchLower = searchTerm.toLowerCase();
     return alumno.nombre.toLowerCase().includes(searchLower) ||
-           alumno.apellido.toLowerCase().includes(searchLower) ||
-           alumno.cedula.includes(searchTerm);
+      alumno.apellido.toLowerCase().includes(searchLower) ||
+      alumno.cedula.includes(searchTerm);
   });
 
   // Obtener estado de pago para un alumno en el mes seleccionado
-  const getEstadoPago = (alumno: Alumno): { estado: string; clase: string; icon: any } => {
-    const pagoMes = alumno.pagos.find(p => 
+  const getEstadoPago = (alumno: Alumno): { estado: string; clase: string; icon: React.ReactElement } => {
+    const pagoMes = alumno.pagos.find(p =>
       p.mes === meses[selectedMonth] && p.año === selectedYear
     );
 
     if (!pagoMes) {
-      return { 
-        estado: 'Sin registro', 
+      return {
+        estado: 'Sin registro',
         clase: 'bg-gray-100 text-gray-800 border-gray-200',
-        icon: AlertCircle
+        icon: <AlertCircle />
       };
     }
 
-    switch(pagoMes.estado) {
+    switch (pagoMes.estado) {
       case 'pagado':
-        return { 
-          estado: 'Al día', 
+        return {
+          estado: 'Al día',
           clase: 'bg-green-100 text-green-800 border-green-200',
-          icon: CheckCircle
+          icon: <CheckCircle />
         };
       case 'atrasado':
-        return { 
-          estado: 'Debe este mes', 
+        return {
+          estado: 'Debe este mes',
           clase: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-          icon: Clock
+          icon: <Clock />
         };
       case 'moroso':
-        return { 
-          estado: 'Moroso', 
+        return {
+          estado: 'Moroso',
           clase: 'bg-red-100 text-red-800 border-red-200',
-          icon: XCircle
+          icon: <XCircle />
         };
       case 'pendiente':
-        return { 
-          estado: 'Pendiente', 
+        return {
+          estado: 'Pendiente',
           clase: 'bg-blue-100 text-blue-800 border-blue-200',
-          icon: AlertCircle
+          icon: <AlertCircle />
         };
       default:
-        return { 
-          estado: pagoMes.estado, 
+        return {
+          estado: pagoMes.estado,
           clase: 'bg-gray-100 text-gray-800 border-gray-200',
-          icon: AlertCircle
+          icon: <AlertCircle />
         };
     }
   };
 
   // Obtener color de fondo de la tarjeta según estado
   const getCardBorderColor = (estado: string) => {
-    switch(estado) {
+    switch (estado) {
       case 'Al día': return 'border-green-400 bg-green-50/30';
       case 'Debe este mes': return 'border-yellow-400 bg-yellow-50/30';
       case 'Moroso': return 'border-red-400 bg-red-50/30';
@@ -375,11 +365,10 @@ export default function Payments() {
         <Button
           variant={activeTab === 'mes-actual' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('mes-actual')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${
-            activeTab === 'mes-actual' 
-              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md' 
+          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'mes-actual'
+              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
               : 'text-gray-700 hover:bg-gray-200'
-          }`}
+            }`}
         >
           <CalendarDays className="h-4 w-4 mr-2" />
           Mes Actual
@@ -387,11 +376,10 @@ export default function Payments() {
         <Button
           variant={activeTab === 'comprobantes' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('comprobantes')}
-          className={`flex-1 rounded-lg transition-all duration-300 ${
-            activeTab === 'comprobantes' 
-              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md' 
+          className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'comprobantes'
+              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
               : 'text-gray-700 hover:bg-gray-200'
-          }`}
+            }`}
         >
           <Receipt className="h-4 w-4 mr-2" />
           Comprobantes
@@ -465,10 +453,10 @@ export default function Payments() {
               {filteredAlumnos.map((alumno) => {
                 const { estado, clase, icon: Icon } = getEstadoPago(alumno);
                 const borderColor = getCardBorderColor(estado);
-                
+
                 return (
-                  <Card 
-                    key={alumno.id} 
+                  <Card
+                    key={alumno.id}
                     className={`border-2 ${borderColor} hover:shadow-lg transition-all duration-300 cursor-pointer`}
                     onClick={() => {
                       setSelectedAlumno(alumno);
@@ -491,7 +479,7 @@ export default function Payments() {
                           </div>
                         </div>
                         <Badge className={clase}>
-                          <Icon className="h-3 w-3 mr-1" />
+                          {Icon}
                           {estado}
                         </Badge>
                       </div>
@@ -576,8 +564,8 @@ export default function Payments() {
                 <div className="grid grid-cols-3 gap-2">
                   {meses.map((mes, index) => {
                     const isCurrentMonth = index === selectedMonth;
-                    const isPastMonth = index < selectedMonth && selectedYear === new Date().getFullYear();
-                    
+                    // const isPastMonth = index < selectedMonth && selectedYear === new Date().getFullYear();
+
                     return (
                       <Button
                         key={mes}
@@ -585,8 +573,8 @@ export default function Payments() {
                         onClick={() => setSelectedMonth(index)}
                         className={`
                           h-16 flex flex-col items-center justify-center transition-all duration-200
-                          ${isCurrentMonth 
-                            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md' 
+                          ${isCurrentMonth
+                            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
                             : 'text-gray-700 hover:bg-gray-100'
                           }
                         `}
@@ -671,8 +659,8 @@ export default function Payments() {
           {/* Grid de comprobantes */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {comprobantesMock.map((comprobante) => (
-              <Card 
-                key={comprobante.id} 
+              <Card
+                key={comprobante.id}
                 className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer"
                 onClick={() => {
                   setSelectedComprobante(comprobante);
@@ -747,7 +735,7 @@ export default function Payments() {
               Registrar Pago - {selectedAlumno?.nombre} {selectedAlumno?.apellido}
             </DialogTitle>
           </DialogHeader>
-          
+
           {selectedAlumno && (
             <div className="space-y-6 py-4">
               {/* Información del alumno */}
@@ -822,7 +810,7 @@ export default function Payments() {
               {/* Referencia */}
               <div className="space-y-2">
                 <Label className="text-gray-900">Número de referencia</Label>
-                <Input 
+                <Input
                   placeholder="Ej: TR-123456, Dep-789, etc."
                   className="border-gray-300"
                 />
@@ -831,7 +819,7 @@ export default function Payments() {
               {/* Fecha de pago */}
               <div className="space-y-2">
                 <Label className="text-gray-900">Fecha de pago</Label>
-                <Input 
+                <Input
                   type="date"
                   defaultValue={format(new Date(), "yyyy-MM-dd")}
                   className="border-gray-300"
@@ -841,7 +829,7 @@ export default function Payments() {
               {/* Monto */}
               <div className="space-y-2">
                 <Label className="text-gray-900">Monto</Label>
-                <Input 
+                <Input
                   type="number"
                   defaultValue="25000"
                   className="border-gray-300"
@@ -850,8 +838,8 @@ export default function Payments() {
 
               {/* Botones */}
               <div className="flex justify-end gap-3 pt-4">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => setShowPagoModal(false)}
                   className="border-gray-300 text-gray-700 hover:bg-gray-100"
                 >
@@ -874,7 +862,7 @@ export default function Payments() {
               Comprobante de Pago
             </DialogTitle>
           </DialogHeader>
-          
+
           {selectedComprobante && (
             <div className="space-y-6 py-4">
               {/* Comprobante visual */}
@@ -957,8 +945,8 @@ export default function Payments() {
 
               {/* Botones de acción */}
               <div className="flex justify-end gap-3">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={() => setShowComprobanteModal(false)}
                   className="border-gray-300 text-gray-700 hover:bg-gray-100"
                 >

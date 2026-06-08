@@ -19,15 +19,30 @@ import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
 import DojosInfo from './pages/DojosInfo/DojosInfo';
 import ProtectedRoute from './ProtectedRoute';
 import RouteSeo from './components/seo/RouteSeo';
+import { Toaster } from 'react-hot-toast';
+import { useAxiosInterceptor } from './services/interceptor';
+
+function AxiosInterceptorProvider() {
+  useAxiosInterceptor();
+  return null;
+};
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3000,
+            removeDelay: 200,
+          }}
+        />
+        <AxiosInterceptorProvider />
         <RouteSeo />
         <Routes>
-          
+
           {/* Users */}
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />

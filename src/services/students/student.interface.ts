@@ -1,3 +1,4 @@
+
 import { IDojo, IDojoMartialArts, IDojoRanks } from "../dojos/dojo.interface";
 
 export type ViewMode = "list" | "grid" | "cards" | "longCards";
@@ -24,10 +25,12 @@ export interface IStudent {
     enrollmentDate: Date;
     rol: IRol;
     dojo: IDojo;
-    userRanks: [{
-        martialArt: IDojoMartialArts;
-        rank: IStudentRanks;
-    }]
+    userRanks: StudentRanks[];
+}
+
+export interface StudentRanks {
+    martialArt: IDojoMartialArts;
+    rank: IStudentRanks;
 }
 
 export interface IStudentsGroup {
@@ -86,9 +89,57 @@ export interface IStudentAllInfo {
     activityAttendanceHistory: IActivityAttendanceItem[];
 }
 
+//Postulaciones
+
+export interface ISuggestionStudentApplied {
+    id:                    number;
+    name:                  string;
+    lastName:              string;
+    enrollmentDate:        Date;
+    identification:        string;
+    birthday:              Date;
+    suggestedByMartialArt: SuggestedByMartialArt[];
+    suggested:             boolean;
+}
+
+export interface SuggestedByMartialArt {
+    martialArtId:    number;
+    martialArt:      string;
+    lastExamDate:    null;
+    postulationRank: PostulationRank;
+    suggested:       boolean;
+}
+
+export interface PostulationRank {
+    id:           number;
+    martialArtId: number;
+    code:         string;
+    rank_name:    string;
+    belt:         string;
+    icon:         string;
+}
 
 
+//Student DTO
 
+export interface StudentBody {
+    id?: number;
+    identification: string;
+    name: string;
+    lastName: string;
+    email: string;
+    sex: string;
+    username: string;
+    address: string;
+    phone: string;
+    dojoId: number;
+    rolId: number;
+    birthday: Date;
+    enrollmentDate: Date;
+    martialArtRank: MartialArtRank[];
+}
 
-
-
+export interface MartialArtRank {
+    martialArtId: number;
+    rankId: number;
+}

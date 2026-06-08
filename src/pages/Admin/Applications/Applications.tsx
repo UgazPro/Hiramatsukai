@@ -22,7 +22,7 @@ export default function Applications() {
 
   const [activeTab, setActiveTab] = useState<TabType>('examenes');
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedExamen, setSelectedExamen] = useState<any>(null);
+  // const [selectedExamen, setSelectedExamen] = useState<any>(null);
 
   const { screen, openPostulationForm } = useApplicationsStore();
   const { upcomingExams, isLoading } = useUpcomingExams();
@@ -38,7 +38,7 @@ export default function Applications() {
   }, [martialArts]);
 
   // Obtener color del cinturón
-  const getCinturonColor = (grado: string) => {
+  const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
       'Blanco': 'bg-gray-100 text-gray-800',
       'Amarillo': 'bg-yellow-100 text-yellow-800',
@@ -102,7 +102,7 @@ export default function Applications() {
                 <NextExams
                   setActiveTab={setActiveTab}
                   upcomingExams={upcomingExams}
-                  setSelectedExamen={setSelectedExamen}
+                  // setSelectedExamen={setSelectedExamen}
                   isLoading={isLoading}
                 />
               )}
@@ -112,7 +112,7 @@ export default function Applications() {
                 activeTab={activeTab}
                 appliedStudents={appliedStudents}
                 isLoading={isAppliedLoading}
-                getCinturonColor={getCinturonColor}
+                getBeltColor={getBeltColor}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 martialArtsMap={martialArtsMap}
@@ -121,14 +121,14 @@ export default function Applications() {
               {/* Pestaña: Historial */}
               <ApplicationsHistory
                 activeTab={activeTab}
-                getCinturonColor={getCinturonColor}
-                martialArtsMap={martialArtsMap}
+                getBeltColor={getBeltColor}
+                // martialArtsMap={martialArtsMap}
               />
 
               {/* Pestaña: Alumnos */}
               <ApplicationsStudentsHistory
                 activeTab={activeTab}
-                getCinturonColor={getCinturonColor}
+                getBeltColor={getBeltColor}
               />
             </div>
 

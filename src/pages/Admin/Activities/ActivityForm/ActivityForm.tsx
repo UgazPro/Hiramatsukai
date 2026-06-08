@@ -5,6 +5,7 @@ import { useUserData } from "@/helpers/token";
 import { useDojos } from "@/hooks/useDojos";
 import { useCreateActivity, useUpdateActivity } from "@/queries/useActivityMutations";
 import { activityLeftFields, activityRightFields } from "@/services/activities/activitiesForm.data";
+import { IDojoEdit } from "@/services/activities/activity.interface";
 import { ActivityFormValues, ActivitySchema } from "@/services/activities/activity.schema";
 import { useActivitiesStore } from "@/stores/activities.store";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -58,7 +59,7 @@ export default function ActivityForm() {
                 price: selectedActivity.price,
                 type: selectedActivity.type,
                 description: selectedActivity.description,
-                dojoIds: selectedActivity.ActivityDojos?.map((dojo: any) => (dojo.dojo.id)) ?? [],
+                dojoIds: (selectedActivity.ActivityDojos as IDojoEdit[])?.map((dojo: IDojoEdit) => (dojo.dojo.id)) ?? [],
             });
         }
 
@@ -79,7 +80,7 @@ export default function ActivityForm() {
             type: data.type,
             description: data.description,
 
-            dojoIds: Array.isArray(data.dojoIds) ? data.dojoIds.map((d: any) => Number(d)) : [],
+            dojoIds: Array.isArray(data.dojoIds) ? data.dojoIds.map((d: number) => Number(d)) : [],
 
             latitude: 0,
             longitude: 0,
@@ -88,7 +89,8 @@ export default function ActivityForm() {
         if (mode === "create") {
             await createActivity(payload);
         } else {
-            const { id, ...updatePayload } = payload;
+            // const { id, ...updatePayload } = payload;
+            const { ...updatePayload } = payload;
             await updateActivity({ data: updatePayload, id: selectedActivity!.id });
         }
 
