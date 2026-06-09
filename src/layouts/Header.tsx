@@ -1,11 +1,21 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import NavBar from "./NavBar";
 import { useAuthStore } from "@/stores/auth.store";
 import { jwtDecode } from "jwt-decode";
 import { DecodedToken } from "@/services/auth/auth.interface";
+import { useUserData } from "@/helpers/token";
+import { House, ChevronDown, LogOut, LayoutDashboard, Building2 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 export default function Header() {
+    const navigate = useNavigate();
     const location = useLocation();
 
     const [prevScrollPos, setPrevScrollPos] = useState(0);
@@ -13,6 +23,14 @@ export default function Header() {
 
     const token = useAuthStore((s) => s.token);
     const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+    const logout = useAuthStore((s) => s.logout);
+
+    const user = useUserData();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
 
     const { userName, userLastName, userRole } = useMemo(() => {
         if (!token) return { userName: "", userLastName: "", userRole: "" };
@@ -71,24 +89,56 @@ export default function Header() {
                     <span className="text-2xl md:text-3xl lg:text-5xl font-bold">Hiramatsukai Internacional</span>
                 </Link>
 
-                {location.pathname === "/" && (
-                    <Link
-                        to={"/login"}
-                        style={{ fontFamily: "JetBrains Mono" }}
-                        className="text-white cursor-pointer text-xs md:text-base border text-center rounded-full px-4 py-2 "
-                    >
-                        Iniciar Sesión
-                    </Link>
-                )}
-
-                {location.pathname.includes("/admin") && isAuthenticated && (
-                    <div className="flex flex-col items-end">
-                        <p className="text-white lg:text-2xl text-sm">
-                            {userName} {userLastName}
-                        </p>
-                        <p className="text-white lg:text-normal text-sm">{userRole}</p>
-                    </div>
-                )}
+                <div className="flex items-center gap-3">
+                    {/* Auth section */}
+                    {isAuthenticated ? (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <button className="flex flex-col items-end text-white cursor-pointer hover:text-amber-400 transition-colors">
+                                    <p className="lg:text-2xl text-sm">
+                                        {userName} {userLastName}
+                                    </p>
+                                    <p className="flex items-center gap-1 lg:text-normal text-sm">
+                                        {userRole}
+                                        <ChevronDown className="h-3 w-3" />
+                                    </p>
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-56">
+                                {location.pathname === "/" && (user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor") ? (
+                                    <DropdownMenuItem onClick={() => navigate("/admin")}>
+                                        <LayoutDashboard className="h-4 w-4 mr-2" />
+                                        Panel Administrativo
+                                    </DropdownMenuItem>
+                                ) : (
+                                    <DropdownMenuItem onClick={() => navigate("/")}>
+                                        <House className="h-4 w-4 mr-2" />
+                                        Home
+                                    </DropdownMenuItem>
+                                )}
+                                <DropdownMenuItem onClick={() => navigate(`/dojos/dojo/${user?.dojoId}`)}>
+                                    <Building2 className="h-4 w-4 mr-2" />
+                                    Ir a mi Dojo
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={handleLogout}>
+                                    <LogOut className="h-4 w-4 mr-2" />
+                                    Cerrar Sesión
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    ) : (
+                        !location.pathname.includes("/admin") && !location.pathname.includes("/login") && (
+                            <Link
+                                to="/login"
+                                style={{ fontFamily: "JetBrains Mono" }}
+                                className="text-white cursor-pointer text-xs md:text-base border text-center rounded-full px-4 py-2 hover:bg-white hover:text-black transition-colors"
+                            >
+                                Iniciar Sesión
+                            </Link>
+                        )
+                    )}
+                </div>
             </div>
 
             {location.pathname === "/" && <NavBar />}

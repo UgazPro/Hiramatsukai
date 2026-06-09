@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ViewMode } from "@/services/students/student.interface";
-import { IdCard, LayoutGrid, List, UserPlus } from "lucide-react";
+import { LayoutGrid, List, UserPlus } from "lucide-react";
 import { useStudentsStore } from "@/stores/students.store";
 import SearchFilterComponent from "@/components/Filters/SearchFilter";
 
@@ -16,7 +16,6 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
     const views = [
         { key: "list", icon: List },
         { key: "grid", icon: LayoutGrid },
-        { key: "longCards", icon: IdCard },
     ];
 
     return (
@@ -30,14 +29,14 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
                 </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 w-full md:w-auto">
 
                 {/* Filter */}
                 <SearchFilterComponent 
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
                     placeHolder="Buscar por nombre, apellido, cédula o email..."
-                    width="w-92"
+                    width="w-full md:w-92"
                 />
 
                 <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">

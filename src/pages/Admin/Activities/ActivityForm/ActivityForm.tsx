@@ -136,7 +136,7 @@ export default function ActivityForm() {
 
                         <form onSubmit={form.handleSubmit(sendForm, (errors) => console.error("Errores de validación:", errors))}>
 
-                            <div className="grid grid-cols-2 gap-6 my-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
 
                                 <FormComponent
                                     form={form}

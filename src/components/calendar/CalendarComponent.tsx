@@ -77,7 +77,7 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
 
     return (
 
-        <div className={styles ? styles : 'w-80'}>
+        <div className={styles ? styles : 'w-full lg:w-80'}>
             <Card className="border border-gray-300 shadow-sm sticky">
                 <CardContent>
                     {/* Header */}
