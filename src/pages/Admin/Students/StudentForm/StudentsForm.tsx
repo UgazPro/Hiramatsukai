@@ -249,13 +249,13 @@ export default function StudentsForm() {
                                             mode === "edit"
                                                 ? step2Col1Fields(dojosOptions, roles, user?.rol.rol === "Administrador").map(f =>
                                                     f.name === "rolId" ? { ...f, disabled: true } : f
-                                                  )
+                                                )
                                                 : step2Col1Fields(dojosOptions, filteredRoles, user?.rol.rol === "Administrador")
                                         ),
                                         ...(mode === "edit"
                                             ? step2Col2Fields.map(f =>
                                                 f.name === "enrollmentDate" ? { ...f, disabled: true } : f
-                                              )
+                                            )
                                             : step2Col2Fields
                                         ),
                                         ...step2Col3Fields,
@@ -274,23 +274,21 @@ export default function StudentsForm() {
                             </div>
 
                             {/* Footer */}
-                            <div className="flex justify-end items-center pt-5 border-t border-gray-200 mt-5">
-                                <div className="flex space-x-4">
-                                    <Button
-                                        type="button"
-                                        variant="outline"
-                                        className="cursor-pointer"
-                                        onClick={finishForm}
-                                    >
-                                        Cancelar
-                                    </Button>
-                                    <Button
-                                        type="submit"
-                                        className="bg-red-700 hover:bg-red-800 cursor-pointer"
-                                    >
-                                        {mode === "create" ? "Guardar Estudiante" : "Actualizar Estudiante"}
-                                    </Button>
-                                </div>
+                            <div className="flex lg:justify-end items-center justify-between  pt-5 border-t border-gray-200 mt-5">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="cursor-pointer"
+                                    onClick={finishForm}
+                                >
+                                    Cancelar
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    className="bg-red-700 hover:bg-red-800 cursor-pointer"
+                                >
+                                    {mode === "create" ? "Guardar" : "Actualizar"}
+                                </Button>
                             </div>
 
                         </form>

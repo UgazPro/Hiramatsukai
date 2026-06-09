@@ -21,7 +21,7 @@ export default function Activities() {
 
   const { activitiesData, isLoading } = useActivities();
 
-  const { currentDate, setCurrentDate, selectedActivity, setSelectedActivity, showCalendar, toggleCalendar, cSelectedActivity, setCSelectedActivity, finishForm, startEdit, startCreate, screen, setScreen, filters, resetFilters, searchTerm, setSearchTerm, setFilters } = useActivitiesStore();
+  const { currentDate, setCurrentDate, setSelectedActivity, showCalendar, toggleCalendar, cSelectedActivity, setCSelectedActivity, startEdit, startCreate, screen, setScreen, filters, resetFilters, searchTerm, setSearchTerm, setFilters } = useActivitiesStore();
 
   const { mutateAsync: deleteActivity } = useDeleteActivity();
 

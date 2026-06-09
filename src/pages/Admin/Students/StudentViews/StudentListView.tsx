@@ -1,6 +1,5 @@
 import { IStudent } from "@/services/students/student.interface";
 import { useStudentsStore } from "@/stores/students.store";
-import { useEffect } from "react";
 import { useDeleteStudent } from "@/queries/useStudentMutations";
 import { TableComponent } from "@/components/table/TableComponent";
 import { getStudentColumns } from "@/services/students/student.tables";
@@ -11,7 +10,7 @@ interface StudentListViewProps {
 
 export default function StudentListView({ filteredStudents }: StudentListViewProps) {
 
-    const { startEdit, selectedStudent } = useStudentsStore();
+    const { startEdit } = useStudentsStore();
 
     const selectStudent = useStudentsStore((state) => state.selectStudent);
 
