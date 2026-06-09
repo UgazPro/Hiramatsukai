@@ -45,12 +45,11 @@ export interface IRol {
 
 export interface IStudentRanks {
     id: number;
-    userId: number;
-    rankId: number;
+    rank_name: string;
     martialArt: IDojoMartialArts;
-    rank: IDojoRanks;
-    belt?: string;
-    code?: string;
+    belt: string;
+    code: string;
+    icon?: string;
 }
 
 export interface IExamHistoryItem {
