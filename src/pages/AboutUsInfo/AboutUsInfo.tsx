@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Users, Award, Shield, MapPin, Globe, Calendar, Swords, TargetIcon, Zap, Mail, Phone, Facebook, Instagram, Youtube } from "lucide-react";
+import { Users, Award, Shield, MapPin, Globe, Calendar, Swords, TargetIcon, Zap } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 import { useDojos } from "@/hooks/useDojos";
-// import TimelineSection from "@/components/TimelineSection";
 
 export default function AboutUsInfo() {
 
@@ -39,46 +37,6 @@ export default function AboutUsInfo() {
             image: "/sensei-carlos.jpg"
         }
     ];
-
-    // const dojos = [
-    //     {
-    //         name: "Dojo Central Hiramatsukai",
-    //         location: "Okinawa, Japón",
-    //         headInstructor: "Shihan Miguel Rodríguez",
-    //         arts: ["Karate", "Kobudo", "Kendo Iaido"],
-    //         students: 250
-    //     },
-    //     {
-    //         name: "Dojo del Pacífico",
-    //         location: "California, USA",
-    //         headInstructor: "Sensei Kenji Tanaka",
-    //         arts: ["Karate", "Kobudo"],
-    //         students: 180
-    //     },
-    //     {
-    //         name: "Dojo Andes",
-    //         location: "Bogotá, Colombia",
-    //         headInstructor: "Sensei Luis Yamashita",
-    //         arts: ["Karate", "Kobudo", "Iaido"],
-    //         students: 150
-    //     },
-    //     {
-    //         name: "Dojo Mediterráneo",
-    //         location: "Barcelona, España",
-    //         headInstructor: "Sensei Sofia Nakamura",
-    //         arts: ["Karate", "Kendo"],
-    //         students: 120
-    //     }
-    // ];
-
-    // const timeline = [
-    //     { year: "1997", event: "Fundación oficial de Hiramatsukai en Okinawa" },
-    //     { year: "2002", event: "Primera certificación internacional de instructores" },
-    //     { year: "2008", event: "Expansión a América con 5 dojos afiliados" },
-    //     { year: "2014", event: "Reconocimiento por la Federación Mundial de Kobudo" },
-    //     { year: "2019", event: "Celebración del 25° aniversario con seminario mundial" },
-    //     { year: "2023", event: "Más de 3000 estudiantes en 15 países" }
-    // ];
 
     const { data: dojos = [] } = useDojos();
 
