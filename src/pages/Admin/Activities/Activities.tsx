@@ -29,6 +29,10 @@ export default function Activities() {
 
   const filteredActivities = useFilteredActivities(activitiesData ?? []);
 
+  useEffect(() => {
+    setScreen("main");
+  }, []);
+
   return (
 
     <div className="w-full h-full">

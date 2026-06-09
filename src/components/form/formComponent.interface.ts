@@ -27,6 +27,7 @@ export interface SelectField extends BaseField {
 
 export interface DateField extends BaseField {
   type: "date";
+  disabled?: boolean;
 }
 
 export interface TimeField extends BaseField {

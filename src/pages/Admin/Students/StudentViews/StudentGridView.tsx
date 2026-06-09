@@ -98,17 +98,17 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
 
                             {/* Ranks */}
                             {student.userRanks.some(r => r.martialArt.martialArt === "Karate" || r.martialArt.martialArt === "Kobudo") && (
-                                <div className="pt-3 border-t border-gray-200 flex justify-between items-center">
+                                <div className="pt-3 border-t border-gray-200 flex flex-col gap-2">
                                     {student.userRanks.filter(r => r.martialArt.martialArt === "Karate").map(r => (
-                                        <div key={r.rank.id} className="flex items-center gap-2">
+                                        <div key={r.rank.id} className="flex items-center gap-1">
                                             <img src="/oki2.png" className="h-7 w-7 shrink-0 rounded object-cover" alt="Karatedo" />
-                                            <span className="text-xs text-gray-900 font-medium truncate">{r.rank.code} {r.rank.rank_name && "-"}{r.rank.rank_name}</span>
+                                            <span className="text-xs text-gray-900 font-medium truncate">{r.rank.code} {r.rank.belt} {r.rank.rank_name && "-"} {r.rank.rank_name}</span>
                                         </div>
                                     ))}
                                     {student.userRanks.filter(r => r.martialArt.martialArt === "Kobudo").map(r => (
                                         <div key={r.rank.id} className="flex items-center gap-2">
-                                            <img src="/gi.jpg" className="h-5 w-5 shrink-0 rounded object-cover" alt="Kobudo" />
-                                            <span className="text-xs text-gray-900 font-medium truncate">{r.rank.code} {r.rank.rank_name && "-"}{r.rank.rank_name}</span>
+                                            <img src="/gi.jpg" className="h-5 w-5 shrink-0 rounded object-cover ml-1" alt="Kobudo" />
+                                            <span className="text-xs text-gray-900 font-medium truncate">{r.rank.code} {r.rank.belt} {r.rank.rank_name && "-"} {r.rank.rank_name}</span>
                                         </div>
                                     ))}
                                 </div>

@@ -69,7 +69,7 @@ export default function ActivityDetailView() {
 
     <DetailLayout header={header} footer={footer}>
 
-      <div className="grid grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         <DetailSection icon={<Calendar className="h-5 w-5 text-amber-600" />} title="Información de la actividad">
           <div className="space-y-4">
@@ -97,29 +97,10 @@ export default function ActivityDetailView() {
           </div>
         </DetailSection>
 
-        {/* <DetailSection icon={<Building2 className="h-5 w-5 text-amber-600" />} title="Dojo creador">
-
-          <InfoItem
-            label="Dojo"
-            value={(selectedActivity.dojoIds as any)?.dojo || "No definido"}
-            icon={<Building2 className="h-4 w-4" />}
-          />
-
-          <div className="mt-4">
-            <InfoItem
-              label="Fecha de creación"
-              value={format(new Date(selectedActivity.createdDate), "dd MMMM yyyy", { locale: es })}
-              icon={<Clock className="h-4 w-4" />}
-            />
-          </div>
-        </DetailSection> */}
-
-      </div>
-
-      <DetailSection
-        icon={<Users className="h-5 w-5 text-amber-600" />}
-        title="Dojos participantes"
-      >
+        <DetailSection
+          icon={<Users className="h-5 w-5 text-amber-600" />}
+          title="Dojos participantes"
+        >
 
         <div className="space-y-2">
 
@@ -145,6 +126,8 @@ export default function ActivityDetailView() {
         </div>
 
       </DetailSection>
+
+      </div>
 
     </DetailLayout>
 

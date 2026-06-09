@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import StudentListView from "./StudentViews/StudentListView";
 import StudentGridView from "./StudentViews/StudentGridView";
 import { useStudents } from "@/hooks/useStudents";
@@ -15,9 +16,13 @@ export default function Students() {
 
   const { data: students = [], isLoading } = useStudents();
 
-  const { viewMode, setViewMode, screen } = useStudentsStore();
+  const { viewMode, setViewMode, screen, setScreen } = useStudentsStore();
 
   const filteredStudents = useFilteredStudents(students);
+
+  useEffect(() => {
+    setScreen("list");
+  }, []);
 
   return (
 

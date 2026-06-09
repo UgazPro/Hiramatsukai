@@ -95,10 +95,11 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                                     control={form.control}
                                     name={field.name}
                                     render={({ field: controllerField }) => (
-                                        <CalendarFieldComponent
-                                            value={controllerField.value}
-                                            onChange={controllerField.onChange}
-                                        />
+                    <CalendarFieldComponent
+                        value={controllerField.value}
+                        onChange={controllerField.onChange}
+                        disabled={field.disabled}
+                    />
                                     )}
                                 />
                                 {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
