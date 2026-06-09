@@ -25,6 +25,7 @@ export const activityLeftFields: ( dojosOptions: any[], isAdmin: boolean ) => Fo
 
 export const activityRightFields: FormField[] = [
   { type: "text", name: "place", label: "Lugar" },
-  { type: "date", name: "date", label: "Fecha y Hora" },
+  { type: "date", name: "date", label: "Fecha" },
+  { type: "time", name: "time", label: "Hora de Inicio" },
   { type: "textarea", name: "description", label: "Descripción" },
 ];

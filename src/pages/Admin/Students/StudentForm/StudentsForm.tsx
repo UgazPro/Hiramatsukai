@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useStudentsStore } from "@/stores/students.store";
 import { useDojoMartialArts, useDojoRanks, useDojos } from "@/hooks/useDojos";
@@ -13,7 +13,6 @@ import { FormComponent } from "@/components/form/FormComponent";
 import {
     step1Col1Fields,
     step1Col2Fields,
-    step1Col3Fields,
     step2Col1Fields,
     step2Col2Fields,
     step2Col3Fields,
@@ -21,11 +20,9 @@ import {
 import ProfilePictureComponent from "@/components/ProfilePictureComponent";
 import MartialRanksComponent from "@/components/form/renderFormComponents/MartialRanksComponent";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StepDot } from "@/components/stepper/StepDot";
 
 export default function StudentsForm() {
 
-    const [step, setStep] = useState<1 | 2>(1);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const prevDojoId = useRef<number | null>(null);
@@ -37,11 +34,15 @@ export default function StudentsForm() {
 
     const user = useUserData();
 
-    // const { selectedStudent, mode, finishForm, setScreen } = useStudentsStore();
     const { selectedStudent, mode, finishForm } = useStudentsStore();
 
     const { mutateAsync: createStudent } = useCreateStudent();
     const { mutateAsync: updateStudent } = useUpdateStudent();
+
+    const filteredRoles = useMemo(
+        () => roles.filter(r => r.rol === "Estudiante" || r.rol === "Representante"),
+        [roles]
+    );
 
     const form = useForm<StudentFormValues>({
         resolver: zodResolver(studentSchema),
@@ -55,7 +56,7 @@ export default function StudentsForm() {
             address: '',
             phone: '',
             dojoId: user?.dojoId || 0,
-            rolId: roles[0]?.id ?? 0,
+            rolId: filteredRoles[0]?.id ?? 0,
             profileImg: '',
             birthday: new Date(),
             enrollmentDate: new Date(),
@@ -66,7 +67,7 @@ export default function StudentsForm() {
     useEffect(() => {
 
         if (!selectedStudent || mode !== "edit") return;
-        if (!roles.length || !dojos.length) return;
+        if (!filteredRoles.length || !dojos.length) return;
 
         if (mode === "edit" && selectedStudent) {
             form.reset({
@@ -89,11 +90,9 @@ export default function StudentsForm() {
             });
         }
 
-    }, [mode, selectedStudent, roles, dojos]);
+    }, [mode, selectedStudent, filteredRoles, dojos]);
 
     const returnTitle = (code: string) => {
-        // const rename = code.slice(1);
-        // const grade = code[0]
         return code
     }
 
@@ -133,23 +132,6 @@ export default function StudentsForm() {
         setImagePreview(null);
     };
 
-    const handleNext = async () => {
-        const valid = await form.trigger([
-            "username",
-            "name",
-            "lastName",
-            "identification",
-            "birthday",
-            "sex",
-            "email",
-            "phone",
-            "address",
-        ]);
-        if (valid) setStep(2);
-    };
-
-    const handlePrev = () => setStep(1);
-
     const watchedDojoId = form.watch("dojoId");
 
     useEffect(() => {
@@ -170,8 +152,6 @@ export default function StudentsForm() {
 
     const sendForm = async (data: StudentFormValues) => {
 
-        console.log(data);
-
         const payload = {
             ...(mode === "edit" && selectedStudent?.id ? { id: selectedStudent.id } : {}),
             identification: data.identification,
@@ -189,8 +169,6 @@ export default function StudentsForm() {
             martialArtRank: data.martialArtRank.filter(m => m.martialArtId > 0 && m.rankId > 0),
         };
 
-        console.log(payload);
-
         if (mode === "create") {
             await createStudent({ data: payload, imageFile });
         } else {
@@ -200,21 +178,18 @@ export default function StudentsForm() {
             });
         }
 
-
-        console.log(payload);
-
         finishForm();
     };
 
     return (
 
-        <div className="p-6 w-full max-w-5xl mx-auto">
+        <div className="p-4 w-full">
             <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
 
                 {/* Header */}
                 <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 px-6 py-4">
-                    <div className="flex justify-between items-center">
-                        <div>
+                    <div className="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-between items-center">
+                        <div className="md:order-1 order-2">
                             <h2 className="text-xl font-bold text-gray-900">
                                 {mode === "create" ? "Nuevo Estudiante" : "Editar Estudiante"}
                             </h2>
@@ -227,7 +202,7 @@ export default function StudentsForm() {
                         <Button
                             variant="ghost"
                             size="sm"
-                            className="mb-3 text-gray-600 hover:text-gray-900"
+                            className="mb-3 text-gray-600 hover:text-gray-900 md:order-2 order-1"
                             onClick={finishForm}
                         >
                             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -236,130 +211,85 @@ export default function StudentsForm() {
                     </div>
                 </div>
 
-                {/* Stepper */}
-                <div className="px-6 pt-5 pb-3 border-b border-gray-200">
-                    <div className="flex items-center justify-center gap-3">
-                        <StepDot number={1} active={step === 1} completed={step === 2} label="Datos Personales" />
-                        <div className={`h-0.5 w-16 ${step === 2 ? "bg-linear-to-r from-amber-500 to-red-500" : "bg-gray-200"}`} />
-                        <StepDot number={2} active={step === 2} completed={false} label="Datos del Dojo" />
-                    </div>
-                </div>
-
                 <div className="p-5">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(sendForm)}>
 
-                            {/* === Paso 1: Datos Personales === */}
-                            {step === 1 && (
-                                <div className="grid grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
+                                {/* Col 1: username, name, lastName, identification + ProfilePicture */}
+                                <div className="space-y-4">
                                     <FormComponent
                                         form={form}
                                         fields={step1Col1Fields}
                                         className="!p-4 !space-y-3"
                                     />
-
-                                    <FormComponent
-                                        form={form}
-                                        fields={step1Col2Fields}
-                                        className="!p-4 !space-y-3"
+                                    <ProfilePictureComponent
+                                        imagePreview={imagePreview}
+                                        handleImageChange={handleImageChange}
+                                        handleRemoveFoto={handleRemoveFoto}
                                     />
-
-                                    <FormComponent
-                                        form={form}
-                                        fields={step1Col3Fields}
-                                        className="!p-4 !space-y-3"
-                                        otherType={
-                                            <ProfilePictureComponent
-                                                imagePreview={imagePreview}
-                                                handleImageChange={handleImageChange}
-                                                handleRemoveFoto={handleRemoveFoto}
-                                            />
-                                        }
-                                    />
-
                                 </div>
-                            )}
 
-                            {/* === Paso 2: Datos del Dojo === */}
-                            {step === 2 && (
-                                <div className="grid grid-cols-3 gap-4">
+                                {/* Col 2: birthday, sex, email, phone + address */}
+                                <FormComponent
+                                    form={form}
+                                    fields={[
+                                        ...step1Col2Fields,
+                                        { type: "textarea", name: "address", label: "Dirección" },
+                                    ]}
+                                    className="!p-4 !space-y-3"
+                                />
 
-                                    <FormComponent
-                                        form={form}
-                                        fields={step2Col1Fields(
-                                            dojosOptions,
-                                            roles,
-                                            user?.rol.rol === "Administrador"
-                                        )}
-                                        className="!p-4 !space-y-3"
-                                    />
+                                {/* Col 3: dojoId, rolId, enrollmentDate + MartialRanks */}
+                                <FormComponent
+                                    form={form}
+                                    fields={[
+                                        ...(
+                                            mode === "edit"
+                                                ? step2Col1Fields(dojosOptions, roles, user?.rol.rol === "Administrador").map(f =>
+                                                    f.name === "rolId" ? { ...f, disabled: true } : f
+                                                  )
+                                                : step2Col1Fields(dojosOptions, filteredRoles, user?.rol.rol === "Administrador")
+                                        ),
+                                        ...(mode === "edit"
+                                            ? step2Col2Fields.map(f =>
+                                                f.name === "enrollmentDate" ? { ...f, disabled: true } : f
+                                              )
+                                            : step2Col2Fields
+                                        ),
+                                        ...step2Col3Fields,
+                                    ]}
+                                    className="!p-4 !space-y-3"
+                                    otherType={
+                                        <MartialRanksComponent
+                                            dojoMartialArts={filteredDojoMartialArts}
+                                            martialArtsOptions={martialArtsOptions}
+                                            ranksOptions={ranksOptions}
+                                            form={form}
+                                        />
+                                    }
+                                />
 
-                                    <FormComponent
-                                        form={form}
-                                        fields={step2Col2Fields}
-                                        className="!p-4 !space-y-3"
-                                    />
-
-                                    <FormComponent
-                                        form={form}
-                                        fields={step2Col3Fields}
-                                        className="!p-4 !space-y-3"
-                                        otherType={
-                                            <MartialRanksComponent
-                                                dojoMartialArts={filteredDojoMartialArts}
-                                                martialArtsOptions={martialArtsOptions}
-                                                ranksOptions={ranksOptions}
-                                                form={form}
-                                            />
-                                        }
-                                    />
-
-                                </div>
-                            )}
+                            </div>
 
                             {/* Footer */}
-                            <div className="flex justify-between items-center pt-5 border-t border-gray-200 mt-5">
-                                <div>
-                                    {step === 2 && (
-                                        <Button
-                                            type="button"
-                                            variant="outline"
-                                            className="border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer"
-                                            onClick={handlePrev}
-                                        >
-                                            ← Atrás
-                                        </Button>
-                                    )}
-                                </div>
+                            <div className="flex justify-end items-center pt-5 border-t border-gray-200 mt-5">
                                 <div className="flex space-x-4">
-                                    {step === 1 && (
-                                        <>
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                className="cursor-pointer"
-                                                onClick={finishForm}
-                                            >
-                                                Cancelar
-                                            </Button>
-                                            <Button
-                                                type="button"
-                                                className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white cursor-pointer"
-                                                onClick={handleNext}
-                                            >
-                                                Siguiente →
-                                            </Button>
-                                        </>
-                                    )}
-                                    {step === 2 && (
-                                        <Button
-                                            type="submit"
-                                            className="bg-red-700 hover:bg-red-800 cursor-pointer"
-                                        >
-                                            {mode === "create" ? "Guardar Estudiante" : "Actualizar Estudiante"}
-                                        </Button>
-                                    )}
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        className="cursor-pointer"
+                                        onClick={finishForm}
+                                    >
+                                        Cancelar
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        className="bg-red-700 hover:bg-red-800 cursor-pointer"
+                                    >
+                                        {mode === "create" ? "Guardar Estudiante" : "Actualizar Estudiante"}
+                                    </Button>
                                 </div>
                             </div>
 

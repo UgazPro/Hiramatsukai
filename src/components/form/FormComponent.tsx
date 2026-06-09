@@ -31,6 +31,19 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
             {fields.map((field) => {
 
                 switch (field.type) {
+                    case "number":
+                        return (
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
+                                <Input
+                                    className={inputClass}
+                                    type="number"
+                                    {...form.register(field.name, { valueAsNumber: true })}
+                                />
+                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                            </div>
+                        );
+
                     case "text":
                         return (
                             <div key={field.name} className="space-y-1.5 relative">
@@ -82,11 +95,25 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                                     control={form.control}
                                     name={field.name}
                                     render={({ field: controllerField }) => (
-                                        <CalendarFieldComponent
-                                            value={controllerField.value}
-                                            onChange={controllerField.onChange}
-                                        />
+                    <CalendarFieldComponent
+                        value={controllerField.value}
+                        onChange={controllerField.onChange}
+                        disabled={field.disabled}
+                    />
                                     )}
+                                />
+                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                            </div>
+                        );
+
+                    case "time":
+                        return (
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
+                                <Input
+                                    className={inputClass}
+                                    type="time"
+                                    {...form.register(field.name)}
                                 />
                                 {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
                             </div>

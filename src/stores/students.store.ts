@@ -29,7 +29,7 @@ export const useStudentsStore = create<StudentsStore>((set) => ({
 
   mode: "create",
   
-  viewMode: "list",
+  viewMode: "grid",
   setViewMode: (view) => set({ viewMode: view }),
 
   screen: "list",

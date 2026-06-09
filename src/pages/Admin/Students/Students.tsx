@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import StudentListView from "./StudentViews/StudentListView";
 import StudentGridView from "./StudentViews/StudentGridView";
 import { useStudents } from "@/hooks/useStudents";
@@ -5,7 +6,7 @@ import { useFilteredStudents } from "@/hooks/useFilteredStudents";
 import { useStudentsStore } from "@/stores/students.store";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import StudentsForm from "./StudentForm/StudentsForm";
-import StudentLongCardView from "./StudentViews/StudentLongCardView";
+
 import StudentsHeader from "./StudentViews/StudentsHeader";
 import StudentsNoResults from "./StudentViews/StudentsNoResults";
 import StudentDetailView from "./StudentDetailView/StudentDetailView";
@@ -15,10 +16,13 @@ export default function Students() {
 
   const { data: students = [], isLoading } = useStudents();
 
-  // const { viewMode, setViewMode, screen, startCreate } = useStudentsStore();
-  const { viewMode, setViewMode, screen } = useStudentsStore();
+  const { viewMode, setViewMode, screen, setScreen } = useStudentsStore();
 
   const filteredStudents = useFilteredStudents(students);
+
+  useEffect(() => {
+    setScreen("list");
+  }, []);
 
   return (
 
@@ -48,10 +52,6 @@ export default function Students() {
               {viewMode === "grid" && (
                 <StudentGridView filteredStudents={filteredStudents} />
               )}
-              {viewMode === "longCards" && (
-                <StudentLongCardView filteredStudents={filteredStudents} />
-              )}
-
               {/* View if no results are found */}
               {filteredStudents.length === 0 && <StudentsNoResults />}
 

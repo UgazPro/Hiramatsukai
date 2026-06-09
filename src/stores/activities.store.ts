@@ -1,7 +1,7 @@
 import { IActivity } from "@/services/activities/activity.interface";
 import { create } from "zustand";
 
-export type activityScreen = "main" | "detail";
+export type activityScreen = "main" | "detail" | "form";
 
 interface ActivitiesFilters {
   type: string;
@@ -29,7 +29,7 @@ interface ActivitiesStore {
   setCurrentDate: (date: Date) => void;
 
   selectedActivity: IActivity | null;
-  setSelectedActivity: (activity: IActivity) => void;
+  setSelectedActivity: (activity: IActivity | null) => void;
 
   cSelectedActivity: IActivity | null;
   setCSelectedActivity: (activity: IActivity) => void;
@@ -57,17 +57,17 @@ export const useActivitiesStore = create<ActivitiesStore>((set) => ({
     set({
       mode: "create",
       selectedActivity: null,
-      usingForm: true,
+      screen: "form",
     }),
   startEdit: (activity) =>
     set({
       mode: "edit",
       selectedActivity: activity,
-      usingForm: true,
+      screen: "form",
     }),
   finishForm: () =>
     set({
-      usingForm: false,
+      screen: "main",
       selectedActivity: null,
       mode: "create",
     }),

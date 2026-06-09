@@ -9,9 +9,10 @@ interface CalendarFieldComponentProps {
     value?: Date;
     onChange: (date: Date | undefined) => void;
     placeholder?: string;
+    disabled?: boolean;
 }
 
-export function CalendarFieldComponent({value, onChange, placeholder = "Selecciona una fecha", }: CalendarFieldComponentProps) {
+export function CalendarFieldComponent({value, onChange, placeholder = "Selecciona una fecha", disabled }: CalendarFieldComponentProps) {
 
     return (
         <Popover>
@@ -20,6 +21,7 @@ export function CalendarFieldComponent({value, onChange, placeholder = "Seleccio
                     type="button"
                     variant="outline"
                     data-empty={!value}
+                    disabled={disabled}
                     className="w-full justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
                 >
                     {value

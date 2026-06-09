@@ -171,8 +171,6 @@ export default function DojoConfigPage() {
   }
 
   const updateDojo = async (data: DojoBody) => {
-    console.log(dojo);
-    console.log(user.dojoId);
 
     if (!dojo?.id) return;
 
@@ -181,8 +179,6 @@ export default function DojoConfigPage() {
       socialMedia: socialMedia,
       martialArts: martialArts.map(ma => ma.id),
     }
-
-    console.log(payload);
 
 
     await updateDojoInfoMutation.mutateAsync({

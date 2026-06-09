@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon, PlusCircle, X } from "lucide-react";
+import { Calendar as CalendarIcon, PlusCircle } from "lucide-react";
 import { format, parseISO } from "date-fns";
 import { getActivitiesColumns } from "@/services/activities/activities.tables";
 import { TableComponent } from "@/components/table/TableComponent";
@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import PageTransitionComponent from "@/components/PageTransitionComponent";
 import ActivityDetailView from "./ActivityDetailView/ActivityDetailView";
-import DialogComponent from "@/components/dialog/DialogComponent";
 import ActivityForm from "./ActivityForm/ActivityForm";
 import { useDeleteActivity } from "@/queries/useActivityMutations";
 import { Badge } from "@/components/ui/badge";
@@ -22,7 +21,7 @@ export default function Activities() {
 
   const { activitiesData, isLoading } = useActivities();
 
-  const { currentDate, setCurrentDate, selectedActivity, setSelectedActivity, showCalendar, toggleCalendar, cSelectedActivity, setCSelectedActivity, finishForm, usingForm, startEdit, startCreate, screen, setScreen, filters, removeFilter, resetFilters, searchTerm, setSearchTerm } = useActivitiesStore();
+  const { currentDate, setCurrentDate, selectedActivity, setSelectedActivity, showCalendar, toggleCalendar, cSelectedActivity, setCSelectedActivity, finishForm, startEdit, startCreate, screen, setScreen, filters, resetFilters, searchTerm, setSearchTerm, setFilters } = useActivitiesStore();
 
   const { mutateAsync: deleteActivity } = useDeleteActivity();
 
@@ -31,11 +30,8 @@ export default function Activities() {
   const filteredActivities = useFilteredActivities(activitiesData ?? []);
 
   useEffect(() => {
-
-    console.log(selectedActivity);
-    console.log(activitiesData);
-
-  }, [selectedActivity]);
+    setScreen("main");
+  }, []);
 
   return (
 
@@ -111,50 +107,30 @@ export default function Activities() {
                       {filters.startDate && (
                         <Badge className="bg-amber-100 text-amber-800 border-amber-200">
                           Desde: {format(filters.startDate, "dd/MM/yyyy")}
-                          <X
-                            className="h-3 w-3 ml-2 cursor-pointer"
-                            onClick={() => removeFilter("startDate")}
-                          />
                         </Badge>
                       )}
 
                       {filters.endDate && (
                         <Badge className="bg-amber-100 text-amber-800 border-amber-200">
                           Hasta: {format(filters.endDate, "dd/MM/yyyy")}
-                          <X
-                            className="h-3 w-3 ml-2 cursor-pointer"
-                            onClick={() => removeFilter("endDate")}
-                          />
                         </Badge>
                       )}
 
                       {filters.type && (
                         <Badge className="bg-amber-100 text-amber-800 border-amber-200">
                           Tipo: {filters.type.charAt(0).toUpperCase() + filters.type.slice(1)}
-                          <X
-                            className="h-3 w-3 ml-2 cursor-pointer"
-                            onClick={() => removeFilter("type")}
-                          />
                         </Badge>
                       )}
 
                       {searchTerm && (
                         <Badge className="bg-amber-100 text-amber-800 border-amber-200">
                           Búsqueda: {searchTerm}
-                          <X
-                            className="h-3 w-3 ml-2 cursor-pointer"
-                            onClick={() => setSearchTerm("")}
-                          />
                         </Badge>
                       )}
 
                       {filters.includePast && (
                         <Badge className="bg-amber-100 text-amber-800 border-amber-200">
                           Incluir pasadas
-                          <X
-                            className="h-3 w-3 ml-2 cursor-pointer"
-                            onClick={() => removeFilter("includePast")}
-                          />
                         </Badge>
                       )}
 
@@ -171,16 +147,7 @@ export default function Activities() {
 
               </div>
 
-              <DialogComponent
-                dialogTitle="Nueva Actividad"
-                onClose={finishForm}
-                openDialog={usingForm}
-                className="max-w-4xl"
-                children={<ActivityForm />}
-                dialogDescription="Complete los campos para agregar una nueva actividad"
-              />
-
-              <div className="flex items-start justify-between gap-8">
+              <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
 
                 <div className={'flex-1'}>
                   <TableComponent
@@ -200,10 +167,11 @@ export default function Activities() {
                   styles={`${showCalendar ? 'w-80' : 'w-0'} overflow-hidden transition-all ease-in-out duration-500 `}
                   currentDate={currentDate}
                   setCurrentDate={setCurrentDate}
-                  activities={filteredActivities ?? []}
+                  activities={activitiesData ?? []}
                   cSelectedActivity={cSelectedActivity}
                   setCSelectedActivity={setCSelectedActivity}
                   GoToTodayButton
+                  onDayClick={(date) => setFilters({ startDate: date, endDate: date })}
                 />
 
               </div>
@@ -214,12 +182,13 @@ export default function Activities() {
         }
 
         secondaryChildren={
-
-          <ActivityDetailView />
-
+          <div>
+            {screen === "detail" && <ActivityDetailView />}
+            {screen === "form" && <div className="h-full overflow-y-auto"><ActivityForm /></div>}
+          </div>
         }
 
-        toggle={screen === "detail" ? true : false}
+        toggle={screen === "detail" || screen === "form"}
 
       />
 

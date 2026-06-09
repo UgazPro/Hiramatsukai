@@ -19,10 +19,6 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
 
     const columns = getStudentColumns({ startEdit, deleteStudent, });
 
-    useEffect(() => {
-        console.log("Selected Student:", selectedStudent);
-    }, [selectedStudent]);
-
     return (
 
         <div className="rounded-lg border border-gray-300 shadow-sm overflow-hidden bg-white">

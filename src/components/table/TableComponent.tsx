@@ -18,7 +18,7 @@ interface TableComponentProps<T> {
 export function TableComponent<T>({ data, columns, onRowClick, rowClassName }: TableComponentProps<T>) {
 
     return (
-        <div className="rounded-lg border border-gray-300 shadow-sm overflow-hidden bg-white">
+        <div className="rounded-lg border border-gray-300 shadow-sm overflow-x-auto bg-white">
             <Table>
                 <TableHeader className="bg-gray-50">
                     <TableRow>

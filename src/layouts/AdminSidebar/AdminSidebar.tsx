@@ -105,15 +105,15 @@ export default function AdminSidebar() {
 
       {/* Mobile Sidebar */}
       <div className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-black text-white">
-        <div className="grid h-full grid-cols-5 mx-auto">
-          {sidebarData.slice(0, 5).map((item, index) => (
+        <div className="flex h-full items-center justify-around px-1 overflow-x-auto">
+          {sidebarData.map((item, index) => (
             <Link
               key={index}
               to={item.redirectTo}
-              className="flex flex-col items-center justify-center"
+              className="flex flex-col items-center justify-center min-w-0 shrink-0 px-1"
             >
               <item.icon className="h-5 w-5" />
-              <span className="text-xs">{item.name}</span>
+              <span className="text-[10px] leading-tight text-center truncate max-w-14">{item.name}</span>
             </Link>
           ))}
         </div>
