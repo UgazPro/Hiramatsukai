@@ -33,7 +33,7 @@ export const useFilteredActivities = (activities: IActivity[] = []) => {
           const aStr = fmtDate(new Date(activity.date));
           matchesDate =
             aStr >= fmtDate(filters.startDate) &&
-            aStr <= fmtDate(filters.endDate);
+            aStr <= fmtDate(filters.endDate as Date);
         } else {
           matchesDate = isSameDay(new Date(activity.date), filters.startDate);
         }

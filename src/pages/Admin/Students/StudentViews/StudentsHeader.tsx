@@ -20,7 +20,7 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
 
     return (
 
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-4">
 
             <div>
                 <h2 className="text-3xl font-bold text-gray-900">Alumnos</h2>
@@ -39,8 +39,7 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
                     width="w-full md:w-92"
                 />
 
-                <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
-
+                <div className="hidden lg:flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
                     {views.map(({ key, icon: Icon }) => (
                         <Button
                             key={key}
@@ -52,7 +51,6 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
                             <Icon className="h-4 w-4" />
                         </Button>
                     ))}
-
                 </div>
 
                 <Button

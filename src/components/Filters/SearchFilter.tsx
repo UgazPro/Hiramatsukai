@@ -17,7 +17,7 @@ export default function SearchFilterComponent({ searchTerm, setSearchTerm, place
                 placeholder={placeHolder}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`pl-12 h-12 text-base border-2 border-gray-300 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl bg-white shadow-sm ${width || 'w-full'}`}
+                className={`pl-10 lg:pl-12 h-12 text-sm lg:text-base border-2 border-gray-300 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl bg-white shadow-sm ${width || 'w-full'}`}
             />
         </div>
     );

@@ -116,7 +116,7 @@ export default function Header() {
                                         Home
                                     </DropdownMenuItem>
                                 )}
-                                <DropdownMenuItem onClick={() => navigate(`/dojos/dojo/${user?.dojoId}`)}>
+                                <DropdownMenuItem onClick={() => navigate(`/dojos/dojo/${user?.dojo.code}`)}>
                                     <Building2 className="h-4 w-4 mr-2" />
                                     Ir a mi Dojo
                                 </DropdownMenuItem>
