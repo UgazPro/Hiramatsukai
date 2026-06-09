@@ -6,7 +6,43 @@ export interface IDojo {
     logo: string;
     code: string;
     dojoMartialArts: IDojoMartialArts[];
+    students: number;
+    leaderInstructor: LeaderInstructor;
 }
+
+export interface LeaderInstructor {
+    id:         number;
+    name:       string;
+    lastName:   string;
+    profileImg: string;
+    dojoId:     number;
+    rol:        Rol;
+    userRanks:  UserRank[];
+}
+
+export interface Rol {
+    rol: string;
+}
+
+export interface UserRank {
+    rank:       Rank;
+    martialArt: MartialArt;
+}
+
+export interface MartialArt {
+    martialArt: string;
+    icon:       string;
+}
+
+export interface Rank {
+    id:           number;
+    code:         string;
+    rank_name:    string;
+    belt:         string;
+    icon:         string;
+    martialArtId: number;
+}
+
 
 export interface IDojoMartialArts {
     id: number;
