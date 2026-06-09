@@ -6,6 +6,7 @@ import { getActivities, getActivityAttendance, getCurrentActivity } from "@/serv
 import { postDataApi } from "@/services/api";
 import { useMemo } from "react";
 import { startOfWeek, endOfWeek } from "date-fns";
+import { IStudent, StudentRanks } from "@/services/students/student.interface";
 
 const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 
@@ -23,7 +24,7 @@ export const useWeeklyAttendance = (dojoId?: number) => {
       });
 
       const attendancePromises = activities.map((a) =>
-        getActivityAttendance(a.id).then((att: any[]) => ({
+        getActivityAttendance(a.id).then((att: Record<string, unknown>[]) => ({
           activityId: a.id,
           date: a.date,
           attendees: att ?? [],
@@ -66,10 +67,10 @@ export const useMonthlyIncome = (dojoId?: number) => {
       const now = new Date();
       const start = new Date(now.getFullYear(), now.getMonth(), 1);
       const end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-      const filters: any = { startDate: start, endDate: end };
+      const filters: { startDate: Date; endDate: Date; dojoId?: number } = { startDate: start, endDate: end };
       if (dojoId) filters.dojoId = dojoId;
       const payments = await postDataApi("/payments/search", filters);
-      const total = (payments ?? []).reduce((sum: number, p: any) => sum + Number(p.amount ?? 0), 0);
+      const total = (payments ?? []).reduce((sum: number, p: { amount?: number }) => sum + Number(p.amount ?? 0), 0);
       return total;
     },
     enabled: Boolean(dojoId),
@@ -77,13 +78,13 @@ export const useMonthlyIncome = (dojoId?: number) => {
   });
 };
 
-export const useBirthdays = (students: any[]) => {
+export const useBirthdays = (students: IStudent[]) => {
   return useMemo(() => {
     const now = new Date();
     const thirtyDaysFromNow = new Date();
     thirtyDaysFromNow.setDate(now.getDate() + 30);
 
-    const withBirthday = students.filter((s: any) => {
+    const withBirthday = students.filter((s: IStudent) => {
       if (!s.birthday) return false;
       const bd = new Date(s.birthday);
       const thisYear = new Date(now.getFullYear(), bd.getMonth(), bd.getDate());
@@ -93,7 +94,7 @@ export const useBirthdays = (students: any[]) => {
     });
 
     return withBirthday
-      .map((s: any) => {
+      .map((s: IStudent) => {
         const bd = new Date(s.birthday);
         const thisYear = new Date(now.getFullYear(), bd.getMonth(), bd.getDate());
         const candidateDate = thisYear >= now ? thisYear : new Date(now.getFullYear() + 1, bd.getMonth(), bd.getDate());
@@ -112,10 +113,10 @@ export const useBirthdays = (students: any[]) => {
   }, [students]);
 };
 
-export const useAdvancedStudents = (students: any[]) => {
+export const useAdvancedStudents = (students: IStudent[]) => {
   return useMemo(() => {
-    return students.filter((s: any) =>
-      s.userRanks?.some((r: any) => {
+    return students.filter((s: IStudent) =>
+      s.userRanks?.some((r: StudentRanks) => {
         const belt = r.rank?.belt ?? "";
         return belt.includes("Marrón") || belt.includes("Negro");
       })

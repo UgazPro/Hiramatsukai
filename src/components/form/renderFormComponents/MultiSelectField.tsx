@@ -1,15 +1,15 @@
-import { Controller } from "react-hook-form";
+import { Controller, UseFormReturn } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { useState, useRef, useEffect } from "react";
 import { Check, ChevronDown } from "lucide-react";
 
 interface Option {
     label: string;
-    value: string;
+    value: string | number;
 }
 
 interface MultiSelectFieldProps {
-    form: any;
+    form: UseFormReturn;
     name: string;
     label: string;
     options?: Option[];
@@ -54,11 +54,12 @@ export function MultiSelectField({ form, name, label, options = [], disabled, pl
                 render={({ field }) => {
                     const selected: string[] = field.value || [];
 
-                    const toggleOption = (value: string) => {
-                        if (selected.includes(value)) {
-                            field.onChange(selected.filter((v) => v !== value));
+                    const toggleOption = (value: string | number) => {
+                        const strValue = String(value);
+                        if (selected.includes(strValue)) {
+                            field.onChange(selected.filter((v) => v !== strValue));
                         } else {
-                            field.onChange([...selected, value]);
+                            field.onChange([...selected, strValue]);
                         }
                     };
 
@@ -95,11 +96,11 @@ export function MultiSelectField({ form, name, label, options = [], disabled, pl
                                     className={`absolute z-50 w-full bg-white border rounded-xl shadow-xl p-2 max-h-64 overflow-auto transition-all ${openUp ? "bottom-full mb-2 animate-in slide-in-from-bottom-2" : "top-full mt-1 animate-in slide-in-from-top-2"}`}
                                 >
                                     {options.map((opt) => {
-                                        const isSelected = selected.includes(opt.value);
+                                        const isSelected = selected.includes(String(opt.value));
 
                                         return (
                                             <div
-                                                key={opt.value}
+                                                key={String(opt.value)}
                                                 onClick={() => toggleOption(opt.value)}
                                                 className="flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer hover:bg-gray-100 transition"
                                             >

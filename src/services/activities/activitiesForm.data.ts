@@ -1,6 +1,7 @@
 import { FormField } from "@/components/form/formComponent.interface";
+import { IOptions } from "@/components/form/renderFormComponents/SelectComponent";
 
-export const activityLeftFields: ( dojosOptions: any[], isAdmin: boolean ) => FormField[] = ( dojosOptions: any[], isAdmin: boolean ) => [
+export const activityLeftFields: ( dojosOptions: IOptions[], isAdmin: boolean ) => FormField[] = ( dojosOptions: IOptions[], isAdmin: boolean ) => [
   { type: "text", name: "name", label: "Actividad" },
   {
     type: "select",

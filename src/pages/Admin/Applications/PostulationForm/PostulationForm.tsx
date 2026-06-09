@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +24,7 @@ import {
 import { useDojoMartialArts } from "@/hooks/useDojos";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { ISuggestionStudentApplied } from "@/services/students/student.interface";
+import { IAppliedStudent } from "@/services/activities/activity.interface";
 
 const getBeltColor = (grado: string) => {
   const colors: Record<string, string> = {
@@ -67,7 +67,7 @@ export default function PostulationForm() {
   const { appliedStudents } = useAppliedStudents(nextExamId);
 
   const appliedUserIds = useMemo(
-    () => new Set(appliedStudents.map((a: any) => a.userId)),
+    () => new Set(appliedStudents.map((a: IAppliedStudent) => a.userId)),
     [appliedStudents],
   );
 

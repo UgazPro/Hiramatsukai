@@ -1,6 +1,7 @@
 import { FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
+import { UseFormReturn } from 'react-hook-form';
 
 export interface IOptions {
     label: string;
@@ -16,7 +17,7 @@ interface FormSelectProps {
     disabled?: boolean;
 }
 interface FormSelectFormProps {
-    form: any;
+    form: UseFormReturn;
     label: string;
     placeholder: string;
     name: string;

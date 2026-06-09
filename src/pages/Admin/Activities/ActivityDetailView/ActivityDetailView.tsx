@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, DollarSign, Building2, Users, Tag } from "lucide-react";
 import { format } from "date-fns";
@@ -9,6 +8,7 @@ import { DetailHeader } from "@/components/detailView/header/DetailHeader";
 import { DetailSection } from "@/components/detailView/section/DetailSection";
 import { DetailFooter } from "@/components/detailView/footer/DetailFooter";
 import { InfoItem } from "@/components/detailView/info/InfoItem";
+import { IDojoEdit } from "@/services/activities/activity.interface";
 
 export default function ActivityDetailView() {
 
@@ -108,7 +108,7 @@ export default function ActivityDetailView() {
             <p className="text-sm text-gray-500">No hay dojos asignados</p>
           )}
 
-          {(selectedActivity.ActivityDojos as any[]).map((d: any, i: number) => (
+          {(selectedActivity.ActivityDojos as IDojoEdit[]).map((d, i) => (
             <div
               key={i}
               className="flex items-center justify-between p-3 rounded-lg border bg-gray-50"

@@ -1,4 +1,6 @@
 import { FormField } from "@/components/form/formComponent.interface";
+import { IOptions } from "@/components/form/renderFormComponents/SelectComponent";
+import { IRol } from "./student.interface";
 
 // === PASO 1: Datos Personales ===
 
@@ -32,7 +34,7 @@ export const step1Col3Fields: FormField[] = [
 
 // === PASO 2: Datos del Dojo ===
 
-export const step2Col1Fields: (dojosOptions: any[], roles: any[], isAdmin: boolean) => FormField[] = (dojosOptions, roles, isAdmin) => [
+export const step2Col1Fields: (dojosOptions: IOptions[], roles: IRol[], isAdmin: boolean) => FormField[] = (dojosOptions, roles, isAdmin) => [
   {
     type: "select",
     name: "dojoId",

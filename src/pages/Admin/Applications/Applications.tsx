@@ -22,7 +22,6 @@ export default function Applications() {
 
   const [activeTab, setActiveTab] = useState<TabType>('examenes');
   const [searchTerm, setSearchTerm] = useState('');
-  // const [selectedExamen, setSelectedExamen] = useState<any>(null);
 
   const { screen, openPostulationForm } = useApplicationsStore();
   const { upcomingExams, isLoading } = useUpcomingExams();

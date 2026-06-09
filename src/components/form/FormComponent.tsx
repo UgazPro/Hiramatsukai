@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SelectComponentForm } from "./renderFormComponents/SelectComponent";
 import { CalendarFieldComponent } from "./renderFormComponents/CalendarFieldComponent";
 import { FormField } from "./formComponent.interface";
-import { Controller } from "react-hook-form";
+import { Controller, UseFormReturn } from "react-hook-form";
 import ErrorMessage from "./renderFormComponents/ErrorMessage";
 import { MultiSelectField } from "./renderFormComponents/MultiSelectField";
 
@@ -12,12 +12,10 @@ const inputClass =
   "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg";
 const labelClass =
   "text-sm font-medium text-[var(--blueColor)]";
-const sectionClass =
-  "bg-white shadow-sm border border-gray-200 rounded-xl p-6 space-y-5";
 
 interface FormComponentProps {
     fields: FormField[];
-    form: any;
+    form: UseFormReturn;
     otherType?: React.ReactNode;
     className?: string;
 }
@@ -26,7 +24,7 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
 
     return (
 
-        <div className={`${sectionClass} ${className ?? ""}`}>
+        <div className={`bg-white shadow-sm border border-gray-200 rounded-xl p-6 space-y-5 ${className ?? ""}`}>
 
             {fields.map((field) => {
 
@@ -40,7 +38,7 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                                     type="number"
                                     {...form.register(field.name, { valueAsNumber: true })}
                                 />
-                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                                {form.formState.errors[field.name] && (<ErrorMessage>{String(form.formState.errors[field.name]?.message ?? "")}</ErrorMessage>)}
                             </div>
                         );
 
@@ -53,7 +51,7 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                                     type={field.inputType ?? "text"}
                                     {...form.register(field.name)}
                                 />
-                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                                {form.formState.errors[field.name] && (<ErrorMessage>{String(form.formState.errors[field.name]?.message ?? "")}</ErrorMessage>)}
                             </div>
 
                         );
@@ -66,7 +64,7 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                                   className={inputClass}
                                   {...form.register(field.name)}
                                 />
-                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                                {form.formState.errors[field.name] && (<ErrorMessage>{String(form.formState.errors[field.name]?.message ?? "")}</ErrorMessage>)}
                             </div>
                         );
 
@@ -82,7 +80,7 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                                     options={field.options}
                                     disabled={field.disabled}
                                 />
-                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                                {form.formState.errors[field.name] && (<ErrorMessage>{String(form.formState.errors[field.name]?.message ?? "")}</ErrorMessage>)}
 
                             </div>
                         );
@@ -102,7 +100,7 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                     />
                                     )}
                                 />
-                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                                {form.formState.errors[field.name] && (<ErrorMessage>{String(form.formState.errors[field.name]?.message ?? "")}</ErrorMessage>)}
                             </div>
                         );
 
@@ -115,7 +113,7 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                                     type="time"
                                     {...form.register(field.name)}
                                 />
-                                {form.formState.errors[field.name] && (<ErrorMessage>{form.formState.errors[field.name]?.message}</ErrorMessage>)}
+                                {form.formState.errors[field.name] && (<ErrorMessage>{String(form.formState.errors[field.name]?.message ?? "")}</ErrorMessage>)}
                             </div>
                         );
 
@@ -132,7 +130,7 @@ export function FormComponent({ fields, form, otherType, className }: FormCompon
                                 />
                                 {form.formState.errors[field.name] && (
                                     <ErrorMessage>
-                                        {form.formState.errors[field.name]?.message}
+                                        {String(form.formState.errors[field.name]?.message ?? "")}
                                     </ErrorMessage>
                                 )}
                             </div>

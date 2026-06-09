@@ -37,7 +37,7 @@ export default function AdminSidebar() {
       )}
 
       <div
-        className="hidden group w-16 hover:w-70 transition-all duration-300 ease-in-out bg-black text-white pl-3 p-4 flex-col justify-between md:flex absolute bottom-0 lg:top-0 left-0 h-full z-50"
+        className="hidden group w-16 hover:w-70 transition-all duration-300 ease-in-out bg-black text-white pl-3 p-4 flex-col justify-between md:flex absolute bottom-0 lg:top-0 left-0 h-full z-[60]"
       >
         <div className="w-full">
           {/* Logo/Header */}
