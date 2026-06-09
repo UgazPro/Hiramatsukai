@@ -8,7 +8,6 @@ import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useDojos } from "@/hooks/useDojos";
 
 const MAX_DOJOS = 4;
-const FALLBACK_DOJO_IMAGE = "https://blog.marti.mx/wp-content/uploads/2023/01/conoce-que-es-karate-jpg.webp";
 
 export default function Dojos() {
 
@@ -21,13 +20,6 @@ export default function Dojos() {
         () => (showAllDojos ? dojos : dojos.slice(0, MAX_DOJOS)),
         [showAllDojos, dojos]
     );
-
-    const setImageDojo = (logo: string): string => {
-        if(logo && logo.trim() !== "") {
-            return `${import.meta.env.VITE_API_URL}/api${logo}`
-        }
-        return FALLBACK_DOJO_IMAGE;
-    }
 
     if (isLoading) return <SpinnerComponent />;
     if (isError) return <SpinnerComponent />;
@@ -73,7 +65,7 @@ export default function Dojos() {
                                             aria-label={`Ver informacion del dojo ${dojo.dojo}`}
                                         >
                                             <InformationSchema
-                                                img={setImageDojo(dojo.logo)}
+                                                img={dojo.logo}
                                                 dojo={dojo.dojo}
                                                 address={dojo.address}
                                             />

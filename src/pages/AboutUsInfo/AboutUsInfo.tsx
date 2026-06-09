@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Users, Award, Shield, MapPin, Globe, Calendar, Swords, TargetIcon, Zap, Mail, Phone, Facebook, Instagram, Youtube } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
+import { useDojos } from "@/hooks/useDojos";
 // import TimelineSection from "@/components/TimelineSection";
 
 export default function AboutUsInfo() {
@@ -39,36 +40,36 @@ export default function AboutUsInfo() {
         }
     ];
 
-    const dojos = [
-        {
-            name: "Dojo Central Hiramatsukai",
-            location: "Okinawa, Japón",
-            headInstructor: "Shihan Miguel Rodríguez",
-            arts: ["Karate", "Kobudo", "Kendo Iaido"],
-            students: 250
-        },
-        {
-            name: "Dojo del Pacífico",
-            location: "California, USA",
-            headInstructor: "Sensei Kenji Tanaka",
-            arts: ["Karate", "Kobudo"],
-            students: 180
-        },
-        {
-            name: "Dojo Andes",
-            location: "Bogotá, Colombia",
-            headInstructor: "Sensei Luis Yamashita",
-            arts: ["Karate", "Kobudo", "Iaido"],
-            students: 150
-        },
-        {
-            name: "Dojo Mediterráneo",
-            location: "Barcelona, España",
-            headInstructor: "Sensei Sofia Nakamura",
-            arts: ["Karate", "Kendo"],
-            students: 120
-        }
-    ];
+    // const dojos = [
+    //     {
+    //         name: "Dojo Central Hiramatsukai",
+    //         location: "Okinawa, Japón",
+    //         headInstructor: "Shihan Miguel Rodríguez",
+    //         arts: ["Karate", "Kobudo", "Kendo Iaido"],
+    //         students: 250
+    //     },
+    //     {
+    //         name: "Dojo del Pacífico",
+    //         location: "California, USA",
+    //         headInstructor: "Sensei Kenji Tanaka",
+    //         arts: ["Karate", "Kobudo"],
+    //         students: 180
+    //     },
+    //     {
+    //         name: "Dojo Andes",
+    //         location: "Bogotá, Colombia",
+    //         headInstructor: "Sensei Luis Yamashita",
+    //         arts: ["Karate", "Kobudo", "Iaido"],
+    //         students: 150
+    //     },
+    //     {
+    //         name: "Dojo Mediterráneo",
+    //         location: "Barcelona, España",
+    //         headInstructor: "Sensei Sofia Nakamura",
+    //         arts: ["Karate", "Kendo"],
+    //         students: 120
+    //     }
+    // ];
 
     // const timeline = [
     //     { year: "1997", event: "Fundación oficial de Hiramatsukai en Okinawa" },
@@ -78,6 +79,8 @@ export default function AboutUsInfo() {
     //     { year: "2019", event: "Celebración del 25° aniversario con seminario mundial" },
     //     { year: "2023", event: "Más de 3000 estudiantes en 15 países" }
     // ];
+
+    const { data: dojos = [] } = useDojos();
 
     const arts = [
         {
@@ -126,7 +129,7 @@ export default function AboutUsInfo() {
                             sólida y una junta directiva de maestros de alto rango, mantenemos los estándares más
                             altos de excelencia marcial.
                         </p>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                        <div className="hidden  grid-cols-1 md:grid-cols-3 gap-8 mt-12">
                             <div className="text-center">
                                 <div className="text-4xl font-bold text-red-600 mb-2">25+</div>
                                 <div className="text-gray-600">Años de Tradición</div>
@@ -157,8 +160,8 @@ export default function AboutUsInfo() {
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
                                         className={`flex items-center gap-3 px-6 py-4 rounded-xl font-medium transition-all duration-300 ${isActive
-                                                ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
-                                                : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                                            ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
+                                            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
                                             }`}
                                     >
                                         <Icon className="h-5 w-5" />
@@ -275,12 +278,12 @@ export default function AboutUsInfo() {
                                         ].map((item, index) => (
                                             <div key={index} className="text-center p-4">
                                                 <div className={`h-16 w-16 rounded-full mx-auto mb-4 flex items-center justify-center ${item.color === 'red' ? 'bg-red-100' :
-                                                        item.color === 'orange' ? 'bg-orange-100' :
-                                                            item.color === 'blue' ? 'bg-blue-100' : 'bg-green-100'
+                                                    item.color === 'orange' ? 'bg-orange-100' :
+                                                        item.color === 'blue' ? 'bg-blue-100' : 'bg-green-100'
                                                     }`}>
                                                     <Award className={`h-8 w-8 ${item.color === 'red' ? 'text-red-600' :
-                                                            item.color === 'orange' ? 'text-orange-600' :
-                                                                item.color === 'blue' ? 'text-blue-600' : 'text-green-600'
+                                                        item.color === 'orange' ? 'text-orange-600' :
+                                                            item.color === 'blue' ? 'text-blue-600' : 'text-green-600'
                                                         }`} />
                                                 </div>
                                                 <h4 className="font-bold text-gray-900">{item.rank}</h4>
@@ -297,16 +300,16 @@ export default function AboutUsInfo() {
 
             {/* Nuestros Dojos */}
             {activeTab === "dojos" && (
-                <section className="py-20">
+                <section className="">
                     <div className="container mx-auto px-4">
                         <div className="max-w-6xl mx-auto">
                             <div className="text-center mb-12">
                                 <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                                     Nuestros <span className="text-red-600">Dojos</span>
                                 </h2>
-                                <p className="text-xl text-gray-700">
+                                {/* <p className="text-xl text-gray-700">
                                     Red internacional de dojos certificados por Hiramatsukai
-                                </p>
+                                </p> */}
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-8">
@@ -314,39 +317,39 @@ export default function AboutUsInfo() {
                                     <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
                                         <div className="flex items-start justify-between mb-4">
                                             <div>
-                                                <h3 className="text-xl font-bold text-gray-900 mb-1">{dojo.name}</h3>
+                                                <h3 className="text-xl font-bold text-gray-900 mb-1">{dojo.dojo}</h3>
                                                 <div className="flex items-center text-gray-600">
                                                     <MapPin className="h-4 w-4 mr-1" />
-                                                    {dojo.location}
+                                                    <p className="text-gray-600 whitespace-nowrap text-ellipsis overflow-hidden w-80">{dojo.address}</p>
                                                 </div>
                                             </div>
-                                            <div className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-bold">
+                                            <div className="flex items-center justify-center py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-bold min-w-30">
                                                 {dojo.students} estudiantes
                                             </div>
                                         </div>
 
                                         <div className="mb-4">
                                             <p className="text-gray-700 mb-2">
-                                                <span className="font-semibold">Instructor Principal:</span> {dojo.headInstructor}
+                                                <span className="font-semibold">Instructor Principal:</span> {dojo.leaderInstructor.userRanks[0].rank.rank_name} {dojo.leaderInstructor.name} {dojo.leaderInstructor.lastName}
                                             </p>
                                             <div className="flex flex-wrap gap-2">
-                                                {dojo.arts.map((art, idx) => (
-                                                    <span key={idx} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
-                                                        {art}
+                                                {dojo.dojoMartialArts.map((art, idx) => (
+                                                    <span key={idx} className="flex items-center gap-2 py-1 px-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                                        <img src={`/${art.icon}`} className="w-8 h-8" alt={art.martialArt} /> {art.martialArt}
                                                     </span>
                                                 ))}
                                             </div>
                                         </div>
-
+{/* 
                                         <Button variant="outline" className="w-full border-blue-500 text-blue-600 hover:bg-blue-50">
                                             Contactar Dojo
-                                        </Button>
+                                        </Button> */}
                                     </div>
                                 ))}
                             </div>
 
                             {/* Mapa de dojos (conceptual) */}
-                            <div className="mt-16 bg-linear-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
+                            <div className="hidden mt-16 bg-linear-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
                                 <div className="flex items-center gap-4 mb-6">
                                     <Globe className="h-8 w-8" />
                                     <h3 className="text-2xl font-bold" style={{ fontFamily: "Kavoon" }}>
@@ -419,51 +422,6 @@ export default function AboutUsInfo() {
                     </div>
                 </section>
             )}
-
-            {/* Footer de Contacto */}
-            <section className="py-20 bg-linear-to-r from-gray-900 to-gray-800">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-4xl mx-auto text-center text-white">
-                        <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: "Kavoon" }}>
-                            Únete a <span className="text-yellow-400">Hiramatsukai</span>
-                        </h2>
-                        <p className="text-xl mb-8 opacity-90">
-                            Forma parte de una organización seria y comprometida con la excelencia marcial
-                        </p>
-
-                        <div className="grid md:grid-cols-3 gap-8 mb-12">
-                            <div className="flex items-center justify-center gap-3">
-                                <Mail className="h-6 w-6 text-yellow-400" />
-                                <span>info@hiramatsukai.org</span>
-                            </div>
-                            <div className="flex items-center justify-center gap-3">
-                                <Phone className="h-6 w-6 text-yellow-400" />
-                                <span>+81 98-987-6543</span>
-                            </div>
-                            <div className="flex items-center justify-center gap-3">
-                                <MapPin className="h-6 w-6 text-yellow-400" />
-                                <span>Okinawa, Japón</span>
-                            </div>
-                        </div>
-
-                        <div className="flex gap-4 justify-center mb-8">
-                            <Button size="icon" className="bg-white/10 hover:bg-white/20">
-                                <Facebook className="h-5 w-5" />
-                            </Button>
-                            <Button size="icon" className="bg-white/10 hover:bg-white/20">
-                                <Instagram className="h-5 w-5" />
-                            </Button>
-                            <Button size="icon" className="bg-white/10 hover:bg-white/20">
-                                <Youtube className="h-5 w-5" />
-                            </Button>
-                        </div>
-
-                        <Button size="lg" className="bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white px-12">
-                            Solicitar Información
-                        </Button>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 }
