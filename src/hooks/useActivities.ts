@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getActivities,
   ActivitiesFilter,
-  getUpcomingExams,
   getAppliedStudents,
   getAppliedStudentSuggestions,
   createAppliedStudent,
@@ -10,34 +9,35 @@ import {
   getExamsByActivity,
   getExamsByUser,
   saveExam,
+  formatDateOnly,
 } from "@/services/activities/activity.service";
 import { useActivitiesStore } from "@/stores/activities.store";
 import { IActivity, IExam } from "@/services/activities/activity.interface";
 
+const getActivitiesQueryKey = (filters: ActivitiesFilter) => [
+  "activities",
+  Boolean(filters.includePast),
+  filters.dateRange?.startDate ? formatDateOnly(filters.dateRange.startDate) : null,
+  filters.dateRange?.endDate ? formatDateOnly(filters.dateRange.endDate) : null,
+];
+
 export const useActivities = () => {
   const { filters } = useActivitiesStore();
 
-  const { data, isLoading, refetch } = useQuery<IActivity[]>({
-    queryKey: [
-      "activities",
-      filters.includePast,
-      filters.startDate?.toISOString(),
-      filters.endDate?.toISOString(),
-    ],
-    queryFn: async () => {
-      const apiFilters: ActivitiesFilter = {
-        includePast: filters.includePast,
-        dateRange:
-          filters.startDate && filters.endDate
-            ? {
-                startDate: filters.startDate,
-                endDate: filters.endDate,
-              }
-            : null,
-      };
+  const apiFilters: ActivitiesFilter = {
+    includePast: filters.includePast,
+    dateRange:
+      filters.startDate && filters.endDate
+        ? {
+            startDate: filters.startDate,
+            endDate: filters.endDate,
+          }
+        : null,
+  };
 
-      return await getActivities(apiFilters);
-    },
+  const { data, isLoading, refetch } = useQuery<IActivity[]>({
+    queryKey: getActivitiesQueryKey(apiFilters),
+    queryFn: () => getActivities(apiFilters),
     staleTime: 1000 * 60 * 5, // 5 minutos
   });
 
@@ -50,9 +50,15 @@ export const useActivities = () => {
 
 // Exams
 export const useUpcomingExams = () => {
+  const baseFilters: ActivitiesFilter = {
+    includePast: false,
+    dateRange: null,
+  };
+
   const { data, isLoading } = useQuery<IActivity[]>({
-    queryKey: ["upcomingExams"],
-    queryFn: getUpcomingExams,
+    queryKey: getActivitiesQueryKey(baseFilters),
+    queryFn: () => getActivities(baseFilters),
+    select: (activities) => activities.filter((a: IActivity) => a.type === "Examen"),
     staleTime: 1000 * 60 * 5,
   });
 

@@ -21,10 +21,11 @@ import {
   useAppliedStudents,
   useCreateAppliedStudent,
 } from "@/hooks/useActivities";
-import { useDojoMartialArts } from "@/hooks/useDojos";
+import { useDojosInfo } from "@/hooks/useDojos";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { ISuggestionStudentApplied } from "@/services/students/student.interface";
 import { IAppliedStudent } from "@/services/activities/activity.interface";
+import { IToken, useUserData } from "@/helpers/token";
 
 const getBeltColor = (grado: string) => {
   const colors: Record<string, string> = {
@@ -45,7 +46,13 @@ export default function PostulationForm() {
   const { upcomingExams } = useUpcomingExams();
   const { suggestions, isLoading: suggestionsLoading } =
     useAppliedStudentSuggestions();
-  const { data: martialArts = [] } = useDojoMartialArts();
+  // const { data: martialArts = [] } = useDojoMartialArts();
+  const user: IToken = useUserData() as IToken;
+
+  console.log(suggestions);
+  
+
+  const { data: dojo } = useDojosInfo(user.dojo.code || "");
   const { mutateAsync: createPostulation, isPending } =
     useCreateAppliedStudent();
 
@@ -105,7 +112,7 @@ export default function PostulationForm() {
 
   const martialArtCounts = useMemo(() => {
     const counts: Record<number, number> = {};
-    for (const ma of martialArts) {
+    for (const ma of dojo?.dojoMartialArts || []) {
       counts[ma.id] = eligibleStudents.filter((s: ISuggestionStudentApplied) =>
         s.suggestedByMartialArt.some(
           (sma) => sma.martialArtId === ma.id && sma.suggested,
@@ -113,7 +120,7 @@ export default function PostulationForm() {
       ).length;
     }
     return counts;
-  }, [martialArts, eligibleStudents]);
+  }, [dojo, eligibleStudents]);
 
   useEffect(() => {
     if (selectedMartialArtId) {
@@ -156,7 +163,7 @@ export default function PostulationForm() {
   };
 
   return (
-    <div className="min-h-full p-6 w-full max-w-3xl mx-auto my-6">
+    <div className="min-h-full p-6 w-full my-6">
       <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
         <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 p-6">
           <div className="flex justify-between items-start">
@@ -185,7 +192,7 @@ export default function PostulationForm() {
           </div>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-4 space-y-4">
           {suggestionsLoading && (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="h-6 w-6 animate-spin text-amber-600" />
@@ -223,7 +230,7 @@ export default function PostulationForm() {
                   Arte Marcial
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {martialArts.map((ma) => {
+                  {dojo?.dojoMartialArts.map((ma) => {
                     const count = martialArtCounts[ma.id] || 0;
                     const isSelected = selectedMartialArtId === ma.id;
                     return (
@@ -236,21 +243,19 @@ export default function PostulationForm() {
                             isSelected ? null : ma.id,
                           )
                         }
-                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${
-                          isSelected
+                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${isSelected
                             ? "border-amber-500 bg-amber-50 shadow-md"
                             : count > 0
                               ? "border-gray-200 bg-white hover:border-amber-300 hover:shadow-sm"
                               : "border-gray-100 bg-gray-50 opacity-50 cursor-not-allowed"
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center gap-3">
                           <div
-                            className={`h-10 w-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0 ${
-                              isSelected
+                            className={`h-10 w-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0 ${isSelected
                                 ? "bg-linear-to-br from-amber-500 to-red-500 text-white"
                                 : "bg-amber-100 text-amber-700"
-                            }`}
+                              }`}
                           >
                             🥋
                           </div>
@@ -297,7 +302,7 @@ export default function PostulationForm() {
                   </div>
 
                   {filteredStudents.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[320px] overflow-y-auto pr-1">
+                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 max-h-80 overflow-y-auto pr-1">
                       {filteredStudents.map((student: ISuggestionStudentApplied) => {
                         const isSelected =
                           selectedStudentIds.has(student.id);
@@ -312,19 +317,17 @@ export default function PostulationForm() {
                             type="button"
                             key={student.id}
                             onClick={() => toggleStudent(student.id)}
-                            className={`text-left w-full p-4 rounded-xl border-2 transition-all duration-200 ${
-                              isSelected
+                            className={`text-left w-full p-4 rounded-xl border-2 transition-all duration-200 ${isSelected
                                 ? "border-amber-500 bg-amber-50 shadow-md"
                                 : "border-gray-200 bg-white hover:border-amber-300 hover:shadow-sm"
-                            }`}
+                              }`}
                           >
                             <div className="flex items-center gap-3">
                               <div
-                                className={`h-10 w-10 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${
-                                  isSelected
+                                className={`h-10 w-10 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${isSelected
                                     ? "bg-linear-to-br from-amber-500 to-red-500 text-white"
                                     : "bg-gray-200 text-gray-600"
-                                }`}
+                                  }`}
                               >
                                 {getInitials(
                                   student.name,
@@ -340,11 +343,10 @@ export default function PostulationForm() {
                                 </p>
                               </div>
                               <div
-                                className={`h-5 w-5 rounded border-2 flex-shrink-0 flex items-center justify-center ${
-                                  isSelected
+                                className={`h-5 w-5 rounded border-2 flex-shrink-0 flex items-center justify-center ${isSelected
                                     ? "bg-amber-500 border-amber-500"
                                     : "border-gray-300"
-                                }`}
+                                  }`}
                               >
                                 {isSelected && (
                                   <Check className="h-3 w-3 text-white" />

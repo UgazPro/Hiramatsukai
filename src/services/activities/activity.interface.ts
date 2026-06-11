@@ -12,6 +12,7 @@ export interface IActivity {
   createdDate: Date;
   type: string;
   description: string;
+  postulated: number;
   ActivityDojos: IDojo[] | IDojoEdit[]; 
 }
 

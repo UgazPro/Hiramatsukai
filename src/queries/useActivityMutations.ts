@@ -10,7 +10,6 @@ export const useCreateActivity = () => {
         mutationFn: (data: IActivityCreate) => postDataApi("/activities", data),
         onSuccess: () => {
             qc.invalidateQueries({ queryKey: ["activities"] });
-            qc.invalidateQueries({ queryKey: ["upcomingExams"] });
         }
     });
 }
@@ -22,7 +21,6 @@ export const useUpdateActivity = () => {
         mutationFn: ({ id, data }: { id: number, data: IActivityCreate }) => putDataApi(`/activities/${id}`, data),
         onSuccess: () => {
             qc.invalidateQueries({ queryKey: ["activities"] });
-            qc.invalidateQueries({ queryKey: ["upcomingExams"] });
         }
     });
 }
@@ -34,7 +32,6 @@ export const useDeleteActivity = () => {
         mutationFn: (id: number) => deleteDataApi(`/activities/${id}`),
         onSuccess: () => {
             qc.invalidateQueries({ queryKey: ["activities"] });
-            qc.invalidateQueries({ queryKey: ["upcomingExams"] });
         },
     });
 };
