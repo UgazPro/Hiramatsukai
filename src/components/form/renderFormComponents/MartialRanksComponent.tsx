@@ -1,12 +1,13 @@
 import { useStudentsStore } from "@/stores/students.store";
 import ErrorMessage from "./ErrorMessage";
 import { SelectComponent } from "./SelectComponent";
+import { UseFormReturn } from "react-hook-form";
 
 interface MartialRanksComponentProps {
     dojoMartialArts: Array<{ id: number; martialArt: string }>;
     martialArtsOptions: Array<{ label: string; value: number }>;
     ranksOptions: Array<{ label: string; value: number; martialArtId: number }>;
-    form: any;
+    form: UseFormReturn;
 }
 
 export default function MartialRanksComponent({ dojoMartialArts, martialArtsOptions, ranksOptions, form }: MartialRanksComponentProps) {
@@ -61,7 +62,7 @@ export default function MartialRanksComponent({ dojoMartialArts, martialArtsOpti
                 ))}
 
                 {isSubmitted && form.formState.errors.martialArtRank && (
-                    <ErrorMessage>{form.formState.errors.martialArtRank?.message}</ErrorMessage>
+                    <ErrorMessage>{String(form.formState.errors.martialArtRank?.message ?? "")}</ErrorMessage>
                 )}
 
 

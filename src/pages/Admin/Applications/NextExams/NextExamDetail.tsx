@@ -21,6 +21,7 @@ import { useAppliedStudents } from "@/hooks/useActivities";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong, timeFormatter } from "@/helpers/formatter";
 import { getRankOrder } from "@/helpers/rank";
+import { IAppliedStudent } from "@/services/activities/activity.interface";
 
 const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
@@ -40,7 +41,7 @@ const getInitials = (name: string, lastName: string) => {
     return `${name?.charAt(0) ?? ""}${lastName?.charAt(0) ?? ""}`.toUpperCase();
 };
 
-function PostulantCard({ p, compact = false }: { p: any; compact?: boolean }) {
+function PostulantCard({ p, compact = false }: { p: IAppliedStudent; compact?: boolean }) {
     return (
         <div
             className={`${
@@ -140,7 +141,7 @@ export default function NextExamDetail() {
         () =>
             [...postulants]
                 .sort(
-                    (a: any, b: any) =>
+                    (a: IAppliedStudent, b: IAppliedStudent) =>
                         getRankOrder(b.ranks?.code ?? "") -
                         getRankOrder(a.ranks?.code ?? ""),
                 )
@@ -150,12 +151,12 @@ export default function NextExamDetail() {
 
     const generalList = useMemo(
         () =>
-            [...postulants].sort((a: any, b: any) => a.id - b.id),
+            [...postulants].sort((a: IAppliedStudent, b: IAppliedStudent) => a.id - b.id),
         [postulants],
     );
 
     const martialArtGroups = useMemo(() => {
-        const groups: Record<string, { name: string; posts: any[] }> = {};
+        const groups: Record<string, { name: string; posts: IAppliedStudent[] }> = {};
         for (const p of postulants) {
             const name = p.ranks?.martialArt?.martialArt ?? "Otro";
             if (!groups[name]) groups[name] = { name, posts: [] };
@@ -163,7 +164,7 @@ export default function NextExamDetail() {
         }
         for (const key in groups) {
             groups[key].posts.sort(
-                (a: any, b: any) =>
+                (a: IAppliedStudent, b: IAppliedStudent) =>
                     getRankOrder(b.ranks?.code ?? "") -
                     getRankOrder(a.ranks?.code ?? ""),
             );
@@ -341,7 +342,7 @@ export default function NextExamDetail() {
 
                                 {top2Global.length > 0 && (
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                                        {top2Global.map((p: any) => (
+                                        {top2Global.map((p: IAppliedStudent) => (
                                             <div
                                                 key={p.id}
                                                 className="p-5 border border-amber-200 bg-amber-50/40 rounded-xl"
@@ -471,7 +472,7 @@ export default function NextExamDetail() {
                                                 </h4>
                                             </div>
 
-                                            {top2.map((p: any) => (
+                                            {top2.map((p: IAppliedStudent) => (
                                                 <PostulantCard
                                                     key={p.id}
                                                     p={p}
@@ -527,7 +528,7 @@ export default function NextExamDetail() {
 
                     <div className="overflow-y-auto flex-1 -mx-6 px-6">
                         <div className="space-y-2 py-2">
-                            {generalPaginated.map((p: any) => (
+                            {generalPaginated.map((p: IAppliedStudent) => (
                                 <PostulantCard
                                     key={p.id}
                                     p={p}
@@ -590,7 +591,7 @@ export default function NextExamDetail() {
 
                     <div className="overflow-y-auto flex-1 -mx-6 px-6">
                         <div className="space-y-2 py-2">
-                            {maPaginated.map((p: any) => (
+                            {maPaginated.map((p: IAppliedStudent) => (
                                 <PostulantCard
                                     key={p.id}
                                     p={p}

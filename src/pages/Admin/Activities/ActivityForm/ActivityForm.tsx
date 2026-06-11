@@ -65,7 +65,7 @@ export default function ActivityForm() {
             });
         }
 
-    }, [mode, selectedActivity]);
+    }, [mode, selectedActivity, form]);
 
     const sendForm = async (data: ActivityFormValues) => {
 
@@ -80,11 +80,8 @@ export default function ActivityForm() {
             place: data.place,
             type: data.type,
             description: data.description,
-
             dojoIds: Array.isArray(data.dojoIds) ? data.dojoIds.map((d: number) => Number(d)) : [],
-
             price: 0,
-
             latitude: 0,
             longitude: 0,
         };
@@ -92,12 +89,10 @@ export default function ActivityForm() {
         if (mode === "create") {
             await createActivity(payload);
         } else {
-            const { id, ...updatePayload } = payload;
+            const { ...updatePayload } = payload;
             await updateActivity({ data: updatePayload, id: selectedActivity!.id });
         }
-
         finishForm();
-
     };
 
     return (

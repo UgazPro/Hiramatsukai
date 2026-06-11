@@ -47,7 +47,7 @@ export interface MultiSelectField {
   label: string;
   type: "multiselect";
   placeholder?: string;
-  options?: { label: string; value: string }[];
+  options?: IOptions[];
   disabled?: boolean;
   inputType?: string;
 }

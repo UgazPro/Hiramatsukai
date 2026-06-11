@@ -12,6 +12,7 @@ export interface IActivity {
   createdDate: Date;
   type: string;
   description: string;
+  postulated: number;
   ActivityDojos: IDojo[] | IDojoEdit[]; 
 }
 
@@ -25,7 +26,41 @@ export interface Dojo {
   address: string;
 }
 
-
+export interface IAppliedStudent {
+  id: number;
+  userId: number;
+  martialArtId: number;
+  activityId: number;
+  user: {
+    id: number;
+    name: string;
+    lastName: string;
+    profileImg?: string;
+  };
+  ranks: {
+    id: number;
+    belt: string;
+    code: string;
+    rank_name: string;
+    martialArt: {
+      id: number;
+      martialArt: string;
+    };
+    martialArtId?: number;
+  };
+  currentRank: {
+    id: number;
+    belt: string;
+    code: string;
+    rank_name: string;
+  };
+  activity: {
+    id: number;
+    name: string;
+    date: Date;
+    description?: string;
+  };
+}
 
 export interface IActivityCreate { 
   name: string;

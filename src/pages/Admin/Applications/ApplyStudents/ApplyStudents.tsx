@@ -23,10 +23,11 @@ import {
 } from "lucide-react";
 import { useSaveExam } from "@/hooks/useActivities";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
+import { IAppliedStudent } from "@/services/activities/activity.interface";
 
 interface ApplyStudentsProps {
   activeTab: string;
-  appliedStudents: any[];
+  appliedStudents: IAppliedStudent[];
   isLoading: boolean;
   getBeltColor: (grado: string) => string;
   searchTerm: string;
@@ -46,14 +47,14 @@ export default function ApplyStudents({
   const { mutateAsync: saveExam, isPending: isSaving } = useSaveExam();
 
   const [manageDialogOpen, setManageDialogOpen] = useState(false);
-  const [manageActivity, setManageActivity] = useState<any>(null);
+  const [manageActivity, setManageActivity] = useState<{ id: number; name?: string; date?: Date } | null>(null);
   const [examStatuses, setExamStatuses] = useState<
     Record<string, "Aprobado" | "Reprobado">
   >({});
 
   const filtered = useMemo(
     () =>
-      appliedStudents.filter((p: any) => {
+      appliedStudents.filter((p: IAppliedStudent) => {
         if (!searchTerm) return true;
         const fullName = `${p.user?.name ?? ""} ${p.user?.lastName ?? ""}`.toLowerCase();
         return fullName.includes(searchTerm.toLowerCase());
@@ -63,7 +64,7 @@ export default function ApplyStudents({
 
   const openManageDialog = (activityId: number) => {
     const studentsForActivity = appliedStudents.filter(
-      (s: any) => s.activityId === activityId,
+      (s: IAppliedStudent) => s.activityId === activityId,
     );
     const activity = studentsForActivity[0]?.activity;
     if (!activity) return;
@@ -90,10 +91,10 @@ export default function ApplyStudents({
     if (!manageActivity) return;
 
     const studentsForActivity = appliedStudents.filter(
-      (s: any) => s.activityId === manageActivity.id,
+      (s: IAppliedStudent) => s.activityId === manageActivity.id,
     );
 
-    const exams = studentsForActivity.map((s: any) => {
+    const exams = studentsForActivity.map((s: IAppliedStudent) => {
       const key = `${s.userId}-${s.martialArtId}`;
       return {
         userId: s.userId,
@@ -150,7 +151,7 @@ export default function ApplyStudents({
 
           {!isLoading && filtered.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filtered.map((postulacion: any) => {
+              {filtered.map((postulacion: IAppliedStudent) => {
                 const martialArtId =
                   postulacion.ranks?.martialArtId ??
                   postulacion.martialArtId;
@@ -272,7 +273,7 @@ export default function ApplyStudents({
             {manageActivity && (
               <DialogDescription className="text-gray-600">
                 {manageActivity.name} —{" "}
-                {dateFormatterIntoLong(manageActivity.date)}
+                {dateFormatterIntoLong(manageActivity.date ?? new Date())}
               </DialogDescription>
             )}
           </DialogHeader>
@@ -282,10 +283,10 @@ export default function ApplyStudents({
               {manageActivity &&
                 appliedStudents
                   .filter(
-                    (s: any) =>
+                    (s: IAppliedStudent) =>
                       s.activityId === manageActivity.id,
                   )
-                  .map((student: any) => {
+                  .map((student: IAppliedStudent) => {
                     const key = `${student.userId}-${student.martialArtId}`;
                     const martialArtId =
                       student.ranks?.martialArtId ??

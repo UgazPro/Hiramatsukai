@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAuthStore } from "@/stores/auth.store";
 import axios from "axios";
 
@@ -27,7 +26,7 @@ export const getImagesApi = async (url: string) => {
     }
 };
 
-export const postDataApi = async (url: string, data: any) => {
+export const postDataApi = async (url: string, data: object) => {
     try {
         return await api.post(url, data).then((res) => {
             return res.data;
@@ -37,7 +36,7 @@ export const postDataApi = async (url: string, data: any) => {
     }
 };
 
-export const putDataApi = async (endpoint: string, data: any) => {
+export const putDataApi = async (endpoint: string, data: object) => {
     return await api.put(endpoint, data).then((response) => {
         return response.data;
     }).catch((err) => {
@@ -53,7 +52,7 @@ export const deleteDataApi = async (endpoint: string) => {
     })
 }
 
-export const postDataImageApi = async (url: string, data: any, img?: File | null,) => {
+export const postDataImageApi = async (url: string, data: object, img?: File | null,) => {
     try {
         const formData = new FormData();
 
@@ -93,7 +92,7 @@ export const postDataImageApi = async (url: string, data: any, img?: File | null
     }
 };
 
-export const putDataImageApi = async (url: string, data: any, img?: File | null,) => {
+export const putDataImageApi = async (url: string, data: object, img?: File | null,) => {
     try {
         const formData = new FormData();
 

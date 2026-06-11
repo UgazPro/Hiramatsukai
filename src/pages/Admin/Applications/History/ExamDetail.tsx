@@ -14,6 +14,7 @@ import {
 import { useExamsByActivity } from "@/hooks/useActivities";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
+import { IExam } from "@/services/activities/activity.interface";
 
 const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
@@ -34,9 +35,9 @@ export default function ExamDetail() {
     const { exams, isLoading } = useExamsByActivity(selectedExamActivityId);
 
     const activity = exams.length > 0 ? exams[0].activity : null;
-    const approved = exams.filter((e: any) => e.status === "Aprobado");
-    const rejected = exams.filter((e: any) => e.status === "Reprobado");
-    const pending = exams.filter((e: any) => e.status === "Pendiente");
+    const approved = exams.filter((e: IExam) => e.status === "Aprobado");
+    const rejected = exams.filter((e: IExam) => e.status === "Reprobado");
+    const pending = exams.filter((e: IExam) => e.status === "Pendiente");
 
     return (
         <div className="min-h-full p-6 w-full max-w-4xl mx-auto my-6">
@@ -139,7 +140,7 @@ export default function ExamDetail() {
                                     Aprobados ({approved.length})
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {approved.map((exam: any) => (
+                                    {approved.map((exam: IExam) => (
                                         <div
                                             key={exam.id}
                                             className="p-4 border border-green-200 bg-green-50/30 rounded-lg hover:border-green-400 transition-colors"
@@ -201,7 +202,7 @@ export default function ExamDetail() {
                                     Reprobados ({rejected.length})
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {rejected.map((exam: any) => (
+                                    {rejected.map((exam: IExam) => (
                                         <div
                                             key={exam.id}
                                             className="p-4 border border-red-200 bg-red-50/30 rounded-lg hover:border-red-400 transition-colors"
@@ -263,7 +264,7 @@ export default function ExamDetail() {
                                     Pendientes ({pending.length})
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {pending.map((exam: any) => (
+                                    {pending.map((exam: IExam) => (
                                         <div
                                             key={exam.id}
                                             className="p-4 border border-yellow-200 bg-yellow-50/30 rounded-lg hover:border-yellow-400 transition-colors"

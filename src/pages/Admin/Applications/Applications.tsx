@@ -22,7 +22,6 @@ export default function Applications() {
 
   const [activeTab, setActiveTab] = useState<TabType>('examenes');
   const [searchTerm, setSearchTerm] = useState('');
-  // const [selectedExamen, setSelectedExamen] = useState<any>(null);
 
   const { screen, openPostulationForm } = useApplicationsStore();
   const { upcomingExams, isLoading } = useUpcomingExams();
@@ -65,7 +64,7 @@ export default function Applications() {
 
       <PageTransitionComponent
         primaryChildren={
-          <div className="p-4 md:p-10">
+          <div className="p-4">
 
             <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
               <div>

@@ -2,52 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { useStudents } from "./useStudents";
 import { useUpcomingExams } from "./useActivities";
 import { getUserDataSafe } from "@/helpers/token";
-import { getActivities, getActivityAttendance, getCurrentActivity } from "@/services/activities/activity.service";
+import { getCurrentActivity } from "@/services/activities/activity.service";
 import { postDataApi } from "@/services/api";
 import { useMemo } from "react";
-import { startOfWeek, endOfWeek } from "date-fns";
+import { IStudent, StudentRanks } from "@/services/students/student.interface";
 
-const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-
-export const useWeeklyAttendance = (dojoId?: number) => {
-  return useQuery({
-    queryKey: ["weeklyAttendance", dojoId],
-    queryFn: async () => {
-      const today = new Date();
-      const start = startOfWeek(today, { weekStartsOn: 1 });
-      const end = endOfWeek(today, { weekStartsOn: 1 });
-
-      const activities = await getActivities({
-        includePast: true,
-        dateRange: { startDate: start, endDate: end },
-      });
-
-      const attendancePromises = activities.map((a) =>
-        getActivityAttendance(a.id).then((att: any[]) => ({
-          activityId: a.id,
-          date: a.date,
-          attendees: att ?? [],
-        }))
-      );
-      const results = await Promise.allSettled(attendancePromises);
-
-      const dailyMap: Record<number, number> = {};
-      for (const r of results) {
-        if (r.status === "fulfilled") {
-          const day = new Date(r.value.date).getDay();
-          dailyMap[day] = (dailyMap[day] ?? 0) + r.value.attendees.length;
-        }
-      }
-
-      return dayNames.map((dia, idx) => ({
-        dia,
-        estudiantes: dailyMap[idx] ?? 0,
-      }));
-    },
-    enabled: Boolean(dojoId),
-    staleTime: 1000 * 60 * 5,
-  });
+type WeeklyAttendanceItem = {
+  dia: string;
+  estudiantes: number;
 };
+
+const EMPTY_WEEKLY_ATTENDANCE: WeeklyAttendanceItem[] = [];
 
 export const useCurrentActivityQuery = (dojoId?: number) => {
   return useQuery({
@@ -66,10 +31,10 @@ export const useMonthlyIncome = (dojoId?: number) => {
       const now = new Date();
       const start = new Date(now.getFullYear(), now.getMonth(), 1);
       const end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-      const filters: any = { startDate: start, endDate: end };
+      const filters: { startDate: Date; endDate: Date; dojoId?: number } = { startDate: start, endDate: end };
       if (dojoId) filters.dojoId = dojoId;
       const payments = await postDataApi("/payments/search", filters);
-      const total = (payments ?? []).reduce((sum: number, p: any) => sum + Number(p.amount ?? 0), 0);
+      const total = (payments ?? []).reduce((sum: number, p: { amount?: number }) => sum + Number(p.amount ?? 0), 0);
       return total;
     },
     enabled: Boolean(dojoId),
@@ -77,13 +42,13 @@ export const useMonthlyIncome = (dojoId?: number) => {
   });
 };
 
-export const useBirthdays = (students: any[]) => {
+export const useBirthdays = (students: IStudent[]) => {
   return useMemo(() => {
     const now = new Date();
     const thirtyDaysFromNow = new Date();
     thirtyDaysFromNow.setDate(now.getDate() + 30);
 
-    const withBirthday = students.filter((s: any) => {
+    const withBirthday = students.filter((s: IStudent) => {
       if (!s.birthday) return false;
       const bd = new Date(s.birthday);
       const thisYear = new Date(now.getFullYear(), bd.getMonth(), bd.getDate());
@@ -93,7 +58,7 @@ export const useBirthdays = (students: any[]) => {
     });
 
     return withBirthday
-      .map((s: any) => {
+      .map((s: IStudent) => {
         const bd = new Date(s.birthday);
         const thisYear = new Date(now.getFullYear(), bd.getMonth(), bd.getDate());
         const candidateDate = thisYear >= now ? thisYear : new Date(now.getFullYear() + 1, bd.getMonth(), bd.getDate());
@@ -112,10 +77,10 @@ export const useBirthdays = (students: any[]) => {
   }, [students]);
 };
 
-export const useAdvancedStudents = (students: any[]) => {
+export const useAdvancedStudents = (students: IStudent[]) => {
   return useMemo(() => {
-    return students.filter((s: any) =>
-      s.userRanks?.some((r: any) => {
+    return students.filter((s: IStudent) =>
+      s.userRanks?.some((r: StudentRanks) => {
         const belt = r.rank?.belt ?? "";
         return belt.includes("Marrón") || belt.includes("Negro");
       })
@@ -130,7 +95,6 @@ export const useDashboard = () => {
   const { data: students = [], isLoading: studentsLoading } = useStudents();
   const { upcomingExams, isLoading: examsLoading } = useUpcomingExams();
   const { data: currentActivity, isLoading: currentLoading } = useCurrentActivityQuery(dojoId);
-  const { data: weeklyAttendance, isLoading: attendanceLoading } = useWeeklyAttendance(dojoId);
   const { data: monthlyIncome, isLoading: incomeLoading } = useMonthlyIncome(dojoId);
 
   const totalEstudiantes = students.length;
@@ -160,13 +124,8 @@ export const useDashboard = () => {
     }).length;
   }, [upcomingExams]);
 
-  const averageAttendance = useMemo(() => {
-    if (!weeklyAttendance || weeklyAttendance.length === 0) return 0;
-    const total = weeklyAttendance.reduce((s, d) => s + d.estudiantes, 0);
-    const daysWithActivity = weeklyAttendance.filter((d) => d.estudiantes > 0).length;
-    if (daysWithActivity === 0 || totalEstudiantes === 0) return 0;
-    return Math.round((total / daysWithActivity / totalEstudiantes) * 100);
-  }, [weeklyAttendance, totalEstudiantes]);
+  const weeklyAttendance = EMPTY_WEEKLY_ATTENDANCE;
+  const averageAttendance = 0;
 
   const upcomingClassesNext = useMemo(() => {
     const now = new Date();
@@ -190,6 +149,6 @@ export const useDashboard = () => {
     averageAttendance,
     currentActivity,
     upcomingClassesNext,
-    isLoading: studentsLoading || examsLoading || currentLoading || attendanceLoading || incomeLoading,
+    isLoading: studentsLoading || examsLoading || currentLoading || incomeLoading,
   };
 };

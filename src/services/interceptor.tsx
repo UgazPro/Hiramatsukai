@@ -1,16 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { api } from './api';
 import { ToastMessage } from '@/components/toastMessage/ToastMessage';
-// import { useNavigate } from 'react-router';
 
 const MUTATION_METHODS = new Set(['post', 'put', 'delete']);
 let interceptorId: number | null = null;
 
 export const useAxiosInterceptor = () => {
-    // const navigate = useNavigate();
-    const isValidMessage = (msg: any) => {
+    const isValidMessage = (msg: string) => {
         return typeof msg === 'string' && msg.trim().length > 2;
     };
 

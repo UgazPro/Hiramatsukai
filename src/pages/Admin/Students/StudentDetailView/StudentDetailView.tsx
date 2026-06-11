@@ -14,6 +14,8 @@ import { useStudentsStore } from "@/stores/students.store";
 import { useExamsByUser } from "@/hooks/useActivities";
 import { calculateMartialTime, dateFormatterIntoLong, formatNumberWithDots, formatPhoneNumber } from "@/helpers/formatter";
 import { useStudentAllInfo } from "@/hooks/useStudents";
+import { IExam } from "@/services/activities/activity.interface";
+import { IActivityAttendanceItem } from "@/services/students/student.interface";
 
 const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
@@ -36,7 +38,7 @@ export default function StudentDetailView() {
     const { exams, isLoading: examsLoading } = useExamsByUser(selectedStudent?.id ?? null);
 
     const examsByMartialArt = useMemo(() => {
-        const groups: Record<string, { name: string; exams: any[] }> = {};
+        const groups: Record<string, { name: string; exams: IExam[] }> = {};
         for (const exam of exams) {
             const name = exam.ranks?.martialArt?.martialArt ?? "Otro";
             if (!groups[name]) groups[name] = { name, exams: [] };
@@ -359,7 +361,7 @@ export default function StudentDetailView() {
                                         </div>
 
                                         <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-                                            {group.exams.map((exam: any) => (
+                                            {group.exams.map((exam: IExam) => (
                                                 <div
                                                     key={exam.id}
                                                     className={`p-3 rounded-lg border text-sm transition-colors ${
@@ -451,7 +453,7 @@ export default function StudentDetailView() {
                         {!dynamicLoading && activitiesTop.length > 0 && (
                             <>
                                 <div className="space-y-3">
-                                    {activitiesTop.map((item: any) => (
+                                    {activitiesTop.map((item: IActivityAttendanceItem) => (
                                         <div
                                             key={item.id}
                                             className="flex items-center gap-3 p-3 bg-linear-to-r from-white to-amber-50 rounded-lg border border-amber-200 hover:border-amber-300 transition-colors group"

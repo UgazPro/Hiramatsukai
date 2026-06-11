@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
@@ -25,8 +24,9 @@ export default function Login() {
         try {
             await loginMutation.mutateAsync(data);
             
-        } catch (error: any) {
-            setLoginErrorMessage(error.message || "Error al iniciar sesión");
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Error al iniciar sesión";
+            setLoginErrorMessage(message);
             setTimeout(() => setLoginErrorMessage(""), 2500);
         }
     };
@@ -35,8 +35,9 @@ export default function Login() {
         try {
             if (!googleResponse.credential) throw new Error("No se obtuvo credencial de Google");
             await googleLoginMutation.mutateAsync({ token: googleResponse.credential });
-        } catch (error: any) {
-            setLoginErrorMessage(error.message || "Error al iniciar sesión con Google");
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Error al iniciar sesión con Google";
+            setLoginErrorMessage(message);
             setTimeout(() => setLoginErrorMessage(""), 2500);
         }
     };

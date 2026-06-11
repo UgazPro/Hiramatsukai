@@ -1,6 +1,7 @@
 
+import { UseFormReturn } from "react-hook-form";
 
-export default function ErrorMessage({children, form} : {children: React.ReactNode, form?: any}) {
+export default function ErrorMessage({children, form} : {children: React.ReactNode, form?: UseFormReturn}) {
 
     return (
 
