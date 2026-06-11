@@ -2,6 +2,7 @@ import { IActivity } from "@/services/activities/activity.interface";
 import { create } from "zustand";
 
 export type activityScreen = "main" | "detail" | "form";
+export type ActivityViewMode = "table" | "cards";
 
 interface ActivitiesFilters {
   type: string;
@@ -16,6 +17,9 @@ interface ActivitiesStore {
 
   screen: activityScreen;
   setScreen: (screen: activityScreen) => void;
+
+  viewMode: ActivityViewMode;
+  setViewMode: (view: ActivityViewMode) => void;
 
   startCreate: () => void;
   startEdit: (activity: IActivity) => void;
@@ -45,6 +49,11 @@ interface ActivitiesStore {
 
   searchTerm: string;
   setSearchTerm: (v: string) => void;
+
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  itemsPerPage: number;
+  setItemsPerPage: (items: number) => void;
 }
 
 export const useActivitiesStore = create<ActivitiesStore>((set) => ({
@@ -52,6 +61,9 @@ export const useActivitiesStore = create<ActivitiesStore>((set) => ({
 
   screen: "main",
   setScreen: (newScreen) => set({ screen: newScreen }),
+
+  viewMode: "table",
+  setViewMode: (view) => set({ viewMode: view }),
 
   startCreate: () =>
     set({
@@ -133,4 +145,9 @@ export const useActivitiesStore = create<ActivitiesStore>((set) => ({
 
   searchTerm: "",
   setSearchTerm: (v) => set({ searchTerm: v }),
+
+  currentPage: 1,
+  setCurrentPage: (page) => set({ currentPage: page }),
+  itemsPerPage: 6,
+  setItemsPerPage: (items) => set({ itemsPerPage: items }),
 }));

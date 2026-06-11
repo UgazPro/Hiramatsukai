@@ -13,6 +13,7 @@ import { format } from "date-fns";
 import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Loader } from "@/components/spinner/Loader";
 
 export default function ActivityForm() {
 
@@ -25,8 +26,8 @@ export default function ActivityForm() {
     const isAdminOrLeader = user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor";
     const dojosOptions = dojos.filter(dojo => isAdminOrLeader || dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
 
-    const { mutateAsync: createActivity } = useCreateActivity();
-    const { mutateAsync: updateActivity } = useUpdateActivity();
+    const { mutateAsync: createActivity, isPending: isCreating } = useCreateActivity();
+    const { mutateAsync: updateActivity, isPending: isUpdating } = useUpdateActivity();
 
     const form = useForm<ActivityFormValues>({
         resolver: zodResolver(ActivitySchema),
@@ -89,11 +90,21 @@ export default function ActivityForm() {
         if (mode === "create") {
             await createActivity(payload);
         } else {
-            const { ...updatePayload } = payload;
+            const { id: _unused, ...updatePayload } = payload;
             await updateActivity({ data: updatePayload, id: selectedActivity!.id });
         }
         finishForm();
     };
+
+    if (isCreating || isUpdating) {
+        return (
+            <div className="p-6 w-full max-w-5xl mx-auto">
+                <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[400px]">
+                    <Loader size="lg" message={isUpdating ? "Actualizando actividad..." : "Guardando actividad..."} />
+                </div>
+            </div>
+        );
+    }
 
     return (
 
