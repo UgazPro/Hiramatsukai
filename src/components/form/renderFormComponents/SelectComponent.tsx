@@ -1,7 +1,7 @@
 import { FormField, FormItem, FormLabel, FormControl } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { UseFormReturn } from 'react-hook-form';
+import { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 
 export interface IOptions {
     label: string;
@@ -16,11 +16,11 @@ interface FormSelectProps {
     onChange: (value: string) => void;
     disabled?: boolean;
 }
-interface FormSelectFormProps {
-    form: UseFormReturn;
+interface FormSelectFormProps<TFieldValues extends FieldValues> {
+    form: UseFormReturn<TFieldValues>;
     label: string;
     placeholder: string;
-    name: string;
+    name: Path<TFieldValues>;
     options: IOptions[];
     disabled?: boolean;
 }
@@ -30,7 +30,7 @@ const triggerClass =
 const labelClass =
   "text-sm font-medium text-[var(--blueColor)]";
 
-export function SelectComponentForm({ form, label, placeholder, name, options, disabled }: FormSelectFormProps) {
+export function SelectComponentForm<TFieldValues extends FieldValues>({ form, label, placeholder, name, options, disabled }: FormSelectFormProps<TFieldValues>) {
 
     const isNumberSelect = typeof options?.[0]?.value === 'number';
 

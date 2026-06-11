@@ -2,12 +2,14 @@ import { useStudentsStore } from "@/stores/students.store";
 import ErrorMessage from "./ErrorMessage";
 import { SelectComponent } from "./SelectComponent";
 import { UseFormReturn } from "react-hook-form";
+import { IDojoMartialArts } from "@/services/dojos/dojo.interface";
+import { StudentFormValues } from "@/services/students/student.schema";
 
 interface MartialRanksComponentProps {
-    dojoMartialArts: Array<{ id: number; martialArt: string }>;
+    dojoMartialArts: IDojoMartialArts[];
     martialArtsOptions: Array<{ label: string; value: number }>;
     ranksOptions: Array<{ label: string; value: number; martialArtId: number }>;
-    form: UseFormReturn<any>;
+    form: UseFormReturn<StudentFormValues>;
 }
 
 export default function MartialRanksComponent({ dojoMartialArts, martialArtsOptions, ranksOptions, form }: MartialRanksComponentProps) {
@@ -20,7 +22,7 @@ export default function MartialRanksComponent({ dojoMartialArts, martialArtsOpti
 
             <div className="border-2 p-5 rounded-lg space-y-2">
 
-                {dojoMartialArts.length > 0 && dojoMartialArts.map((field, index) => (
+                {dojoMartialArts.length > 0 && dojoMartialArts.map((field: IDojoMartialArts, index: number) => (
                     
                     <div key={field.id} className="flex items-center gap-2">
                         <SelectComponent
