@@ -23,10 +23,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function StudentsForm() {
 
-    const [imageFile, setImageFile] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const prevDojoId = useRef<number | null>(null);
-
     const { data: dojoMartialArts = [] } = useDojoMartialArts();
     const { data: dojoRanks = [] } = useDojoRanks();
     const { data: dojos = [] } = useDojos();
@@ -36,8 +32,15 @@ export default function StudentsForm() {
 
     const { selectedStudent, mode, finishForm } = useStudentsStore();
 
-    const { mutateAsync: createStudent } = useCreateStudent();
-    const { mutateAsync: updateStudent } = useUpdateStudent();
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [isFormLoading, setIsFormLoading] = useState(true);
+    const prevDojoId = useRef<number | null>(null);
+
+    const { mutateAsync: createStudent, isPending: isCreatePending } = useCreateStudent();
+    const { mutateAsync: updateStudent, isPending: isUpdatePending } = useUpdateStudent();
+
+    const isSubmitting = isCreatePending || isUpdatePending;
 
     const filteredRoles = useMemo(
         () => roles.filter(r => r.rol === "Estudiante" || r.rol === "Representante"),
@@ -65,30 +68,35 @@ export default function StudentsForm() {
     });
 
     useEffect(() => {
+        if (mode === "create") {
+            if (!dojos.length) return;
+            setIsFormLoading(false);
+            return;
+        }
 
         if (!selectedStudent || mode !== "edit") return;
         if (!filteredRoles.length || !dojos.length) return;
 
-        if (mode === "edit" && selectedStudent) {
-            form.reset({
-                identification: selectedStudent.identification,
-                name: selectedStudent.name,
-                lastName: selectedStudent.lastName,
-                email: selectedStudent.email,
-                username: selectedStudent.username,
-                address: selectedStudent.address,
-                phone: selectedStudent.phone,
-                sex: selectedStudent.sex,
-                dojoId: selectedStudent.dojoId,
-                rolId: selectedStudent.rolId,
-                birthday: new Date(selectedStudent.birthday),
-                enrollmentDate: new Date(selectedStudent.enrollmentDate),
-                martialArtRank: selectedStudent.userRanks.map(r => ({
-                    martialArtId: r.martialArt.id,
-                    rankId: r.rank.id,
-                })),
-            });
-        }
+        form.reset({
+            identification: selectedStudent.identification,
+            name: selectedStudent.name,
+            lastName: selectedStudent.lastName,
+            email: selectedStudent.email,
+            username: selectedStudent.username,
+            address: selectedStudent.address,
+            phone: selectedStudent.phone,
+            sex: selectedStudent.sex,
+            dojoId: selectedStudent.dojoId,
+            rolId: selectedStudent.rolId,
+            birthday: new Date(selectedStudent.birthday),
+            enrollmentDate: new Date(selectedStudent.enrollmentDate),
+            martialArtRank: selectedStudent.userRanks.map(r => ({
+                martialArtId: r.martialArt.id,
+                rankId: r.rank.id,
+            })),
+        });
+
+        setIsFormLoading(false);
 
     }, [mode, selectedStudent, filteredRoles, dojos]);
 
@@ -180,6 +188,19 @@ export default function StudentsForm() {
 
         finishForm();
     };
+
+    if (isFormLoading || isSubmitting) {
+        return (
+            <div className="p-4 w-full">
+                <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[400px]">
+                    <div className="flex flex-col items-center gap-3">
+                        <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-gray-200 border-t-(--redColor)" />
+                        <p className="text-sm text-gray-400 animate-pulse">Cargando...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
 
@@ -285,9 +306,13 @@ export default function StudentsForm() {
                                 </Button>
                                 <Button
                                     type="submit"
-                                    className="bg-red-700 hover:bg-red-800 cursor-pointer"
+                                    disabled={isSubmitting}
+                                    className="bg-red-700 hover:bg-red-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {mode === "create" ? "Guardar" : "Actualizar"}
+                                    {isSubmitting
+                                        ? (mode === "create" ? "Guardando..." : "Actualizando...")
+                                        : (mode === "create" ? "Guardar" : "Actualizar")
+                                    }
                                 </Button>
                             </div>
 

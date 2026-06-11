@@ -7,7 +7,7 @@ interface MartialRanksComponentProps {
     dojoMartialArts: Array<{ id: number; martialArt: string }>;
     martialArtsOptions: Array<{ label: string; value: number }>;
     ranksOptions: Array<{ label: string; value: number; martialArtId: number }>;
-    form: UseFormReturn;
+    form: UseFormReturn<any>;
 }
 
 export default function MartialRanksComponent({ dojoMartialArts, martialArtsOptions, ranksOptions, form }: MartialRanksComponentProps) {

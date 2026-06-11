@@ -15,7 +15,7 @@ const labelClass =
 
 interface FormComponentProps {
     fields: FormField[];
-    form: UseFormReturn;
+    form: UseFormReturn<any>;
     otherType?: React.ReactNode;
     className?: string;
 }

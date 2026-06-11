@@ -4,7 +4,6 @@ import StudentGridView from "./StudentViews/StudentGridView";
 import { useStudents } from "@/hooks/useStudents";
 import { useFilteredStudents } from "@/hooks/useFilteredStudents";
 import { useStudentsStore } from "@/stores/students.store";
-import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import StudentsForm from "./StudentForm/StudentsForm";
 
 import StudentsHeader from "./StudentViews/StudentsHeader";
@@ -28,9 +27,6 @@ export default function Students() {
 
     <div className="w-full h-full">
 
-      
-      {isLoading && <SpinnerComponent />}
-
       <PageTransitionComponent
         primaryChildren={
           <div className="p-4">
@@ -38,22 +34,33 @@ export default function Students() {
               {/* Header */}
               <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} />
 
-              {/* Views */}
-              {viewMode === "list" && (
+              {isLoading ? (
+                <div className="flex items-center justify-center py-20">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-gray-200 border-t-(--redColor)" />
+                    <p className="text-sm text-gray-400 animate-pulse">Cargando estudiantes...</p>
+                  </div>
+                </div>
+              ) : (
                 <>
-                  <StudentListView filteredStudents={filteredStudents} />
-                  {filteredStudents.length !== 0 && (
-                    <div className="text-sm text-gray-600 mt-6 text-right">
-                      {filteredStudents.length} de {students.length} estudiantes
-                    </div>
+                  {/* Views */}
+                  {viewMode === "list" && (
+                    <>
+                      <StudentListView filteredStudents={filteredStudents} />
+                      {filteredStudents.length !== 0 && (
+                        <div className="text-sm text-gray-600 mt-6 text-right">
+                          {filteredStudents.length} de {students.length} estudiantes
+                        </div>
+                      )}
+                    </>
                   )}
+                  {viewMode === "grid" && (
+                    <StudentGridView filteredStudents={filteredStudents} />
+                  )}
+                  {/* View if no results are found */}
+                  {filteredStudents.length === 0 && <StudentsNoResults />}
                 </>
               )}
-              {viewMode === "grid" && (
-                <StudentGridView filteredStudents={filteredStudents} />
-              )}
-              {/* View if no results are found */}
-              {filteredStudents.length === 0 && <StudentsNoResults />}
 
             </>
 
