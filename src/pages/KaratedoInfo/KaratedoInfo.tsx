@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Target, Users, Award, BookOpen, Shield, Activity, Brain, Heart, Zap } from "lucide-react";
+import { Target, Users, Award, BookOpen, Shield, Activity, Brain, Heart, Zap, ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 import { ProgressStepper } from "@/components/progressStepper/Progress-stepper";
 import { karatedoInfoData, katas, ProgressSteps, progressData } from "./KaratedoInfo.data";
@@ -19,6 +19,31 @@ export default function KaratedoInfo() {
 
     const [activeSection, setActiveSection] = useState<SectionId>("fundamentos");
     const [activeHistory, setActiveHistory] = useState<ProgressSteps>("nahate");
+    const [mobileOpenHistory, setMobileOpenHistory] = useState<ProgressSteps | null>("nahate");
+
+    const activeHistoryIndex = useMemo(
+        () => progressData.findIndex((step) => step.name === activeHistory),
+        [activeHistory],
+    );
+
+    const activeHistoryEntry = useMemo(
+        () => karatedoInfoData.find((info) => info.name === activeHistory),
+        [activeHistory],
+    );
+
+    const goToPreviousHistory = () => {
+        if (activeHistoryIndex <= 0) return;
+        const previousStepName = progressData[activeHistoryIndex - 1].name;
+        setActiveHistory(previousStepName);
+        setMobileOpenHistory(previousStepName);
+    };
+
+    const goToNextHistory = () => {
+        if (activeHistoryIndex === -1 || activeHistoryIndex >= progressData.length - 1) return;
+        const nextStepName = progressData[activeHistoryIndex + 1].name;
+        setActiveHistory(nextStepName);
+        setMobileOpenHistory(nextStepName);
+    };
 
     const principles = [
         {
@@ -91,15 +116,98 @@ export default function KaratedoInfo() {
                 </div>
             </section>
 
-            <div className="w-full h-28">
+            <div className="hidden md:block w-full h-28">
                 <ProgressStepper steps={progressData} onSelectStep={setActiveHistory} />
             </div>
 
-            <div className="w-3/4 mx-auto text-justify">
-                {karatedoInfoData.find(info => info.name === activeHistory)?.content.map((paragraph, index) => (
+            <div className="hidden md:block w-3/4 mx-auto text-justify">
+                {activeHistoryEntry?.content.map((paragraph, index) => (
                     <p key={index} className="mb-4">{paragraph}</p>
                 ))}
             </div>
+
+            {/* Timeline Mobile */}
+            <section className="md:hidden px-4 py-5 bg-white border-y border-gray-200">
+                <div className="max-w-xl mx-auto">
+                    <div className="flex items-center justify-between mb-3">
+                        <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={goToPreviousHistory}
+                            disabled={activeHistoryIndex <= 0}
+                            className="h-8 px-3"
+                        >
+                            <ChevronLeft className="h-4 w-4 mr-1" />
+                            Anterior
+                        </Button>
+
+                        <p className="text-xs font-semibold tracking-wide text-gray-500 uppercase">
+                            Historia
+                        </p>
+
+                        <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={goToNextHistory}
+                            disabled={activeHistoryIndex >= progressData.length - 1}
+                            className="h-8 px-3"
+                        >
+                            Siguiente
+                            <ChevronRight className="h-4 w-4 ml-1" />
+                        </Button>
+                    </div>
+
+                    <div className="space-y-1.5">
+                        {progressData.map((step) => {
+                            const isActive = mobileOpenHistory === step.name;
+                            const content = karatedoInfoData.find((info) => info.name === step.name)?.content ?? [];
+
+                            return (
+                                <div key={step.name} className={`rounded-lg border overflow-hidden transition-colors ${isActive ? "border-red-300" : "border-gray-200"}`}>
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const nextOpen = isActive ? null : step.name;
+                                            setMobileOpenHistory(nextOpen);
+                                            setActiveHistory(step.name);
+                                        }}
+                                        className={`w-full flex items-center justify-between px-2 py-2.5 text-left transition-colors ${isActive ? "bg-red-50" : "bg-white"}`}
+                                    >
+                                        <div className="flex items-center gap-1">
+                                            <p className={`text-xs ${isActive ? "text-red-700" : "text-gray-500"}`}>({step.year})</p>
+                                            <p className={`text-sm font-semibold ${isActive ? "text-red-800" : "text-gray-900"}`}>{step.label}</p>
+                                        </div>
+                                        <ChevronDown className={`h-4 w-4 transition-transform ${isActive ? "rotate-180 text-red-700" : "text-gray-500"}`} />
+                                    </button>
+
+                                    <AnimatePresence initial={false}>
+                                        {isActive && (
+                                            <motion.div
+                                                key={`mobile-history-${step.name}`}
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: "auto", opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                transition={{ duration: 0.28, ease: "easeOut" }}
+                                                className="overflow-hidden"
+                                            >
+                                                <div className="px-3 pb-3 pt-1.5 space-y-2 bg-white text-justify">
+                                                    {content.map((paragraph, index) => (
+                                                        <p key={index} className="text-sm text-gray-700 leading-relaxed">
+                                                            {paragraph}
+                                                        </p>
+                                                    ))}
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
 
             <section className="pt-10 bg-gray-50">
                 <div className="container mx-auto px-4">
