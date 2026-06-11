@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { MdWhatsapp } from "react-icons/md";
+import { Loader } from "@/components/spinner/Loader";
 import {
   MapPin, Mail, Globe, Clock,
   Sword, Target, Zap, Instagram, Facebook, Youtube, Twitter, ChevronRight,
@@ -267,7 +268,7 @@ export default function DojoPage() {
 
   const { id } = useParams();
 
-  const dojo: IDojoInfo | undefined = useDojosInfo(id || "").data;
+  const { data: dojo, isLoading } = useDojosInfo(id || "");
 
   const getBannerDojo = (dojo: IDojoInfo): string => {
     const findBanner = dojo.dojoImages.find(img => img.type === "banner");
@@ -452,6 +453,14 @@ export default function DojoPage() {
   }
 
   const currentDiscipline = dojoData.disciplines.find(d => d.id === activeDiscipline);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader size="lg" message="Cargando información del Dojo..." />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
