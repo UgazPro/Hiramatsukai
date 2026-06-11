@@ -49,14 +49,6 @@ export const getActivities = async (
 
 // Exams
 
-export const getUpcomingExams = async (): Promise<IActivity[]> => {
-  const apiFilters: ActivitiesFilter = {
-    includePast: false,
-  };
-  const activities = await getActivities(apiFilters);
-  return activities.filter((a: IActivity) => a.type === "Examen");
-};
-
 export const getCurrentActivity = async (dojoId?: number) => {
   const url = dojoId ? `/activities/current?dojoId=${dojoId}` : '/activities/current';
   return await getDataApi(url);

@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react"
 import { Link } from "react-router";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useDojos } from "@/hooks/useDojos";
+import { Loader } from "@/components/spinner/Loader";
 
 const MAX_DOJOS = 4;
 
@@ -21,7 +22,7 @@ export default function Dojos() {
         [showAllDojos, dojos]
     );
 
-    if (isLoading) return <SpinnerComponent />;
+    // if (isLoading) return <SpinnerComponent />;
     if (isError) return <SpinnerComponent />;
 
     return (
@@ -47,33 +48,35 @@ export default function Dojos() {
 
                     <div className="mt-10">
 
-                        <ul id="dojo-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <AnimatePresence mode="popLayout">
-                                {visibleDojos.map((dojo, index) => (
-                                    <motion.li
-                                        key={dojo.code}
-                                        layout
-                                        initial={{ opacity: 0, y: 22, scale: 0.98 }}
-                                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                                        exit={{ opacity: 0, y: -10, scale: 0.98 }}
-                                        transition={{ duration: 0.35, delay: index * 0.05, ease: "easeOut" }}
-                                        className="list-none"
-                                    >
-                                        <Link
-                                            to={`/dojos/dojo/${dojo.code}`}
-                                            className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"
-                                            aria-label={`Ver informacion del dojo ${dojo.dojo}`}
+                        {isLoading ? <Loader message="Cargando dojos..." /> : (
+                            <ul id="dojo-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <AnimatePresence mode="popLayout">
+                                    {visibleDojos.map((dojo, index) => (
+                                        <motion.li
+                                            key={dojo.code}
+                                            layout
+                                            initial={{ opacity: 0, y: 22, scale: 0.98 }}
+                                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                                            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+                                            transition={{ duration: 0.35, delay: index * 0.05, ease: "easeOut" }}
+                                            className="list-none"
                                         >
-                                            <InformationSchema
-                                                img={dojo.logo}
-                                                dojo={dojo.dojo}
-                                                address={dojo.address}
-                                            />
-                                        </Link>
-                                    </motion.li>
-                                ))}
-                            </AnimatePresence>
-                        </ul>
+                                            <Link
+                                                to={`/dojos/dojo/${dojo.code}`}
+                                                className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"
+                                                aria-label={`Ver informacion del dojo ${dojo.dojo}`}
+                                            >
+                                                <InformationSchema
+                                                    img={dojo.logo}
+                                                    dojo={dojo.dojo}
+                                                    address={dojo.address}
+                                                />
+                                            </Link>
+                                        </motion.li>
+                                    ))}
+                                </AnimatePresence>
+                            </ul>
+                        )}
 
                     </div>
 

@@ -72,7 +72,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                 <Users className="h-5 w-5 text-gray-500" />
                                 <div>
                                     <p className="text-sm text-gray-500">Participantes</p>
-                                    <p className="font-semibold text-gray-900">0 postulados</p>
+                                    <p className="font-semibold text-gray-900">{examen.postulated} postulados</p>
                                 </div>
                             </div>
 
