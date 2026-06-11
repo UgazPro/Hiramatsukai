@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { useStudentsStore } from "@/stores/students.store";
 import { useDojoMartialArts, useDojoRanks, useDojos } from "@/hooks/useDojos";
 import { StudentFormValues, studentSchema } from "@/services/students/student.schema";
@@ -193,10 +194,7 @@ export default function StudentsForm() {
         return (
             <div className="p-4 w-full">
                 <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[400px]">
-                    <div className="flex flex-col items-center gap-3">
-                        <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-gray-200 border-t-(--redColor)" />
-                        <p className="text-sm text-gray-400 animate-pulse">Cargando...</p>
-                    </div>
+                    <Loader size="lg" message="Cargando..." />
                 </div>
             </div>
         );

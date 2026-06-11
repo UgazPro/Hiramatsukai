@@ -4,12 +4,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
     Search,
-    Loader2,
     GraduationCap,
     ChevronRight,
 } from "lucide-react";
 import { useStudents } from "@/hooks/useStudents";
 import { useApplicationsStore } from "@/stores/applications.store";
+import { Loader } from "@/components/spinner/Loader";
 import { IStudent, StudentRanks } from "@/services/students/student.interface";
 
 interface ApplicationsStudentsHistoryProps {
@@ -53,10 +53,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                 <div className="space-y-6">
                     {isLoading && (
                         <div className="flex items-center justify-center py-16">
-                            <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                            <span className="ml-3 text-gray-600">
-                                Cargando alumnos...
-                            </span>
+                            <Loader message="Cargando alumnos..." />
                         </div>
                     )}
 

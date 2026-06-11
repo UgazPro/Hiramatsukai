@@ -15,8 +15,8 @@ import {
     MapPin,
     ChevronRight,
     Users,
-    Loader2,
 } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { useAppliedStudents } from "@/hooks/useActivities";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong, timeFormatter } from "@/helpers/formatter";
@@ -204,10 +204,7 @@ export default function NextExamDetail() {
             <div className="min-h-full p-6 w-full max-w-4xl mx-auto my-6">
                 <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
                     <div className="flex items-center justify-center py-20">
-                        <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                        <span className="ml-3 text-gray-600">
-                            Cargando postulaciones...
-                        </span>
+                        <Loader message="Cargando postulaciones..." />
                     </div>
                 </div>
             </div>

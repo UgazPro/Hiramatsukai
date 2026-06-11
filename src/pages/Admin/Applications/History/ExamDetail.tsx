@@ -6,12 +6,12 @@ import {
     CheckCircle,
     ChevronRight,
     GraduationCap,
-    Loader2,
     Users,
     XCircle,
     CalendarDays,
 } from "lucide-react";
 import { useExamsByActivity } from "@/hooks/useActivities";
+import { Loader } from "@/components/spinner/Loader";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { IExam } from "@/services/activities/activity.interface";
@@ -44,10 +44,7 @@ export default function ExamDetail() {
             <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
                 {isLoading && (
                     <div className="flex items-center justify-center py-20">
-                        <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                        <span className="ml-3 text-gray-600">
-                            Cargando resultados...
-                        </span>
+                        <Loader message="Cargando resultados..." />
                     </div>
                 )}
 

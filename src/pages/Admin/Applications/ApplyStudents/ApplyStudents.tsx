@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import {
   ChevronRight,
   Eye,
-  Loader2,
   Search,
   User,
   Users,
@@ -21,6 +20,7 @@ import {
   CheckCircle,
   XCircle,
 } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { useSaveExam } from "@/hooks/useActivities";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { IAppliedStudent } from "@/services/activities/activity.interface";
@@ -130,10 +130,7 @@ export default function ApplyStudents({
 
           {isLoading && (
             <div className="flex items-center justify-center py-16">
-              <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-              <span className="ml-3 text-gray-600">
-                Cargando postulaciones...
-              </span>
+              <Loader message="Cargando postulaciones..." />
             </div>
           )}
 

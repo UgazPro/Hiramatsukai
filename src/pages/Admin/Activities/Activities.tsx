@@ -7,6 +7,7 @@ import { useActivities } from "@/hooks/useActivities";
 import { useActivitiesStore } from "@/stores/activities.store";
 import CalendarComponent from "@/components/calendar/CalendarComponent";
 import { useEffect } from "react";
+import { Loader } from "@/components/spinner/Loader";
 import PageTransitionComponent from "@/components/PageTransitionComponent";
 import ActivityDetailView from "./ActivityDetailView/ActivityDetailView";
 import ActivityForm from "./ActivityForm/ActivityForm";
@@ -41,10 +42,7 @@ export default function Activities() {
         primaryChildren={
           isLoading ? (
             <div className="flex items-center justify-center py-20">
-              <div className="flex flex-col items-center gap-3">
-                <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-gray-200 border-t-(--redColor)" />
-                <p className="text-sm text-gray-400 animate-pulse">Cargando actividades...</p>
-              </div>
+              <Loader size="lg" message="Cargando actividades..." />
             </div>
           ) : (
             <>

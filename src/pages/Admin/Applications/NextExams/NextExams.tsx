@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Users, Award, Plus, CalendarDays, Eye } from "lucide-react";
+import { Users, Award, Plus, CalendarDays, Eye } from "lucide-react";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { IActivity } from "@/services/activities/activity.interface";
 import { TabType } from "../ApplicationsTabs";
+import { Loader } from "@/components/spinner/Loader";
 
 interface NextExamsProps {
     setActiveTab: (tab: TabType) => void;
@@ -20,8 +21,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
     if (isLoading) {
         return (
             <div className="flex items-center justify-center py-20">
-                <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                <span className="ml-3 text-gray-600">Cargando exámenes...</span>
+                <Loader message="Cargando exámenes..." />
             </div>
         );
     }

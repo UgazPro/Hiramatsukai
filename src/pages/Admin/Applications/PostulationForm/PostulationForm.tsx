@@ -7,13 +7,13 @@ import {
   X,
   UserCheck,
   GraduationCap,
-  Loader2,
   Search,
   Check,
   CalendarDays,
   Award,
   Users,
 } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { useApplicationsStore } from "@/stores/applications.store";
 import {
   useUpcomingExams,
@@ -192,10 +192,7 @@ export default function PostulationForm() {
         <div className="p-4 space-y-4">
           {suggestionsLoading && (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-6 w-6 animate-spin text-amber-600" />
-              <span className="ml-2 text-gray-500">
-                Cargando alumnos sugeridos...
-              </span>
+              <Loader size="sm" message="Cargando alumnos sugeridos..." />
             </div>
           )}
 

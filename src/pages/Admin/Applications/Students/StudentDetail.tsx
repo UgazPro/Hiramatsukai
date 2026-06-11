@@ -7,7 +7,6 @@ import {
     CheckCircle,
     ChevronRight,
     GraduationCap,
-    Loader2,
     User,
     XCircle,
     CalendarDays,
@@ -17,6 +16,7 @@ import { useApplicationsStore } from "@/stores/applications.store";
 import { useStudents } from "@/hooks/useStudents";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { IExam } from "@/services/activities/activity.interface";
+import { Loader } from "@/components/spinner/Loader";
 import { IStudent, StudentRanks } from "@/services/students/student.interface";
 
 const getBeltColor = (grado: string) => {
@@ -152,10 +152,7 @@ export default function StudentDetail() {
                 <div className="p-6">
                     {isLoading && (
                         <div className="flex items-center justify-center py-16">
-                            <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                            <span className="ml-3 text-gray-600">
-                                Cargando historial de exámenes...
-                            </span>
+                            <Loader message="Cargando historial de exámenes..." />
                         </div>
                     )}
 

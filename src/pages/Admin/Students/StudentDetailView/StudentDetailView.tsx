@@ -6,8 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
     X, User, Mail, MapPin, Phone, Cake, Calendar, Clock, Award,
     CheckCircle, XCircle, DollarSign, School, Target, Shield, ChevronRight,
-    Activity, Star, Loader2
+    Activity, Star
 } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { es } from "date-fns/locale";
 import { format } from "date-fns";
 import { useStudentsStore } from "@/stores/students.store";
@@ -256,8 +257,7 @@ export default function StudentDetailView() {
                             <div className="space-y-4">
                                 {dynamicLoading ? (
                                     <div className="flex items-center justify-center py-8 text-gray-400">
-                                        <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                                        <span className="text-sm">Cargando...</span>
+                                        <Loader size="sm" message="Cargando..." />
                                     </div>
                                 ) : allInfo ? (
                                     <>
@@ -299,8 +299,7 @@ export default function StudentDetailView() {
                             <div className="space-y-4">
                                 {dynamicLoading ? (
                                     <div className="flex items-center justify-center py-8 text-gray-400">
-                                        <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                                        <span className="text-sm">Cargando...</span>
+                                        <Loader size="sm" message="Cargando..." />
                                     </div>
                                 ) : (
                                     <div className="text-center py-4">
@@ -336,8 +335,7 @@ export default function StudentDetailView() {
 
                         {examsLoading && (
                             <div className="flex items-center justify-center py-8 text-gray-400">
-                                <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                                <span className="text-sm">Cargando exámenes...</span>
+                                <Loader size="sm" message="Cargando exámenes..." />
                             </div>
                         )}
 
@@ -438,8 +436,7 @@ export default function StudentDetailView() {
 
                         {dynamicLoading && (
                             <div className="flex items-center justify-center py-8 text-gray-400">
-                                <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                                <span className="text-sm">Cargando...</span>
+                                <Loader size="sm" message="Cargando..." />
                             </div>
                         )}
 

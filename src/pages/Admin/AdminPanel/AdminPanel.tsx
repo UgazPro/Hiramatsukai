@@ -4,11 +4,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  Users, DollarSign, Calendar, TrendingUp, Award, Star, Activity, Target, UserPlus, Gift, BarChart3, CalendarDays, School, Loader2, Flame,
+  Users, DollarSign, Calendar, TrendingUp, Award, Star, Activity, Target, UserPlus, Gift, BarChart3, CalendarDays, School, Flame,
   BookOpen, Sparkles, Crown
 } from "lucide-react";
 import { format, differenceInDays, isToday, isTomorrow } from "date-fns";
 import { es } from "date-fns/locale";
+import { Loader } from "@/components/spinner/Loader";
 import { useDashboard } from "@/hooks/useDashboard";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 
@@ -62,8 +63,7 @@ export default function AdminPanel() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-        <span className="ml-3 text-gray-600">Cargando dashboard...</span>
+        <Loader message="Cargando dashboard..." />
       </div>
     );
   }

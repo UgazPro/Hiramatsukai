@@ -9,12 +9,12 @@ import {
     ChevronDown,
     ChevronRight,
     CheckCircle,
-    Loader2,
     Eye
 } from "lucide-react";
 import { useExamsHistory, useExamsByActivity } from "@/hooks/useActivities";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
+import { Loader } from "@/components/spinner/Loader";
 import { IExam } from "@/services/activities/activity.interface";
 
 interface ApplicationsHistoryProps {
@@ -37,10 +37,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                 <div className="space-y-4">
                     {isLoading && (
                         <div className="flex items-center justify-center py-16">
-                            <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                            <span className="ml-3 text-gray-600">
-                                Cargando historial...
-                            </span>
+                            <Loader message="Cargando historial..." />
                         </div>
                     )}
 
@@ -104,11 +101,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                             <div className="p-5 border-t border-gray-200 bg-white">
                                                 {examsLoading && (
                                                     <div className="flex items-center justify-center py-8">
-                                                        <Loader2 className="h-6 w-6 animate-spin text-amber-600" />
-                                                        <span className="ml-2 text-gray-500">
-                                                            Cargando
-                                                            resultados...
-                                                        </span>
+                                                        <Loader size="sm" message="Cargando resultados..." />
                                                     </div>
                                                 )}
 

@@ -9,6 +9,7 @@ import StudentsForm from "./StudentForm/StudentsForm";
 import StudentsHeader from "./StudentViews/StudentsHeader";
 import StudentsNoResults from "./StudentViews/StudentsNoResults";
 import StudentDetailView from "./StudentDetailView/StudentDetailView";
+import { Loader } from "@/components/spinner/Loader";
 import PageTransitionComponent from "@/components/PageTransitionComponent";
 
 export default function Students() {
@@ -36,10 +37,7 @@ export default function Students() {
 
               {isLoading ? (
                 <div className="flex items-center justify-center py-20">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="h-10 w-10 animate-spin rounded-full border-[3px] border-gray-200 border-t-(--redColor)" />
-                    <p className="text-sm text-gray-400 animate-pulse">Cargando estudiantes...</p>
-                  </div>
+                  <Loader size="lg" message="Cargando estudiantes..." />
                 </div>
               ) : (
                 <>
