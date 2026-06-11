@@ -69,7 +69,7 @@ export default function FloatingButtons() {
                 <Button
                     onClick={scrollToTop}
                     size="icon"
-                    className="h-14 w-14 rounded-full bg-linear-to-br from-red-800 to-red-900 shadow-lg hover:shadow-red-500/30 hover:scale-105 active:scale-95 transition-all duration-300 group animate-slide-up absolute bottom-0 right-12 lg:right-18"
+                    className="h-14 w-14 rounded-full bg-linear-to-br from-red-800 to-red-900 shadow-lg hover:shadow-red-500/30 hover:scale-105 active:scale-95 transition-all duration-300 group animate-slide-up"
                     style={{ animationDelay: '200ms' }}
                 >
                     <ArrowUp className="h-6 w-6 text-white" />

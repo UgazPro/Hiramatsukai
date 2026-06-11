@@ -105,21 +105,27 @@ export default function Header() {
                                 </button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-56">
-                                {location.pathname === "/" && (user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor") ? (
-                                    <DropdownMenuItem onClick={() => navigate("/admin")}>
-                                        <LayoutDashboard className="h-4 w-4 mr-2" />
-                                        Panel Administrativo
-                                    </DropdownMenuItem>
-                                ) : (
+                                {location.pathname !== "/" && (
                                     <DropdownMenuItem onClick={() => navigate("/")}>
                                         <House className="h-4 w-4 mr-2" />
                                         Home
                                     </DropdownMenuItem>
                                 )}
-                                <DropdownMenuItem onClick={() => navigate(`/dojos/dojo/${user?.dojo.code}`)}>
-                                    <Building2 className="h-4 w-4 mr-2" />
-                                    Ir a mi Dojo
-                                </DropdownMenuItem>
+
+                                {!location.pathname.startsWith("/admin") && (user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor") && (
+                                    <DropdownMenuItem onClick={() => navigate("/admin")}>
+                                        <LayoutDashboard className="h-4 w-4 mr-2" />
+                                        Panel Administrativo
+                                    </DropdownMenuItem>
+                                )}
+
+                                {!location.pathname.startsWith("/dojos/dojo/") && (
+                                    <DropdownMenuItem onClick={() => navigate(`/dojos/dojo/${user?.dojo.code}`)}>
+                                        <Building2 className="h-4 w-4 mr-2" />
+                                        Ir a mi Dojo
+                                    </DropdownMenuItem>
+                                )}
+
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem onClick={handleLogout}>
                                     <LogOut className="h-4 w-4 mr-2" />
