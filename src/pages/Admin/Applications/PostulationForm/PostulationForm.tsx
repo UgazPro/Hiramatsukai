@@ -49,9 +49,6 @@ export default function PostulationForm() {
   // const { data: martialArts = [] } = useDojoMartialArts();
   const user: IToken = useUserData() as IToken;
 
-  console.log(suggestions);
-  
-
   const { data: dojo } = useDojosInfo(user.dojo.code || "");
   const { mutateAsync: createPostulation, isPending } =
     useCreateAppliedStudent();
