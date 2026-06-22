@@ -64,37 +64,51 @@ export default function StudentsForm() {
             profileImg: '',
             birthday: new Date(),
             enrollmentDate: new Date(),
-            martialArtRank: [{ martialArtId: 0, rankId: 0 }],
+            martialArtRank: [],
         }
     });
 
     useEffect(() => {
+        if (!dojos.length) return;
+        if (mode === "edit" && (!selectedStudent || !filteredRoles.length)) return;
+
         if (mode === "create") {
-            if (!dojos.length) return;
+            const defaultDojo = dojos.find(d => d.id === (user?.dojoId || 0));
+            const dojoMAs = defaultDojo?.dojoMartialArts ?? [];
+            form.reset({
+                ...form.getValues(),
+                martialArtRank: dojoMAs.map(ma => ({
+                    martialArtId: ma.id,
+                    rankId: 0,
+                })),
+            });
             setIsFormLoading(false);
             return;
         }
 
-        if (!selectedStudent || mode !== "edit") return;
-        if (!filteredRoles.length || !dojos.length) return;
+        const studentDojo = dojos.find(d => d.id === selectedStudent!.dojoId);
+        const dojoMAs = studentDojo?.dojoMartialArts ?? [];
 
         form.reset({
-            identification: selectedStudent.identification,
-            name: selectedStudent.name,
-            lastName: selectedStudent.lastName,
-            email: selectedStudent.email,
-            username: selectedStudent.username,
-            address: selectedStudent.address,
-            phone: selectedStudent.phone,
-            sex: selectedStudent.sex,
-            dojoId: selectedStudent.dojoId,
-            rolId: selectedStudent.rolId,
-            birthday: new Date(selectedStudent.birthday),
-            enrollmentDate: new Date(selectedStudent.enrollmentDate),
-            martialArtRank: selectedStudent.userRanks.map(r => ({
-                martialArtId: r.martialArt.id,
-                rankId: r.rank.id,
-            })),
+            identification: selectedStudent!.identification,
+            name: selectedStudent!.name,
+            lastName: selectedStudent!.lastName,
+            email: selectedStudent!.email,
+            username: selectedStudent!.username,
+            address: selectedStudent!.address,
+            phone: selectedStudent!.phone,
+            sex: selectedStudent!.sex,
+            dojoId: selectedStudent!.dojoId,
+            rolId: selectedStudent!.rolId,
+            birthday: new Date(selectedStudent!.birthday),
+            enrollmentDate: new Date(selectedStudent!.enrollmentDate),
+            martialArtRank: dojoMAs.map(ma => {
+                const existing = selectedStudent!.userRanks.find(r => r.martialArt.id === ma.id);
+                return {
+                    martialArtId: ma.id,
+                    rankId: existing?.rank.id ?? 0,
+                };
+            }),
         });
 
         setIsFormLoading(false);
@@ -106,11 +120,6 @@ export default function StudentsForm() {
     }
 
     const dojosOptions = dojos.filter(dojo => user?.rol.rol === "Administrador" ? dojos.map(d => d) : dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
-
-    const martialArtsOptions = dojoMartialArts.map(ma => ({
-        label: ma.martialArt,
-        value: ma.id
-    }));
 
     const ranksOptions = dojoRanks.map(rank => ({
         label: `${returnTitle(rank.code)} ${rank.belt} ${rank.rank_name}`,
@@ -144,17 +153,25 @@ export default function StudentsForm() {
     const watchedDojoId = form.watch("dojoId");
 
     useEffect(() => {
-        if (mode === "edit" && selectedStudent && prevDojoId.current === null) {
+        if (prevDojoId.current === null) {
             prevDojoId.current = watchedDojoId;
             return;
         }
 
-        if (prevDojoId.current !== null && prevDojoId.current !== watchedDojoId) {
-            form.setValue("martialArtRank", [{ martialArtId: 0, rankId: 0 }]);
+        if (prevDojoId.current !== watchedDojoId) {
+            const dojo = dojos.find(d => d.id === watchedDojoId);
+            const mas = dojo?.dojoMartialArts ?? [];
+            form.setValue(
+                "martialArtRank",
+                mas.map(ma => {
+                    const existing = selectedStudent?.userRanks.find(r => r.martialArt.id === ma.id);
+                    return { martialArtId: ma.id, rankId: existing?.rank.id ?? 0 };
+                })
+            );
         }
 
         prevDojoId.current = watchedDojoId;
-    }, [watchedDojoId]);
+    }, [watchedDojoId, dojos]);
 
     const selectedDojo = dojos.find(d => d.id === form.watch("dojoId"));
     const filteredDojoMartialArts = selectedDojo?.dojoMartialArts ?? [];
@@ -283,7 +300,6 @@ export default function StudentsForm() {
                                     otherType={
                                         <MartialRanksComponent
                                             dojoMartialArts={filteredDojoMartialArts}
-                                            martialArtsOptions={martialArtsOptions}
                                             ranksOptions={ranksOptions}
                                             form={form}
                                         />

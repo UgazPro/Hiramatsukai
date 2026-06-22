@@ -7,69 +7,77 @@ import { StudentFormValues } from "@/services/students/student.schema";
 
 interface MartialRanksComponentProps {
     dojoMartialArts: IDojoMartialArts[];
-    martialArtsOptions: Array<{ label: string; value: number }>;
     ranksOptions: Array<{ label: string; value: number; martialArtId: number }>;
     form: UseFormReturn<StudentFormValues>;
 }
 
-export default function MartialRanksComponent({ dojoMartialArts, martialArtsOptions, ranksOptions, form }: MartialRanksComponentProps) {
+const maIcons: Record<string, string> = {
+    Karate: "🥋",
+    Kobudo: "🔱",
+};
 
-    const { selectedStudent } = useStudentsStore(); 
+function getMaIcon(name: string) {
+    return maIcons[name] || "⚔️";
+}
+
+export default function MartialRanksComponent({ dojoMartialArts, ranksOptions, form }: MartialRanksComponentProps) {
+
+    const { selectedStudent } = useStudentsStore();
     const isSubmitted = form.formState.isSubmitted;
 
+    const allLocked = !!selectedStudent && dojoMartialArts.length > 0 && dojoMartialArts.every(
+        ma => selectedStudent.userRanks.some(r => r.martialArt.id === ma.id)
+    );
+
     return (
-        <>
+        <div className={`border-2 p-5 rounded-lg space-y-3 ${allLocked ? "opacity-60 pointer-events-none" : ""}`}>
 
-            <div className="border-2 p-5 rounded-lg space-y-2">
+            {dojoMartialArts.length === 0 && (
+                <p className="text-sm text-gray-400 text-center py-2">
+                    Selecciona un dojo para ver sus artes marciales
+                </p>
+            )}
 
-                {dojoMartialArts.length > 0 && dojoMartialArts.map((field: IDojoMartialArts, index: number) => (
-                    
-                    <div key={field.id} className="flex items-center gap-2">
-                        <SelectComponent
-                            label={index === 0 ? "Arte Marcial" : ""}
-                            placeholder="Arte marcial"
-                            options={martialArtsOptions.filter(ma => ma.value === field.id)}
-                            value={
-                                selectedStudent
-                                    ? String(selectedStudent.userRanks[index]?.martialArt?.id && selectedStudent.userRanks[index].martialArt.id)
-                                    : String(form.watch(`martialArtRank.${index}.martialArtId`))
-                            }
-                            onChange={v => {
-                                form.setValue(`martialArtRank.${index}.martialArtId`, Number(v));
-                                form.trigger("martialArtRank");
-                            }}
-                            disabled={selectedStudent?.userRanks[index]?.martialArt?.id ? true : false}
-                        />
+            {dojoMartialArts.map((field: IDojoMartialArts, index: number) => {
+                const isExistingRank = !!selectedStudent?.userRanks.some(
+                    r => r.martialArt.id === field.id
+                );
 
-                        <SelectComponent
-                            label={index === 0 ? "Rango" : ""}
-                            placeholder="Rango"
-                            options={ranksOptions.filter(   
-                                r => r.martialArtId === form.watch(`martialArtRank.${index}.martialArtId`)
-                            )}
-                            value={
-                                selectedStudent 
-                                    ? String(selectedStudent.userRanks[index]?.rank?.id ?? "")
-                                    : String(form.watch(`martialArtRank.${index}.rankId`))
-                            }
-                            onChange={v => {
-                                form.setValue(`martialArtRank.${index}.rankId`, Number(v));
-                                form.trigger("martialArtRank");
-                            }}
-                            disabled={!form.watch(`martialArtRank.${index}.martialArtId`) || !!selectedStudent}
-                        />
+                const currentValue = form.watch(`martialArtRank.${index}.rankId`);
 
+                return (
+                    <div key={field.id} className="flex items-center gap-3">
+                        <div className="flex items-center gap-2 min-w-0 w-40 shrink-0">
+                            <span className="text-base">{getMaIcon(field.martialArt)}</span>
+                            <span className="text-sm font-medium text-gray-800 truncate">
+                                {field.martialArt}
+                            </span>
+                        </div>
 
+                        <div className="flex-1">
+                            <SelectComponent
+                                label=""
+                                placeholder={isExistingRank ? "Rango actual" : "Seleccionar rango"}
+                                options={[
+                                    { label: "Sin rango", value: 0 },
+                                    ...ranksOptions.filter(r => r.martialArtId === field.id),
+                                ]}
+                                value={String(currentValue ?? 0)}
+                                onChange={v => {
+                                    form.setValue(`martialArtRank.${index}.rankId`, Number(v));
+                                    form.trigger("martialArtRank");
+                                }}
+                                disabled={isExistingRank}
+                            />
+                        </div>
                     </div>
-                ))}
+                );
+            })}
 
-                {isSubmitted && form.formState.errors.martialArtRank && (
-                    <ErrorMessage>{String(form.formState.errors.martialArtRank?.message ?? "")}</ErrorMessage>
-                )}
+            {isSubmitted && form.formState.errors.martialArtRank && (
+                <ErrorMessage>{String(form.formState.errors.martialArtRank?.message ?? "")}</ErrorMessage>
+            )}
 
-
-            </div>
-
-        </>
-    )
+        </div>
+    );
 }
