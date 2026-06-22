@@ -56,10 +56,10 @@ export default function StudentDetailView() {
     if (!selectedStudent) return null;
 
     return (
-        <div className="min-h-full p-6 relative w-full max-w-7xl mx-auto my-6 bg-white shadow-xl border border-gray-200 rounded-xl">
+        <div className="flex flex-col h-full bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden mx-5 my-3">
 
             {/* Header */}
-            <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-300 rounded-lg">
+            <div className="shrink-0 bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-300">
                 <h2 className="p-6">
                     <div className="flex justify-between items-start">
                         <div className="flex items-center gap-4">
@@ -122,10 +122,10 @@ export default function StudentDetailView() {
             </div>
 
             {/* Main screen */}
-            <div className="p-6 space-y-8">
+            <div className="flex-1 overflow-y-auto p-6 space-y-8">
 
-                {/* Row 1: Info Personal + Info Contacto */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Row 1: Info Personal + Info Contacto + Info Dojo */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     <Card className="border border-gray-300 shadow-sm">
                         <CardContent className="p-6">
@@ -196,10 +196,6 @@ export default function StudentDetailView() {
                             </div>
                         </CardContent>
                     </Card>
-                </div>
-
-                {/* Row 2: Dojo + Asistencia + Pagos */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     <Card className="border border-gray-300 shadow-sm">
                         <CardContent className="p-6">
@@ -234,6 +230,10 @@ export default function StudentDetailView() {
                             </div>
                         </CardContent>
                     </Card>
+                </div>
+
+                {/* Row 2: Asistencia + Pagos + Actividades */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     <Card className="border border-gray-300 shadow-sm">
                         <CardContent className="p-6">
@@ -323,9 +323,58 @@ export default function StudentDetailView() {
                             </div>
                         </CardContent>
                     </Card>
+
+                    <Card className="border border-gray-300 shadow-sm">
+                        <CardContent className="p-6">
+                            <div className="flex items-center gap-2 mb-4">
+                                <Activity className="h-5 w-5 text-yellow-600" />
+                                <h3 className="text-lg font-semibold text-gray-900">Actividades Asistidas</h3>
+                            </div>
+
+                            {dynamicLoading && (
+                                <div className="flex items-center justify-center py-8 text-gray-400">
+                                    <Loader size="sm" message="Cargando..." />
+                                </div>
+                            )}
+
+                            {!dynamicLoading && activitiesTop.length === 0 && (
+                                <div className="text-center py-8 text-gray-500">
+                                    <Star className="h-10 w-10 mx-auto mb-2 text-gray-300" />
+                                    <p className="text-sm">No ha asistido a actividades especiales</p>
+                                </div>
+                            )}
+
+                            {!dynamicLoading && activitiesTop.length > 0 && (
+                                <>
+                                    <div className="space-y-2">
+                                        {activitiesTop.map((item: IActivityAttendanceItem) => (
+                                            <div
+                                                key={item.id}
+                                                className="flex items-center gap-2 p-2.5 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors group"
+                                            >
+                                                <div className="h-7 w-7 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
+                                                    <Star className="h-3.5 w-3.5 text-yellow-600" />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-sm font-medium text-gray-900 truncate">{item.activity.name}</p>
+                                                    <p className="text-[10px] text-gray-500">{dateFormatterIntoLong(item.activity.date)}</p>
+                                                </div>
+                                                <ChevronRight className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="mt-3 pt-2 border-t border-gray-200 text-center">
+                                        <p className="text-xs text-gray-500">
+                                            Ha asistido a {allInfo?.activityAttendanceHistory.length ?? 0} actividades especiales
+                                        </p>
+                                    </div>
+                                </>
+                            )}
+                        </CardContent>
+                    </Card>
                 </div>
 
-                {/* Row 3: Exámenes por Arte Marcial (reemplaza Historial) */}
+                {/* Row 3: Exámenes por Arte Marcial */}
                 <Card className="border border-gray-300 shadow-sm">
                     <CardContent className="p-6">
                         <div className="flex items-center gap-2 mb-4">
@@ -426,59 +475,10 @@ export default function StudentDetailView() {
                     </CardContent>
                 </Card>
 
-                {/* Row 4: Actividades Asistidas */}
-                <Card className="border border-gray-300 shadow-sm">
-                    <CardContent className="p-6">
-                        <div className="flex items-center gap-2 mb-4">
-                            <Activity className="h-5 w-5 text-yellow-600" />
-                            <h3 className="text-lg font-semibold text-gray-900">Actividades Asistidas</h3>
-                        </div>
-
-                        {dynamicLoading && (
-                            <div className="flex items-center justify-center py-8 text-gray-400">
-                                <Loader size="sm" message="Cargando..." />
-                            </div>
-                        )}
-
-                        {!dynamicLoading && activitiesTop.length === 0 && (
-                            <div className="text-center py-8 text-gray-500">
-                                <Star className="h-10 w-10 mx-auto mb-2 text-gray-300" />
-                                <p className="text-sm">No ha asistido a actividades especiales</p>
-                            </div>
-                        )}
-
-                        {!dynamicLoading && activitiesTop.length > 0 && (
-                            <>
-                                <div className="space-y-3">
-                                    {activitiesTop.map((item: IActivityAttendanceItem) => (
-                                        <div
-                                            key={item.id}
-                                            className="flex items-center gap-3 p-3 bg-linear-to-r from-white to-yellow-50 rounded-lg border border-yellow-200 hover:border-yellow-300 transition-colors group"
-                                        >
-                                            <div className="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center shrink-0 group-hover:bg-yellow-200 transition-colors">
-                                                <Star className="h-4 w-4 text-yellow-600" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <p className="font-medium text-gray-900">{item.activity.name}</p>
-                                                <p className="text-xs text-gray-500">{dateFormatterIntoLong(item.activity.date)}</p>
-                                            </div>
-                                            <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-yellow-600 transition-colors" />
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="mt-4 pt-3 border-t border-gray-200 text-center">
-                                    <p className="text-sm text-gray-600">
-                                        Ha asistido a {allInfo?.activityAttendanceHistory.length ?? 0} actividades especiales
-                                    </p>
-                                </div>
-                            </>
-                        )}
-                    </CardContent>
-                </Card>
             </div>
 
             {/* Footer */}
-            <div className="sticky bottom-0 bg-white border-t border-gray-300 p-4 z-20">
+            <div className="shrink-0 bg-white border-t border-gray-300 p-4">
                 <div className="flex justify-between items-center">
                     <div className="text-sm text-gray-600">
                         Última actualización: {format(new Date(), "dd/MM/yyyy 'a las' HH:mm", { locale: es })}
