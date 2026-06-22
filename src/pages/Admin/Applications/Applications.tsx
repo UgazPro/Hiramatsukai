@@ -77,7 +77,7 @@ export default function Applications() {
               {/* Botón de acción según pestaña */}
               {activeTab === 'postulaciones' && (
                 <Button
-                  className="bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white shadow-md hover:shadow-lg transition-all"
+                  className="bg-linear-to-r from-yellow-600 to-yellow-700 hover:from-yellow-500 hover:to-yellow-600 text-white shadow-md hover:shadow-lg transition-all"
                   onClick={() => openPostulationForm()}
                 >
                   <Plus className="h-4 w-4 mr-2" />

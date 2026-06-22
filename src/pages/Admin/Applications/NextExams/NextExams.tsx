@@ -87,7 +87,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                 </Button>
                                 <Button
                                     disabled={!isNextExam}
-                                    className={`flex-1 text-white ${isNextExam ? "bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500" : "bg-gray-400 cursor-not-allowed"}`}
+                                    className={`flex-1 text-white ${isNextExam ? "bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-700 hover:to-yellow-800" : "bg-gray-400 cursor-not-allowed"}`}
                                     onClick={() => {
                                         if (!isNextExam) return;
                                         setActiveTab('postulaciones');
