@@ -30,7 +30,7 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
             header: "Alumno",
             render: (student) => (
                 <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-linear-to-br from-amber-100 to-red-100 border border-amber-200 flex items-center justify-center">
+                    <div className="h-10 w-10 rounded-full bg-linear-to-br from-yellow-100 to-red-100 border border-yellow-200 flex items-center justify-center">
                         {student.profileImg?.trim() ? (
                             <img
                                 src={student.profileImg}
@@ -38,7 +38,7 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
                                 alt={student.name}
                             />
                         ) : (
-                            <User className="h-5 w-5 text-amber-600" />
+                            <User className="h-5 w-5 text-yellow-600" />
                         )}
                     </div>
                     <div>

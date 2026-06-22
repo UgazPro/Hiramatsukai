@@ -25,7 +25,7 @@ const getBeltColor = (grado: string) => {
         Naranja: "bg-orange-100 text-orange-800 border-orange-300",
         Verde: "bg-green-100 text-green-800 border-green-300",
         Azul: "bg-blue-100 text-blue-800 border-blue-300",
-        Marrón: "bg-amber-800 text-white border-amber-900",
+        Marrón: "bg-yellow-800 text-white border-yellow-900",
         Negro: "bg-gray-900 text-white border-gray-950",
         Rojo: "bg-red-800 text-white border-red-900",
     };
@@ -59,11 +59,11 @@ export default function StudentDetailView() {
         <div className="min-h-full p-6 relative w-full max-w-7xl mx-auto my-6 bg-white shadow-xl border border-gray-200 rounded-xl">
 
             {/* Header */}
-            <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-300 rounded-lg">
+            <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-300 rounded-lg">
                 <h2 className="p-6">
                     <div className="flex justify-between items-start">
                         <div className="flex items-center gap-4">
-                            <div className="h-20 w-20 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-1 flex-shrink-0">
+                            <div className="h-20 w-20 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-1 flex-shrink-0">
                                 <div className="h-full w-full rounded-full bg-white flex items-center justify-center overflow-hidden">
                                     {selectedStudent.profileImg ? (
                                         <img
@@ -72,7 +72,7 @@ export default function StudentDetailView() {
                                             alt="Perfil"
                                         />
                                     ) : (
-                                        <User className="h-10 w-10 text-amber-600" />
+                                        <User className="h-10 w-10 text-yellow-600" />
                                     )}
                                 </div>
                             </div>
@@ -83,7 +83,7 @@ export default function StudentDetailView() {
                                 <div className="flex flex-wrap items-center gap-2 mt-2">
                                     {selectedStudent.userRanks.length > 0 && (
                                         <>
-                                            <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-base px-3 py-1">
+                                            <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 text-base px-3 py-1">
                                                 <Shield className="h-4 w-4 mr-1" />
                                                 {selectedStudent.userRanks[0].rank.belt}
                                             </Badge>
@@ -130,7 +130,7 @@ export default function StudentDetailView() {
                     <Card className="border border-gray-300 shadow-sm">
                         <CardContent className="p-6">
                             <div className="flex items-center gap-2 mb-4">
-                                <User className="h-5 w-5 text-amber-600" />
+                                <User className="h-5 w-5 text-yellow-600" />
                                 <h3 className="text-lg font-semibold text-gray-900">Información Personal</h3>
                             </div>
                             <div className="space-y-4">
@@ -162,7 +162,7 @@ export default function StudentDetailView() {
                     <Card className="border border-gray-300 shadow-sm">
                         <CardContent className="p-6">
                             <div className="flex items-center gap-2 mb-4">
-                                <Mail className="h-5 w-5 text-amber-600" />
+                                <Mail className="h-5 w-5 text-yellow-600" />
                                 <h3 className="text-lg font-semibold text-gray-900">Información de Contacto</h3>
                             </div>
                             <div className="space-y-4">
@@ -204,15 +204,15 @@ export default function StudentDetailView() {
                     <Card className="border border-gray-300 shadow-sm">
                         <CardContent className="p-6">
                             <div className="flex items-center gap-2 mb-4">
-                                <School className="h-5 w-5 text-amber-600" />
+                                <School className="h-5 w-5 text-yellow-600" />
                                 <h3 className="text-lg font-semibold text-gray-900">Información del Dojo</h3>
                             </div>
                             <div className="space-y-4">
                                 <div>
                                     <p className="text-sm text-gray-500 mb-1">Dojo</p>
                                     <div className="flex items-center gap-2">
-                                        <div className="h-8 w-8 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center">
-                                            <Target className="h-4 w-4 text-amber-600" />
+                                        <div className="h-8 w-8 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center">
+                                            <Target className="h-4 w-4 text-yellow-600" />
                                         </div>
                                         <p className="font-semibold text-gray-900">{selectedStudent.dojo.dojo}</p>
                                     </div>
@@ -239,7 +239,7 @@ export default function StudentDetailView() {
                         <CardContent className="p-6">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-2">
-                                    <Activity className="h-5 w-5 text-amber-600" />
+                                    <Activity className="h-5 w-5 text-yellow-600" />
                                     <h3 className="text-lg font-semibold text-gray-900">Asistencia</h3>
                                 </div>
                                 {!dynamicLoading && allInfo && (
@@ -247,7 +247,7 @@ export default function StudentDetailView() {
                                         allInfo.attendancePercentage >= 80
                                             ? "bg-green-100 text-green-800 border-green-200"
                                             : allInfo.attendancePercentage >= 60
-                                                ? "bg-amber-100 text-amber-800 border-amber-200"
+                                                ? "bg-yellow-100 text-yellow-800 border-yellow-200"
                                                 : "bg-red-100 text-red-800 border-red-200"
                                     }`}>
                                         {allInfo.attendancePercentage}%
@@ -276,7 +276,7 @@ export default function StudentDetailView() {
                                                 {allInfo.attendancePercentage >= 80 ? (
                                                     <span className="text-green-600 font-medium">¡Excelente asistencia!</span>
                                                 ) : allInfo.attendancePercentage >= 60 ? (
-                                                    <span className="text-amber-600 font-medium">Asistencia regular</span>
+                                                    <span className="text-yellow-600 font-medium">Asistencia regular</span>
                                                 ) : (
                                                     <span className="text-red-600 font-medium">Asistencia baja</span>
                                                 )}
@@ -293,7 +293,7 @@ export default function StudentDetailView() {
                     <Card className="border border-gray-300 shadow-sm">
                         <CardContent className="p-6">
                             <div className="flex items-center gap-2 mb-4">
-                                <DollarSign className="h-5 w-5 text-amber-600" />
+                                <DollarSign className="h-5 w-5 text-yellow-600" />
                                 <h3 className="text-lg font-semibold text-gray-900">Estado de Pagos</h3>
                             </div>
                             <div className="space-y-4">
@@ -329,7 +329,7 @@ export default function StudentDetailView() {
                 <Card className="border border-gray-300 shadow-sm">
                     <CardContent className="p-6">
                         <div className="flex items-center gap-2 mb-4">
-                            <Award className="h-5 w-5 text-amber-600" />
+                            <Award className="h-5 w-5 text-yellow-600" />
                             <h3 className="text-lg font-semibold text-gray-900">Exámenes por Arte Marcial</h3>
                         </div>
 
@@ -351,8 +351,8 @@ export default function StudentDetailView() {
                                 {examsByMartialArt.map((group) => (
                                     <div key={group.name} className="border border-gray-200 rounded-xl p-4 space-y-3">
                                         <div className="flex items-center gap-2 pb-2 border-b border-gray-100">
-                                            <div className="h-7 w-7 rounded-lg bg-amber-100 flex items-center justify-center">
-                                                <Award className="h-4 w-4 text-amber-700" />
+                                            <div className="h-7 w-7 rounded-lg bg-yellow-100 flex items-center justify-center">
+                                                <Award className="h-4 w-4 text-yellow-700" />
                                             </div>
                                             <span className="font-bold text-gray-900">{group.name}</span>
                                             <span className="text-xs text-gray-500">({group.exams.length})</span>
@@ -410,13 +410,13 @@ export default function StudentDetailView() {
                                     <div>
                                         <p className="text-sm text-gray-500">Próximo Examen Postulado</p>
                                         <div className="flex items-center gap-2 mt-0.5">
-                                            <Calendar className="h-4 w-4 text-amber-600" />
+                                            <Calendar className="h-4 w-4 text-yellow-600" />
                                             <p className="font-semibold text-gray-900">
                                                 {allInfo.upcomingExam.name} — {dateFormatterIntoLong(allInfo.upcomingExam.date)}
                                             </p>
                                         </div>
                                     </div>
-                                    <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                                    <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                                         <Award className="h-3 w-3 mr-1" />
                                         Pendiente
                                     </Badge>
@@ -430,7 +430,7 @@ export default function StudentDetailView() {
                 <Card className="border border-gray-300 shadow-sm">
                     <CardContent className="p-6">
                         <div className="flex items-center gap-2 mb-4">
-                            <Activity className="h-5 w-5 text-amber-600" />
+                            <Activity className="h-5 w-5 text-yellow-600" />
                             <h3 className="text-lg font-semibold text-gray-900">Actividades Asistidas</h3>
                         </div>
 
@@ -453,16 +453,16 @@ export default function StudentDetailView() {
                                     {activitiesTop.map((item: IActivityAttendanceItem) => (
                                         <div
                                             key={item.id}
-                                            className="flex items-center gap-3 p-3 bg-linear-to-r from-white to-amber-50 rounded-lg border border-amber-200 hover:border-amber-300 transition-colors group"
+                                            className="flex items-center gap-3 p-3 bg-linear-to-r from-white to-yellow-50 rounded-lg border border-yellow-200 hover:border-yellow-300 transition-colors group"
                                         >
-                                            <div className="h-8 w-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
-                                                <Star className="h-4 w-4 text-amber-600" />
+                                            <div className="h-8 w-8 rounded-full bg-yellow-100 flex items-center justify-center shrink-0 group-hover:bg-yellow-200 transition-colors">
+                                                <Star className="h-4 w-4 text-yellow-600" />
                                             </div>
                                             <div className="flex-1">
                                                 <p className="font-medium text-gray-900">{item.activity.name}</p>
                                                 <p className="text-xs text-gray-500">{dateFormatterIntoLong(item.activity.date)}</p>
                                             </div>
-                                            <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-amber-600 transition-colors" />
+                                            <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-yellow-600 transition-colors" />
                                         </div>
                                     ))}
                                 </div>
@@ -492,7 +492,7 @@ export default function StudentDetailView() {
                             Cerrar
                         </Button>
                         <Button
-                            className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white cursor-pointer"
+                            className="bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white cursor-pointer"
                             onClick={() => startEdit(selectedStudent!)}
                         >
                             Editar Información

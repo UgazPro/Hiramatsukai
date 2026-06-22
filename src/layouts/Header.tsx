@@ -94,7 +94,7 @@ export default function Header() {
                     {isAuthenticated ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <button className="flex flex-col items-end text-white cursor-pointer hover:text-amber-400 transition-colors">
+                                <button className="flex flex-col items-end text-white cursor-pointer hover:text-yellow-400 transition-colors">
                                     <p className="lg:text-2xl text-sm">
                                         {userName} {userLastName}
                                     </p>

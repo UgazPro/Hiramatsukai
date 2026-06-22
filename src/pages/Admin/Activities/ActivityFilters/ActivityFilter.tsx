@@ -63,17 +63,17 @@ export default function ActivityFilter() {
                     <Filter className="h-4 w-4 mr-2" />
                     Filtros
                     {activeFiltersCount() > 0 && (
-                        <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-amber-500 text-white text-xs">
+                        <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-yellow-500 text-white text-xs">
                             {activeFiltersCount()}
                         </Badge>
                     )}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-78 p-0 border-gray-300 shadow-xl" align="end">
-                <div className="p-4 border-b border-gray-200 bg-linear-to-r from-amber-50 to-red-50">
+                <div className="p-4 border-b border-gray-200 bg-linear-to-r from-yellow-50 to-red-50">
                     <div className="flex justify-between items-center">
                         <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                            <Filter className="h-4 w-4 text-amber-600" />
+                            <Filter className="h-4 w-4 text-yellow-600" />
                             Filtrar Actividades
                         </h3>
                         <Button
@@ -173,7 +173,7 @@ export default function ActivityFilter() {
                     <Button
                         size="sm"
                         onClick={handleApplyFilters}
-                        className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white"
+                        className="bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white"
                     >
                         Aplicar filtros
                     </Button>

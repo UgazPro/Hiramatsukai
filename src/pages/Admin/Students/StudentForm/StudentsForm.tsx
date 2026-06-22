@@ -206,7 +206,7 @@ export default function StudentsForm() {
             <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
 
                 {/* Header */}
-                <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 px-6 py-4">
+                <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 px-6 py-4">
                     <div className="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-between items-center">
                         <div className="md:order-1 order-2">
                             <h2 className="text-xl font-bold text-gray-900">

@@ -84,7 +84,7 @@ export default function Activities() {
                       variant='secondary'
                       size="sm"
                       onClick={() => startCreate()}
-                      className={`rounded-none border-r border-gray-300 bg-amber-500 text-white hover:bg-amber-600`}
+                      className={`rounded-none border-r border-gray-300 bg-yellow-500 text-white hover:bg-yellow-600`}
                     >
                       <PlusCircle /> Nueva Actividad
                     </Button>
@@ -97,7 +97,7 @@ export default function Activities() {
                         variant={viewMode === key ? "secondary" : "ghost"}
                         size="sm"
                         onClick={() => setViewMode(key as ActivityViewMode)}
-                        className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-amber-500 text-white hover:bg-amber-600" : "text-gray-700 hover:bg-gray-100"}`}
+                        className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-yellow-500 text-white hover:bg-yellow-600" : "text-gray-700 hover:bg-gray-100"}`}
                       >
                         <Icon className="h-4 w-4" />
                       </Button>
@@ -136,31 +136,31 @@ export default function Activities() {
                   searchTerm) && (
                     <div className="flex flex-wrap gap-2">
                       {filters.startDate && (
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                           Desde: {format(filters.startDate, "dd/MM/yyyy")}
                         </Badge>
                       )}
 
                       {filters.endDate && (
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                           Hasta: {format(filters.endDate, "dd/MM/yyyy")}
                         </Badge>
                       )}
 
                       {filters.type && (
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                           Tipo: {filters.type.charAt(0).toUpperCase() + filters.type.slice(1)}
                         </Badge>
                       )}
 
                       {searchTerm && (
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                           Búsqueda: {searchTerm}
                         </Badge>
                       )}
 
                       {filters.includePast && (
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                           Incluir pasadas
                         </Badge>
                       )}
@@ -195,7 +195,7 @@ export default function Activities() {
                           setCurrentDate(parseISO(activity.date.toString()));
                         }}
                         rowClassName={(activity) =>
-                          cSelectedActivity?.id === activity.id ? "bg-amber-50" : ""
+                          cSelectedActivity?.id === activity.id ? "bg-yellow-50" : ""
                         }
                       />
                     )}

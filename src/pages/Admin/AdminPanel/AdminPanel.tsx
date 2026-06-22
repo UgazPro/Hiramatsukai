@@ -20,7 +20,7 @@ const getBeltColor = (grado: string) => {
     Naranja: "bg-orange-100 text-orange-800 border-orange-300",
     Verde: "bg-green-100 text-green-800 border-green-300",
     Azul: "bg-blue-100 text-blue-800 border-blue-300",
-    Marrón: "bg-amber-800 text-white border-amber-900",
+    Marrón: "bg-yellow-800 text-white border-yellow-900",
     Negro: "bg-gray-900 text-white border-gray-950",
     Rojo: "bg-red-800 text-white border-red-900",
   };
@@ -81,7 +81,7 @@ export default function AdminPanel() {
             {format(currentTime, "EEEE, d 'de' MMMM 'de' yyyy", { locale: es })}
           </p>
         </div>
-        <Badge className="bg-amber-100 text-amber-800 border-amber-200 px-4 py-2">
+        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 px-4 py-2">
           <Sparkles className="h-4 w-4 mr-2" />
           {totalEstudiantes} Estudiantes Activos
         </Badge>
@@ -89,12 +89,12 @@ export default function AdminPanel() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 group">
+        <Card className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 group">
           <CardContent className="p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Total Estudiantes</p>
-                <h3 className="text-3xl font-bold text-gray-900 group-hover:text-amber-700 transition-colors">
+                <h3 className="text-3xl font-bold text-gray-900 group-hover:text-yellow-700 transition-colors">
                   {totalEstudiantes}
                 </h3>
                 <p className="text-sm text-green-600 mt-2 flex items-center">
@@ -102,68 +102,68 @@ export default function AdminPanel() {
                   Activos en el dojo
                 </p>
               </div>
-              <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Users className="h-7 w-7 text-amber-600" />
+              <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Users className="h-7 w-7 text-yellow-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 group">
+        <Card className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 group">
           <CardContent className="p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Cinturones Avanzados</p>
-                <h3 className="text-3xl font-bold text-gray-900 group-hover:text-amber-700 transition-colors">
+                <h3 className="text-3xl font-bold text-gray-900 group-hover:text-yellow-700 transition-colors">
                   {advancedCount}
                 </h3>
                 <p className="text-sm text-gray-600 mt-2 flex items-center">
-                  <Crown className="h-3 w-3 mr-1 text-amber-600" />
+                  <Crown className="h-3 w-3 mr-1 text-yellow-600" />
                   Marrón y Negro
                 </p>
               </div>
-              <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Award className="h-7 w-7 text-amber-600" />
+              <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Award className="h-7 w-7 text-yellow-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 group">
+        <Card className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 group">
           <CardContent className="p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Ingresos Mensuales</p>
-                <h3 className="text-3xl font-bold text-gray-900 group-hover:text-amber-700 transition-colors">
+                <h3 className="text-3xl font-bold text-gray-900 group-hover:text-yellow-700 transition-colors">
                   {formatMoneda(monthlyIncome)}
                 </h3>
-                <p className="text-sm text-amber-600 mt-2 flex items-center">
+                <p className="text-sm text-yellow-600 mt-2 flex items-center">
                   <TrendingUp className="h-3 w-3 mr-1" />
                   Mes actual
                 </p>
               </div>
-              <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <DollarSign className="h-7 w-7 text-amber-600" />
+              <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <DollarSign className="h-7 w-7 text-yellow-600" />
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 group">
+        <Card className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 group">
           <CardContent className="p-6">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Clases del Mes</p>
-                <h3 className="text-3xl font-bold text-gray-900 group-hover:text-amber-700 transition-colors">
+                <h3 className="text-3xl font-bold text-gray-900 group-hover:text-yellow-700 transition-colors">
                   {classesThisMonth}
                 </h3>
-                <p className="text-sm text-amber-600 mt-2 flex items-center">
+                <p className="text-sm text-yellow-600 mt-2 flex items-center">
                   <Flame className="h-3 w-3 mr-1" />
                   Actividades programadas
                 </p>
               </div>
-              <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Activity className="h-7 w-7 text-amber-600" />
+              <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Activity className="h-7 w-7 text-yellow-600" />
               </div>
             </div>
           </CardContent>
@@ -177,10 +177,10 @@ export default function AdminPanel() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-amber-600" />
+                <BarChart3 className="h-5 w-5 text-yellow-600" />
                 <h3 className="text-lg font-semibold text-gray-900">Asistencia Semanal</h3>
               </div>
-              <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+              <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                 Promedio: {averageAttendance}%
               </Badge>
             </div>
@@ -200,7 +200,7 @@ export default function AdminPanel() {
                         <span className="text-gray-600">{dia.estudiantes} estudiantes</span>
                       </div>
                       <span className={`font-medium ${dia.estudiantes >= (maxAttendance * 0.8) ? 'text-green-600' :
-                          dia.estudiantes >= (maxAttendance * 0.5) ? 'text-amber-600' : 'text-red-600'
+                          dia.estudiantes >= (maxAttendance * 0.5) ? 'text-yellow-600' : 'text-red-600'
                         }`}>
                         {totalEstudiantes > 0 ? Math.round((dia.estudiantes / totalEstudiantes) * 100) : 0}%
                       </span>
@@ -208,7 +208,7 @@ export default function AdminPanel() {
                     <Progress
                       value={totalEstudiantes > 0 ? (dia.estudiantes / totalEstudiantes) * 100 : 0}
                       className={`h-3 ${dia.estudiantes >= (maxAttendance * 0.8) ? 'bg-green-500' :
-                          dia.estudiantes >= (maxAttendance * 0.5) ? 'bg-amber-500' : 'bg-red-500'
+                          dia.estudiantes >= (maxAttendance * 0.5) ? 'bg-yellow-500' : 'bg-red-500'
                         }`}
                     />
                   </div>
@@ -222,9 +222,9 @@ export default function AdminPanel() {
         <div className="space-y-6">
           <Card className="border border-gray-300 shadow-sm">
             <CardContent className="p-0">
-              <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 p-4">
+              <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 p-4">
                 <div className="flex items-center gap-2">
-                  <Star className="h-5 w-5 text-amber-600" />
+                  <Star className="h-5 w-5 text-yellow-600" />
                   <h3 className="font-semibold text-gray-900">Próximas Actividades</h3>
                 </div>
               </div>
@@ -234,8 +234,8 @@ export default function AdminPanel() {
                 ) : (
                   nextActivities.map((act) => (
                     <div key={act.id} className="flex items-start gap-3">
-                      <div className="h-10 w-10 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center flex-shrink-0">
-                        <Target className="h-5 w-5 text-amber-600" />
+                      <div className="h-10 w-10 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center flex-shrink-0">
+                        <Target className="h-5 w-5 text-yellow-600" />
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="font-medium text-gray-900 truncate">{act.name}</p>
@@ -243,7 +243,7 @@ export default function AdminPanel() {
                           <CalendarDays className="h-3 w-3" />
                           <span>{dateFormatterIntoLong(act.date)}</span>
                         </div>
-                        <Badge className="mt-1 bg-amber-100 text-amber-800 border-amber-200 text-[10px]">
+                        <Badge className="mt-1 bg-yellow-100 text-yellow-800 border-yellow-200 text-[10px]">
                           {diasRestantes(new Date(act.date))}
                         </Badge>
                       </div>
@@ -258,11 +258,11 @@ export default function AdminPanel() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <Gift className="h-5 w-5 text-amber-600" />
+                  <Gift className="h-5 w-5 text-yellow-600" />
                   <h3 className="text-lg font-semibold text-gray-900">Próximos Cumpleaños</h3>
                 </div>
                 {birthdays.length > 0 && (
-                  <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                  <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                     {birthdays.length} próximos
                   </Badge>
                 )}
@@ -276,13 +276,13 @@ export default function AdminPanel() {
               ) : (
                 <div className="space-y-3">
                   {birthdays.map((cumple) => (
-                    <div key={cumple.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-amber-50 transition-colors">
+                    <div key={cumple.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-yellow-50 transition-colors">
                       <div className="flex items-center gap-3 min-w-0">
-                        <Avatar className="h-10 w-10 border-2 border-amber-500 flex-shrink-0">
+                        <Avatar className="h-10 w-10 border-2 border-yellow-500 flex-shrink-0">
                           {cumple.imagen ? (
                             <AvatarImage src={cumple.imagen} alt={cumple.nombre} />
                           ) : null}
-                          <AvatarFallback className="bg-linear-to-br from-amber-500 to-red-500 text-white text-xs">
+                          <AvatarFallback className="bg-linear-to-br from-yellow-500 to-red-500 text-white text-xs">
                             {getInitials(cumple.nombre, cumple.apellido)}
                           </AvatarFallback>
                         </Avatar>
@@ -300,7 +300,7 @@ export default function AdminPanel() {
                         </div>
                       </div>
                       <Badge className={`ml-2 flex-shrink-0 ${isToday(cumple.fecha) ? 'bg-green-100 text-green-800 border-green-200' :
-                          isTomorrow(cumple.fecha) ? 'bg-amber-100 text-amber-800 border-amber-200' :
+                          isTomorrow(cumple.fecha) ? 'bg-yellow-100 text-yellow-800 border-yellow-200' :
                             'bg-blue-100 text-blue-800 border-blue-200'
                         }`}>
                         {diasRestantes(cumple.fecha)}
@@ -320,11 +320,11 @@ export default function AdminPanel() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-2">
-                <Award className="h-5 w-5 text-amber-600" />
+                <Award className="h-5 w-5 text-yellow-600" />
                 <h3 className="text-lg font-semibold text-gray-900">Próximos Exámenes</h3>
               </div>
               {nextExams.length > 0 && (
-                <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                   {nextExams.length} próximos
                 </Badge>
               )}
@@ -338,13 +338,13 @@ export default function AdminPanel() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {nextExams.map((examen) => (
-                  <Card key={examen.id} className="border border-gray-200 hover:border-amber-400 transition-all">
+                  <Card key={examen.id} className="border border-gray-200 hover:border-yellow-400 transition-all">
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between mb-3">
-                        <div className="h-10 w-10 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center">
-                          <Award className="h-5 w-5 text-amber-600" />
+                        <div className="h-10 w-10 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center">
+                          <Award className="h-5 w-5 text-yellow-600" />
                         </div>
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                           {examen.type}
                         </Badge>
                       </div>
@@ -360,7 +360,7 @@ export default function AdminPanel() {
                         </div>
                       </div>
                       <div className="mt-3">
-                        <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-xs">
+                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 text-xs">
                           {diasRestantes(new Date(examen.date))}
                         </Badge>
                       </div>
@@ -376,7 +376,7 @@ export default function AdminPanel() {
         <Card className="border border-gray-300 shadow-sm">
           <CardContent className="p-6">
             <div className="flex items-center gap-2 mb-4">
-              <BookOpen className="h-5 w-5 text-amber-600" />
+              <BookOpen className="h-5 w-5 text-yellow-600" />
               <h3 className="text-lg font-semibold text-gray-900">Próximas Clases</h3>
             </div>
 
@@ -388,9 +388,9 @@ export default function AdminPanel() {
             ) : (
               <div className="space-y-4">
                 {upcomingClassesNext.map((cls) => (
-                  <div key={cls.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-amber-50 transition-colors">
-                    <div className="h-9 w-9 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                      <Activity className="h-4 w-4 text-amber-600" />
+                  <div key={cls.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-yellow-50 transition-colors">
+                    <div className="h-9 w-9 rounded-full bg-yellow-100 flex items-center justify-center flex-shrink-0">
+                      <Activity className="h-4 w-4 text-yellow-600" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="font-medium text-gray-900 text-sm truncate">{cls.name}</p>
@@ -399,7 +399,7 @@ export default function AdminPanel() {
                         <span>{dateFormatterIntoLong(cls.date)}</span>
                       </div>
                     </div>
-                    <Badge className="bg-amber-100 text-amber-800 border-amber-200 text-[10px] flex-shrink-0">
+                    <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 text-[10px] flex-shrink-0">
                       {diasRestantes(new Date(cls.date))}
                     </Badge>
                   </div>

@@ -15,7 +15,7 @@ export function DetailHeader({
     onClose,
 }: DetailHeaderProps) {
     return (
-        <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-300 rounded-lg p-6">
+        <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-300 rounded-lg p-6">
             <div className="flex justify-between items-start">
                 <div className="flex items-center gap-4">
                     {avatar}

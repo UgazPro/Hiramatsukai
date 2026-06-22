@@ -16,7 +16,7 @@ const sizeClasses: Record<string, string> = {
 export const Loader: FC<LoaderProps> = ({
     message = "Cargando...",
     size = "md",
-    color = "text-amber-600",
+    color = "text-yellow-600",
 }) => {
     return (
         <>

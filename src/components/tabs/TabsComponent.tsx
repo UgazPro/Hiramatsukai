@@ -33,7 +33,7 @@ export default function TabsComponent<T extends string>({
             variant={isActive ? "secondary" : "ghost"}
             onClick={() => onChange(tab.value)}
             className={`flex-1 rounded-lg transition-all duration-300 ${isActive
-                ? "bg-linear-to-r from-amber-600 to-red-600 text-white shadow-md"
+                ? "bg-linear-to-r from-yellow-600 to-red-600 text-white shadow-md"
                 : "text-gray-700 hover:bg-gray-200"
               }`}
           >

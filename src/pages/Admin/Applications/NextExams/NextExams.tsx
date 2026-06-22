@@ -46,13 +46,13 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
             {sortedExams.map((examen) => {
                 const isNextExam = examen.id === nextExamId;
                 return (
-                <Card key={examen.id} className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                <Card key={examen.id} className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 overflow-hidden group">
                     <CardContent className="p-0">
-                        <div className="bg-linear-to-r from-amber-50 to-red-50 p-6 border-b border-gray-200">
+                        <div className="bg-linear-to-r from-yellow-50 to-red-50 p-6 border-b border-gray-200">
                             <div className="flex justify-between items-start">
-                                <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5">
+                                <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5">
                                     <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                                        <Award className="h-7 w-7 text-amber-600" />
+                                        <Award className="h-7 w-7 text-yellow-600" />
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                 </Button>
                                 <Button
                                     disabled={!isNextExam}
-                                    className={`flex-1 text-white ${isNextExam ? "bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500" : "bg-gray-400 cursor-not-allowed"}`}
+                                    className={`flex-1 text-white ${isNextExam ? "bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500" : "bg-gray-400 cursor-not-allowed"}`}
                                     onClick={() => {
                                         if (!isNextExam) return;
                                         setActiveTab('postulaciones');

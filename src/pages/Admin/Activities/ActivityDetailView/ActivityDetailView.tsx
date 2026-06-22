@@ -38,8 +38,8 @@ export default function ActivityDetailView() {
         </div>
       }
       avatar={
-        <div className="h-16 w-16 rounded-full bg-amber-100 flex items-center justify-center">
-          <Tag className="h-7 w-7 text-amber-600" />
+        <div className="h-16 w-16 rounded-full bg-yellow-100 flex items-center justify-center">
+          <Tag className="h-7 w-7 text-yellow-600" />
         </div>
       }
     />
@@ -71,7 +71,7 @@ export default function ActivityDetailView() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <DetailSection icon={<Calendar className="h-5 w-5 text-amber-600" />} title="Información de la actividad">
+        <DetailSection icon={<Calendar className="h-5 w-5 text-yellow-600" />} title="Información de la actividad">
           <div className="space-y-4">
 
             <InfoItem
@@ -98,7 +98,7 @@ export default function ActivityDetailView() {
         </DetailSection>
 
         <DetailSection
-          icon={<Users className="h-5 w-5 text-amber-600" />}
+          icon={<Users className="h-5 w-5 text-yellow-600" />}
           title="Dojos participantes"
         >
 
@@ -114,7 +114,7 @@ export default function ActivityDetailView() {
               className="flex items-center justify-between p-3 rounded-lg border bg-gray-50"
             >
               <div className="flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-amber-600" />
+                <Building2 className="h-4 w-4 text-yellow-600" />
                 <p className="font-medium">
                   {d.dojo?.dojo || "Dojo"}
                 </p>

@@ -34,7 +34,7 @@ const getBeltColor = (grado: string) => {
     Naranja: "bg-orange-100 text-orange-800 border-orange-300",
     Verde: "bg-green-100 text-green-800 border-green-300",
     Azul: "bg-blue-100 text-blue-800 border-blue-300",
-    Marrón: "bg-amber-800 text-white border-amber-900",
+    Marrón: "bg-yellow-800 text-white border-yellow-900",
     Negro: "bg-gray-900 text-white border-gray-950",
     Rojo: "bg-red-800 text-white border-red-900",
   };
@@ -162,12 +162,12 @@ export default function PostulationForm() {
   return (
     <div className="min-h-full p-6 w-full my-6">
       <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
-        <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 p-6">
+        <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 p-6">
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-4">
-              <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5">
+              <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5">
                 <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                  <UserCheck className="h-7 w-7 text-amber-600" />
+                  <UserCheck className="h-7 w-7 text-yellow-600" />
                 </div>
               </div>
               <div>
@@ -238,17 +238,17 @@ export default function PostulationForm() {
                           )
                         }
                         className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${isSelected
-                            ? "border-amber-500 bg-amber-50 shadow-md"
+                            ? "border-yellow-500 bg-yellow-50 shadow-md"
                             : count > 0
-                              ? "border-gray-200 bg-white hover:border-amber-300 hover:shadow-sm"
+                              ? "border-gray-200 bg-white hover:border-yellow-300 hover:shadow-sm"
                               : "border-gray-100 bg-gray-50 opacity-50 cursor-not-allowed"
                           }`}
                       >
                         <div className="flex items-center gap-3">
                           <div
                             className={`h-10 w-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0 ${isSelected
-                                ? "bg-linear-to-br from-amber-500 to-red-500 text-white"
-                                : "bg-amber-100 text-amber-700"
+                                ? "bg-linear-to-br from-yellow-500 to-red-500 text-white"
+                                : "bg-yellow-100 text-yellow-700"
                               }`}
                           >
                             🥋
@@ -262,7 +262,7 @@ export default function PostulationForm() {
                             </p>
                           </div>
                           {isSelected && (
-                            <div className="ml-auto h-6 w-6 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
+                            <div className="ml-auto h-6 w-6 rounded-full bg-yellow-500 flex items-center justify-center flex-shrink-0">
                               <Check className="h-4 w-4 text-white" />
                             </div>
                           )}
@@ -312,14 +312,14 @@ export default function PostulationForm() {
                             key={student.id}
                             onClick={() => toggleStudent(student.id)}
                             className={`text-left w-full p-4 rounded-xl border-2 transition-all duration-200 ${isSelected
-                                ? "border-amber-500 bg-amber-50 shadow-md"
-                                : "border-gray-200 bg-white hover:border-amber-300 hover:shadow-sm"
+                                ? "border-yellow-500 bg-yellow-50 shadow-md"
+                                : "border-gray-200 bg-white hover:border-yellow-300 hover:shadow-sm"
                               }`}
                           >
                             <div className="flex items-center gap-3">
                               <div
                                 className={`h-10 w-10 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${isSelected
-                                    ? "bg-linear-to-br from-amber-500 to-red-500 text-white"
+                                    ? "bg-linear-to-br from-yellow-500 to-red-500 text-white"
                                     : "bg-gray-200 text-gray-600"
                                   }`}
                               >
@@ -338,7 +338,7 @@ export default function PostulationForm() {
                               </div>
                               <div
                                 className={`h-5 w-5 rounded border-2 flex-shrink-0 flex items-center justify-center ${isSelected
-                                    ? "bg-amber-500 border-amber-500"
+                                    ? "bg-yellow-500 border-yellow-500"
                                     : "border-gray-300"
                                   }`}
                               >
@@ -393,7 +393,7 @@ export default function PostulationForm() {
                   selectedStudentIds.size === 0 ||
                   isPending
                 }
-                className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
                 onClick={handleSubmit}
               >
                 {isPending

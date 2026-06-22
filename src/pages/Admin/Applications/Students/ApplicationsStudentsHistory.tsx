@@ -87,7 +87,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                 {filteredStudents.map((student: IStudent) => (
                                     <Card
                                         key={student.id}
-                                        className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                                        className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 cursor-pointer group"
                                         onClick={() =>
                                             openStudentDetail(student.id)
                                         }
@@ -95,7 +95,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                         <CardContent className="p-5">
                                             <div className="flex flex-col items-center text-center">
                                                 <div className="relative mb-4">
-                                                    <div className="h-20 w-20 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-1">
+                                                    <div className="h-20 w-20 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-1">
                                                         <div className="h-full w-full rounded-full bg-white flex items-center justify-center overflow-hidden">
                                                             {student.profileImg ? (
                                                                 <img
@@ -106,7 +106,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                                                     className="h-full w-full object-cover"
                                                                 />
                                                             ) : (
-                                                                <span className="text-lg font-bold text-amber-600">
+                                                                <span className="text-lg font-bold text-yellow-600">
                                                                     {getInitials(
                                                                         student.name,
                                                                         student.lastName,
@@ -117,7 +117,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                                     </div>
                                                 </div>
 
-                                                <h3 className="font-bold text-gray-900 group-hover:text-amber-700 transition-colors truncate w-full">
+                                                <h3 className="font-bold text-gray-900 group-hover:text-yellow-700 transition-colors truncate w-full">
                                                     {student.name}{" "}
                                                     {student.lastName}
                                                 </h3>
@@ -155,7 +155,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                                     )}
 
                                                 <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <Badge className="bg-amber-100 text-amber-800 border-amber-200">
+                                                    <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
                                                         Ver historial{" "}
                                                         <ChevronRight className="h-3 w-3 ml-1 inline" />
                                                     </Badge>
