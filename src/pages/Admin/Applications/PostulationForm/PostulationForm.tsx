@@ -70,17 +70,17 @@ export default function PostulationForm() {
 
   const { appliedStudents } = useAppliedStudents(nextExamId);
 
-  const appliedUserIds = useMemo(
-    () => new Set(appliedStudents.map((a: IAppliedStudent) => a.userId)),
+  const appliedUserMartialArtPairs = useMemo(
+    () => new Set(appliedStudents.map((a: IAppliedStudent) => `${a.userId}-${a.martialArtId}`)),
     [appliedStudents],
   );
 
   const eligibleStudents = useMemo(
     () =>
       suggestions.filter(
-        (s: ISuggestionStudentApplied) => s.suggested && !appliedUserIds.has(s.id),
+        (s: ISuggestionStudentApplied) => s.suggested,
       ),
-    [suggestions, appliedUserIds],
+    [suggestions],
   );
 
   const studentsForMartialArt = useMemo(
@@ -88,9 +88,9 @@ export default function PostulationForm() {
       eligibleStudents.filter((s: ISuggestionStudentApplied) =>
         s.suggestedByMartialArt.some(
           (ma) => ma.martialArtId === selectedMartialArtId && ma.suggested,
-        ),
+        ) && !appliedUserMartialArtPairs.has(`${s.id}-${selectedMartialArtId}`),
       ),
-    [eligibleStudents, selectedMartialArtId],
+    [eligibleStudents, selectedMartialArtId, appliedUserMartialArtPairs],
   );
 
   const filteredStudents = useMemo(
@@ -113,11 +113,11 @@ export default function PostulationForm() {
       counts[ma.id] = eligibleStudents.filter((s: ISuggestionStudentApplied) =>
         s.suggestedByMartialArt.some(
           (sma) => sma.martialArtId === ma.id && sma.suggested,
-        ),
+        ) && !appliedUserMartialArtPairs.has(`${s.id}-${ma.id}`),
       ).length;
     }
     return counts;
-  }, [dojo, eligibleStudents]);
+  }, [dojo, eligibleStudents, appliedUserMartialArtPairs]);
 
   useEffect(() => {
     if (selectedMartialArtId) {
