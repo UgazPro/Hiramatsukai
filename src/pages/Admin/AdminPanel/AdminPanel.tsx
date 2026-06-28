@@ -9,8 +9,8 @@ import {
 } from "lucide-react";
 import { format, differenceInDays, isToday, isTomorrow } from "date-fns";
 import { es } from "date-fns/locale";
-import { Loader } from "@/components/spinner/Loader";
 import { useDashboard } from "@/hooks/useDashboard";
+import AdminPanelSkeleton from "./AdminPanelSkeleton";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 
 const getBeltColor = (grado: string) => {
@@ -61,11 +61,7 @@ export default function AdminPanel() {
   );
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader message="Cargando dashboard..." />
-      </div>
-    );
+    return <AdminPanelSkeleton />;
   }
 
   return (
