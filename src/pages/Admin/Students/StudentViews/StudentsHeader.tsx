@@ -46,7 +46,7 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
                             variant={viewMode === key ? "secondary" : "ghost"}
                             size="sm"
                             onClick={() => setViewMode(key as ViewMode)}
-                            className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-amber-500 text-white hover:bg-amber-600" : "text-gray-700 hover:bg-gray-100"}`}
+                            className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-yellow-500 text-white hover:bg-yellow-600" : "text-gray-700 hover:bg-gray-100"}`}
                         >
                             <Icon className="h-4 w-4" />
                         </Button>

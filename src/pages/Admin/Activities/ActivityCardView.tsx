@@ -23,17 +23,17 @@ export default function ActivityCardView({ filteredActivities }: ActivityCardVie
             {filteredActivities.map((activity) => (
                 <Card
                     key={activity.id}
-                    className="border border-gray-300 bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
+                    className="border border-gray-300 bg-white hover:border-yellow-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
                     onClick={() => {
                         setSelectedActivity(activity);
                         setScreen("detail");
                     }}
                 >
                     <CardContent className="p-0">
-                        <div className="bg-linear-to-r from-amber-50 to-red-50 p-4 border-b border-gray-200">
+                        <div className="bg-linear-to-r from-yellow-50 to-red-50 p-4 border-b border-gray-200">
                             <div className="flex items-start justify-between gap-2">
                                 <div className="min-w-0 flex-1">
-                                    <h3 className="font-bold text-sm text-gray-900 truncate group-hover:text-amber-700 transition-colors">
+                                    <h3 className="font-bold text-sm text-gray-900 truncate group-hover:text-yellow-700 transition-colors">
                                         {activity.name}
                                     </h3>
                                     <p className="text-xs text-gray-600 mt-1 line-clamp-2">
@@ -76,7 +76,7 @@ export default function ActivityCardView({ filteredActivities }: ActivityCardVie
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    className="border-amber-300 text-amber-700 hover:bg-amber-50 hover:border-amber-400 flex-1 text-xs"
+                                    className="border-yellow-300 text-yellow-700 hover:bg-yellow-50 hover:border-yellow-400 flex-1 text-xs"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         startEdit(activity);

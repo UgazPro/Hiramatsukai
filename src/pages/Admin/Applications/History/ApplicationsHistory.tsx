@@ -71,8 +71,8 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                             }
                                         >
                                             <div className="flex items-center gap-4">
-                                                <div className="h-12 w-12 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center">
-                                                    <Award className="h-6 w-6 text-amber-600" />
+                                                <div className="h-12 w-12 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center">
+                                                    <Award className="h-6 w-6 text-yellow-600" />
                                                 </div>
                                                 <div>
                                                     <h3 className="font-bold text-lg text-gray-900">
@@ -131,7 +131,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                                                             key={
                                                                                 exam.id
                                                                             }
-                                                                            className="p-4 border border-gray-200 rounded-lg hover:border-amber-400 transition-colors"
+                                                                            className="p-4 border border-gray-200 rounded-lg hover:border-yellow-400 transition-colors"
                                                                         >
                                                                             <div className="flex items-center justify-between mb-2">
                                                                                 <h4 className="font-semibold text-gray-900">
@@ -185,7 +185,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                                             <div className="mt-4 flex justify-center">
                                                                 <Button
                                                                     variant="outline"
-                                                                    className="border-amber-300 text-amber-700 hover:bg-amber-50"
+                                                                    className="border-yellow-300 text-yellow-700 hover:bg-yellow-50"
                                                                     onClick={() =>
                                                                         openExamDetail(
                                                                             examen.id,
