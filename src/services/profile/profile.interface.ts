@@ -9,7 +9,9 @@ export interface IProfile {
   enrollmentDate: string;
   birthday: string;
   sex: string;
+  rolId?: number;
   rol: {
+    id: number;
     rol: string;
   };
   dojo: {

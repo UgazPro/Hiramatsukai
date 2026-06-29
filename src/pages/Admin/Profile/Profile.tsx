@@ -1,15 +1,18 @@
 import { useState } from "react";
 import {
-  Camera, Eye, EyeOff, Mail, Phone, User, Shield, Bell, Activity, Key, Smartphone, Check, Edit, Loader2, X
+  Camera, Eye, EyeOff, Mail, Phone, User, Shield, Key, Check, Edit, Loader2, X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useProfile } from "@/queries/useProfileQueries";
 import { useUpdateProfile, useChangePassword } from "@/queries/useProfileMutations";
+import { CalendarFieldComponent } from "@/components/form/renderFormComponents/CalendarFieldComponent";
 import ProfileSkeleton from "./ProfileSkeleton";
+import { LiaIdCardSolid } from "react-icons/lia";
 import { toast } from "sonner";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]).{8,}$/;
@@ -36,6 +39,8 @@ export default function Profile() {
     phone: "",
     address: "",
     identification: "",
+    sex: "",
+    birthday: "",
   });
 
   const startEditing = () => {
@@ -47,6 +52,8 @@ export default function Profile() {
       phone: profile?.phone ?? "",
       address: profile?.address ?? "",
       identification: profile?.identification ?? "",
+      sex: profile?.sex ?? "",
+      birthday: profile?.birthday ?? "",
     });
     setIsEditing(true);
   };
@@ -56,8 +63,21 @@ export default function Profile() {
   };
 
   const saveAll = () => {
+    const payload = {
+      ...editData,
+      dojoId: profile?.dojo?.id,
+      rolId: profile?.rol?.id,
+      enrollmentDate: profile?.enrollmentDate,
+      martialArtRank: profile?.userRanks.map(rank => {
+        return {
+          martialArtId: rank.martialArt.id,
+          rankId: rank.rank.id
+        }
+      })
+    };
+
     updateProfile.mutate(
-      { data: editData },
+      { data: payload },
       {
         onSuccess: () => {
           toast.success("Perfil actualizado correctamente");
@@ -78,7 +98,7 @@ export default function Profile() {
 
   const [showPasswords, setShowPasswords] = useState(false);
 
-  const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
+  // const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
 
   const [notifications, setNotifications] = useState({
     email: true,
@@ -157,15 +177,18 @@ export default function Profile() {
   const displayIdentification = isEditing ? editData.identification : (profile?.identification ?? "");
   const displayAddress = isEditing ? editData.address : (profile?.address ?? "");
   const displayDojo = profile?.dojo?.dojo ?? "";
-  const displayRank = profile?.userRanks?.[0]?.rank?.rank_name ?? "";
-  const displayJoinDate = profile?.enrollmentDate ?? "";
+  const displayRank = `${profile?.userRanks?.[0]?.rank?.rank_name ?? ""} Cinturón ${profile?.userRanks?.[0]?.rank?.belt ?? ""} ${profile?.userRanks?.[0]?.rank?.code ?? ""} (${profile?.userRanks?.[0]?.martialArt?.martialArt ?? ""})`;
+  const displayRankKobudo = `${profile?.userRanks?.[1]?.rank?.rank_name ?? ""} Cinturón ${profile?.userRanks?.[1]?.rank?.belt ?? ""} ${profile?.userRanks?.[1]?.rank?.code ?? ""} (${profile?.userRanks?.[1]?.martialArt?.martialArt ?? ""})`;
+  // const displayJoinDate = profile?.enrollmentDate ?? "";
+  const displaySex = isEditing ? editData.sex : (profile?.sex ?? "");
+  const displayBirthday = isEditing ? editData.birthday : (profile?.birthday ?? "");
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen w-full bg-linear-to-b from-gray-50 to-gray-100 p-3 sm:p-4 md:p-6">
+      <div className="">
 
-        <div className="flex items-center justify-center mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
+        <div className="flex items-center justify-center mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
             Mi Perfil
           </h1>
         </div>
@@ -194,38 +217,46 @@ export default function Profile() {
                 </div>
 
                 <div className="text-center mt-2 space-y-3">
-                  <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
                     {displayName} {displayLastName}
                   </h2>
-                  <p className="text-gray-600">@{displayUsername}</p>
+                  <p className="text-gray-600 text-sm sm:text-base">@{displayUsername}</p>
 
                   <div className="flex flex-wrap justify-center gap-2">
-                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
-                      {displayRank}
-                    </span>
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm font-medium">
                       {displayDojo}
                     </span>
                   </div>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium">
+                      {displayRank}
+                    </span>
+                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium">
+                      {displayRankKobudo}
+                    </span>
+                  </div>
 
-                  <div className="pt-4 space-y-2">
+                  <div className="pt-2 space-y-2">
                     <div className="flex items-center justify-center gap-2 text-gray-700">
                       <Mail className="h-4 w-4" />
-                      <span>{displayEmail}</span>
+                      <span className="text-sm sm:text-base truncate max-w-full sm:max-w-none">{displayEmail}</span>
                     </div>
-                    <div className="flex items-center justify-center gap-2 text-gray-700">
-                      <Phone className="h-4 w-4" />
-                      <span>{displayPhone}</span>
-                    </div>
-                    <div className="flex items-center justify-center gap-2 text-gray-700">
-                      <Phone className="h-4 w-4" />
-                      <span>{displayIdentification}</span>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6">
+                      <div className="flex items-center justify-center gap-2 text-gray-700">
+                        <Phone className="h-4 w-4" />
+                        <span>{displayPhone}</span>
+                      </div>
+                      <span className="text-gray-400 hidden sm:inline">|</span>
+                      <div className="flex items-center justify-center gap-2 text-gray-700">
+                        <LiaIdCardSolid className="h-4 w-4" />
+                        <span>{displayIdentification}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
-
+            {/* 
             <Card className="border-blue-200">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-2 text-lg">
@@ -255,34 +286,34 @@ export default function Profile() {
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
 
           {/* Columna derecha */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="general" className="w-full">
-              <TabsList className="grid grid-cols-4 mb-6">
-                <TabsTrigger value="general" className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  General
+              <TabsList className="flex w-full mb-6 overflow-x-auto">
+                <TabsTrigger value="general" className="flex-1 min-w-0 gap-1 text-xs sm:text-sm">
+                  <User className="h-4 w-4 shrink-0" />
+                  <span className="truncate">General</span>
                 </TabsTrigger>
-                <TabsTrigger value="security" className="flex items-center gap-2">
-                  <Shield className="h-4 w-4" />
-                  Seguridad
+                <TabsTrigger value="security" className="flex-1 min-w-0 gap-1 text-xs sm:text-sm">
+                  <Shield className="h-4 w-4 shrink-0" />
+                  <span className="truncate">Seguridad</span>
                 </TabsTrigger>
-                <TabsTrigger value="notifications" className="flex items-center gap-2">
-                  <Bell className="h-4 w-4" />
-                  Notificaciones
-                </TabsTrigger>
+                {/* <TabsTrigger value="notifications" className="flex-1 min-w-0 gap-1 text-xs sm:text-sm">
+                  <Bell className="h-4 w-4 shrink-0" />
+                  <span className="truncate">Notificaciones</span>
+                </TabsTrigger> */}
               </TabsList>
 
               {/* Pestaña General */}
               <TabsContent value="general" className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <div className="flex items-center justify-between w-full">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-3">
                       <div>
-                        <CardTitle>Información Personal</CardTitle>
+                        <CardTitle className="text-lg sm:text-xl">Información Personal</CardTitle>
                         <CardDescription>
                           {isEditing ? "Edita tu información personal" : "Actualiza tu información personal"}
                         </CardDescription>
@@ -317,39 +348,25 @@ export default function Profile() {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Nombre */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Nombre</Label>
-                        <Input
-                          id="name"
-                          value={isEditing ? editData.name : displayName}
-                          onChange={(e) => setEditData(prev => ({ ...prev, name: e.target.value }))}
-                          disabled={!isEditing}
-                        />
-                      </div>
-
-                      {/* Apellido */}
-                      <div className="space-y-2">
-                        <Label htmlFor="lastName">Apellido</Label>
-                        <Input
-                          id="lastName"
-                          value={isEditing ? editData.lastName : displayLastName}
-                          onChange={(e) => setEditData(prev => ({ ...prev, lastName: e.target.value }))}
-                          disabled={!isEditing}
-                        />
-                      </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Nombre</Label>
+                      <Input
+                        id="name"
+                        value={isEditing ? editData.name : displayName}
+                        onChange={(e) => setEditData(prev => ({ ...prev, name: e.target.value }))}
+                        disabled={!isEditing}
+                      />
                     </div>
 
-                    {/* Email */}
+                    {/* Apellido */}
                     <div className="space-y-2">
-                      <Label htmlFor="email">Correo electrónico</Label>
+                      <Label htmlFor="lastName">Apellido</Label>
                       <Input
-                        id="email"
-                        type="email"
-                        value={isEditing ? editData.email : displayEmail}
-                        onChange={(e) => setEditData(prev => ({ ...prev, email: e.target.value }))}
+                        id="lastName"
+                        value={isEditing ? editData.lastName : displayLastName}
+                        onChange={(e) => setEditData(prev => ({ ...prev, lastName: e.target.value }))}
                         disabled={!isEditing}
                       />
                     </div>
@@ -361,6 +378,18 @@ export default function Profile() {
                         id="username"
                         value={isEditing ? editData.username : displayUsername}
                         onChange={(e) => setEditData(prev => ({ ...prev, username: e.target.value }))}
+                        disabled={!isEditing}
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Correo electrónico</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        value={isEditing ? editData.email : displayEmail}
+                        onChange={(e) => setEditData(prev => ({ ...prev, email: e.target.value }))}
                         disabled={!isEditing}
                       />
                     </div>
@@ -397,6 +426,35 @@ export default function Profile() {
                         disabled={!isEditing}
                       />
                     </div>
+
+                    {/* Sexo */}
+                    <div className="space-y-2">
+                      <Label htmlFor="sex">Sexo</Label>
+                      <Select
+                        value={isEditing ? editData.sex : displaySex}
+                        onValueChange={(value) => setEditData(prev => ({ ...prev, sex: value }))}
+                        disabled={!isEditing}
+                      >
+                        <SelectTrigger id="sex" className="w-full">
+                          <SelectValue placeholder="Seleccionar..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Masculino">Masculino</SelectItem>
+                          <SelectItem value="Femenino">Femenino</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Fecha de nacimiento */}
+                    <div className="space-y-2">
+                      <Label>Fecha de nacimiento</Label>
+                      <CalendarFieldComponent
+                        value={isEditing ? (editData.birthday ? new Date(editData.birthday) : undefined) : (displayBirthday ? new Date(displayBirthday) : undefined)}
+                        onChange={(date) => setEditData(prev => ({ ...prev, birthday: date ? date.toISOString() : "" }))}
+                        disabled={!isEditing}
+                        placeholder="Selecciona tu fecha de nacimiento"
+                      />
+                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -405,10 +463,10 @@ export default function Profile() {
               <TabsContent value="security" className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <div className="flex items-center justify-between w-full">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-3">
                       <div className="flex items-center gap-2">
                         <Key className="h-5 w-5 text-yellow-600" />
-                        <CardTitle>Cambiar Contraseña</CardTitle>
+                        <CardTitle className="text-lg sm:text-xl">Cambiar Contraseña</CardTitle>
                       </div>
                       <Button
                         type="button"
@@ -489,41 +547,41 @@ export default function Profile() {
                   </CardContent>
                 </Card>
 
-                <Card>
+                {/* <Card>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                       <Smartphone className="h-5 w-5 text-blue-600" />
                       Autenticación de Dos Factores
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center justify-between">
-                      <div>
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="flex-1">
                         <h4 className="font-medium">Autenticación por aplicación</h4>
                         <p className="text-sm text-gray-500">Usa Google Authenticator</p>
                       </div>
                       <div
-                        className={`h-6 w-11 rounded-full relative cursor-pointer transition-colors ${twoFactorEnabled ? 'bg-green-600' : 'bg-gray-300'}`}
+                        className={`h-6 w-11 rounded-full relative cursor-pointer transition-colors shrink-0 ${twoFactorEnabled ? 'bg-green-600' : 'bg-gray-300'}`}
                         onClick={() => setTwoFactorEnabled(!twoFactorEnabled)}
                       >
                         <div className={`absolute top-1 h-4 w-4 bg-white rounded-full transition-transform ${twoFactorEnabled ? 'left-6' : 'left-1'}`} />
                       </div>
                     </div>
                   </CardContent>
-                </Card>
+                </Card> */}
               </TabsContent>
 
               {/* Pestaña Notificaciones */}
               <TabsContent value="notifications" className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Preferencias de Notificaciones</CardTitle>
+                    <CardTitle className="text-lg sm:text-xl">Preferencias de Notificaciones</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {Object.entries(notifications).map(([key, value]) => (
-                      <div key={key} className="flex items-center justify-between">
-                        <div>
-                          <h4 className="font-medium capitalize">{key}</h4>
+                      <div key={key} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 bg-gray-50 rounded-lg">
+                        <div className="flex-1">
+                          <h4 className="font-medium capitalize">{key === 'email' ? 'Email' : key === 'reminders' ? 'Recordatorios' : key === 'news' ? 'Novedades' : 'Promociones'}</h4>
                           <p className="text-sm text-gray-500">
                             {key === 'email' && 'Recibe notificaciones por email'}
                             {key === 'reminders' && 'Recordatorios de clases'}
