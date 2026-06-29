@@ -366,7 +366,7 @@ export default function Payments() {
           variant={activeTab === 'mes-actual' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('mes-actual')}
           className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'mes-actual'
-              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
+              ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white shadow-md'
               : 'text-gray-700 hover:bg-gray-200'
             }`}
         >
@@ -377,7 +377,7 @@ export default function Payments() {
           variant={activeTab === 'comprobantes' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('comprobantes')}
           className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'comprobantes'
-              ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
+              ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white shadow-md'
               : 'text-gray-700 hover:bg-gray-200'
             }`}
         >
@@ -466,9 +466,9 @@ export default function Payments() {
                     <CardContent className="p-5">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-0.5">
+                          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-0.5">
                             <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                              <User className="h-6 w-6 text-amber-600" />
+                              <User className="h-6 w-6 text-yellow-600" />
                             </div>
                           </div>
                           <div>
@@ -574,7 +574,7 @@ export default function Payments() {
                         className={`
                           h-16 flex flex-col items-center justify-center transition-all duration-200
                           ${isCurrentMonth
-                            ? 'bg-gradient-to-r from-amber-600 to-red-600 text-white shadow-md'
+                            ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white shadow-md'
                             : 'text-gray-700 hover:bg-gray-100'
                           }
                         `}
@@ -661,18 +661,18 @@ export default function Payments() {
             {comprobantesMock.map((comprobante) => (
               <Card
                 key={comprobante.id}
-                className="border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 cursor-pointer"
                 onClick={() => {
                   setSelectedComprobante(comprobante);
                   setShowComprobanteModal(true);
                 }}
               >
                 <CardContent className="p-0">
-                  <div className="bg-gradient-to-r from-amber-50 to-red-50 p-5 border-b border-gray-200">
+                  <div className="bg-gradient-to-r from-yellow-50 to-red-50 p-5 border-b border-gray-200">
                     <div className="flex justify-between items-start">
-                      <div className="h-12 w-12 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-0.5">
+                      <div className="h-12 w-12 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-0.5">
                         <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                          <Receipt className="h-6 w-6 text-amber-600" />
+                          <Receipt className="h-6 w-6 text-yellow-600" />
                         </div>
                       </div>
                       <Badge className="bg-green-100 text-green-800 border-green-200">
@@ -714,7 +714,7 @@ export default function Payments() {
                         <Eye className="h-4 w-4 mr-2" />
                         Ver
                       </Button>
-                      <Button size="sm" className="flex-1 bg-amber-600 hover:bg-amber-700 text-white">
+                      <Button size="sm" className="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white">
                         <Download className="h-4 w-4 mr-2" />
                         PDF
                       </Button>
@@ -740,9 +740,9 @@ export default function Payments() {
             <div className="space-y-6 py-4">
               {/* Información del alumno */}
               <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-0.5">
+                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-0.5">
                   <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                    <User className="h-8 w-8 text-amber-600" />
+                    <User className="h-8 w-8 text-yellow-600" />
                   </div>
                 </div>
                 <div>
@@ -845,7 +845,7 @@ export default function Payments() {
                 >
                   Cancelar
                 </Button>
-                <Button className="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white">
+                <Button className="bg-gradient-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white">
                   Registrar Pago
                 </Button>
               </div>
@@ -875,7 +875,7 @@ export default function Payments() {
                     <p className="text-gray-600">comprobantes@dojokenzendo.cl</p>
                   </div>
                   <div className="text-right">
-                    <Badge className="bg-gradient-to-r from-amber-600 to-red-600 text-white border-0 px-4 py-2">
+                    <Badge className="bg-gradient-to-r from-yellow-600 to-red-600 text-white border-0 px-4 py-2">
                       COMPROBANTE DE PAGO
                     </Badge>
                     <p className="text-sm text-gray-600 mt-2">N° {selectedComprobante.id.toString().padStart(6, '0')}</p>
@@ -928,7 +928,7 @@ export default function Payments() {
                       </div>
                       <div className="flex justify-between pt-2 border-t border-gray-300">
                         <span className="font-bold text-gray-900">Total:</span>
-                        <span className="font-bold text-xl text-amber-700">
+                        <span className="font-bold text-xl text-yellow-700">
                           {formatMoneda(selectedComprobante.monto * 1.19)}
                         </span>
                       </div>
@@ -952,11 +952,11 @@ export default function Payments() {
                 >
                   Cerrar
                 </Button>
-                <Button className="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white">
+                <Button className="bg-gradient-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white">
                   <Printer className="h-4 w-4 mr-2" />
                   Imprimir
                 </Button>
-                <Button className="bg-gradient-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white">
+                <Button className="bg-gradient-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white">
                   <Download className="h-4 w-4 mr-2" />
                   Descargar PDF
                 </Button>

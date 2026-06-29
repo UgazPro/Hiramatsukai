@@ -137,9 +137,9 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
                                     className={`
                                         h-12 p-1 rounded-lg transition-all duration-200 hover:cursor-pointer
                                         ${!day.isCurrentMonth ? 'text-gray-400' : 'text-gray-900'}
-                                        ${isToday ? 'border-amber-500 bg-amber-50' : 'border-gray-200'}
+                                        ${isToday ? 'border-yellow-500 bg-yellow-50' : 'border-gray-200'}
                                         ${hasActivities ? 'bg-blue-50 hover:bg-blue-100 cursor-pointer' : 'hover:bg-gray-50'}
-                                        ${isSelectedActivityDay ? 'ring-2 ring-amber-500 bg-amber-100' : ''}
+                                        ${isSelectedActivityDay ? 'ring-2 ring-yellow-500 bg-yellow-100' : ''}
                                         flex flex-col items-center justify-start
                                     `}
                                 >
@@ -152,7 +152,7 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
                                                     className={`h-1.5 w-1.5 rounded-full ${act.type === 'examen' ? 'bg-red-500' :
                                                         act.type === 'Organizacional' ? 'bg-blue-500' :
                                                             act.type === 'Interna' ? 'bg-purple-500' :
-                                                                act.type === 'Examen' ? 'bg-amber-500' : 'bg-green-500'
+                                                                act.type === 'Examen' ? 'bg-yellow-500' : 'bg-green-500'
                                                         }`}
                                                     title={act.name}
                                                 />

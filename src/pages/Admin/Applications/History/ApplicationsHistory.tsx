@@ -9,12 +9,12 @@ import {
     ChevronDown,
     ChevronRight,
     CheckCircle,
-    Loader2,
     Eye
 } from "lucide-react";
 import { useExamsHistory, useExamsByActivity } from "@/hooks/useActivities";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
+import { Loader } from "@/components/spinner/Loader";
 import { IExam } from "@/services/activities/activity.interface";
 
 interface ApplicationsHistoryProps {
@@ -37,10 +37,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                 <div className="space-y-4">
                     {isLoading && (
                         <div className="flex items-center justify-center py-16">
-                            <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                            <span className="ml-3 text-gray-600">
-                                Cargando historial...
-                            </span>
+                            <Loader message="Cargando historial..." />
                         </div>
                     )}
 
@@ -74,8 +71,8 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                             }
                                         >
                                             <div className="flex items-center gap-4">
-                                                <div className="h-12 w-12 rounded-full bg-linear-to-br from-amber-500/20 to-red-500/20 flex items-center justify-center">
-                                                    <Award className="h-6 w-6 text-amber-600" />
+                                                <div className="h-12 w-12 rounded-full bg-linear-to-br from-yellow-500/20 to-red-500/20 flex items-center justify-center">
+                                                    <Award className="h-6 w-6 text-yellow-600" />
                                                 </div>
                                                 <div>
                                                     <h3 className="font-bold text-lg text-gray-900">
@@ -104,11 +101,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                             <div className="p-5 border-t border-gray-200 bg-white">
                                                 {examsLoading && (
                                                     <div className="flex items-center justify-center py-8">
-                                                        <Loader2 className="h-6 w-6 animate-spin text-amber-600" />
-                                                        <span className="ml-2 text-gray-500">
-                                                            Cargando
-                                                            resultados...
-                                                        </span>
+                                                        <Loader size="sm" message="Cargando resultados..." />
                                                     </div>
                                                 )}
 
@@ -138,7 +131,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                                                             key={
                                                                                 exam.id
                                                                             }
-                                                                            className="p-4 border border-gray-200 rounded-lg hover:border-amber-400 transition-colors"
+                                                                            className="p-4 border border-gray-200 rounded-lg hover:border-yellow-400 transition-colors"
                                                                         >
                                                                             <div className="flex items-center justify-between mb-2">
                                                                                 <h4 className="font-semibold text-gray-900">
@@ -192,7 +185,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                                             <div className="mt-4 flex justify-center">
                                                                 <Button
                                                                     variant="outline"
-                                                                    className="border-amber-300 text-amber-700 hover:bg-amber-50"
+                                                                    className="border-yellow-300 text-yellow-700 hover:bg-yellow-50"
                                                                     onClick={() =>
                                                                         openExamDetail(
                                                                             examen.id,

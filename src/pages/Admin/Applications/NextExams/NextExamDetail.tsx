@@ -15,8 +15,8 @@ import {
     MapPin,
     ChevronRight,
     Users,
-    Loader2,
 } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { useAppliedStudents } from "@/hooks/useActivities";
 import { useApplicationsStore } from "@/stores/applications.store";
 import { dateFormatterIntoLong, timeFormatter } from "@/helpers/formatter";
@@ -30,7 +30,7 @@ const getBeltColor = (grado: string) => {
         Naranja: "bg-orange-100 text-orange-800 border-orange-300",
         Verde: "bg-green-100 text-green-800 border-green-300",
         Azul: "bg-blue-100 text-blue-800 border-blue-300",
-        Marrón: "bg-amber-800 text-white border-amber-900",
+        Marrón: "bg-yellow-800 text-white border-yellow-900",
         Negro: "bg-gray-900 text-white border-gray-950",
         Rojo: "bg-red-800 text-white border-red-900",
     };
@@ -47,12 +47,12 @@ function PostulantCard({ p, compact = false }: { p: IAppliedStudent; compact?: b
             className={`${
                 compact
                     ? "p-3 border border-gray-200 rounded-lg"
-                    : "p-4 border border-gray-200 rounded-xl hover:border-amber-300 transition-colors"
+                    : "p-4 border border-gray-200 rounded-xl hover:border-yellow-300 transition-colors"
             } bg-white`}
         >
             <div className="flex items-center gap-3">
                 <div
-                    className={`rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5 flex-shrink-0 ${
+                    className={`rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5 flex-shrink-0 ${
                         compact ? "h-9 w-9" : "h-10 w-10"
                     }`}
                 >
@@ -65,7 +65,7 @@ function PostulantCard({ p, compact = false }: { p: IAppliedStudent; compact?: b
                             />
                         ) : (
                             <span
-                                className={`font-bold text-amber-600 ${
+                                className={`font-bold text-yellow-600 ${
                                     compact ? "text-[10px]" : "text-xs"
                                 }`}
                             >
@@ -204,10 +204,7 @@ export default function NextExamDetail() {
             <div className="min-h-full p-6 w-full max-w-4xl mx-auto my-6">
                 <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
                     <div className="flex items-center justify-center py-20">
-                        <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                        <span className="ml-3 text-gray-600">
-                            Cargando postulaciones...
-                        </span>
+                        <Loader message="Cargando postulaciones..." />
                     </div>
                 </div>
             </div>
@@ -241,7 +238,7 @@ export default function NextExamDetail() {
         <div className="min-h-full p-6 w-full max-w-5xl mx-auto my-6">
             <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
                 {/* Header */}
-                <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 p-6">
+                <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 p-6">
                     <Button
                         variant="ghost"
                         size="sm"
@@ -253,9 +250,9 @@ export default function NextExamDetail() {
                     </Button>
 
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5">
+                        <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5">
                             <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                                <Award className="h-7 w-7 text-amber-600" />
+                                <Award className="h-7 w-7 text-yellow-600" />
                             </div>
                         </div>
                         <div>
@@ -315,7 +312,7 @@ export default function NextExamDetail() {
                     {/* Resumen General — Top 2 más avanzados */}
                     <div>
                         <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
-                            <Award className="h-5 w-5 text-amber-600" />
+                            <Award className="h-5 w-5 text-yellow-600" />
                             Postulantes con Examen Más Avanzado
                         </h3>
 
@@ -345,10 +342,10 @@ export default function NextExamDetail() {
                                         {top2Global.map((p: IAppliedStudent) => (
                                             <div
                                                 key={p.id}
-                                                className="p-5 border border-amber-200 bg-amber-50/40 rounded-xl"
+                                                className="p-5 border border-yellow-200 bg-yellow-50/40 rounded-xl"
                                             >
                                                 <div className="flex items-center gap-4">
-                                                    <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5 flex-shrink-0">
+                                                    <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5 flex-shrink-0">
                                                         <div className="h-full w-full rounded-full bg-white flex items-center justify-center overflow-hidden">
                                                             {p.user
                                                                 ?.profileImg ? (
@@ -361,7 +358,7 @@ export default function NextExamDetail() {
                                                                     className="h-full w-full object-cover"
                                                                 />
                                                             ) : (
-                                                                <span className="text-sm font-bold text-amber-600">
+                                                                <span className="text-sm font-bold text-yellow-600">
                                                                     {getInitials(
                                                                         p.user
                                                                             ?.name ??
@@ -380,7 +377,7 @@ export default function NextExamDetail() {
                                                             {p.user?.lastName ??
                                                                 ""}
                                                         </p>
-                                                        <p className="text-sm text-amber-700 font-medium mt-0.5">
+                                                        <p className="text-sm text-yellow-700 font-medium mt-0.5">
                                                             {p.ranks
                                                                 ?.martialArt
                                                                 ?.martialArt ??
@@ -439,7 +436,7 @@ export default function NextExamDetail() {
                     {martialArtGroups.length > 0 && (
                         <div>
                             <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
-                                <Users className="h-5 w-5 text-amber-600" />
+                                <Users className="h-5 w-5 text-yellow-600" />
                                 Por Arte Marcial
                             </h3>
 
@@ -456,7 +453,7 @@ export default function NextExamDetail() {
                                         >
                                             <div className="flex items-center justify-between">
                                                 <h4 className="font-bold text-gray-900 flex items-center gap-2">
-                                                    <span className="h-6 w-6 rounded bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-bold">
+                                                    <span className="h-6 w-6 rounded bg-yellow-100 text-yellow-700 flex items-center justify-center text-xs font-bold">
                                                         {group.name.charAt(
                                                             0,
                                                         )}

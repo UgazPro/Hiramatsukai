@@ -27,7 +27,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
             {filteredStudents.map((student) => (
                 <Card
                     key={student.id}
-                    className="border border-gray-300 bg-white hover:border-amber-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
+                    className="border border-gray-300 bg-white hover:border-yellow-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
                     onClick={() => {
                         selectStudent(student);
                         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -35,20 +35,20 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                 >
                     <CardContent className="p-0">
                         {/* Header */}
-                        <div className="bg-linear-to-r from-amber-50 to-red-50 p-4 border-b border-gray-200">
+                        <div className="bg-linear-to-r from-yellow-50 to-red-50 p-4 border-b border-gray-200">
                             <div className="flex items-start justify-between gap-2">
                                 <div className="flex items-center gap-3 min-w-0">
-                                    <div className="h-12 w-12 shrink-0 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5">
+                                    <div className="h-12 w-12 shrink-0 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5">
                                         <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
                                             {student.profileImg ? (
                                                 <img src={student.profileImg} className="h-full w-full rounded-full object-cover" alt={student.name} />
                                             ) : (
-                                                <User className="h-6 w-6 text-amber-600" />
+                                                <User className="h-6 w-6 text-yellow-600" />
                                             )}
                                         </div>
                                     </div>
                                     <div className="min-w-0">
-                                        <h3 className="font-bold text-sm text-gray-900 truncate group-hover:text-amber-700 transition-colors">
+                                        <h3 className="font-bold text-sm text-gray-900 truncate group-hover:text-yellow-700 transition-colors">
                                             {student.name} {student.lastName}
                                         </h3>
                                         <p className="text-xs text-gray-600 truncate">@{student.username}</p>
@@ -82,7 +82,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                 <div>
                                     <p className="text-xs text-gray-500 mb-1">Rol</p>
                                     <Badge className={`${student.rol.rol === 'Instructor' ? 'bg-red-100 text-red-800 border-red-200' :
-                                        'bg-amber-100 text-amber-800 border-amber-200'
+                                        'bg-yellow-100 text-yellow-800 border-yellow-200'
                                         } border font-medium`}>
                                         {student.rol.rol}
                                     </Badge>
@@ -130,7 +130,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    className="border-amber-300 text-amber-700 hover:bg-amber-50 hover:border-amber-400 flex-1 text-xs"
+                                    className="border-yellow-300 text-yellow-700 hover:bg-yellow-50 hover:border-yellow-400 flex-1 text-xs"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         startEdit(student);

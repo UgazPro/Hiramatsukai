@@ -32,7 +32,7 @@ export default function Kobudo() {
         },
         {
             title: "Nunchaku",
-            description: "Dos palos unidos por cadena o cuerda",
+            description: "Dos palos de madera unidos por una cadena o cuerda",
             icon: "ヌンチャク",
             bgIcon: "bg-linear-to-br from-purple-600 to-purple-800",
             bg: "bg-linear-to-br from-purple-100 to-purple-300",

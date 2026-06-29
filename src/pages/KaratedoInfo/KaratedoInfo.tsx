@@ -51,7 +51,7 @@ export default function KaratedoInfo() {
             description: "Técnicas lineales y poderosas",
             icon: Shield,
             color: "red",
-            examples: ["Tsuki directos", "Kicks frontales", "Bloqueos firmes"]
+            examples: ["Tsuki directos", "Patadas frontales", "Bloqueos firmes"]
         },
         {
             title: "Ju (Suavidad)",
@@ -65,7 +65,7 @@ export default function KaratedoInfo() {
             description: "Control del ki a través de la respiración",
             icon: Activity,
             color: "yellow",
-            examples: ["Respiración Ibuki", "Kiai controlado", "Meditación en movimiento"]
+            examples: ["Respiración profunda (ibuki)", "Kiai controlado", "Meditación en movimiento"]
         }
     ];
 
@@ -104,7 +104,7 @@ export default function KaratedoInfo() {
                                 las artes marciales chinas y las técnicas indígenas de Okinawa.
                             </p>
                             <p className="text-lg text-gray-700 mb-8">
-                                En Hiramatsukai, preservamos este legado enseñando el Goju-Ryu en su
+                                En la organización Hiramatsukai, preservamos este legado enseñando el Goju-Ryu en su
                                 forma más pura, manteniendo los katas originales y la filosofía del
                                 fundador.
                             </p>
@@ -513,7 +513,7 @@ export default function KaratedoInfo() {
                         exit={{ opacity: 0, y: -14 }}
                         transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                        <div className="container px-4">
+                        <div className="container px-4 mx-auto">
                             <div className="">
                                 <div className="text-center mb-12">
                                     <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
@@ -526,13 +526,13 @@ export default function KaratedoInfo() {
 
                                 <div className="grid md:grid-cols-2 gap-8">
                                     <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-5">Dojo Kun</h3>
+                                        <h3 className="text-2xl font-bold text-gray-900 mb-5">Dojo Kun (Principios Marciales)</h3>
                                         <ul className="space-y-3 text-gray-700 italic leading-relaxed">
                                             <li>Lealtad por mi maestro, mi escuela y los principios de mi arte.</li>
-                                            <li>Siempre me esforzare por lo bueno y rechazare lo malo.</li>
-                                            <li>Trabajare por la creacion de la armonia entre todas las personas.</li>
-                                            <li>Nunca utilizare la violencia.</li>
-                                            <li>Respetare la vida y lo natural.</li>
+                                            <li>Siempre me esforzaré por lo bueno y rechazaré lo malo.</li>
+                                            <li>Trabajaré por la creación de la armonía entre todas las personas.</li>
+                                            <li>Nunca utilizaré la violencia.</li>
+                                            <li>Respetaré la vida y lo natural.</li>
                                         </ul>
                                     </div>
 

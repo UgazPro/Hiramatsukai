@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import {
   ChevronRight,
   Eye,
-  Loader2,
   Search,
   User,
   Users,
@@ -21,6 +20,7 @@ import {
   CheckCircle,
   XCircle,
 } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { useSaveExam } from "@/hooks/useActivities";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { IAppliedStudent } from "@/services/activities/activity.interface";
@@ -130,10 +130,7 @@ export default function ApplyStudents({
 
           {isLoading && (
             <div className="flex items-center justify-center py-16">
-              <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-              <span className="ml-3 text-gray-600">
-                Cargando postulaciones...
-              </span>
+              <Loader message="Cargando postulaciones..." />
             </div>
           )}
 
@@ -162,13 +159,13 @@ export default function ApplyStudents({
                 return (
                   <Card
                     key={postulacion.id}
-                    className="h-full border border-gray-300 hover:border-amber-400 hover:shadow-lg transition-all duration-300 group"
+                    className="h-full border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 group"
                   >
                     <CardContent className="p-0 flex flex-col h-full">
-                      <div className="p-5 bg-gradient-to-br from-white to-amber-50 border-b border-gray-200 flex flex-col items-center text-center flex-shrink-0">
-                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-amber-500 to-red-500 p-0.5 mb-3">
+                      <div className="p-5 bg-gradient-to-br from-white to-yellow-50 border-b border-gray-200 flex flex-col items-center text-center flex-shrink-0">
+                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-0.5 mb-3">
                           <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                            <User className="h-7 w-7 text-amber-600" />
+                            <User className="h-7 w-7 text-yellow-600" />
                           </div>
                         </div>
                         <h3 className="font-bold text-gray-900 line-clamp-2 max-w-full">
@@ -233,7 +230,7 @@ export default function ApplyStudents({
                             <Button
                               variant="outline"
                               size="sm"
-                              className="flex-1 border-amber-300 text-amber-700 hover:bg-amber-50"
+                              className="flex-1 border-yellow-300 text-yellow-700 hover:bg-yellow-50"
                               onClick={() =>
                                 openManageDialog(
                                   postulacion.activityId,
@@ -387,7 +384,7 @@ export default function ApplyStudents({
             </Button>
             <Button
               disabled={isSaving}
-              className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white"
+              className="bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white"
               onClick={handleSaveResults}
             >
               {isSaving ? "Guardando..." : "Guardar Resultados"}

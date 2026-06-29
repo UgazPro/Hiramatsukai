@@ -19,7 +19,7 @@ export default function StudentsNoResults() {
 
             <div className="flex gap-3 justify-center">
                 <Button
-                    className="bg-amber-600 hover:bg-amber-700 text-white"
+                    className="bg-yellow-600 hover:bg-yellow-700 text-white"
                     onClick={startCreate}
                 >
                     <Plus className="h-4 w-4 mr-2" />

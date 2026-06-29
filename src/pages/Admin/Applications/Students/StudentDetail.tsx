@@ -7,7 +7,6 @@ import {
     CheckCircle,
     ChevronRight,
     GraduationCap,
-    Loader2,
     User,
     XCircle,
     CalendarDays,
@@ -17,6 +16,7 @@ import { useApplicationsStore } from "@/stores/applications.store";
 import { useStudents } from "@/hooks/useStudents";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { IExam } from "@/services/activities/activity.interface";
+import { Loader } from "@/components/spinner/Loader";
 import { IStudent, StudentRanks } from "@/services/students/student.interface";
 
 const getBeltColor = (grado: string) => {
@@ -26,7 +26,7 @@ const getBeltColor = (grado: string) => {
         Naranja: "bg-orange-100 text-orange-800 border-orange-300",
         Verde: "bg-green-100 text-green-800 border-green-300",
         Azul: "bg-blue-100 text-blue-800 border-blue-300",
-        Marrón: "bg-amber-800 text-white border-amber-900",
+        Marrón: "bg-yellow-800 text-white border-yellow-900",
         Negro: "bg-gray-900 text-white border-gray-950",
         Rojo: "bg-red-800 text-white border-red-900",
     };
@@ -60,7 +60,7 @@ export default function StudentDetail() {
     return (
         <div className="min-h-full p-6 w-full max-w-4xl mx-auto my-6">
             <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
-                <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 p-6">
+                <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 p-6">
                     <Button
                         variant="ghost"
                         size="sm"
@@ -72,7 +72,7 @@ export default function StudentDetail() {
                     </Button>
 
                     <div className="flex items-center gap-4">
-                        <div className="h-16 w-16 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5">
+                        <div className="h-16 w-16 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5">
                             <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
                                 {student?.profileImg ? (
                                     <img
@@ -81,7 +81,7 @@ export default function StudentDetail() {
                                         className="h-full w-full rounded-full object-cover"
                                     />
                                 ) : (
-                                    <User className="h-8 w-8 text-amber-600" />
+                                    <User className="h-8 w-8 text-yellow-600" />
                                 )}
                             </div>
                         </div>
@@ -152,10 +152,7 @@ export default function StudentDetail() {
                 <div className="p-6">
                     {isLoading && (
                         <div className="flex items-center justify-center py-16">
-                            <Loader2 className="h-8 w-8 animate-spin text-amber-600" />
-                            <span className="ml-3 text-gray-600">
-                                Cargando historial de exámenes...
-                            </span>
+                            <Loader message="Cargando historial de exámenes..." />
                         </div>
                     )}
 
@@ -175,7 +172,7 @@ export default function StudentDetail() {
                     {!isLoading && exams.length > 0 && (
                         <div className="space-y-4">
                             <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <Award className="h-5 w-5 text-amber-600" />
+                                <Award className="h-5 w-5 text-yellow-600" />
                                 Historial de Exámenes
                             </h3>
                             {exams.map((exam: IExam) => (

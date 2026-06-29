@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { useStudentsStore } from "@/stores/students.store";
 import { useDojoMartialArts, useDojoRanks, useDojos } from "@/hooks/useDojos";
 import { StudentFormValues, studentSchema } from "@/services/students/student.schema";
@@ -23,10 +24,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function StudentsForm() {
 
-    const [imageFile, setImageFile] = useState<File | null>(null);
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const prevDojoId = useRef<number | null>(null);
-
     const { data: dojoMartialArts = [] } = useDojoMartialArts();
     const { data: dojoRanks = [] } = useDojoRanks();
     const { data: dojos = [] } = useDojos();
@@ -36,8 +33,15 @@ export default function StudentsForm() {
 
     const { selectedStudent, mode, finishForm } = useStudentsStore();
 
-    const { mutateAsync: createStudent } = useCreateStudent();
-    const { mutateAsync: updateStudent } = useUpdateStudent();
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const [isFormLoading, setIsFormLoading] = useState(true);
+    const prevDojoId = useRef<number | null>(null);
+
+    const { mutateAsync: createStudent, isPending: isCreatePending } = useCreateStudent();
+    const { mutateAsync: updateStudent, isPending: isUpdatePending } = useUpdateStudent();
+
+    const isSubmitting = isCreatePending || isUpdatePending;
 
     const filteredRoles = useMemo(
         () => roles.filter(r => r.rol === "Estudiante" || r.rol === "Representante"),
@@ -60,35 +64,54 @@ export default function StudentsForm() {
             profileImg: '',
             birthday: new Date(),
             enrollmentDate: new Date(),
-            martialArtRank: [{ martialArtId: 0, rankId: 0 }],
+            martialArtRank: [],
         }
     });
 
     useEffect(() => {
+        if (!dojos.length) return;
+        if (mode === "edit" && (!selectedStudent || !filteredRoles.length)) return;
 
-        if (!selectedStudent || mode !== "edit") return;
-        if (!filteredRoles.length || !dojos.length) return;
-
-        if (mode === "edit" && selectedStudent) {
+        if (mode === "create") {
+            const defaultDojo = dojos.find(d => d.id === (user?.dojoId || 0));
+            const dojoMAs = defaultDojo?.dojoMartialArts ?? [];
             form.reset({
-                identification: selectedStudent.identification,
-                name: selectedStudent.name,
-                lastName: selectedStudent.lastName,
-                email: selectedStudent.email,
-                username: selectedStudent.username,
-                address: selectedStudent.address,
-                phone: selectedStudent.phone,
-                sex: selectedStudent.sex,
-                dojoId: selectedStudent.dojoId,
-                rolId: selectedStudent.rolId,
-                birthday: new Date(selectedStudent.birthday),
-                enrollmentDate: new Date(selectedStudent.enrollmentDate),
-                martialArtRank: selectedStudent.userRanks.map(r => ({
-                    martialArtId: r.martialArt.id,
-                    rankId: r.rank.id,
+                ...form.getValues(),
+                martialArtRank: dojoMAs.map(ma => ({
+                    martialArtId: ma.id,
+                    rankId: 0,
                 })),
             });
+            setIsFormLoading(false);
+            return;
         }
+
+        const studentDojo = dojos.find(d => d.id === selectedStudent!.dojoId);
+        const dojoMAs = studentDojo?.dojoMartialArts ?? [];
+
+        form.reset({
+            identification: selectedStudent!.identification,
+            name: selectedStudent!.name,
+            lastName: selectedStudent!.lastName,
+            email: selectedStudent!.email,
+            username: selectedStudent!.username,
+            address: selectedStudent!.address,
+            phone: selectedStudent!.phone,
+            sex: selectedStudent!.sex,
+            dojoId: selectedStudent!.dojoId,
+            rolId: selectedStudent!.rolId,
+            birthday: new Date(selectedStudent!.birthday),
+            enrollmentDate: new Date(selectedStudent!.enrollmentDate),
+            martialArtRank: dojoMAs.map(ma => {
+                const existing = selectedStudent!.userRanks.find(r => r.martialArt.id === ma.id);
+                return {
+                    martialArtId: ma.id,
+                    rankId: existing?.rank.id ?? 0,
+                };
+            }),
+        });
+
+        setIsFormLoading(false);
 
     }, [mode, selectedStudent, filteredRoles, dojos]);
 
@@ -97,11 +120,6 @@ export default function StudentsForm() {
     }
 
     const dojosOptions = dojos.filter(dojo => user?.rol.rol === "Administrador" ? dojos.map(d => d) : dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
-
-    const martialArtsOptions = dojoMartialArts.map(ma => ({
-        label: ma.martialArt,
-        value: ma.id
-    }));
 
     const ranksOptions = dojoRanks.map(rank => ({
         label: `${returnTitle(rank.code)} ${rank.belt} ${rank.rank_name}`,
@@ -135,17 +153,25 @@ export default function StudentsForm() {
     const watchedDojoId = form.watch("dojoId");
 
     useEffect(() => {
-        if (mode === "edit" && selectedStudent && prevDojoId.current === null) {
+        if (prevDojoId.current === null) {
             prevDojoId.current = watchedDojoId;
             return;
         }
 
-        if (prevDojoId.current !== null && prevDojoId.current !== watchedDojoId) {
-            form.setValue("martialArtRank", [{ martialArtId: 0, rankId: 0 }]);
+        if (prevDojoId.current !== watchedDojoId) {
+            const dojo = dojos.find(d => d.id === watchedDojoId);
+            const mas = dojo?.dojoMartialArts ?? [];
+            form.setValue(
+                "martialArtRank",
+                mas.map(ma => {
+                    const existing = selectedStudent?.userRanks.find(r => r.martialArt.id === ma.id);
+                    return { martialArtId: ma.id, rankId: existing?.rank.id ?? 0 };
+                })
+            );
         }
 
         prevDojoId.current = watchedDojoId;
-    }, [watchedDojoId]);
+    }, [watchedDojoId, dojos]);
 
     const selectedDojo = dojos.find(d => d.id === form.watch("dojoId"));
     const filteredDojoMartialArts = selectedDojo?.dojoMartialArts ?? [];
@@ -181,13 +207,23 @@ export default function StudentsForm() {
         finishForm();
     };
 
+    if (isFormLoading || isSubmitting) {
+        return (
+            <div className="p-4 w-full">
+                <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[400px]">
+                    <Loader size="lg" message="Cargando..." />
+                </div>
+            </div>
+        );
+    }
+
     return (
 
         <div className="p-4 w-full">
             <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
 
                 {/* Header */}
-                <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 px-6 py-4">
+                <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 px-6 py-4">
                     <div className="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-between items-center">
                         <div className="md:order-1 order-2">
                             <h2 className="text-xl font-bold text-gray-900">
@@ -264,7 +300,6 @@ export default function StudentsForm() {
                                     otherType={
                                         <MartialRanksComponent
                                             dojoMartialArts={filteredDojoMartialArts}
-                                            martialArtsOptions={martialArtsOptions}
                                             ranksOptions={ranksOptions}
                                             form={form}
                                         />
@@ -285,9 +320,13 @@ export default function StudentsForm() {
                                 </Button>
                                 <Button
                                     type="submit"
-                                    className="bg-red-700 hover:bg-red-800 cursor-pointer"
+                                    disabled={isSubmitting}
+                                    className="bg-red-700 hover:bg-red-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {mode === "create" ? "Guardar" : "Actualizar"}
+                                    {isSubmitting
+                                        ? (mode === "create" ? "Guardando..." : "Actualizando...")
+                                        : (mode === "create" ? "Guardar" : "Actualizar")
+                                    }
                                 </Button>
                             </div>
 

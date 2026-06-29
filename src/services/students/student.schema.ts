@@ -37,21 +37,7 @@ export const studentSchema = z.object({
 
   profileImg: z.string().optional(),
 
-  martialArtRank: z.array(martialArtRankSchema)
-    .refine(
-      ranks => {
-
-        const hasCompletePair = ranks.some(r => r.martialArtId > 0 && r.rankId > 0);
-        if (!hasCompletePair) return false;
-
-        const hasIncompletePair = ranks.some(r => 
-          (r.martialArtId > 0 && r.rankId === 0) ||
-          (r.martialArtId === 0 && r.rankId > 0)
-        );
-        return !hasIncompletePair;
-      },
-      { message: "Debe seleccionar un arte marcial y su rango" }
-    ),
+  martialArtRank: z.array(martialArtRankSchema),
 
 });
 

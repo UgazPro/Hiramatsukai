@@ -1,19 +1,18 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import {
   X,
-  UserCheck,
-  GraduationCap,
-  Loader2,
   Search,
   Check,
   CalendarDays,
-  Award,
   Users,
+  GraduationCap,
+  Award,
+  UserCheck,
 } from "lucide-react";
+import { Loader } from "@/components/spinner/Loader";
 import { useApplicationsStore } from "@/stores/applications.store";
 import {
   useUpcomingExams,
@@ -21,41 +20,101 @@ import {
   useAppliedStudents,
   useCreateAppliedStudent,
 } from "@/hooks/useActivities";
-import { useDojosInfo } from "@/hooks/useDojos";
+import { useDojosInfo, useDojoRanks } from "@/hooks/useDojos";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { ISuggestionStudentApplied } from "@/services/students/student.interface";
+import { IDojoRanks } from "@/services/dojos/dojo.interface";
 import { IAppliedStudent } from "@/services/activities/activity.interface";
 import { IToken, useUserData } from "@/helpers/token";
 
-const getBeltColor = (grado: string) => {
-  const colors: Record<string, string> = {
-    Blanco: "bg-gray-100 text-gray-800 border-gray-300",
-    Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
-    Naranja: "bg-orange-100 text-orange-800 border-orange-300",
-    Verde: "bg-green-100 text-green-800 border-green-300",
-    Azul: "bg-blue-100 text-blue-800 border-blue-300",
-    Marrón: "bg-amber-800 text-white border-amber-900",
-    Negro: "bg-gray-900 text-white border-gray-950",
-    Rojo: "bg-red-800 text-white border-red-900",
+const beltColors: Record<string, { bg: string; text: string; stripe: string }> =
+  {
+    Blanco: {
+      bg: "bg-gray-100",
+      text: "text-gray-800",
+      stripe: "bg-gray-300",
+    },
+    Amarillo: {
+      bg: "bg-yellow-100",
+      text: "text-yellow-800",
+      stripe: "bg-yellow-400",
+    },
+    Naranja: {
+      bg: "bg-orange-100",
+      text: "text-orange-800",
+      stripe: "bg-orange-400",
+    },
+    Verde: {
+      bg: "bg-green-100",
+      text: "text-green-800",
+      stripe: "bg-green-400",
+    },
+    Azul: {
+      bg: "bg-blue-100",
+      text: "text-blue-800",
+      stripe: "bg-blue-400",
+    },
+    Marrón: {
+      bg: "bg-amber-800",
+      text: "text-white",
+      stripe: "bg-amber-700",
+    },
+    Negro: {
+      bg: "bg-gray-900",
+      text: "text-white",
+      stripe: "bg-gray-800",
+    },
+    Rojo: {
+      bg: "bg-red-800",
+      text: "text-white",
+      stripe: "bg-red-600",
+    },
   };
-  return colors[grado] || "bg-gray-100 text-gray-800 border-gray-300";
+
+const getBeltStyle = (belt: string) =>
+  beltColors[belt] || beltColors["Blanco"];
+
+const martialArtIcons: Record<string, string> = {
+  Karate: "🥋",
+  Kobudo: "🔱",
 };
+
+function getMartialArtIcon(name: string) {
+  return martialArtIcons[name] || "🥋";
+}
+
+function onlyKarateAndKobudo(ma: { martialArt: string }) {
+  return ma.martialArt === "Karate" || ma.martialArt === "Kobudo";
+}
 
 export default function PostulationForm() {
   const { screen, selectedActivityId, closeForm } = useApplicationsStore();
   const { upcomingExams } = useUpcomingExams();
   const { suggestions, isLoading: suggestionsLoading } =
     useAppliedStudentSuggestions();
-  // const { data: martialArts = [] } = useDojoMartialArts();
   const user: IToken = useUserData() as IToken;
 
   const { data: dojo } = useDojosInfo(user.dojo.code || "");
   const { mutateAsync: createPostulation, isPending } =
     useCreateAppliedStudent();
+  const { data: ranks = [] } = useDojoRanks();
 
   const [selectedMartialArtId, setSelectedMartialArtId] = useState<number | null>(null);
   const [selectedStudentIds, setSelectedStudentIds] = useState<Set<number>>(new Set());
   const [searchTerm, setSearchTerm] = useState("");
+
+  const visibleMartialArts = useMemo(
+    () => (dojo?.dojoMartialArts || []).filter(onlyKarateAndKobudo),
+    [dojo],
+  );
+
+  const ranksMap = useMemo(() => {
+    const map = new Map<number, IDojoRanks>();
+    for (const r of ranks) {
+      map.set(Number(r.id), r);
+    }
+    return map;
+  }, [ranks]);
 
   const nextExam = useMemo(() => {
     const sorted = [...upcomingExams].sort(
@@ -70,17 +129,17 @@ export default function PostulationForm() {
 
   const { appliedStudents } = useAppliedStudents(nextExamId);
 
-  const appliedUserIds = useMemo(
-    () => new Set(appliedStudents.map((a: IAppliedStudent) => a.userId)),
+  const appliedUserMartialArtPairs = useMemo(
+    () => new Set(appliedStudents.map((a: IAppliedStudent) => `${a.userId}-${a.martialArtId}`)),
     [appliedStudents],
   );
 
   const eligibleStudents = useMemo(
     () =>
       suggestions.filter(
-        (s: ISuggestionStudentApplied) => s.suggested && !appliedUserIds.has(s.id),
+        (s: ISuggestionStudentApplied) => s.suggested,
       ),
-    [suggestions, appliedUserIds],
+    [suggestions],
   );
 
   const studentsForMartialArt = useMemo(
@@ -88,9 +147,9 @@ export default function PostulationForm() {
       eligibleStudents.filter((s: ISuggestionStudentApplied) =>
         s.suggestedByMartialArt.some(
           (ma) => ma.martialArtId === selectedMartialArtId && ma.suggested,
-        ),
+        ) && !appliedUserMartialArtPairs.has(`${s.id}-${selectedMartialArtId}`),
       ),
-    [eligibleStudents, selectedMartialArtId],
+    [eligibleStudents, selectedMartialArtId, appliedUserMartialArtPairs],
   );
 
   const filteredStudents = useMemo(
@@ -113,11 +172,11 @@ export default function PostulationForm() {
       counts[ma.id] = eligibleStudents.filter((s: ISuggestionStudentApplied) =>
         s.suggestedByMartialArt.some(
           (sma) => sma.martialArtId === ma.id && sma.suggested,
-        ),
+        ) && !appliedUserMartialArtPairs.has(`${s.id}-${ma.id}`),
       ).length;
     }
     return counts;
-  }, [dojo, eligibleStudents]);
+  }, [dojo, eligibleStudents, appliedUserMartialArtPairs]);
 
   useEffect(() => {
     if (selectedMartialArtId) {
@@ -160,255 +219,360 @@ export default function PostulationForm() {
   };
 
   return (
-    <div className="min-h-full p-6 w-full my-6">
-      <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
-        <div className="bg-linear-to-r from-amber-50 to-red-50 border-b border-gray-200 p-6">
-          <div className="flex justify-between items-start">
-            <div className="flex items-center gap-4">
-              <div className="h-14 w-14 rounded-full bg-linear-to-br from-amber-500 to-red-500 p-0.5">
-                <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                  <UserCheck className="h-7 w-7 text-amber-600" />
-                </div>
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">
-                  Nueva Postulación
-                </h2>
-                {nextExam && (
-                  <p className="text-gray-600 text-sm mt-1 flex items-center gap-2">
-                    <CalendarDays className="h-4 w-4" />
-                    {nextExam.name} —{" "}
-                    {dateFormatterIntoLong(nextExam.date)}
-                  </p>
-                )}
-              </div>
-            </div>
-            <Button variant="ghost" size="sm" onClick={closeForm}>
-              <X className="h-4 w-4" />
-            </Button>
+    <div className="m-4 h-[calc(100%-2rem)] w-[calc(100%-2rem)] flex flex-col bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+      {/* ─── Header ─── */}
+      <div className="flex items-center justify-between px-6 py-4 shrink-0 bg-gray-50/80 border-b border-gray-100">
+        <div className="flex items-center gap-3 min-w-0">
+          <div
+            className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0"
+            style={{ backgroundColor: "var(--redColor)" }}
+          >
+            <UserCheck className="h-5 w-5 text-white" />
+          </div>
+          <div className="min-w-0">
+            <h2 className="text-lg font-semibold text-gray-900 leading-tight">
+              Nueva Postulación
+            </h2>
+            {nextExam && (
+              <p className="text-xs text-gray-500 flex items-center gap-1.5 leading-tight">
+                <CalendarDays className="h-3 w-3" />
+                <span className="truncate">
+                  {nextExam.name} — {dateFormatterIntoLong(nextExam.date)}
+                </span>
+              </p>
+            )}
           </div>
         </div>
 
-        <div className="p-4 space-y-4">
-          {suggestionsLoading && (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-6 w-6 animate-spin text-amber-600" />
-              <span className="ml-2 text-gray-500">
-                Cargando alumnos sugeridos...
-              </span>
-            </div>
+        <div className="flex items-center gap-3 shrink-0">
+          {nextExam && (
+            <span className="hidden sm:flex items-center gap-1.5 text-xs text-gray-400">
+              <CalendarDays className="h-3 w-3" />
+              {dateFormatterIntoLong(nextExam.date)}
+            </span>
           )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={closeForm}
+            className="h-8 w-8 text-gray-400 hover:text-gray-600"
+          >
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
 
-          {!suggestionsLoading && !nextExam && (
-            <div className="text-center py-12 text-gray-500">
-              <Award className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-              <p className="font-medium">No hay exámenes próximos</p>
-              <p className="text-sm">
-                Debe existir al menos un examen programado para postular.
-              </p>
-            </div>
-          )}
+      {/* ─── Loading ─── */}
+      {suggestionsLoading && (
+        <div className="flex-1 flex items-center justify-center">
+          <Loader size="sm" message="Cargando alumnos sugeridos..." />
+        </div>
+      )}
 
-          {!suggestionsLoading && nextExam && eligibleStudents.length === 0 && (
-            <div className="text-center py-12 text-gray-500">
-              <GraduationCap className="h-12 w-12 mx-auto mb-3 text-gray-300" />
-              <p className="font-medium">No hay alumnos para postular</p>
-              <p className="text-sm">
-                Todos los alumnos elegibles ya han sido postulados a este
-                examen.
-              </p>
-            </div>
-          )}
+      {/* ─── No exam ─── */}
+      {!suggestionsLoading && !nextExam && (
+        <div className="flex-1 flex flex-col items-center justify-center gap-3 text-gray-400">
+          <div className="h-16 w-16 rounded-full bg-gray-50 flex items-center justify-center">
+            <Award className="h-8 w-8 text-gray-300" />
+          </div>
+          <div className="text-center">
+            <p className="font-medium text-gray-600">No hay exámenes próximos</p>
+            <p className="text-sm text-gray-400">
+              Debe existir al menos un examen programado para postular.
+            </p>
+          </div>
+        </div>
+      )}
 
-          {!suggestionsLoading && nextExam && eligibleStudents.length > 0 && (
-            <>
-              <div>
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">
-                  Arte Marcial
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {dojo?.dojoMartialArts.map((ma) => {
-                    const count = martialArtCounts[ma.id] || 0;
-                    const isSelected = selectedMartialArtId === ma.id;
-                    return (
-                      <button
-                        key={ma.id}
-                        type="button"
-                        disabled={count === 0}
-                        onClick={() =>
-                          setSelectedMartialArtId(
-                            isSelected ? null : ma.id,
-                          )
+      {/* ─── No eligible students ─── */}
+      {!suggestionsLoading && nextExam && eligibleStudents.length === 0 && (
+        <div className="flex-1 flex flex-col items-center justify-center gap-3 text-gray-400">
+          <div className="h-16 w-16 rounded-full bg-gray-50 flex items-center justify-center">
+            <GraduationCap className="h-8 w-8 text-gray-300" />
+          </div>
+          <div className="text-center">
+            <p className="font-medium text-gray-600">No hay alumnos para postular</p>
+            <p className="text-sm text-gray-400">
+              Todos los alumnos elegibles ya han sido postulados a este examen.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ─── Main Content ─── */}
+      {!suggestionsLoading && nextExam && eligibleStudents.length > 0 && (
+        <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
+            <section>
+              <div className="flex gap-1 p-1 bg-gray-100 rounded-xl">
+                {visibleMartialArts.map((ma) => {
+                  const count = martialArtCounts[ma.id] || 0;
+                  const isSelected = selectedMartialArtId === ma.id;
+                  const hasStudents = count > 0;
+
+                  return (
+                    <button
+                      key={ma.id}
+                      type="button"
+                      disabled={!hasStudents}
+                      onClick={() =>
+                        setSelectedMartialArtId(isSelected ? null : ma.id)
+                      }
+                      className={`
+                        flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all
+                        ${isSelected
+                          ? "shadow-sm"
+                          : hasStudents
+                            ? "bg-transparent text-gray-500 hover:bg-gray-200 hover:text-gray-800"
+                            : "bg-transparent text-gray-300 cursor-not-allowed"
                         }
-                        className={`p-4 rounded-xl border-2 transition-all duration-200 text-left ${isSelected
-                            ? "border-amber-500 bg-amber-50 shadow-md"
-                            : count > 0
-                              ? "border-gray-200 bg-white hover:border-amber-300 hover:shadow-sm"
-                              : "border-gray-100 bg-gray-50 opacity-50 cursor-not-allowed"
-                          }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div
-                            className={`h-10 w-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0 ${isSelected
-                                ? "bg-linear-to-br from-amber-500 to-red-500 text-white"
-                                : "bg-amber-100 text-amber-700"
-                              }`}
-                          >
-                            🥋
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <p className="font-semibold text-gray-900 truncate">
-                              {ma.martialArt}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {count} alumnos
-                            </p>
-                          </div>
-                          {isSelected && (
-                            <div className="ml-auto h-6 w-6 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
-                              <Check className="h-4 w-4 text-white" />
-                            </div>
-                          )}
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
+                      `}
+                      style={{
+                        backgroundColor: isSelected ? "#000" : undefined,
+                        color: isSelected ? "#fff" : undefined,
+                      }}
+                    >
+                      <span className="text-base">{getMartialArtIcon(ma.martialArt)}</span>
+                      <span>{ma.martialArt}</span>
+                      {count > 0 && (
+                        <span
+                          className={`
+                            text-[10px] px-1.5 py-0.5 rounded-full font-medium tabular-nums
+                            ${isSelected
+                              ? "bg-white/20 text-white"
+                              : "bg-gray-200 text-gray-500"
+                            }
+                          `}
+                        >
+                          {count}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
+            </section>
 
-              {selectedMartialArtId && (
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                      Alumnos para postular
-                    </h3>
-                    <span className="text-sm text-gray-500">
-                      {selectedStudentIds.size} de{" "}
-                      {studentsForMartialArt.length} seleccionados
-                    </span>
-                  </div>
-
-                  <div className="relative mb-4">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            {selectedMartialArtId && (
+              <section>
+                <div className="flex items-center gap-3 mb-4">
+                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                    Alumnos para postular
+                  </h3>
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-300 pointer-events-none" />
                     <Input
-                      placeholder="Buscar alumno..."
+                      placeholder="Buscar alumno por nombre o cédula..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10 bg-white border-gray-300"
+                      className="pl-9 h-9 text-sm bg-gray-50 border-gray-100 rounded-lg placeholder:text-gray-300 focus-visible:bg-white focus-visible:border-gray-300 transition-all w-full"
                     />
                   </div>
+                  <span className="text-xs font-medium text-gray-500 tabular-nums whitespace-nowrap">
+                    {selectedStudentIds.size} de{" "}
+                    {studentsForMartialArt.length} seleccionados
+                  </span>
+                </div>
 
-                  {filteredStudents.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 max-h-80 overflow-y-auto pr-1">
-                      {filteredStudents.map((student: ISuggestionStudentApplied) => {
-                        const isSelected =
-                          selectedStudentIds.has(student.id);
+                {filteredStudents.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pb-1">
+                    {filteredStudents.map(
+                      (student: ISuggestionStudentApplied) => {
+                        const isSelected = selectedStudentIds.has(student.id);
                         const targetInfo =
                           student.suggestedByMartialArt.find(
                             (ma) =>
                               ma.martialArtId === selectedMartialArtId,
-                          );
+                          ) as (typeof student.suggestedByMartialArt)[number] & {
+                            lastExamDate: string | null;
+                          } | undefined;
+                        const postulationRank =
+                          targetInfo?.postulationRank;
+                        const hasLastExam =
+                          targetInfo?.lastExamDate ?? null;
+                        const currentRank =
+                          hasLastExam && postulationRank
+                            ? ranksMap.get(postulationRank.id - 1) ?? null
+                            : null;
+                        const currentRankBelt =
+                          currentRank?.belt || "";
+                        const targetRankBelt =
+                          postulationRank?.belt || "";
+                        const currentBeltStripe = currentRankBelt
+                          ? getBeltStyle(currentRankBelt).stripe
+                          : "bg-gray-200";
+                        const targetBeltStripe = targetRankBelt
+                          ? getBeltStyle(targetRankBelt).stripe
+                          : "bg-gray-200";
 
                         return (
                           <button
                             type="button"
                             key={student.id}
                             onClick={() => toggleStudent(student.id)}
-                            className={`text-left w-full p-4 rounded-xl border-2 transition-all duration-200 ${isSelected
-                                ? "border-amber-500 bg-amber-50 shadow-md"
-                                : "border-gray-200 bg-white hover:border-amber-300 hover:shadow-sm"
-                              }`}
+                            className={`
+                              group relative text-left w-full rounded-xl border transition-all duration-200 overflow-hidden
+                              ${isSelected
+                                ? "shadow-sm"
+                                : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-sm hover:bg-gray-50/50"
+                            }
+                            `}
+                            style={{
+                              borderColor: isSelected
+                                ? "#000"
+                                : undefined,
+                              backgroundColor: isSelected
+                                ? "#f3f4f6"
+                                : undefined,
+                            }}
                           >
-                            <div className="flex items-center gap-3">
-                              <div
-                                className={`h-10 w-10 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold ${isSelected
-                                    ? "bg-linear-to-br from-amber-500 to-red-500 text-white"
-                                    : "bg-gray-200 text-gray-600"
-                                  }`}
-                              >
-                                {getInitials(
-                                  student.name,
-                                  student.lastName,
-                                )}
-                              </div>
-                              <div className="min-w-0 flex-1">
-                                <p className="font-semibold text-gray-900 text-sm truncate">
-                                  {student.name} {student.lastName}
-                                </p>
-                                <p className="text-xs text-gray-500 truncate">
-                                  {student.identification || "Sin cédula"}
-                                </p>
-                              </div>
-                              <div
-                                className={`h-5 w-5 rounded border-2 flex-shrink-0 flex items-center justify-center ${isSelected
-                                    ? "bg-amber-500 border-amber-500"
-                                    : "border-gray-300"
-                                  }`}
-                              >
-                                {isSelected && (
-                                  <Check className="h-3 w-3 text-white" />
-                                )}
+                            <div className="p-3.5">
+                              <div className="flex items-start gap-3">
+                                {/* Avatar */}
+                                <div
+                                  className={`
+                                    h-10 w-10 rounded-full shrink-0 flex items-center justify-center text-xs font-bold
+                                    transition-all duration-200
+                                    ${currentRankBelt ? getBeltStyle(currentRankBelt).bg : "bg-gray-100"}
+                                    ${currentRankBelt ? getBeltStyle(currentRankBelt).text : "text-gray-500"}
+                                  `}
+                                  style={{
+                                    outline: isSelected
+                                      ? "2px solid #000"
+                                      : undefined,
+                                    outlineOffset: isSelected
+                                      ? "2px"
+                                      : undefined,
+                                  }}
+                                >
+                                  {getInitials(
+                                    student.name,
+                                    student.lastName,
+                                  )}
+                                </div>
+
+                                <div className="min-w-0 flex-1 pt-0.5">
+                                  <p className="text-sm font-semibold text-gray-900 truncate leading-tight">
+                                    {student.name} {student.lastName}
+                                  </p>
+                                  <p className="text-xs text-gray-400 truncate mt-0.5">
+                                    {student.identification || "Sin cédula"}
+                                  </p>
+
+                                  {/* Current → Target rank */}
+                                  <div className="mt-2.5 flex items-center gap-2">
+                                    <div className="flex items-center gap-1">
+                                      <div
+                                        className={`h-2.5 w-2.5 rounded-full ${currentBeltStripe} shrink-0`}
+                                      />
+                                      <span className="text-[10px] text-gray-400 leading-none">
+                                        {currentRankBelt || "Blanco"}
+                                      </span>
+                                    </div>
+                                    <span className="text-[10px] text-gray-300 leading-none">→</span>
+                                    <div className="flex items-center gap-1">
+                                      <div
+                                        className={`h-2.5 w-2.5 rounded-full ${targetBeltStripe} shrink-0`}
+                                      />
+                                      <span className="text-[10px] font-semibold text-gray-700 leading-none">
+                                        {targetRankBelt}
+                                      </span>
+                                    </div>
+                                    {isSelected && (
+                                      <Check
+                                        className="h-3 w-3 ml-auto shrink-0"
+                                        style={{
+                                          color: "#000",
+                                        }}
+                                      />
+                                    )}
+                                  </div>
+                                </div>
                               </div>
                             </div>
 
-                            {targetInfo?.postulationRank && (
-                              <div className="mt-2 flex items-center gap-2">
-                                <Badge
-                                  variant="outline"
-                                  className={`text-xs ${getBeltColor(targetInfo.postulationRank.belt)}`}
-                                >
-                                  {targetInfo.martialArt} →{" "}
-                                  {targetInfo.postulationRank.belt}
-                                </Badge>
-                              </div>
-                            )}
+                            {/* Selection bar */}
+                            <div
+                              className="h-0.5 w-full transition-all duration-300"
+                              style={{
+                                backgroundColor: isSelected
+                                  ? "#000"
+                                  : "transparent",
+                              }}
+                            />
                           </button>
                         );
-                      })}
-                    </div>
-                  )}
-
-                  {filteredStudents.length === 0 && (
-                    <div className="text-center py-8 text-gray-500">
-                      <Users className="h-10 w-10 mx-auto mb-2 text-gray-300" />
-                      <p className="text-sm">No se encontraron alumnos</p>
-                    </div>
-                  )}
-                </div>
-              )}
-            </>
-          )}
-
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-            <Button
-              type="button"
-              variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-100"
-              onClick={closeForm}
-            >
-              Cancelar
-            </Button>
-            {eligibleStudents.length > 0 && (
-              <Button
-                type="button"
-                disabled={
-                  !selectedMartialArtId ||
-                  selectedStudentIds.size === 0 ||
-                  isPending
-                }
-                className="bg-linear-to-r from-amber-600 to-red-600 hover:from-amber-500 hover:to-red-500 text-white disabled:bg-gray-400 disabled:cursor-not-allowed"
-                onClick={handleSubmit}
-              >
-                {isPending
-                  ? "Postulando..."
-                  : selectedStudentIds.size > 0
-                    ? `Postular (${selectedStudentIds.size})`
-                    : "Postular"}
-              </Button>
+                      },
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+                    <Users className="h-8 w-8 mb-2 text-gray-200" />
+                    <p className="text-sm font-medium text-gray-500">
+                      {searchTerm
+                        ? "No se encontraron alumnos"
+                        : "No hay alumnos disponibles"}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      {searchTerm
+                        ? "Intenta con otro nombre o cédula"
+                        : "Todos los alumnos elegibles ya fueron postulados"}
+                    </p>
+                  </div>
+                )}
+              </section>
             )}
           </div>
+
+          {/* ─── Footer ─── */}
+          <div className="shrink-0 border-t border-gray-100 px-6 py-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-xs text-gray-400 hidden sm:block">
+                {selectedStudentIds.size > 0
+                  ? `${selectedStudentIds.size} ${selectedStudentIds.size === 1 ? "alumno seleccionado" : "alumnos seleccionados"}`
+                  : "Selecciona un arte marcial y los alumnos a postular"}
+              </p>
+              <div className="flex items-center gap-2 ml-auto">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={closeForm}
+                  className="h-9 px-4 text-sm text-gray-500 border-gray-200 hover:text-gray-700 hover:bg-gray-50"
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  type="button"
+                  disabled={
+                    !selectedMartialArtId ||
+                    selectedStudentIds.size === 0 ||
+                    isPending
+                  }
+                  onClick={handleSubmit}
+                  style={{
+                    backgroundColor:
+                      !selectedMartialArtId || selectedStudentIds.size === 0
+                        ? undefined
+                        : "var(--redColor)",
+                  }}
+                  className="h-9 px-5 text-sm text-white font-medium border-0 transition-all disabled:bg-gray-300"
+                >
+                  {isPending ? (
+                    <span className="flex items-center gap-2">
+                      <span className="h-3.5 w-3.5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+                      Postulando...
+                    </span>
+                  ) : selectedStudentIds.size > 0 ? (
+                    `Postular (${selectedStudentIds.size})`
+                  ) : (
+                    "Postular"
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

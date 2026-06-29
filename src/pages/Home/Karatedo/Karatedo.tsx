@@ -8,7 +8,7 @@ export default function Karatedo() {
   const cardsKarate: CardComponentProps[] = [
     {
       title: "Fuerza (Go)",
-      description: 'Tecnicas lineales y poderosas',
+      description: 'Técnicas lineales y poderosas',
       icon: "力",
       bgIcon: "bg-linear-to-br from-red-500 to-red-800",
       bg: "bg-linear-to-br from-red-200 to-red-300",
@@ -49,8 +49,8 @@ export default function Karatedo() {
               </div>
 
               <p className="text-lg text-gray-700 leading-relaxed">
-                Estilo tradicional de karate fundado por el maestro
-                <span className="font-semibold text-yellow-600"> Chojun Miyagi</span>.
+                Estilo tradicional de karatedo fundado por el maestro
+                <span className="font-semibold text-yellow-600"> Chōjun Miyagi</span>.
                 Su nombre significa "estilo duro-suave", combinando técnicas poderosas
                 con movimientos circulares y fluidos.
               </p>

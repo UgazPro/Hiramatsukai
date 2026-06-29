@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { MdWhatsapp } from "react-icons/md";
+import { Loader } from "@/components/spinner/Loader";
 import {
   MapPin, Mail, Globe, Clock,
   Sword, Target, Zap, Instagram, Facebook, Youtube, Twitter, ChevronRight,
@@ -13,6 +14,7 @@ import {
   Quote, Shield, Users as UsersLucide,
   Award as AwardLucide
 } from "lucide-react";
+import { FaRegUserCircle } from "react-icons/fa";
 import CarouselComponent from "@/components/CarouselComponent";
 import { useDojosInfo } from "@/hooks/useDojos";
 import { useParams } from "react-router";
@@ -267,7 +269,7 @@ export default function DojoPage() {
 
   const { id } = useParams();
 
-  const dojo: IDojoInfo | undefined = useDojosInfo(id || "").data;
+  const { data: dojo, isLoading } = useDojosInfo(id || "");
 
   const getBannerDojo = (dojo: IDojoInfo): string => {
     const findBanner = dojo.dojoImages.find(img => img.type === "banner");
@@ -452,6 +454,14 @@ export default function DojoPage() {
   }
 
   const currentDiscipline = dojoData.disciplines.find(d => d.id === activeDiscipline);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader size="lg" message="Cargando información del Dojo..." />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -809,11 +819,17 @@ export default function DojoPage() {
                           <CardContent className="p-6">
                             <div className="text-center mb-6">
                               <div className="h-32 w-32 mx-auto rounded-full overflow-hidden border-4 border-gray-300 mb-4">
-                                <img
+                                {master.profileImg.trim() != '' ? (
+                                  <img
                                   src={getProfileImg(master)}
                                   alt={master.name}
                                   className="w-full h-full object-cover"
-                                />
+                                  />
+                                ) : (
+                                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                                      <FaRegUserCircle className="text-gray-500 text-6xl" />
+                                  </div>
+                                )}
                               </div>
                               <h3 className="text-xl font-bold text-gray-900">{master.userRanks[0].rank.rank_name} {master.name}</h3>
                               <p className="text-red-600 font-medium">{master.rol.rol}</p>

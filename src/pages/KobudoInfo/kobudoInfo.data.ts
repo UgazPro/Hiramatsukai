@@ -53,7 +53,7 @@ export const mainWeapons = [
     {
         id: "kai",
         name: "Kai",
-        description: "Remo okyanawense",
+        description: "Remo okinawense",
         icon: GiStickGrenade,
         length: "160-180 cm",
         material: "Madera de camelia",

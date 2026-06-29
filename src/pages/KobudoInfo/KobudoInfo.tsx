@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Book } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 import { AnimatePresence, motion } from "motion/react";
@@ -29,6 +29,17 @@ export default function KobudoInfo() {
         kai: "linear-gradient(90deg, #166534 0%, #15803d 100%)",
     };
 
+    const [showAllKatas, setShowAllKatas] = useState(false);
+    const weaponKatas = selectedWeaponData
+        ? katas.filter(k => k.weapon === selectedWeaponData.name)
+        : [];
+    const visibleKatas = showAllKatas ? weaponKatas : weaponKatas.slice(0, 3);
+    const hasMoreKatas = weaponKatas.length > 3;
+
+    useEffect(() => {
+        setShowAllKatas(false);
+    }, [selectedWeapon]);
+
     return (
         <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
             <section className="relative">
@@ -54,8 +65,8 @@ export default function KobudoInfo() {
                                 tradición Matayoshi con los refinamientos técnicos de la Jinbukai.
                             </p>
                             <p className="text-lg text-gray-700 mb-8">
-                                En Hiramatsukai, enseñamos el Kobudo como un sistema completo de
-                                armas tradicionales, preservando las katas originales y las aplicaciones
+                                En la organización Hiramatsukai, enseñamos el Kobudo como un sistema completo de
+                                armas tradicionales, preservando los katas originales y las aplicaciones
                                 prácticas de cada arma.
                             </p>
                         </div>
@@ -196,28 +207,47 @@ export default function KobudoInfo() {
                             <div className="p-8">
                                 <h4 className="text-2xl font-bold text-gray-900 mb-6">Katas Específicos</h4>
                                 <div className="space-y-4">
-                                    {katas
-                                        .filter(kata => kata.weapon === selectedWeaponData.name)
-                                        .map((kata, index) => (
-                                            <motion.div
-                                                key={index}
-                                                initial={{ opacity: 0, x: 12 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 0.06 * index, duration: 0.22 }}
-                                                className="flex items-center justify-between p-4 bg-gray-50 rounded-xl"
-                                            >
-                                                <div>
-                                                    <h5 className="font-bold text-gray-900">{kata.name}</h5>
-                                                    <div className="flex items-center gap-4 mt-1">
-                                                        <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                                                            {kata.level}
-                                                        </span>
-                                                        <span className="text-sm text-gray-600">{kata.style}</span>
-                                                    </div>
+                                    {visibleKatas.map((kata, index) => (
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, x: 12 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.06 * index, duration: 0.22 }}
+                                            className="flex items-center justify-between p-4 bg-gray-50 rounded-xl"
+                                        >
+                                            <div>
+                                                <h5 className="font-bold text-gray-900">{kata.name}</h5>
+                                                <div className="flex items-center gap-4 mt-1">
+                                                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                                                        {kata.level}
+                                                    </span>
+                                                    <span className="text-sm text-gray-600">{kata.style}</span>
                                                 </div>
-                                                <Book className="h-6 w-6 text-gray-400" />
-                                            </motion.div>
-                                        ))}
+                                            </div>
+                                            <Book className="h-6 w-6 text-gray-400" />
+                                        </motion.div>
+                                    ))}
+
+                                    {hasMoreKatas && (
+                                        <motion.button
+                                            layout
+                                            onClick={() => setShowAllKatas(prev => !prev)}
+                                            className="w-full mt-4 py-3 px-4 rounded-xl font-bold text-sm transition-all duration-200 cursor-pointer"
+                                            style={{
+                                                background: showAllKatas
+                                                    ? "transparent"
+                                                    : gradientByWeapon[selectedWeaponData.id],
+                                                color: showAllKatas
+                                                    ? accentByWeapon[selectedWeaponData.id]
+                                                    : "#ffffff",
+                                                border: showAllKatas
+                                                    ? `2px solid ${accentByWeapon[selectedWeaponData.id]}`
+                                                    : "2px solid transparent",
+                                            }}
+                                        >
+                                            {showAllKatas ? "▲ Mostrar menos" : `▼ Ver más (${weaponKatas.length - 3} restantes)`}
+                                        </motion.button>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>
