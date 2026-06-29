@@ -48,7 +48,7 @@ export default function Dojos() {
 
                     <div className="mt-10">
 
-                        {isLoading ? <Loader message="Cargando dojos..." /> : (
+                        {isLoading ? <div className="flex flex-col items-center gap-2"><Loader message="Cargando dojos..." /></div> : (
                             <ul id="dojo-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                                 <AnimatePresence mode="popLayout">
                                     {visibleDojos.map((dojo, index) => (
