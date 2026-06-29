@@ -8,7 +8,6 @@ import { useActivities } from "@/hooks/useActivities";
 import { useActivitiesStore, ActivityViewMode } from "@/stores/activities.store";
 import CalendarComponent from "@/components/calendar/CalendarComponent";
 import { useEffect } from "react";
-import { Loader } from "@/components/spinner/Loader";
 import PageTransitionComponent from "@/components/PageTransitionComponent";
 import ActivityDetailView from "./ActivityDetailView/ActivityDetailView";
 import ActivityForm from "./ActivityForm/ActivityForm";
@@ -18,6 +17,7 @@ import ActivityFilter from "./ActivityFilters/ActivityFilter";
 import SearchFilterComponent from "@/components/Filters/SearchFilter";
 import { useFilteredActivities } from "@/hooks/useFilteredActivities";
 import ActivityCardView from "./ActivityCardView";
+import ActivitiesSkeleton from "./ActivitiesSkeleton";
 
 export default function Activities() {
 
@@ -179,9 +179,7 @@ export default function Activities() {
               </div>
 
               {isLoading ? (
-                <div className="flex items-center justify-center py-20">
-                  <Loader size="lg" message="Cargando actividades..." />
-                </div>
+                <ActivitiesSkeleton />
               ) : (
                 <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
 
