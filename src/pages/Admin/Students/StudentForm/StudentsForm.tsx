@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Loader } from "@/components/spinner/Loader";
 import { useStudentsStore } from "@/stores/students.store";
-import { useDojoMartialArts, useDojoRanks, useDojos } from "@/hooks/useDojos";
+import { useDojoRanks, useDojos } from "@/hooks/useDojos";
 import { StudentFormValues, studentSchema } from "@/services/students/student.schema";
 import { useCreateStudent, useUpdateStudent } from "@/queries/useStudentMutations";
 import { useUserData } from "@/helpers/token";
@@ -24,7 +24,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function StudentsForm() {
 
-    const { data: dojoMartialArts = [] } = useDojoMartialArts();
+    // const { data: dojoMartialArts = [] } = useDojoMartialArts();
     const { data: dojoRanks = [] } = useDojoRanks();
     const { data: dojos = [] } = useDojos();
     const { data: roles = [] } = useRoles();
