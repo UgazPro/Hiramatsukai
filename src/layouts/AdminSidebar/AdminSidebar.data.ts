@@ -5,6 +5,7 @@ import { FaMoneyBillWave } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiAncientGateFill } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 
 export interface SidebarContent {
   name: string;
@@ -18,6 +19,12 @@ export const sidebarData: SidebarContent[] = [
     name: "Mi Dojo",
     icon: RiAncientGateFill,
     redirectTo: "/admin",
+    active: false,
+  },
+  {
+    name: "Yo",
+    icon: FaUser,
+    redirectTo: "/admin/yo",
     active: false,
   },
   {

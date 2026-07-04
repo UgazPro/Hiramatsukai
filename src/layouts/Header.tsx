@@ -7,11 +7,11 @@ import { DecodedToken } from "@/services/auth/auth.interface";
 import { useUserData } from "@/helpers/token";
 import { House, ChevronDown, LogOut, LayoutDashboard, Building2 } from "lucide-react";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
 export default function Header() {
@@ -112,10 +112,17 @@ export default function Header() {
                                     </DropdownMenuItem>
                                 )}
 
-                                {!location.pathname.startsWith("/admin") && (user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor") && (
+                                {!location.pathname.startsWith("/admin") && (user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor" || user?.rol?.rol === "Instructor" ) && (
                                     <DropdownMenuItem onClick={() => navigate("/admin")}>
                                         <LayoutDashboard className="h-4 w-4 mr-2" />
                                         Panel Administrativo
+                                    </DropdownMenuItem>
+                                )}
+
+                                {!location.pathname.startsWith("/admin") && (user?.rol?.rol !== "Administrador" && user?.rol?.rol !== "Líder Instructor" && user?.rol?.rol !== "Instructor" ) && (
+                                    <DropdownMenuItem onClick={() => navigate("/admin/yo")}>
+                                        <LayoutDashboard className="h-4 w-4 mr-2" />
+                                        Mi perfil
                                     </DropdownMenuItem>
                                 )}
 

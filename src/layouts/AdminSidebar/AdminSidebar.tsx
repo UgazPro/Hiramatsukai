@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link, useLocation } from "react-router";
 import { sidebarData } from "./AdminSidebar.data";
 import { LogOut } from "lucide-react";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useAuthStore } from "@/stores/auth.store";
+import { useStudentsStore } from "@/stores/students.store";
+import { useUserData } from "@/helpers/token";
+import { queryClient } from "@/main";
 
 export default function AdminSidebar() {
   const [showSpinner, setShowSpinner] = useState(false);
@@ -11,11 +14,22 @@ export default function AdminSidebar() {
 
   const location = useLocation();
   const logout = useAuthStore((s) => s.logout);
+  const user = useUserData();
+
+  const restrictedNames = ["Alumnos", "Pagos", "Configuración", "Mi Dojo"];
+  const isRestricted = user?.rol.rol === "Estudiante" || user?.rol.rol === "Representante";
+
+  const filteredSidebarData = useMemo(() => {
+    if (!isRestricted) return sidebarData;
+    return sidebarData.filter((item) => !restrictedNames.includes(item.name));
+  }, [isRestricted]);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
     setShowSpinner(true);
 
+    useStudentsStore.getState().clearSelectedStudent();
+    queryClient.clear();
     logout();
   };
 
@@ -56,7 +70,7 @@ export default function AdminSidebar() {
 
           {/* Navigation Items */}
           <nav className="space-y-3">
-            {sidebarData.map((item, index) => {
+            {filteredSidebarData.map((item, index) => {
               const isActive = item.redirectTo === location.pathname;
 
               return (
@@ -106,7 +120,7 @@ export default function AdminSidebar() {
       {/* Mobile Sidebar */}
       <div className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-black text-white">
         <div className="flex h-full items-center justify-around px-1 overflow-x-auto">
-          {sidebarData.map((item, index) => (
+          {filteredSidebarData.map((item, index) => (
             <Link
               key={index}
               to={item.redirectTo}

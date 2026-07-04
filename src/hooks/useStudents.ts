@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getRoles, getUserAllInfo, getUsers } from "@/services/students/student.service";
-import { IStudentAllInfo } from "@/services/students/student.interface";
+import { getRoles, getUserAllInfo, getUsers, getMe } from "@/services/students/student.service";
+import { IStudent, IStudentAllInfo } from "@/services/students/student.interface";
 import { getUserDataSafe } from "@/helpers/token";
 
 export const useStudents = () => {
@@ -33,7 +33,11 @@ export const useStudentAllInfo = (userId: number | null) => {
   });
 };
 
-
-
-
+export const useMe = () => {
+  return useQuery<IStudent>({
+    queryKey: ["me"],
+    queryFn: getMe,
+    staleTime: 1000 * 60 * 5,
+  });
+};
 

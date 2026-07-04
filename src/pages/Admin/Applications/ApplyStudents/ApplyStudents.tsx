@@ -24,6 +24,7 @@ import { Loader } from "@/components/spinner/Loader";
 import { useSaveExam } from "@/hooks/useActivities";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { IAppliedStudent } from "@/services/activities/activity.interface";
+import { useUserData } from "@/helpers/token";
 
 interface ApplyStudentsProps {
   activeTab: string;
@@ -45,6 +46,9 @@ export default function ApplyStudents({
   martialArtsMap,
 }: ApplyStudentsProps) {
   const { mutateAsync: saveExam, isPending: isSaving } = useSaveExam();
+
+  const userData = useUserData();
+  const canManage = userData?.rol.rol !== "Estudiante";
 
   const [manageDialogOpen, setManageDialogOpen] = useState(false);
   const [manageActivity, setManageActivity] = useState<{ id: number; name?: string; date?: Date } | null>(null);
@@ -116,17 +120,19 @@ export default function ApplyStudents({
     <>
       {activeTab === "postulaciones" && (
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                placeholder="Buscar postulante..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white border-gray-300"
-              />
+          {canManage && (
+            <div className="flex flex-col sm:flex-row gap-4">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  placeholder="Buscar postulante..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 bg-white border-gray-300"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           {isLoading && (
             <div className="flex items-center justify-center py-16">
@@ -226,7 +232,7 @@ export default function ApplyStudents({
                         )}
 
                         <div className="pt-4 mt-auto flex gap-2">
-                          {passed ? (
+                          {passed && canManage ? (
                             <Button
                               variant="outline"
                               size="sm"

@@ -1,4 +1,6 @@
 import { useAuthStore } from "@/stores/auth.store";
+import { useStudentsStore } from "@/stores/students.store";
+import { queryClient } from "@/main";
 import axios from "axios";
 
 export const api = axios.create({
@@ -153,6 +155,8 @@ api.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             useAuthStore.getState().logout();
+            useStudentsStore.getState().clearSelectedStudent();
+            queryClient.clear();
             window.location.href = "/login";
         }
 

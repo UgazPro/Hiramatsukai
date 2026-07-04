@@ -17,8 +17,8 @@ export const getUserAllInfo = async (userId: number) => {
     return await getDataApi(`${usersUrl}/detail/${userId}`);
 }
 
-
-
-
+export const getMe = async () : Promise<IStudent> => {
+    return await getDataApi(`${usersUrl}/info`);
+}
 
 

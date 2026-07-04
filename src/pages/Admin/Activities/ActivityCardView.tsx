@@ -7,6 +7,7 @@ import { useActivitiesStore } from "@/stores/activities.store";
 import { useDeleteActivity } from "@/queries/useActivityMutations";
 import { DeleteDialog } from "@/components/deleteDialog";
 import FieldBadge from "@/components/table/RenderTableComponents";
+import { useUserData } from "@/helpers/token";
 
 interface ActivityCardViewProps {
     filteredActivities: IActivity[];
@@ -17,6 +18,9 @@ export default function ActivityCardView({ filteredActivities }: ActivityCardVie
     const { startEdit, setSelectedActivity, setScreen } = useActivitiesStore();
 
     const { mutateAsync: deleteActivity } = useDeleteActivity();
+
+    const userData = useUserData();
+    const canModify = userData?.rol.rol === "Administrador" || userData?.rol.rol === "Líder Instructor" || userData?.rol.rol === "Instructor";
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -65,28 +69,30 @@ export default function ActivityCardView({ filteredActivities }: ActivityCardVie
                             </div>
                         </div>
 
-                        <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
-                            <div className="flex justify-between gap-2">
-                                <DeleteDialog
-                                    preposition="la actividad"
-                                    whatsDeleting={`${activity.name}`}
-                                    onConfirm={() => deleteActivity(activity.id)}
-                                />
+                        {canModify && (
+                            <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+                                <div className="flex justify-between gap-2">
+                                    <DeleteDialog
+                                        preposition="la actividad"
+                                        whatsDeleting={`${activity.name}`}
+                                        onConfirm={() => deleteActivity(activity.id)}
+                                    />
 
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="border-yellow-300 text-yellow-700 hover:bg-yellow-50 hover:border-yellow-400 flex-1 text-xs"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        startEdit(activity);
-                                    }}
-                                >
-                                    <Edit className="h-3 w-3 mr-1" />
-                                    Editar
-                                </Button>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="border-yellow-300 text-yellow-700 hover:bg-yellow-50 hover:border-yellow-400 flex-1 text-xs"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            startEdit(activity);
+                                        }}
+                                    >
+                                        <Edit className="h-3 w-3 mr-1" />
+                                        Editar
+                                    </Button>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </CardContent>
                 </Card>
             ))}

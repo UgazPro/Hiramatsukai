@@ -12,9 +12,10 @@ interface Actions {
   setSelectedActivity: (activity: IActivity) => void;
   setScreen: (screen: activityScreen) => void;
   deleteActivity: (id: number) => void;
+  canModify?: boolean;
 }
 
-export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen, deleteActivity }: Actions): Column<IActivity>[] => [
+export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen, deleteActivity, canModify = true }: Actions): Column<IActivity>[] => [
   {
     header: "Actividad",
     render: (a) => <p className="font-medium">{a.name}</p>,
@@ -67,22 +68,26 @@ export const getActivitiesColumns = ({ startEdit, setSelectedActivity, setScreen
         >
           <Eye />
         </Button>
-        <Button
-          size="sm"
-          variant="ghost"
-          className="border-gray-300 text-gray-700 hover:bg-gray-100"
-          onClick={(e) => {
-            e.stopPropagation();
-            startEdit(activity);
-          }}
-        >
-          <Edit />
-        </Button>
-        <DeleteDialog
-          preposition="la actividad"
-          whatsDeleting={`${activity.name}`}
-          onConfirm={() => deleteActivity(activity.id)}
-        />
+        {canModify && (
+          <>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="border-gray-300 text-gray-700 hover:bg-gray-100"
+              onClick={(e) => {
+                e.stopPropagation();
+                startEdit(activity);
+              }}
+            >
+              <Edit />
+            </Button>
+            <DeleteDialog
+              preposition="la actividad"
+              whatsDeleting={`${activity.name}`}
+              onConfirm={() => deleteActivity(activity.id)}
+            />
+          </>
+        )}
       </>
     ),
   },

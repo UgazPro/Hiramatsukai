@@ -18,6 +18,7 @@ import SearchFilterComponent from "@/components/Filters/SearchFilter";
 import { useFilteredActivities } from "@/hooks/useFilteredActivities";
 import ActivityCardView from "./ActivityCardView";
 import ActivitiesSkeleton from "./ActivitiesSkeleton";
+import { useUserData } from "@/helpers/token";
 
 export default function Activities() {
 
@@ -27,7 +28,10 @@ export default function Activities() {
 
   const { mutateAsync: deleteActivity } = useDeleteActivity();
 
-  const columns = getActivitiesColumns({ startEdit, setSelectedActivity, setScreen, deleteActivity });
+  const userData = useUserData();
+  const canModify = userData?.rol.rol === "Administrador" || userData?.rol.rol === "Líder Instructor" || userData?.rol.rol === "Instructor";
+
+  const columns = getActivitiesColumns({ startEdit, setSelectedActivity, setScreen, deleteActivity, canModify });
 
   const filteredActivities = useFilteredActivities(activitiesData ?? []);
 
@@ -79,16 +83,18 @@ export default function Activities() {
                   {/* Filters Button */}
                   <ActivityFilter />
 
-                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
-                    <Button
-                      variant='secondary'
-                      size="sm"
-                      onClick={() => startCreate()}
-                      className={`rounded-none border-r border-gray-300 bg-yellow-500 text-white hover:bg-yellow-600`}
-                    >
-                      <PlusCircle /> Nueva Actividad
-                    </Button>
-                  </div>
+                  {canModify && (
+                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
+                      <Button
+                        variant='secondary'
+                        size="sm"
+                        onClick={() => startCreate()}
+                        className={`rounded-none border-r border-gray-300 bg-yellow-500 text-white hover:bg-yellow-600`}
+                      >
+                        <PlusCircle /> Nueva Actividad
+                      </Button>
+                    </div>
+                  )}
 
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
                     {views.map(({ key, icon: Icon }) => (

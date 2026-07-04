@@ -16,7 +16,7 @@ import { useExamsByUser } from "@/hooks/useActivities";
 import { calculateMartialTime, dateFormatterIntoLong, formatNumberWithDots, formatPhoneNumber } from "@/helpers/formatter";
 import { useStudentAllInfo } from "@/hooks/useStudents";
 import { IExam } from "@/services/activities/activity.interface";
-import { IActivityAttendanceItem } from "@/services/students/student.interface";
+import { IActivityAttendanceItem, IStudent } from "@/services/students/student.interface";
 
 const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
@@ -32,9 +32,16 @@ const getBeltColor = (grado: string) => {
     return colors[grado] || "bg-gray-100 text-gray-800 border-gray-300";
 };
 
-export default function StudentDetailView() {
+interface StudentDetailViewProps {
+    student?: IStudent;
+}
 
-    const { selectedStudent, setScreen, startEdit } = useStudentsStore();
+export default function StudentDetailView({ student: propStudent }: StudentDetailViewProps = {}) {
+
+    const store = useStudentsStore();
+    const selectedStudent = propStudent ?? store.selectedStudent;
+    const setScreen = store.setScreen;
+    const startEdit = store.startEdit;
     const { data: allInfo, isLoading: dynamicLoading } = useStudentAllInfo(selectedStudent?.id ?? null);
     const { exams, isLoading: examsLoading } = useExamsByUser(selectedStudent?.id ?? null);
 
@@ -56,7 +63,7 @@ export default function StudentDetailView() {
     if (!selectedStudent) return null;
 
     return (
-        <div className="flex flex-col h-full bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden mx-5 my-3">
+        <div className="flex flex-col bg-white shadow-xl border border-gray-200 rounded-xl mx-5 my-3">
 
             {/* Header */}
             <div className="shrink-0 bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-300">
@@ -109,6 +116,7 @@ export default function StudentDetailView() {
                                 </p>
                             </div>
                         </div>
+                        {!propStudent && (
                         <Button
                             variant="ghost"
                             size="sm"
@@ -117,12 +125,13 @@ export default function StudentDetailView() {
                         >
                             <X className="h-4 w-4" />
                         </Button>
+                        )}
                     </div>
                 </h2>
             </div>
 
             {/* Main screen */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-8">
+            <div className="flex-1 p-6 space-y-8">
 
                 {/* Row 1: Info Personal + Info Contacto + Info Dojo */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -478,7 +487,8 @@ export default function StudentDetailView() {
             </div>
 
             {/* Footer */}
-            <div className="shrink-0 bg-white border-t border-gray-300 p-4">
+            {!propStudent && (
+            <div className="bg-white border-t border-gray-300 p-4">
                 <div className="flex justify-between items-center">
                     <div className="text-sm text-gray-600">
                         Última actualización: {format(new Date(), "dd/MM/yyyy 'a las' HH:mm", { locale: es })}
@@ -500,6 +510,7 @@ export default function StudentDetailView() {
                     </div>
                 </div>
             </div>
+            )}
         </div>
     );
 }
