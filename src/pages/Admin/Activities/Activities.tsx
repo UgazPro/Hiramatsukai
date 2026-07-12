@@ -70,7 +70,7 @@ export default function Activities() {
             <div className="mx-auto p-4 md:p-6">
 
               {/* Header */}
-              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
                 <div>
                   <h1 className="text-3xl font-bold text-gray-900">Actividades</h1>
                   <p className="text-gray-600 mt-2">
@@ -78,9 +78,16 @@ export default function Activities() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap items-center gap-3">
 
                   {/* Filters Button */}
+                  <SearchFilterComponent
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    placeHolder="Buscar por nombre o lugar de la actividad..."
+                    width="w-50"
+                  />
+                
                   <ActivityFilter />
 
                   {canModify && (
@@ -122,16 +129,7 @@ export default function Activities() {
                 </div>
               </div>
 
-              <div className="mb-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-
-                <div className="flex justify-end w-auto">
-                  <SearchFilterComponent
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    placeHolder="Buscar por nombre o lugar de la actividad..."
-                    width="w-full md:w-85"
-                  />
-                </div>
+              <div className="mb-5 flex flex-wrap items-center gap-3">
 
                 {/* Badges de filtros activos */}
                 {(filters.type ||
