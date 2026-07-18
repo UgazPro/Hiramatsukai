@@ -5,7 +5,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { jwtDecode } from "jwt-decode";
 import { DecodedToken } from "@/services/auth/auth.interface";
 import { useUserData } from "@/helpers/token";
-import { House, ChevronDown, LogOut, LayoutDashboard, Building2 } from "lucide-react";
+import { House, ChevronDown, LogOut, LayoutDashboard, Building2, Menu } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -14,7 +14,11 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
-export default function Header() {
+interface HeaderProps {
+    onToggleMobileNav?: () => void;
+}
+
+export default function Header({ onToggleMobileNav }: HeaderProps) {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -70,24 +74,32 @@ export default function Header() {
             }
         >
             <div className="flex h-16 items-center justify-between bg-black py-12 px-7 space-x-5 md:space-x-0">
-                <Link
-                    to={location.pathname.includes("/admin") ? "/admin" : "/"}
-                    style={{ fontFamily: "Kaushan Script" }}
-                    className={
-                        location.pathname.includes("/admin") || location.pathname.includes("/login")
-                            ? "flex items-center space-x-2 text-gray-300 hover:text-white shadow-2xl"
-                            : "text-gray-300 flex items-center space-x-2 md:text-black hover:text-gray-700 shadow-white md:bg-white rounded-xl pr-9 py-1"
-                    }
-                >
-                    {!location.pathname.includes("/admin") && !location.pathname.includes("/login") && (
-                        <img
-                            src="/artesmarciales.jpg"
-                            alt="Todas las Artes Marciales"
-                            className="hidden md:block md:h-15 md:w-50 rounded-full mr-3 shadow-2xl h-8 w-30"
-                        />
-                    )}
-                    <span className="text-2xl md:text-3xl lg:text-5xl font-bold">Hiramatsukai Internacional</span>
-                </Link>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={onToggleMobileNav}
+                        className={`${location.pathname.includes('/admin') ? 'block' : 'hidden'} md:hidden text-white p-2 hover:bg-gray-800 rounded-lg transition-colors`}
+                    >
+                        <Menu className="h-6 w-6" />
+                    </button>
+                    <Link
+                        to={location.pathname.includes("/admin") ? "/admin" : "/"}
+                        style={{ fontFamily: "Kaushan Script" }}
+                        className={
+                            location.pathname.includes("/admin") || location.pathname.includes("/login")
+                                ? "flex items-center space-x-2 text-gray-300 hover:text-white shadow-2xl"
+                                : "text-gray-300 flex items-center space-x-2 md:text-black hover:text-gray-700 shadow-white md:bg-white rounded-xl pr-9 py-1"
+                        }
+                    >
+                        {!location.pathname.includes("/admin") && !location.pathname.includes("/login") && (
+                            <img
+                                src="/artesmarciales.jpg"
+                                alt="Todas las Artes Marciales"
+                                className="hidden md:block md:h-15 md:w-50 rounded-full mr-3 shadow-2xl h-8 w-30"
+                            />
+                        )}
+                        <span className={`${location.pathname.includes('/admin') ? 'hidden' : 'block'} text-2xl md:block md:text-3xl lg:text-5xl font-bold`}>Hiramatsukai Internacional</span>
+                    </Link>
+                </div>
 
                 <div className="flex items-center gap-3">
                     {/* Auth section */}
