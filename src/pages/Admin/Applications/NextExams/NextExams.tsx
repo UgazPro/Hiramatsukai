@@ -79,7 +79,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                 </div>
                             </div>
 
-                            <div className="pt-4 flex gap-3">
+                            <div className="pt-4 flex flex-col sm:flex-row gap-3">
                                 <Button
                                     variant="outline"
                                     className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100"

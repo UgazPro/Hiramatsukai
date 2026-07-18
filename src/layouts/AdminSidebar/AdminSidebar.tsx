@@ -7,7 +7,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useStudentsStore } from "@/stores/students.store";
 import { useUserData } from "@/helpers/token";
 import { queryClient } from "@/main";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 interface AdminSidebarProps {
     isMobileNavOpen: boolean;
@@ -126,6 +126,8 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
       {/* Mobile Drawer */}
       <Sheet open={isMobileNavOpen} onOpenChange={onCloseMobileNav}>
         <SheetContent side="left" className="bg-black text-white p-0 gap-0 border-gray-800 w-72 sm:max-w-72">
+          <SheetTitle className="sr-only">Navegación</SheetTitle>
+          <SheetDescription className="sr-only">Menú de navegación del dojo</SheetDescription>
           <div className="flex flex-col h-full">
             <div className="pr-12 p-5 border-b border-gray-800">
               <div className="flex items-center gap-3">
