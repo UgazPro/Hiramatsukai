@@ -48,7 +48,9 @@ export default function AdminPanel() {
     new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(monto);
 
   const diasRestantes = (fecha: Date) => {
-    const dias = differenceInDays(fecha, new Date());
+    const today = new Date();
+    const todaySinHora = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const dias = differenceInDays(fecha, todaySinHora);
     if (dias === 0) return "Hoy";
     if (dias === 1) return "Mañana";
     if (dias < 0) return "Pasado";

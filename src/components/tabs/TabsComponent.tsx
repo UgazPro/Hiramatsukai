@@ -22,7 +22,7 @@ export default function TabsComponent<T extends string>({
 }: TabsComponentProps<T>) {
   return (
     <div
-      className={`flex flex-wrap gap-2 p-1 bg-gray-100 rounded-xl border border-gray-300 ${className}`}
+      className={`flex flex-col sm:flex-row sm:flex-wrap gap-2 p-1 bg-gray-100 rounded-xl border border-gray-300 ${className}`}
     >
       {tabs.map((tab) => {
         const isActive = activeTab === tab.value;
@@ -32,7 +32,7 @@ export default function TabsComponent<T extends string>({
             key={tab.value}
             variant={isActive ? "secondary" : "ghost"}
             onClick={() => onChange(tab.value)}
-            className={`flex-1 rounded-lg transition-all duration-300 ${isActive
+            className={`sm:flex-1 rounded-lg transition-all duration-300 ${isActive
                 ? "bg-linear-to-r from-yellow-500 to-yellow-700 text-white shadow-md"
                 : "text-gray-700 hover:bg-gray-200"
               }`}

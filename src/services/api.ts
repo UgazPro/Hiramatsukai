@@ -1,9 +1,12 @@
 import { useAuthStore } from "@/stores/auth.store";
+import { useStudentsStore } from "@/stores/students.store";
+import { queryClient } from "@/main";
 import axios from "axios";
 
 export const api = axios.create({
     // baseURL: `https://bj8nvndr-3000.use2.devtunnels.ms/api`,
-    baseURL: `${import.meta.env.VITE_API_URL}/api`,
+    // baseURL: `${import.meta.env.VITE_API_URL}/api`,
+    baseURL: `https://hiramatsukai-api.onrender.com/api`,
 });
 
 export const getDataApi = async (url: string) => {
@@ -153,6 +156,8 @@ api.interceptors.response.use(
     (error) => {
         if (error.response?.status === 401) {
             useAuthStore.getState().logout();
+            useStudentsStore.getState().clearSelectedStudent();
+            queryClient.clear();
             window.location.href = "/login";
         }
 

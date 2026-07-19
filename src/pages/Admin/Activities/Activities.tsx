@@ -18,6 +18,7 @@ import SearchFilterComponent from "@/components/Filters/SearchFilter";
 import { useFilteredActivities } from "@/hooks/useFilteredActivities";
 import ActivityCardView from "./ActivityCardView";
 import ActivitiesSkeleton from "./ActivitiesSkeleton";
+import { useUserData } from "@/helpers/token";
 
 export default function Activities() {
 
@@ -27,7 +28,10 @@ export default function Activities() {
 
   const { mutateAsync: deleteActivity } = useDeleteActivity();
 
-  const columns = getActivitiesColumns({ startEdit, setSelectedActivity, setScreen, deleteActivity });
+  const userData = useUserData();
+  const canModify = userData?.rol.rol === "Administrador" || userData?.rol.rol === "Líder Instructor" || userData?.rol.rol === "Instructor";
+
+  const columns = getActivitiesColumns({ startEdit, setSelectedActivity, setScreen, deleteActivity, canModify });
 
   const filteredActivities = useFilteredActivities(activitiesData ?? []);
 
@@ -66,7 +70,7 @@ export default function Activities() {
             <div className="mx-auto p-4 md:p-6">
 
               {/* Header */}
-              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
+              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
                 <div>
                   <h1 className="text-3xl font-bold text-gray-900">Actividades</h1>
                   <p className="text-gray-600 mt-2">
@@ -74,21 +78,30 @@ export default function Activities() {
                   </p>
                 </div>
 
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap items-center gap-3">
 
                   {/* Filters Button */}
+                  <SearchFilterComponent
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    placeHolder="Buscar por nombre o lugar de la actividad..."
+                    width="w-50"
+                  />
+                
                   <ActivityFilter />
 
-                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
-                    <Button
-                      variant='secondary'
-                      size="sm"
-                      onClick={() => startCreate()}
-                      className={`rounded-none border-r border-gray-300 bg-yellow-500 text-white hover:bg-yellow-600`}
-                    >
-                      <PlusCircle /> Nueva Actividad
-                    </Button>
-                  </div>
+                  {canModify && (
+                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
+                      <Button
+                        variant='secondary'
+                        size="sm"
+                        onClick={() => startCreate()}
+                        className={`rounded-none border-r border-gray-300 bg-yellow-500 text-white hover:bg-yellow-600`}
+                      >
+                        <PlusCircle /> Nueva Actividad
+                      </Button>
+                    </div>
+                  )}
 
                   <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
                     {views.map(({ key, icon: Icon }) => (
@@ -116,16 +129,7 @@ export default function Activities() {
                 </div>
               </div>
 
-              <div className="mb-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-
-                <div className="flex justify-end w-auto">
-                  <SearchFilterComponent
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    placeHolder="Buscar por nombre o lugar de la actividad..."
-                    width="w-full md:w-85"
-                  />
-                </div>
+              <div className="mb-5 flex flex-wrap items-center gap-3">
 
                 {/* Badges de filtros activos */}
                 {(filters.type ||

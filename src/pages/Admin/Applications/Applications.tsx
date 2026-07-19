@@ -15,6 +15,7 @@ import PageTransitionComponent from "@/components/PageTransitionComponent";
 import { useUpcomingExams, useAppliedStudents } from "@/hooks/useActivities";
 import { useDojoMartialArts } from "@/hooks/useDojos";
 import { useApplicationsStore } from "@/stores/applications.store";
+import { useUserData } from "@/helpers/token";
 
 // ================ COMPONENTES ================
 
@@ -22,6 +23,17 @@ export default function Applications() {
 
   const [activeTab, setActiveTab] = useState<TabType>('examenes');
   const [searchTerm, setSearchTerm] = useState('');
+
+  const userData = useUserData();
+  const isStudent = userData?.rol.rol === "Estudiante";
+
+  const filteredTabs = useMemo(() => {
+    if (!isStudent) return applicationsTabs;
+    return applicationsTabs.filter((t) => t.value === "examenes" || t.value === "postulaciones");
+  }, [isStudent]);
+
+  const validTabs = useMemo(() => filteredTabs.map((t) => t.value), [filteredTabs]);
+  const safeActiveTab = validTabs.includes(activeTab) ? activeTab : validTabs[0];
 
   const { screen, openPostulationForm } = useApplicationsStore();
   const { upcomingExams, isLoading } = useUpcomingExams();
@@ -74,8 +86,17 @@ export default function Applications() {
                 </p>
               </div>
 
-              {/* Botón de acción según pestaña */}
-              {activeTab === 'postulaciones' && (
+            </div>
+
+            {/* Tabs */}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8 justify-between">
+              <TabsComponent
+                tabs={filteredTabs}
+                activeTab={safeActiveTab}
+                onChange={(tab) => setActiveTab(tab as TabType)}
+                className="flex-1 max-w-3xl"
+              />
+              {activeTab === 'postulaciones' && !isStudent && (
                 <Button
                   className="bg-linear-to-r from-yellow-600 to-yellow-700 hover:from-yellow-500 hover:to-yellow-600 text-white shadow-md hover:shadow-lg transition-all"
                   onClick={() => openPostulationForm()}
@@ -85,14 +106,6 @@ export default function Applications() {
                 </Button>
               )}
             </div>
-
-            {/* Tabs */}
-            <TabsComponent
-              tabs={applicationsTabs}
-              activeTab={activeTab}
-              onChange={setActiveTab}
-              className="mb-8 max-w-3xl"
-            />
 
             {/* Contenido según pestaña */}
             <div className="space-y-6">

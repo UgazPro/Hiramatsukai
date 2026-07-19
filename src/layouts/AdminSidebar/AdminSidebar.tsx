@@ -1,21 +1,41 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Link, useLocation } from "react-router";
 import { sidebarData } from "./AdminSidebar.data";
 import { LogOut } from "lucide-react";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useAuthStore } from "@/stores/auth.store";
+import { useStudentsStore } from "@/stores/students.store";
+import { useUserData } from "@/helpers/token";
+import { queryClient } from "@/main";
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
-export default function AdminSidebar() {
+interface AdminSidebarProps {
+    isMobileNavOpen: boolean;
+    onCloseMobileNav: () => void;
+}
+
+export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: AdminSidebarProps) {
   const [showSpinner, setShowSpinner] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const location = useLocation();
   const logout = useAuthStore((s) => s.logout);
+  const user = useUserData();
+
+  const restrictedNames = ["Alumnos", "Pagos", "Configuración", "Mi Dojo"];
+  const isRestricted = user?.rol.rol === "Estudiante" || user?.rol.rol === "Representante";
+
+  const filteredSidebarData = useMemo(() => {
+    if (!isRestricted) return sidebarData;
+    return sidebarData.filter((item) => !restrictedNames.includes(item.name));
+  }, [isRestricted]);
 
   const handleLogout = () => {
     setIsLoggingOut(true);
     setShowSpinner(true);
 
+    useStudentsStore.getState().clearSelectedStudent();
+    queryClient.clear();
     logout();
   };
 
@@ -56,7 +76,7 @@ export default function AdminSidebar() {
 
           {/* Navigation Items */}
           <nav className="space-y-3">
-            {sidebarData.map((item, index) => {
+            {filteredSidebarData.map((item, index) => {
               const isActive = item.redirectTo === location.pathname;
 
               return (
@@ -103,21 +123,59 @@ export default function AdminSidebar() {
         </div>
       </div>
 
-      {/* Mobile Sidebar */}
-      <div className="md:hidden fixed bottom-0 left-0 z-50 w-full h-16 bg-black text-white">
-        <div className="flex h-full items-center justify-around px-1 overflow-x-auto">
-          {sidebarData.map((item, index) => (
-            <Link
-              key={index}
-              to={item.redirectTo}
-              className="flex flex-col items-center justify-center min-w-0 shrink-0 px-1"
-            >
-              <item.icon className="h-5 w-5" />
-              <span className="text-[10px] leading-tight text-center truncate max-w-14">{item.name}</span>
-            </Link>
-          ))}
-        </div>
-      </div>
+      {/* Mobile Drawer */}
+      <Sheet open={isMobileNavOpen} onOpenChange={onCloseMobileNav}>
+        <SheetContent side="left" className="bg-black text-white p-0 gap-0 border-gray-800 w-72 sm:max-w-72">
+          <SheetTitle className="sr-only">Navegación</SheetTitle>
+          <SheetDescription className="sr-only">Menú de navegación del dojo</SheetDescription>
+          <div className="flex flex-col h-full">
+            <div className="pr-12 p-5 border-b border-gray-800">
+              <div className="flex items-center gap-3">
+                <img src="/oki2.png" className="h-10 w-10 shrink-0" alt="Logo" />
+                <span className="text-xl font-bold">Dojo Kenzendo</span>
+              </div>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto p-3 space-y-1">
+              {filteredSidebarData.map((item, index) => {
+                const isActive = item.redirectTo === location.pathname;
+                return (
+                  <Link
+                    key={index}
+                    to={item.redirectTo}
+                    onClick={onCloseMobileNav}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                      isActive ? 'bg-yellow-500/20 text-yellow-400' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                    }`}
+                  >
+                    <item.icon className="h-5 w-5 shrink-0" />
+                    <span className="text-sm font-medium">{item.name}</span>
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <div className="border-t border-gray-800 p-4 space-y-3">
+              {user && (
+                <div className="flex items-center gap-3">
+                  <div className="h-9 w-9 rounded-full bg-yellow-500 flex items-center justify-center shrink-0">
+                    <span className="text-sm font-bold text-black">
+                      {user.name?.[0]}{user.lastName?.[0]}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-white truncate">
+                      {user.name} {user.lastName}
+                    </p>
+                    <p className="text-xs text-gray-400 truncate">{user.rol?.rol}</p>
+                  </div>
+                </div>
+              )}
+
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

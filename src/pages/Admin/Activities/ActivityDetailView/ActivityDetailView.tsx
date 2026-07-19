@@ -9,10 +9,14 @@ import { DetailSection } from "@/components/detailView/section/DetailSection";
 import { DetailFooter } from "@/components/detailView/footer/DetailFooter";
 import { InfoItem } from "@/components/detailView/info/InfoItem";
 import { IDojoEdit } from "@/services/activities/activity.interface";
+import { useUserData } from "@/helpers/token";
 
 export default function ActivityDetailView() {
 
   const { selectedActivity, setSelectedActivity, setScreen, startEdit } = useActivitiesStore();
+
+  const userData = useUserData();
+  const canModify = userData?.rol.rol === "Administrador" || userData?.rol.rol === "Líder Instructor" || userData?.rol.rol === "Instructor";
 
   if (!selectedActivity) return null;
 
@@ -48,13 +52,13 @@ export default function ActivityDetailView() {
   /* ---------------- FOOTER ---------------- */
   const footer = (
     <DetailFooter
-      primaryLabel="Editar actividad"
+      primaryLabel={canModify ? "Editar actividad" : undefined}
       secondaryLabel="Cerrar"
       onSecondary={() => {
         setSelectedActivity(null!);
         setScreen("main");
       }}
-      onPrimary={() => startEdit(selectedActivity)}
+      onPrimary={canModify ? () => startEdit(selectedActivity) : undefined}
     >
       <div className="text-sm text-gray-600">
         Creada el{" "}

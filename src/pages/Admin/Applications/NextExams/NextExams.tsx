@@ -6,6 +6,7 @@ import { useApplicationsStore } from "@/stores/applications.store";
 import { IActivity } from "@/services/activities/activity.interface";
 import { TabType } from "../ApplicationsTabs";
 import { Loader } from "@/components/spinner/Loader";
+import { useUserData } from "@/helpers/token";
 
 interface NextExamsProps {
     setActiveTab: (tab: TabType) => void;
@@ -17,6 +18,8 @@ interface NextExamsProps {
 export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedExamen, */ isLoading }: NextExamsProps) {
 
     const { openPostulationForm, openNextExamDetail } = useApplicationsStore();
+    const userData = useUserData();
+    const isStudent = userData?.rol.rol === "Estudiante";
     
     if (isLoading) {
         return (
@@ -76,7 +79,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                 </div>
                             </div>
 
-                            <div className="pt-4 flex gap-3">
+                            <div className="pt-4 flex flex-col sm:flex-row gap-3">
                                 <Button
                                     variant="outline"
                                     className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100"
@@ -85,19 +88,21 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                     <Eye className="h-4 w-4 mr-2" />
                                     Ver detalles
                                 </Button>
-                                <Button
-                                    disabled={!isNextExam}
-                                    className={`flex-1 text-white ${isNextExam ? "bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-700 hover:to-yellow-800" : "bg-gray-400 cursor-not-allowed"}`}
-                                    onClick={() => {
-                                        if (!isNextExam) return;
-                                        setActiveTab('postulaciones');
-                                        // setSelectedExamen(examen);
-                                        openPostulationForm(examen.id);
-                                    }}
-                                >
-                                    <Plus className="h-4 w-4 mr-2" />
-                                    {isNextExam ? "Postular" : "Próximamente"}
-                                </Button>
+                                {!isStudent && (
+                                    <Button
+                                        disabled={!isNextExam}
+                                        className={`flex-1 text-white ${isNextExam ? "bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-700 hover:to-yellow-800" : "bg-gray-400 cursor-not-allowed"}`}
+                                        onClick={() => {
+                                            if (!isNextExam) return;
+                                            setActiveTab('postulaciones');
+                                            // setSelectedExamen(examen);
+                                            openPostulationForm(examen.id);
+                                        }}
+                                    >
+                                        <Plus className="h-4 w-4 mr-2" />
+                                        {isNextExam ? "Postular" : "Próximamente"}
+                                    </Button>
+                                )}
                             </div>
                         </div>
                     </CardContent>
