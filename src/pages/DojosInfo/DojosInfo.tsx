@@ -9,10 +9,8 @@ import { Loader } from "@/components/spinner/Loader";
 import {
   MapPin, Mail, Globe, Clock,
   Sword, Target, Zap, Instagram, Facebook, Youtube, Twitter, ChevronRight,
-  CheckCircle, GraduationCap,
-  ShieldCheck, Play, Medal, Flag, Target as TargetLucide, UserCheck, Book,
-  Quote, Shield, Users as UsersLucide,
-  Award as AwardLucide
+  ShieldCheck, Play, Medal, Flag, UserCheck,
+  Shield, Users as UsersLucide, Heart
 } from "lucide-react";
 import { FaRegUserCircle } from "react-icons/fa";
 import CarouselComponent from "@/components/CarouselComponent";
@@ -177,26 +175,12 @@ const dojoData = {
   ],
 
   values: [
-    {
-      title: "Disciplina (Shitsuke)",
-      description: "La constancia en la práctica forja el carácter. Sin disciplina no hay progreso verdadero.",
-      icon: TargetLucide
-    },
-    {
-      title: "Respeto (Sonkei)",
-      description: "Hacia el sensei, los sempai, los kohai y el dojo. El respeto es la base de las relaciones marciales.",
-      icon: UserCheck
-    },
-    {
-      title: "Humildad (Kenkyo)",
-      description: "El verdadero conocimiento comienza reconociendo lo que no sabemos. La arrogancia es el peor enemigo.",
-      icon: Book
-    },
-    {
-      title: "Perseverancia (Nintai)",
-      description: "Caer siete veces, levantarse ocho. El camino marcial se recibe paso a paso, no de un salto.",
-      icon: Flag
-    }
+    { title: "Amor", description: "El amor por las artes marciales y por nuestros compañeros nos impulsa a crecer y superarnos cada día.", icon: Heart },
+    { title: "Honestidad", description: "La honestidad es la base de la confianza. Ser sinceros con nosotros mismos y con los demás nos fortalece como individuos.", icon: ShieldCheck },
+    { title: "Respeto", description: "Hacia el sensei, los sempai, los kohai y el dojo. El respeto es la base de las relaciones marciales.", icon: UserCheck },
+    { title: "Disciplina", description: "La constancia en la práctica forja el carácter. Sin disciplina no hay progreso verdadero.", icon: Target },
+    { title: "Motivación", description: "Cada entrenamiento es una oportunidad para superar nuestros límites y alcanzar nuevas metas.", icon: Zap },
+    { title: "Lealtad", description: "Lealtad al dojo, a nuestros maestros y a nuestros principios. El compromiso nos define.", icon: Flag },
   ],
 
   principles: [
@@ -871,46 +855,7 @@ export default function DojoPage() {
                       ))}
                     </div>
 
-                    {/* Línea de Maestros */}
-                    <section className="hidden bg-gray-50 rounded-2xl p-8">
-                      <h3 className="text-2xl font-bold text-center text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
-                        Línea de Transmisión
-                      </h3>
-
-                      <div className="max-w-4xl mx-auto">
-                        <div className="relative">
-                          <div className="flex flex-col md:flex-row justify-between items-center">
-                            <div className="text-center mb-6 md:mb-0">
-                              <div className="h-16 w-16 rounded-full bg-linear-to-br from-gray-900 to-black flex items-center justify-center mx-auto mb-3">
-                                <GraduationCap className="h-8 w-8 text-white" />
-                              </div>
-                              <h4 className="font-bold text-gray-900">Gran Maestro Kenwa Mabuni</h4>
-                              <p className="text-sm text-gray-600">Fundador Shito-Ryu</p>
-                            </div>
-
-                            <ChevronRight className="h-8 w-8 text-gray-400 hidden md:block" />
-
-                            <div className="text-center mb-6 md:mb-0">
-                              <div className="h-16 w-16 rounded-full bg-linear-to-br from-red-600 to-red-800 flex items-center justify-center mx-auto mb-3">
-                                <UsersLucide className="h-8 w-8 text-white" />
-                              </div>
-                              <h4 className="font-bold text-gray-900">Sensei Takashi Sato</h4>
-                              <p className="text-sm text-gray-600">Discípulo Directo</p>
-                            </div>
-
-                            <ChevronRight className="h-8 w-8 text-gray-400 hidden md:block" />
-
-                            <div className="text-center">
-                              <div className="h-16 w-16 rounded-full bg-linear-to-br from-blue-600 to-blue-800 flex items-center justify-center mx-auto mb-3">
-                                <AwardLucide className="h-8 w-8 text-white" />
-                              </div>
-                              <h4 className="font-bold text-gray-900">Nuestros Alumnos</h4>
-                              <p className="text-sm text-gray-600">Continúan el Legado</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </section>
+                    
                   </TabsContent>
 
                   {/* Pestaña: Galería */}
