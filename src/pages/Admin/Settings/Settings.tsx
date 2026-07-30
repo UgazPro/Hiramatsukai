@@ -320,14 +320,14 @@ export default function DojoConfigPage() {
 
           {/* Información Básica */}
           <TabsContent value="info" className="space-y-6">
-            <form onSubmit={form.handleSubmit(updateDojo)} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <form onSubmit={form.handleSubmit(updateDojo)} className="grid grid-cols-1 lg:grid-cols-2">
               {/* Información General */}
               <Card>
-                <CardHeader>
+                <CardHeader className="pt-4">
                   <CardTitle>Información General</CardTitle>
                   <CardDescription>Datos básicos de tu dojo</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 px-4 pb-4">
                   <div className="space-y-2">
                     <Label htmlFor="dojo-name">Nombre del Dojo</Label>
                     <Input
@@ -411,12 +411,12 @@ export default function DojoConfigPage() {
               </Card>
 
               {/* Contacto y Redes */}
-              <Card>
-                <CardHeader>
+              <Card className="my-4">
+                <CardHeader className="pt-4">
                   <CardTitle>Contacto y Redes Sociales</CardTitle>
                   <CardDescription>Información de contacto pública</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 px-4 pb-4">
                   <div className="space-y-2">
                     <Label htmlFor="addressShort" className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
@@ -509,14 +509,14 @@ export default function DojoConfigPage() {
 
               {/* Imágenes */}
               <Card className="lg:col-span-2">
-                <CardHeader>
+                <CardHeader className="pt-4">
                   <CardTitle className="flex items-center gap-2">
                     <Image className="h-5 w-5" />
                     Imágenes del Dojo
                   </CardTitle>
                   <CardDescription>Logo y banner para tu perfil</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-4 pb-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
@@ -569,7 +569,7 @@ export default function DojoConfigPage() {
           {/* Instructores */}
           <TabsContent value="instructors" className="space-y-6">
             <Card>
-              <CardHeader>
+              <CardHeader className="pt-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <CardTitle>Instructores del Dojo</CardTitle>

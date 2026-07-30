@@ -108,7 +108,7 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
   return (
     <div>
       <Card>
-        <CardHeader>
+        <CardHeader className="pt-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <div>
               <CardTitle>Horarios de Entrenamiento</CardTitle>
@@ -120,7 +120,7 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
             </Button>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="mx-2">
           {newSchedule.length > 0 && (
             <div className="space-y-4 border border-gray-300 rounded-lg py-4 px-2">
               {newSchedule.map((schedule, index) => (
@@ -211,7 +211,7 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                 </Button>
                 <Button variant='clickRed' onClick={handleSaveSchedule}>
                   <Save className="h-4 w-4 mr-2" />
-                  Guardar Horarios
+                  Guardar <span className="hidden lg:flex">Horarios</span>
                 </Button>
               </div>
             </div>

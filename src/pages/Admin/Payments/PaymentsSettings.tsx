@@ -100,7 +100,7 @@ export const PaymentsSettings = ({
 
     return (
         <Card>
-            <CardHeader>
+            <CardHeader className="pt-4">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                     <div>
                         <CardTitle>Planes del Dojo</CardTitle>
@@ -114,7 +114,7 @@ export const PaymentsSettings = ({
                     </Button>
                 </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-6">
                 {monthlyFormOpen && (
                     <MonthlyPaymentForm
                         key={selectedMonthlyPayment ? `monthly-${selectedMonthlyPayment.id}` : "monthly-new"}
@@ -176,7 +176,7 @@ export const PaymentsSettings = ({
                     </Button>
                 </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-6 pb-6">
                 {paymentMethodFormOpen && (
                     <PaymentMethodForm
                         key={selectedPaymentMethod ? `payment-method-${selectedPaymentMethod.id}` : "payment-method-new"}
@@ -198,7 +198,7 @@ export const PaymentsSettings = ({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {paymentMethods.map((method) => (
                             <Card key={method.id}>
-                                <CardContent className="space-y-1">
+                                <CardContent className="space-y-1 p-2">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2">
                                             <CreditCard className="h-4 w-4 text-yellow-600" />
@@ -210,7 +210,7 @@ export const PaymentsSettings = ({
                                             onClick={() => openPaymentMethodEditForm(method)}
                                         >
                                             <PenSquare className="h-4 w-4 mr-2" />
-                                            Editar
+                                            <span className="hidden lg:block">Editar</span>
                                         </Button>
                                     </div>
 
