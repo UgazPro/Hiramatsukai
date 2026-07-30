@@ -5,7 +5,8 @@ import { useAuthStore } from "@/stores/auth.store";
 import { jwtDecode } from "jwt-decode";
 import { DecodedToken } from "@/services/auth/auth.interface";
 import { useUserData } from "@/helpers/token";
-import { House, LogOut, LayoutDashboard, Building2, Menu } from "lucide-react";
+import { House, LogOut, LayoutDashboard, Building2 } from "lucide-react";
+
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -15,11 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-interface HeaderProps {
-    onToggleMobileNav?: () => void;
-}
-
-export default function Header({ onToggleMobileNav }: HeaderProps) {
+export default function Header() {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -76,12 +73,9 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
         >
             <div className="flex h-16 items-center justify-between bg-black py-12 px-2 lg:px-7 space-x-5 md:space-x-0">
                 <div className="flex items-center gap-2">
-                    <button
-                        onClick={onToggleMobileNav}
-                        className={`${location.pathname.includes('/admin') ? 'block' : 'hidden'} md:hidden text-white p-2 hover:bg-gray-800 rounded-lg transition-colors`}
-                    >
-                        <Menu className="h-6 w-6" />
-                    </button>
+                    <div className="block lg:hidden">
+                        <NavBar />
+                    </div>
                     <Link
                         to={location.pathname.includes("/admin") ? "/admin" : "/"}
                         style={{ fontFamily: "Kaushan Script" }}
@@ -112,11 +106,17 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     {isAuthenticated ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild className="cursor-pointer">
-                                <Avatar size="lg" className="bg-yellow-500 text-black">
-                                    <AvatarFallback className="font-bold text-sm">
-                                        {userName?.[0]}{userLastName?.[0]}
-                                    </AvatarFallback>
-                                </Avatar>
+                                <div className="flex items-center justify-center gap-4">
+                                    <div className="text-white hidden lg:flex flex-col items-end">
+                                        <p className="text-xl">{userName} {userLastName}</p>
+                                        <p className="text-sm text-gray-200">{userRole}</p>
+                                    </div>
+                                    <Avatar size="lg" className="bg-yellow-500 text-black">
+                                        <AvatarFallback className="font-bold text-sm">
+                                            {userName?.[0]}{userLastName?.[0]}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </div>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-48">
                                 <div className="p-1">
@@ -173,7 +173,9 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                 </div>
             </div>
 
-            {location.pathname === "/" && <NavBar />}
+            <div className="hidden lg:block">
+                {location.pathname === "/" && <NavBar />}
+            </div>
         </header>
     );
 }

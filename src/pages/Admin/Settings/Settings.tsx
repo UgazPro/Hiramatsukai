@@ -244,11 +244,11 @@ export default function DojoConfigPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
-              <CardHeader>
+              <CardHeader className="pt-4">
                 <div className="h-6 w-40 bg-gray-200 rounded-md animate-pulse" />
                 <div className="h-4 w-56 bg-gray-200 rounded-md animate-pulse" />
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 px-4 pb-4">
                 <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
                 <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
                 <div className="h-28 w-full bg-gray-200 rounded-md animate-pulse" />
@@ -256,11 +256,11 @@ export default function DojoConfigPage() {
             </Card>
 
             <Card>
-              <CardHeader>
+              <CardHeader className="pt-4">
                 <div className="h-6 w-52 bg-gray-200 rounded-md animate-pulse" />
                 <div className="h-4 w-64 bg-gray-200 rounded-md animate-pulse" />
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 px-4 pb-4">
                 <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
                 <div className="h-24 w-full bg-gray-200 rounded-md animate-pulse" />
                 <div className="grid grid-cols-2 gap-4">
@@ -577,7 +577,7 @@ export default function DojoConfigPage() {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-4 pb-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {dojo && dojo.masters && dojo.masters.map((instructor) => (
                     <Card key={instructor.id} className="relative">

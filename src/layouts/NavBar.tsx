@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function NavBar() {
+import { motion, AnimatePresence } from "framer-motion";
 
+export default function NavBar() {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
@@ -33,7 +34,7 @@ export default function NavBar() {
 
     return (
 
-        <div className={`bg-(--yellowColor) transition-all duration-300 py-2`}>
+        <div className={`text-white lg:text-black lg:bg-(--yellowColor) transition-all duration-300 py-2`}>
 
             {/* DESKTOP MENU */}
             <nav className="hidden md:flex justify-around">
@@ -50,33 +51,41 @@ export default function NavBar() {
             </nav>
 
             {/* MOBILE MENU */}
-            <nav className="flex flex-col items-center w-full md:hidden">
-                <Button
-                    variant="ghost"
-                    size="lg"
-                    onClick={() => setOpen(!open)}
-                    className="hover:bg-(--yellowColor) transition-all duration-300 z-50"
-                >
-                    <Menu className="h-6 w-6 size-4 text-black" />
-                </Button>
+            <Button
+                variant="ghost"
+                size="lg"
+                onClick={() => setOpen(!open)}
+                className="lg:hidden transition-all duration-300 z-50"
+            >
+                <Menu className="h-6 w-6 size-4 text-white" />
+            </Button>
 
-                {open && (
-                    <div className="absolute top-full left-0 right-0 bg-(--yellowColor) shadow-lg z-40">
-                        <div className="flex flex-col items-center space-y-4 py-4">
-                            {menuItems.map((item) => (
-                                <button
-                                    key={item.id}
-                                    onClick={() => handleScroll(item.id)}
-                                    style={{ fontFamily: "Kavoon" }}
-                                    className="text-xl cursor-pointer font-medium transition-colors hover:text-primary bg-transparent p-2 w-full text-center"
-                                >
-                                    {item.label}
-                                </button>
-                            ))}
+            <AnimatePresence>
+                {open && !location.pathname.includes("/admin") && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden bg-black md:hidden text-black z-50"
+                    >
+                        <div className="absolute top-full left-0 right-0 bg-(--yellowColor) shadow-lg z-40">
+                            <div className="flex flex-col items-center space-y-4 py-4">
+                                {menuItems.map((item) => (
+                                    <button
+                                        key={item.id}
+                                        onClick={() => handleScroll(item.id)}
+                                        style={{ fontFamily: "Kavoon" }}
+                                        className="text-xl cursor-pointer font-medium transition-colors hover:text-primary bg-transparent p-2 w-full text-center"
+                                    >
+                                        {item.label}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    </motion.div>
                 )}
-            </nav>
+            </AnimatePresence>
         </div>
     );
 }
