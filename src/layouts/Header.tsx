@@ -1,11 +1,11 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import NavBar from "./NavBar";
+import { NavBar, NavBarMobile } from "./NavBar";
 import { useAuthStore } from "@/stores/auth.store";
 import { jwtDecode } from "jwt-decode";
 import { DecodedToken } from "@/services/auth/auth.interface";
 import { useUserData } from "@/helpers/token";
-import { House, LogOut, LayoutDashboard, Building2 } from "lucide-react";
+import { House, LogOut, LayoutDashboard, Building2, Menu } from "lucide-react";
 
 import {
     DropdownMenu,
@@ -15,8 +15,11 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+interface HeaderProps {
+    onToggleMobileNav?: () => void;
+}
 
-export default function Header() {
+export default function Header({ onToggleMobileNav }: HeaderProps) {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -70,6 +73,13 @@ export default function Header() {
         }
     };
 
+    const goToScroll = (id: string) => {
+        const section = document.getElementById(id);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
 
     return (
         <header
@@ -82,8 +92,14 @@ export default function Header() {
             <div className="flex h-16 items-center justify-between bg-black py-12 px-2 lg:px-7 space-x-5 md:space-x-0">
                 <div className="flex items-center gap-2">
                     <div className="block lg:hidden">
-                        <NavBar />
+                        {location.pathname === "/" && <NavBarMobile goToScroll={goToScroll} />}
                     </div>
+                    <button
+                        onClick={onToggleMobileNav}
+                        className={`${location.pathname.includes('/admin') ? 'block' : 'hidden'} md:hidden text-white p-2 hover:bg-gray-800 rounded-lg transition-colors`}
+                    >
+                        <Menu className="h-6 w-6" />
+                    </button>
                     <Link
                         to={location.pathname.includes("/admin") ? "/admin" : "/"}
                         style={{ fontFamily: "Kaushan Script" }}
