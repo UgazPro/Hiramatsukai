@@ -101,14 +101,14 @@ export const PaymentsSettings = ({
     return (
         <Card>
             <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                     <div>
                         <CardTitle>Planes del Dojo</CardTitle>
                         <CardDescription>
                             Información que verán los alumnos para realizar sus pagos.
                         </CardDescription>
                     </div>
-                    <Button size="sm" onClick={openMonthlyForm} >
+                    <Button size="sm" onClick={openMonthlyForm} className="w-full sm:w-auto">
                         <Plus className="h-4 w-4 mr-2" />
                         Nueva Mensualidad
                     </Button>
@@ -135,7 +135,7 @@ export const PaymentsSettings = ({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {monthlyPayments.map((item) => (
                             <Card key={item.id}>
-                                <CardContent className="space-y-2 flex items-center justify-between">
+                                <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                                     <div>
                                         <div className="flex items-center gap-2">
                                             <CreditCard className="h-4 w-4 text-yellow-600" />
@@ -144,7 +144,7 @@ export const PaymentsSettings = ({
                                         <span className="text-gray-700 text-xs">{item.description}</span>
                                     </div>
 
-                                    <div className="text-sm text-gray-700 space-y-2">
+                                    <div className="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-2">
                                         <p className="font-semibold text-gray-900 text-xl">{item.amount}$</p>
                                         <Button
                                             size="sm"
@@ -163,14 +163,14 @@ export const PaymentsSettings = ({
             </CardContent>
 
             <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                     <div>
                         <CardTitle>Métodos de Pago del Dojo</CardTitle>
                         <CardDescription>
                             Información que verán los alumnos para realizar sus pagos.
                         </CardDescription>
                     </div>
-                    <Button size="sm" onClick={openPaymentMethodForm}>
+                    <Button size="sm" onClick={openPaymentMethodForm} className="w-full sm:w-auto">
                         <Plus className="h-4 w-4 mr-2" />
                         Agregar Método de Pago
                     </Button>

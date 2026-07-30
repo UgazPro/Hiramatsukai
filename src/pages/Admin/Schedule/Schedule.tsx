@@ -109,12 +109,12 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
     <div>
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
             <div>
               <CardTitle>Horarios de Entrenamiento</CardTitle>
               <CardDescription>Gestiona los horarios de tus clases</CardDescription>
             </div>
-            <Button onClick={handleAddSchedule} size="sm">
+            <Button onClick={handleAddSchedule} size="sm" className="w-full sm:w-auto">
               <Plus className="h-4 w-4 mr-2" />
               Nuevo Horario
             </Button>
@@ -124,8 +124,8 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
           {newSchedule.length > 0 && (
             <div className="space-y-4 border border-gray-300 rounded-lg py-4 px-2">
               {newSchedule.map((schedule, index) => (
-                <div key={index} className="flex items-end justify-between gap-8">
-                  <div className="space-y-2 w-1/4">
+                <div key={index} className="flex flex-col md:flex-row items-start md:items-end gap-4 p-3 border border-gray-200 rounded-lg">
+                  <div className="space-y-2 w-full md:w-1/4">
                     <Label>Dia</Label>
                     <Select
                       value={schedule.day}
@@ -148,11 +148,10 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2 w-1/4">
-                    {/* <Label>Horario</Label> */}
+                  <div className="space-y-2 w-full md:w-1/4">
                     <div className="flex items-center gap-2">
                       <div className="space-y-2 w-1/2">
-                        <Label htmlFor="time-picker-optional">Desde</Label>
+                        <Label>Desde</Label>
                         <Input
                           type="time"
                           step={60}
@@ -162,7 +161,7 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                         />
                       </div>
                       <div className="space-y-2 w-1/2">
-                        <Label htmlFor="time-picker-optional">Hasta</Label>
+                        <Label>Hasta</Label>
                         <Input
                           type="time"
                           step={60}
@@ -173,14 +172,14 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-2 w-1/4">
+                  <div className="space-y-2 w-full md:w-1/4">
                     <Label>Nombre/Actividad</Label>
                     <Input
                       value={schedule.name}
                       onChange={(e) => updateScheduleField(index, "name", e.target.value)}
                     />
                   </div>
-                  <div className="space-y-2 w-1/4">
+                  <div className="space-y-2 w-full md:w-1/4">
                     <Label>Arte Marcial</Label>
                     <Select
                       value={schedule.martialArtId.toString()}
@@ -198,9 +197,11 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                       </SelectContent>
                     </Select>
                   </div>
-                  <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => removeSchedule(index)}>
-                    <X className="text-2xl" />
-                  </Button>
+                  <div className="flex md:items-end justify-end w-full md:w-auto">
+                    <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => removeSchedule(index)}>
+                      <X className="text-2xl" />
+                    </Button>
+                  </div>
                 </div>
               ))}
 
@@ -222,8 +223,8 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                 <tr className="border-b">
                   <th className="text-left py-3 px-4">Día</th>
                   <th className="text-left py-3 px-4">Horario</th>
-                  <th className="text-left py-3 px-4">Nombre/Actividad</th>
-                  <th className="text-left py-3 px-4">Arte Marcial</th>
+                  <th className="text-left py-3 px-4 hidden md:table-cell">Nombre/Actividad</th>
+                  <th className="text-left py-3 px-4 hidden md:table-cell">Arte Marcial</th>
                   <th className="text-left py-3 px-4">Acciones</th>
                 </tr>
               </thead>
@@ -272,14 +273,14 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                             />
                           </div>
                         </td>
-                        <td className="py-3 px-4">
+                        <td className="py-3 px-4 hidden md:table-cell">
                           <Input
                             className="w-full"
                             value={editingScheduleData?.name || ""}
                             onChange={(e) => updateEditingField("name", e.target.value)}
                           />
                         </td>
-                        <td className="py-3 px-4">
+                        <td className="py-3 px-4 hidden md:table-cell">
                           <Select
                             value={editingScheduleData?.martialArtId?.toString() || ""}
                             onValueChange={(value) => updateEditingField("martialArtId", Number(value))}
@@ -310,9 +311,9 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                     ) : (
                       <>
                         <td className="py-3 px-4 font-medium">{item.day}</td>
-                        <td className="py-3 px-4">{item.startTime} - {item.endTime}</td>
-                        <td className="py-3 px-4">{item.name}</td>
-                        <td className="py-3 px-4 flex items-center gap-2"><img src={resolverImageUrl(item.martialArts.icon)} className="w-8 h-8" alt={item.martialArts.martialArt} /> {item.martialArts.martialArt}</td>
+                        <td className="py-3 px-4 whitespace-nowrap">{item.startTime} - {item.endTime}</td>
+                        <td className="py-3 px-4 hidden md:table-cell">{item.name}</td>
+                        <td className="py-3 px-4 hidden md:table-cell"><img src={resolverImageUrl(item.martialArts.icon)} className="w-8 h-8 inline mr-1 align-middle" alt={item.martialArts.martialArt} /> {item.martialArts.martialArt}</td>
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
                             <Button

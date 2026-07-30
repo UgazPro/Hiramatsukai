@@ -279,9 +279,9 @@ export default function DojoConfigPage() {
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">
       {/* Header */}
       <div className="">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-8">
 
-          <div className="text-center">
+          <div className="text-center sm:text-left">
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
               Configuración del Dojo
             </h1>
@@ -291,7 +291,7 @@ export default function DojoConfigPage() {
           <Button
             onClick={handleSaveAll}
             disabled={!dojo?.id || !hasMainInfoChanges || updateDojoInfoMutation.isPending}
-            className="bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white"
+            className="bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white w-full sm:w-auto"
           >
             <Save className="h-4 w-4 mr-2" />
             Guardar Todo
@@ -299,22 +299,22 @@ export default function DojoConfigPage() {
         </div>
 
         <Tabs defaultValue="info" className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-5 mb-10 lg:mb-3">
-            <TabsTrigger value="info" className="flex items-center gap-2">
-              <Globe className="h-4 w-4" />
-              Información
+          <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-10 lg:mb-3">
+            <TabsTrigger value="info" className="flex items-center justify-center gap-2">
+              <Globe className="h-5 w-5 md:h-4 md:w-4" />
+              <span className="">Información</span>
             </TabsTrigger>
-            <TabsTrigger value="schedule" className="flex items-center gap-2">
-              <Clock className="h-4 w-4" />
-              Horarios
+            <TabsTrigger value="schedule" className="flex items-center justify-center gap-2">
+              <Clock className="h-5 w-5 md:h-4 md:w-4" />
+              <span className="">Horarios</span>
             </TabsTrigger>
-            <TabsTrigger value="instructors" className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              Instructores
+            <TabsTrigger value="instructors" className="flex items-center justify-center gap-2">
+              <Users className="h-5 w-5 md:h-4 md:w-4" />
+              <span className="">Instructores</span>
             </TabsTrigger>
-            <TabsTrigger value="plans" className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4" />
-              Planes
+            <TabsTrigger value="plans" className="flex items-center justify-center gap-2">
+              <DollarSign className="h-5 w-5 md:h-4 md:w-4" />
+              <span className="">Planes</span>
             </TabsTrigger>
           </TabsList>
 
@@ -386,7 +386,7 @@ export default function DojoConfigPage() {
                       </DropdownMenu>
                     </div>
 
-                    <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                       {martialArts.map((ma, index) => (
                         <div className="space-y-2" key={index}>
                           <div className="flex items-center justify-between">
@@ -439,7 +439,7 @@ export default function DojoConfigPage() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="phone" className="flex items-center gap-2">
                         <Phone className="h-4 w-4" />
@@ -479,7 +479,7 @@ export default function DojoConfigPage() {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {socialMedia.map((sm, index) => (
                       <div className="space-y-2" key={index}>
                         <div className="flex items-center justify-between">
