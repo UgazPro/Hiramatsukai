@@ -22,12 +22,17 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
   const logout = useAuthStore((s) => s.logout);
   const user = useUserData();
 
-  const restrictedNames = ["Alumnos", "Pagos", "Configuración", "Mi Dojo"];
+  const restrictedNames = ["Alumnos", "Pagos", "Configuración", "Inicio"];
   const isRestricted = user?.rol.rol === "Estudiante" || user?.rol.rol === "Representante";
 
-  const filteredSidebarData = useMemo(() => {
+  const filteredSidebarGroups = useMemo(() => {
     if (!isRestricted) return sidebarData;
-    return sidebarData.filter((item) => !restrictedNames.includes(item.name));
+    return sidebarData
+      .map((group) => ({
+        ...group,
+        items: group.items.filter((item) => !restrictedNames.includes(item.name)),
+      }))
+      .filter((group) => group.items.length > 0);
   }, [isRestricted]);
 
   const handleLogout = () => {
@@ -75,34 +80,47 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
           </div>
 
           {/* Navigation Items */}
-          <nav className="space-y-3">
-            {filteredSidebarData.map((item, index) => {
-              const isActive = item.redirectTo === location.pathname;
+          <nav className="">
+            {filteredSidebarGroups.map((group, groupIndex) => (
+              <div key={groupIndex}>
+                {group.header && (
+                  <div className="overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 mb-2 pl-2">
+                    <span className="text-[10px] text-gray-500 uppercase tracking-[0.15em] font-semibold">
+                      {group.header}
+                    </span>
+                  </div>
+                )}
+                <div className="space-y-1">
+                  {group.items.map((item, itemIndex) => {
+                    const isActive = item.redirectTo === location.pathname;
 
-              return (
-                <Link
-                  key={index}
-                  to={item.redirectTo}
-                  className={`flex items-center rounded-lg transition-all duration-300 hover:bg-gray-800 relative group/item ${isActive ? 'group-hover:bg-gray-800' : ''}`}
-                >
-                  <div className={`p-2 ${isActive ? 'bg-gray-800 rounded-xl' : ''}`}>
-                    <item.icon className="h-5 w-5 shrink-0" />
-                  </div>
-                  <span className="ml-3 overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0">
-                    {item.name}
-                  </span>
-                  <div
-                    className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover/item:opacity-0 group-hover:opacity-0 pointer-events-none transition-opacity duration-300 z-50 whitespace-nowrap shadow-xl border border-gray-700"
-                  >
-                    {item.name}
-                    <div className="absolute top-1/2 -left-1 transform -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
-                  </div>
-                  {isActive && (
-                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 h-2 w-2 bg-yellow-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  )}
-                </Link>
-              );
-            })}
+                    return (
+                      <Link
+                        key={itemIndex}
+                        to={item.redirectTo}
+                        className={`flex items-center rounded-lg transition-all duration-300 hover:bg-gray-800 relative group/item ${isActive ? 'group-hover:bg-gray-800' : ''}`}
+                      >
+                        <div className={`p-2 ${isActive ? 'bg-gray-800 rounded-xl' : ''}`}>
+                          <item.icon className="h-5 w-5 shrink-0" />
+                        </div>
+                        <span className="ml-3 overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0">
+                          {item.name}
+                        </span>
+                        <div
+                          className="absolute left-full ml-4 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover/item:opacity-0 group-hover:opacity-0 pointer-events-none transition-opacity duration-300 z-50 whitespace-nowrap shadow-xl border border-gray-700"
+                        >
+                          {item.name}
+                          <div className="absolute top-1/2 -left-1 transform -translate-y-1/2 border-4 border-transparent border-r-gray-900"></div>
+                        </div>
+                        {isActive && (
+                          <div className="absolute right-2 top-1/2 transform -translate-y-1/2 h-2 w-2 bg-yellow-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
           </nav>
         </div>
 
@@ -136,23 +154,36 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
               </div>
             </div>
 
-            <nav className="flex-1 overflow-y-auto p-3 space-y-1">
-              {filteredSidebarData.map((item, index) => {
-                const isActive = item.redirectTo === location.pathname;
-                return (
-                  <Link
-                    key={index}
-                    to={item.redirectTo}
-                    onClick={onCloseMobileNav}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                      isActive ? 'bg-yellow-500/20 text-yellow-400' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
-                    }`}
-                  >
-                    <item.icon className="h-5 w-5 shrink-0" />
-                    <span className="text-sm font-medium">{item.name}</span>
-                  </Link>
-                );
-              })}
+            <nav className="flex-1 overflow-y-auto p-1">
+              {filteredSidebarGroups.map((group, groupIndex) => (
+                <div key={groupIndex}>
+                  {group.header && (
+                    <div className="px-4 py-2">
+                      <span className="text-[10px] text-gray-500 uppercase tracking-[0.15em] font-semibold">
+                        {group.header}
+                      </span>
+                    </div>
+                  )}
+                  <div className="space-y-1">
+                    {group.items.map((item, itemIndex) => {
+                      const isActive = item.redirectTo === location.pathname;
+                      return (
+                        <Link
+                          key={itemIndex}
+                          to={item.redirectTo}
+                          onClick={onCloseMobileNav}
+                          className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                            isActive ? 'bg-yellow-500/20 text-yellow-400' : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                          }`}
+                        >
+                          <item.icon className="h-5 w-5 shrink-0" />
+                          <span className="text-sm font-medium">{item.name}</span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </nav>
 
             <div className="border-t border-gray-800 p-4 space-y-3">
