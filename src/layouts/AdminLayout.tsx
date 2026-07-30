@@ -17,7 +17,7 @@ export default function AdminLayout() {
                 />
             </div>
             <div className="flex h-full w-full flex-col overflow-hidden md:pl-12">
-                <Header onToggleMobileNav={() => setIsMobileNavOpen((prev) => !prev)} />
+                <Header onToggleMobileNav={() => setIsMobileNavOpen((prev) => !prev)}/>
                 <div className="w-full flex-1 overflow-y-auto overflow-x-hidden py-2 lg:pl-4">
                     <Outlet />
                 </div>

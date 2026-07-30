@@ -1,11 +1,12 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import NavBar from "./NavBar";
+import { NavBar, NavBarMobile } from "./NavBar";
 import { useAuthStore } from "@/stores/auth.store";
 import { jwtDecode } from "jwt-decode";
 import { DecodedToken } from "@/services/auth/auth.interface";
 import { useUserData } from "@/helpers/token";
 import { House, LogOut, LayoutDashboard, Building2, Menu } from "lucide-react";
+
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -14,7 +15,6 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-
 interface HeaderProps {
     onToggleMobileNav?: () => void;
 }
@@ -66,6 +66,21 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, [location.pathname]);
 
+    const goHead = () => {
+        const section = document.getElementById('home');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const goToScroll = (id: string) => {
+        const section = document.getElementById(id);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+
     return (
         <header
             className={
@@ -76,6 +91,9 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
         >
             <div className="flex h-16 items-center justify-between bg-black py-12 px-2 lg:px-7 space-x-5 md:space-x-0">
                 <div className="flex items-center gap-2">
+                    <div className="block lg:hidden">
+                        {location.pathname === "/" && <NavBarMobile goToScroll={goToScroll} />}
+                    </div>
                     <button
                         onClick={onToggleMobileNav}
                         className={`${location.pathname.includes('/admin') ? 'block' : 'hidden'} md:hidden text-white p-2 hover:bg-gray-800 rounded-lg transition-colors`}
@@ -85,6 +103,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     <Link
                         to={location.pathname.includes("/admin") ? "/admin" : "/"}
                         style={{ fontFamily: "Kaushan Script" }}
+                        onClick={goHead}
                         className={
                             "flex items-center space-x-2 text-gray-100 hover:text-white shadow-2xl"
                         }
@@ -112,11 +131,17 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     {isAuthenticated ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild className="cursor-pointer">
-                                <Avatar size="lg" className="bg-yellow-500 text-black">
-                                    <AvatarFallback className="font-bold text-sm">
-                                        {userName?.[0]}{userLastName?.[0]}
-                                    </AvatarFallback>
-                                </Avatar>
+                                <div className="flex items-center justify-center gap-4">
+                                    <div className="text-white hidden lg:flex flex-col items-end">
+                                        <p className="text-xl">{userName} {userLastName}</p>
+                                        <p className="text-sm text-gray-200">{userRole}</p>
+                                    </div>
+                                    <Avatar size="lg" className="bg-yellow-500 text-black">
+                                        <AvatarFallback className="font-bold text-sm">
+                                            {userName?.[0]}{userLastName?.[0]}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                </div>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="w-48">
                                 <div className="p-1">
@@ -173,7 +198,9 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                 </div>
             </div>
 
-            {location.pathname === "/" && <NavBar />}
+            <div className="hidden lg:block">
+                {location.pathname === "/" && <NavBar />}
+            </div>
         </header>
     );
 }
