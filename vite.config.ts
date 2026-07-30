@@ -16,7 +16,7 @@ export default defineConfig({
         name: 'Hiramatsukai | Karate-Do, Kobudo y Kendo Iaido',
         short_name: 'Hiramatsukai',
         description: 'Escuela tradicional de artes marciales: Goju-Ryu Karate-Do, Kobudo Okinawense y Kendo Iaido.',
-        theme_color: '#000000',
+        theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',

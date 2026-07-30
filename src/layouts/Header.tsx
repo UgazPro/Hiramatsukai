@@ -5,7 +5,7 @@ import { useAuthStore } from "@/stores/auth.store";
 import { jwtDecode } from "jwt-decode";
 import { DecodedToken } from "@/services/auth/auth.interface";
 import { useUserData } from "@/helpers/token";
-import { House, ChevronDown, LogOut, LayoutDashboard, Building2, Menu } from "lucide-react";
+import { House, LogOut, LayoutDashboard, Building2, Menu } from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuTrigger,
@@ -13,6 +13,7 @@ import {
     DropdownMenuItem,
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 interface HeaderProps {
     onToggleMobileNav?: () => void;
@@ -73,7 +74,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     : `sticky ${visible ? "top-0" : "-top-60"} z-50 w-full bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 transition-all`
             }
         >
-            <div className="flex h-16 items-center justify-between bg-black py-12 px-7 space-x-5 md:space-x-0">
+            <div className="flex h-16 items-center justify-between bg-black py-12 px-2 lg:px-7 space-x-5 md:space-x-0">
                 <div className="flex items-center gap-2">
                     <button
                         onClick={onToggleMobileNav}
@@ -85,9 +86,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                         to={location.pathname.includes("/admin") ? "/admin" : "/"}
                         style={{ fontFamily: "Kaushan Script" }}
                         className={
-                            location.pathname.includes("/admin") || location.pathname.includes("/login")
-                                ? "flex items-center space-x-2 text-gray-300 hover:text-white shadow-2xl"
-                                : "text-gray-300 flex items-center space-x-2 md:text-black hover:text-gray-700 shadow-white md:bg-white rounded-xl pr-9 py-1"
+                            "flex items-center space-x-2 text-gray-100 hover:text-white shadow-2xl"
                         }
                     >
                         {!location.pathname.includes("/admin") && !location.pathname.includes("/login") && (
@@ -97,7 +96,14 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                                 className="hidden md:block md:h-15 md:w-50 rounded-full mr-3 shadow-2xl h-8 w-30"
                             />
                         )}
-                        <span className={`${location.pathname.includes('/admin') ? 'hidden' : 'block'} text-2xl md:block md:text-3xl lg:text-5xl font-bold`}>Hiramatsukai Internacional</span>
+                        <div className="flex flex-col items-start lg:items-center leading-tight">
+                            <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white tracking-wide">
+                                Hiramatsukai
+                            </span>
+                            <span className="text-[10px] sm:text-sm md:text-base lg:text-lg text-yellow-400 tracking-[0.15em]">
+                                ⸻ Internacional ⸻
+                            </span>
+                        </div>
                     </Link>
                 </div>
 
@@ -105,18 +111,19 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     {/* Auth section */}
                     {isAuthenticated ? (
                         <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <button className="flex flex-col items-end text-white cursor-pointer hover:text-yellow-400 transition-colors">
-                                    <p className="lg:text-2xl text-sm">
-                                        {userName} {userLastName}
-                                    </p>
-                                    <p className="flex items-center gap-1 lg:text-normal text-sm">
-                                        {userRole}
-                                        <ChevronDown className="h-3 w-3" />
-                                    </p>
-                                </button>
+                            <DropdownMenuTrigger asChild className="cursor-pointer">
+                                <Avatar size="lg" className="bg-yellow-500 text-black">
+                                    <AvatarFallback className="font-bold text-sm">
+                                        {userName?.[0]}{userLastName?.[0]}
+                                    </AvatarFallback>
+                                </Avatar>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-56">
+                            <DropdownMenuContent align="end" className="w-48">
+                                <div className="p-1">
+                                    <p className="font-medium">{userName} {userLastName}</p>
+                                    <p className="text-xs text-muted-foreground">{userRole}</p>
+                                </div>
+                                <DropdownMenuSeparator />
                                 {location.pathname !== "/" && (
                                     <DropdownMenuItem onClick={() => navigate("/")}>
                                         <House className="h-4 w-4 mr-2" />
@@ -124,14 +131,14 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                                     </DropdownMenuItem>
                                 )}
 
-                                {!location.pathname.startsWith("/admin") && (user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor" || user?.rol?.rol === "Instructor" ) && (
+                                {!location.pathname.startsWith("/admin") && (user?.rol?.rol === "Administrador" || user?.rol?.rol === "Líder Instructor" || user?.rol?.rol === "Instructor") && (
                                     <DropdownMenuItem onClick={() => navigate("/admin")}>
                                         <LayoutDashboard className="h-4 w-4 mr-2" />
                                         Panel Administrativo
                                     </DropdownMenuItem>
                                 )}
 
-                                {!location.pathname.startsWith("/admin") && (user?.rol?.rol !== "Administrador" && user?.rol?.rol !== "Líder Instructor" && user?.rol?.rol !== "Instructor" ) && (
+                                {!location.pathname.startsWith("/admin") && (user?.rol?.rol !== "Administrador" && user?.rol?.rol !== "Líder Instructor" && user?.rol?.rol !== "Instructor") && (
                                     <DropdownMenuItem onClick={() => navigate("/admin/yo")}>
                                         <LayoutDashboard className="h-4 w-4 mr-2" />
                                         Mi perfil
