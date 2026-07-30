@@ -63,6 +63,14 @@ export default function Header() {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, [location.pathname]);
 
+    const goHead = () => {
+        const section = document.getElementById('home');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+
     return (
         <header
             className={
@@ -79,6 +87,7 @@ export default function Header() {
                     <Link
                         to={location.pathname.includes("/admin") ? "/admin" : "/"}
                         style={{ fontFamily: "Kaushan Script" }}
+                        onClick={goHead}
                         className={
                             "flex items-center space-x-2 text-gray-100 hover:text-white shadow-2xl"
                         }
