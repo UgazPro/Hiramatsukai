@@ -165,11 +165,11 @@ export default function ApplyStudents({
                 return (
                   <Card
                     key={postulacion.id}
-                    className="h-full border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 group"
+                    className="h-full border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 overflow-hidden group"
                   >
-                    <CardContent className="p-0 flex flex-col h-full">
-                      <div className="p-5 bg-gradient-to-br from-white to-yellow-50 border-b border-gray-200 flex flex-col items-center text-center flex-shrink-0">
-                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-0.5 mb-3">
+                    <CardContent className="flex flex-col h-full">
+                      <div className="p-4 bg-linear-to-br from-white to-yellow-200 border-b border-gray-200 flex flex-col items-center text-center shrink-0">
+                        <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5 mb-3">
                           <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
                             <User className="h-7 w-7 text-yellow-600" />
                           </div>

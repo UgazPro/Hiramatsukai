@@ -51,9 +51,11 @@ export default function Applications() {
   // Obtener color del cinturón
   const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
-      'Blanco': 'bg-gray-100 text-gray-800',
-      'Amarillo': 'bg-yellow-100 text-yellow-800',
-      'Naranja': 'bg-orange-100 text-orange-800',
+      'Blanco': 'bg-white text-gray-800',
+      'Blanco Punta Amarillo': 'bg-white text-gray-800',
+      'Blanco Raya Amarillo': 'bg-white text-gray-800',
+      'Amarillo': 'bg-yellow-200 text-yellow-800',
+      'Naranja': 'bg-orange-300 text-orange-800',
       'Verde': 'bg-green-100 text-green-800',
       'Azul': 'bg-blue-100 text-blue-800',
       'Marrón': 'bg-yellow-800 text-white',
