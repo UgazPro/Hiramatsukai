@@ -187,19 +187,13 @@ export default function Profile() {
     <div className="min-h-screen w-full bg-linear-to-b from-gray-50 to-gray-100 p-3 sm:p-4 md:p-6">
       <div className="">
 
-        <div className="flex items-center justify-center mb-6 sm:mb-8">
-          <h1 className="text-xl sm:text-3xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
-            Mi Perfil
-          </h1>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
           {/* Columna izquierda */}
           <div className="lg:col-span-1 space-y-6">
             <Card className="border-yellow-200 shadow-lg overflow-hidden">
               <div className="h-24 bg-linear-to-r from-yellow-500 to-yellow-600" />
 
-              <CardContent className="relative pt-16">
+              <CardContent className="relative pt-16 pb-4">
                 <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
                   <div className="relative group">
                     <div className="h-32 w-32 rounded-full border-4 border-white bg-white shadow-xl overflow-hidden">
@@ -256,43 +250,12 @@ export default function Profile() {
                 </div>
               </CardContent>
             </Card>
-            {/* 
-            <Card className="border-blue-200">
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Activity className="h-5 w-5 text-blue-600" />
-                  Mi Actividad
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Días entrenados</span>
-                    <span className="font-bold text-blue-600">156</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Asistencia</span>
-                    <span className="font-bold text-green-600">89%</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Katas aprendidos</span>
-                    <span className="font-bold text-yellow-600">12</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Miembro desde</span>
-                    <span className="font-medium">
-                      {displayJoinDate ? new Date(displayJoinDate).getFullYear() : "N/A"}
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card> */}
           </div>
 
           {/* Columna derecha */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="general" className="w-full">
-              <TabsList className="flex w-full mb-6 overflow-x-auto">
+              <TabsList className="flex w-full mb-2 overflow-x-auto">
                 <TabsTrigger value="general" className="flex-1 min-w-0 gap-1 text-xs sm:text-sm">
                   <User className="h-4 w-4 shrink-0" />
                   <span className="truncate">General</span>
@@ -301,16 +264,12 @@ export default function Profile() {
                   <Shield className="h-4 w-4 shrink-0" />
                   <span className="truncate">Seguridad</span>
                 </TabsTrigger>
-                {/* <TabsTrigger value="notifications" className="flex-1 min-w-0 gap-1 text-xs sm:text-sm">
-                  <Bell className="h-4 w-4 shrink-0" />
-                  <span className="truncate">Notificaciones</span>
-                </TabsTrigger> */}
               </TabsList>
 
               {/* Pestaña General */}
               <TabsContent value="general" className="space-y-6">
                 <Card>
-                  <CardHeader>
+                  <CardHeader className="pt-4">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-3">
                       <div>
                         <CardTitle className="text-lg sm:text-xl">Información Personal</CardTitle>
@@ -348,7 +307,7 @@ export default function Profile() {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <CardContent className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4 px-4 pb-4">
                     {/* Nombre */}
                     <div className="space-y-2">
                       <Label htmlFor="name">Nombre</Label>
@@ -462,7 +421,7 @@ export default function Profile() {
               {/* Pestaña Seguridad */}
               <TabsContent value="security" className="space-y-6">
                 <Card>
-                  <CardHeader>
+                  <CardHeader className="pt-4">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-3">
                       <div className="flex items-center gap-2">
                         <Key className="h-5 w-5 text-yellow-600" />
@@ -479,7 +438,7 @@ export default function Profile() {
                       </Button>
                     </div>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-4 pb-4">
                     <form onSubmit={handlePasswordSubmit} className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="current-password">Contraseña actual</Label>
