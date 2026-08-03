@@ -105,7 +105,7 @@ export default function Activities() {
                     </div>
                   )}
 
-                  <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
+                  <div className="hidden lg:flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
                     {views.map(({ key, icon: Icon }) => (
                       <Button
                         key={key}

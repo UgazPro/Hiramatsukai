@@ -79,7 +79,7 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
 
         <div className={styles ? styles : 'w-full lg:w-80'}>
             <Card className="border border-gray-300 shadow-sm sticky">
-                <CardContent>
+                <CardContent className="p-4">
                     {/* Header */}
                     <div className="flex justify-between items-center mb-4">
 
@@ -117,7 +117,7 @@ export default function CalendarComponent({ styles, currentDate, setCurrentDate,
                     <div className="grid grid-cols-7 gap-1 mb-2">
                         {dayNames.map((day) => (
                             <div key={day} className="text-center">
-                                <span className="text-sm font-medium text-gray-600 uppercase">{day.slice(0, 2)}</span>
+                                <span className="text-sm font-medium text-gray-600 capitalize">{day.slice(0, 3)}</span>
                             </div>
                         ))}
                     </div>
