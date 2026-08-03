@@ -38,7 +38,7 @@ const FALLBACK_DOJO_IMAGE = "https://blog.marti.mx/wp-content/uploads/2023/01/co
 export default function DojoConfigPage() {
 
   const user: IProfile = useUserData() as IProfile;
-
+console.log(user)
   const { data: dojo, isLoading: isDojoLoading } = useDojosInfo(user.dojo.code || "");
   
   const form = useForm<DojoBody>({

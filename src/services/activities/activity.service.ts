@@ -68,7 +68,7 @@ export const getAppliedStudents = async (activityId?: number) => {
 
 export const getAppliedStudentSuggestions = async () => {
   const user = getUserDataSafe();
-  const params = user?.dojoId ? `?dojoId=${user.dojoId}` : "";
+  const params = user?.dojo.id ? `?dojoId=${user.dojo.id}` : "";
   return await getDataApi(`${studentsAsignedToExamUrl}/suggestions${params}`);
 };
 

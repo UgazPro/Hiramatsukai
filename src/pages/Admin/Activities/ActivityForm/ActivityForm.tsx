@@ -24,7 +24,7 @@ export default function ActivityForm() {
     const user = useUserData();
 
     const isAdminOrLeader = user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor");
-    const dojosOptions = dojos.filter(dojo => isAdminOrLeader || dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
+    const dojosOptions = dojos.filter(dojo => isAdminOrLeader || dojo.id === user?.dojo.id).map(d => ({ label: d.dojo, value: d.id }));
 
     const { mutateAsync: createActivity, isPending: isCreating } = useCreateActivity();
     const { mutateAsync: updateActivity, isPending: isUpdating } = useUpdateActivity();
@@ -90,7 +90,7 @@ export default function ActivityForm() {
         if (mode === "create") {
             await createActivity(payload);
         } else {
-            const { id: _unused, ...updatePayload } = payload;
+            const { ...updatePayload } = payload;
             await updateActivity({ data: updatePayload, id: selectedActivity!.id });
         }
         finishForm();
