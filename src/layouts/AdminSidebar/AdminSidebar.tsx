@@ -75,7 +75,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
             <div
               className="ml-3 overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0"
             >
-              <span className="text-xl font-bold">Dojo Kenzendo</span>
+              <span className="text-xl font-bold">{user?.dojo?.dojo || "Dojo"}</span>
             </div>
           </div>
 
@@ -150,7 +150,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
             <div className="pr-12 p-5 border-b border-gray-800">
               <div className="flex items-center gap-3">
                 <img src="/oki2.png" className="h-10 w-10 shrink-0" alt="Logo" />
-                <span className="text-xl font-bold">Dojo Kenzendo</span>
+                <span className="text-xl font-bold">{user?.dojo?.dojo || "Dojo"}</span>
               </div>
             </div>
 
