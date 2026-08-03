@@ -25,7 +25,8 @@ import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { ISuggestionStudentApplied } from "@/services/students/student.interface";
 import { IDojoRanks } from "@/services/dojos/dojo.interface";
 import { IAppliedStudent } from "@/services/activities/activity.interface";
-import { IToken, useUserData } from "@/helpers/token";
+import { useUserData } from "@/helpers/token";
+import { IProfile } from "@/services/profile/profile.interface";
 
 const beltColors: Record<string, { bg: string; text: string; stripe: string }> =
   {
@@ -92,7 +93,7 @@ export default function PostulationForm() {
   const { upcomingExams } = useUpcomingExams();
   const { suggestions, isLoading: suggestionsLoading } =
     useAppliedStudentSuggestions();
-  const user: IToken = useUserData() as IToken;
+  const user: IProfile = useUserData() as IProfile;
 
   const { data: dojo } = useDojosInfo(user.dojo.code || "");
   const { mutateAsync: createPostulation, isPending } =

@@ -69,7 +69,7 @@ export default function ActivityFilter() {
                     )}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-78 p-0 border-gray-300 shadow-xl" align="end">
+            <PopoverContent className="w-[calc(100vw-2rem)] sm:w-78 p-0 border-gray-300 shadow-xl" align="end">
                 <div className="p-4 border-b border-gray-200 bg-linear-to-r from-yellow-50 to-red-50">
                     <div className="flex justify-between items-center">
                         <h3 className="font-semibold text-gray-900 flex items-center gap-2">

@@ -1,9 +1,7 @@
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { NavBar, NavBarMobile } from "./NavBar";
 import { useAuthStore } from "@/stores/auth.store";
-import { jwtDecode } from "jwt-decode";
-import { DecodedToken } from "@/services/auth/auth.interface";
 import { useUserData } from "@/helpers/token";
 import { House, LogOut, LayoutDashboard, Building2, Menu } from "lucide-react";
 
@@ -26,7 +24,6 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
     const [prevScrollPos, setPrevScrollPos] = useState(0);
     const [visible, setVisible] = useState(true);
 
-    const token = useAuthStore((s) => s.token);
     const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
     const logout = useAuthStore((s) => s.logout);
 
@@ -37,19 +34,9 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
         navigate("/");
     };
 
-    const { userName, userLastName, userRole } = useMemo(() => {
-        if (!token) return { userName: "", userLastName: "", userRole: "" };
-        try {
-            const decoded = jwtDecode<DecodedToken>(token);
-            return {
-                userName: decoded.name || "",
-                userLastName: decoded.lastName || "",
-                userRole: decoded.roles[0].rol || "",
-            };
-        } catch {
-            return { userName: "", userLastName: "", userRole: "" };
-        }
-    }, [token]);
+    const userName = user?.name || "";
+    const userLastName = user?.lastName || "";
+    const userRole = user?.roles?.[0]?.rol || "";
 
     const handleScroll = useCallback(() => {
         const currentScrollPos = window.scrollY;

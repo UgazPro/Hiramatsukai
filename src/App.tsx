@@ -24,6 +24,7 @@ import RouteSeo from './components/seo/RouteSeo';
 import { Toaster } from 'react-hot-toast';
 import { useAxiosInterceptor } from './services/interceptor';
 import { useUserData } from './helpers/token';
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 
 function AxiosInterceptorProvider() {
   useAxiosInterceptor();
@@ -41,7 +42,7 @@ function AdminGuard() {
 function App() {
 
   return (
-    <>
+    <ErrorBoundary>
       <BrowserRouter>
         <Toaster
           position="top-right"
@@ -95,7 +96,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
-    </>
+    </ErrorBoundary>
   )
 }
 
