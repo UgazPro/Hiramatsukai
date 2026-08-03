@@ -48,7 +48,7 @@ export default function ApplyStudents({
   const { mutateAsync: saveExam, isPending: isSaving } = useSaveExam();
 
   const userData = useUserData();
-  const canManage = userData?.rol.rol !== "Estudiante";
+  const canManage = !userData?.roles.some(({ rol }) => rol.rol === "Estudiante");
 
   const [manageDialogOpen, setManageDialogOpen] = useState(false);
   const [manageActivity, setManageActivity] = useState<{ id: number; name?: string; date?: Date } | null>(null);

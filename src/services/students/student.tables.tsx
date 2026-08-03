@@ -16,6 +16,7 @@ function userRolColor(rol : userRolesNames) {
     switch(rol) {
 
         case 'Administrador': return 'red';
+        case 'Líder Maestro': return 'blue';
         case 'Líder Instructor': return 'blue';
         case 'Instructor': return 'green';
         case 'Estudiante': return 'yellow';
@@ -67,8 +68,8 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
             header: "Rol",
             render: (s) => (
                 <FieldBadge 
-                    label={s.rol.rol}
-                    color={userRolColor(s.rol.rol)}
+                    label={s.roles?.map((r) => r.rol.rol).join(", ") || "—"}
+                    color={userRolColor(s.roles[0]?.rol.rol ?? "Estudiante")}
                 />
             ),
         },

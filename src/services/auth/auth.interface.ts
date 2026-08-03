@@ -31,9 +31,14 @@ export interface AuthCompleteProfileData {
 export interface DecodedToken {
     name: string;
     lastName: string;
-    rol: {
-        rol: string;
-    };
+    roles: {
+        userId: number;
+        rolId: number;
+        rol: {
+            id: number;
+            rol: string
+        };
+    }[];
 }
 
 

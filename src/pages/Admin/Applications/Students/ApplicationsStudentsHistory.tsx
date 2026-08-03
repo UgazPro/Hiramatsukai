@@ -26,7 +26,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
     const students = useMemo(
         () =>
             (allUsers as IStudent[]).filter(
-                (u: IStudent) => u.rol?.rol === "Estudiante" && !u.deleted || u.rol?.rol === "Líder Instructor" && !u.deleted || u.rol?.rol === "Instructor" && !u.deleted,
+                (u: IStudent) => !u.deleted && u.roles?.some((r) => r.rol === "Estudiante" || r.rol === "Líder Instructor" || r.rol === "Instructor"),
             ),
         [allUsers],
     );

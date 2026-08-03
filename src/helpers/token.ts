@@ -1,5 +1,5 @@
 import { IDojo } from "@/services/dojos/dojo.interface";
-import { IRol } from "@/services/students/student.interface";
+import { userRolesNames } from "@/services/students/student.interface";
 import { useAuthStore } from "@/stores/auth.store";
 import { jwtDecode } from "jwt-decode";
 
@@ -14,17 +14,27 @@ export interface IToken {
   phone:          string;
   sex:            string;
   dojoId:         number;
-  rolId:          number;
+  roles:          ITokenRoles[];
   birthday:       Date;
   profileImg:     string;
   active:         boolean;
   deleted:        boolean;
   createdAt:      Date;
   enrollmentDate: Date;
-  rol:            IRol;
   dojo:           IDojo;
   iat:            number;
   exp:            number;
+}
+
+export interface ITokenRoles {
+  userId: number;
+  rolId: number;
+  rol: Role;
+}
+
+export interface Role {
+  id: number;
+  rol: userRolesNames;
 }
 
 export const getAuthToken = () => {

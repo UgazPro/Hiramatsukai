@@ -2,7 +2,7 @@
 import { IDojo, IDojoMartialArts, IDojoRanks } from "../dojos/dojo.interface";
 
 export type ViewMode = "list" | "grid" | "cards" | "longCards";
-export type userRolesNames = "Administrador" | "Líder Instructor" | "Instructor" | "Estudiante" | "Representante";
+export type userRolesNames = "Administrador" |  "Líder Maestro" | "Líder Instructor" | "Instructor" | "Estudiante" | "Representante";
 
 export interface IStudent {
     id: number;
@@ -23,7 +23,7 @@ export interface IStudent {
     deleted: boolean;
     createdAt: Date;
     enrollmentDate: Date;
-    rol: IRol;
+    roles: IRoles[];
     dojo: IDojo;
     userRanks: StudentRanks[];
 }
@@ -38,9 +38,13 @@ export interface IStudentsGroup {
     students: IStudent[];
 }
 
-export interface IRol {
-    id: number;
-    rol: userRolesNames;
+export interface IRoles {
+    userId: number;
+    rolId: number;
+    rol: {
+        id: number;
+        rol: userRolesNames
+    };
 }
 
 export interface IStudentRanks {

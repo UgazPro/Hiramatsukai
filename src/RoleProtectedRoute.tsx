@@ -14,7 +14,7 @@ export default function RoleProtectedRoute({ allowedRoles, children }: RoleProte
     return <Navigate to="/login" replace />;
   }
 
-  if (!allowedRoles.includes(user.rol.rol)) {
+  if (!user.roles.some(({ rol }) => allowedRoles.includes(rol.rol as userRolesNames))) {
     return <Navigate to="/admin" replace />;
   }
 

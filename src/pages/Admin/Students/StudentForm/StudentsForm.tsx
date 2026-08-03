@@ -119,7 +119,7 @@ export default function StudentsForm() {
         return code
     }
 
-    const dojosOptions = dojos.filter(dojo => user?.rol.rol === "Administrador" ? dojos.map(d => d) : dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
+    const dojosOptions = dojos.filter(dojo => user?.roles?.some(({ rol }) => rol.rol === "Administrador") ? dojos.map(d => d) : dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
 
     const ranksOptions = dojoRanks.map(rank => ({
         label: `${returnTitle(rank.code)} ${rank.belt} ${rank.rank_name}`,
@@ -283,10 +283,10 @@ export default function StudentsForm() {
                                     fields={[
                                         ...(
                                             mode === "edit"
-                                                ? step2Col1Fields(dojosOptions, roles, user?.rol.rol === "Administrador").map(f =>
+                                                ? step2Col1Fields(dojosOptions, roles, user?.roles?.some(({ rol }) => rol.rol === "Administrador") ?? false).map(f =>
                                                     f.name === "rolId" ? { ...f, disabled: true } : f
                                                 )
-                                                : step2Col1Fields(dojosOptions, filteredRoles, user?.rol.rol === "Administrador")
+                                                : step2Col1Fields(dojosOptions, filteredRoles, user?.roles?.some(({ rol }) => rol.rol === "Administrador") ?? false)
                                         ),
                                         ...(mode === "edit"
                                             ? step2Col2Fields.map(f =>
