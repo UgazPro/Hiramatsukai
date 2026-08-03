@@ -11,13 +11,13 @@ export interface IDojo {
 }
 
 export interface LeaderInstructor {
-    id:         number;
-    name:       string;
-    lastName:   string;
+    id: number;
+    name: string;
+    lastName: string;
     profileImg: string;
-    dojoId:     number;
-    rol:        Rol;
-    userRanks:  UserRank[];
+    dojoId: number;
+    rol: Rol;
+    userRanks: UserRank[];
 }
 
 export interface Rol {
@@ -25,21 +25,21 @@ export interface Rol {
 }
 
 export interface UserRank {
-    rank:       Rank;
+    rank: Rank;
     martialArt: MartialArt;
 }
 
 export interface MartialArt {
     martialArt: string;
-    icon:       string;
+    icon: string;
 }
 
 export interface Rank {
-    id:           number;
-    code:         string;
-    rank_name:    string;
-    belt:         string;
-    icon:         string;
+    id: number;
+    code: string;
+    rank_name: string;
+    belt: string;
+    icon: string;
     martialArtId: number;
 }
 
@@ -78,7 +78,7 @@ export interface IDojoInfo extends IDojo {
 }
 
 export interface DojoSocialMedia {
-    link:        string;
+    link: string;
     socialMedia: string;
     directUrl: string;
 }
@@ -104,12 +104,8 @@ export interface DojoMaster {
 }
 
 export interface Roles {
-    userId: string;
-    rolId: string;
-    rol: {
-        id: number;
-        rol: string;
-    };
+    id: number;
+    rol: string;
 }
 
 

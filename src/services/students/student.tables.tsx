@@ -68,8 +68,8 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
             header: "Rol",
             render: (s) => (
                 <FieldBadge 
-                    label={s.roles?.map((r) => r.rol.rol).join(", ") || "—"}
-                    color={userRolColor(s.roles[0]?.rol.rol ?? "Estudiante")}
+                    label={s.roles?.map((r) => r.rol).join(", ") || "—"}
+                    color={userRolColor(s.roles[0]?.rol ?? "Estudiante")}
                 />
             ),
         },

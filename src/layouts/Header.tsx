@@ -44,7 +44,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
             return {
                 userName: decoded.name || "",
                 userLastName: decoded.lastName || "",
-                userRole: decoded.roles[0].rol.rol || "",
+                userRole: decoded.roles[0].rol || "",
             };
         } catch {
             return { userName: "", userLastName: "", userRole: "" };
@@ -156,14 +156,14 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                                     </DropdownMenuItem>
                                 )}
 
-                                {!location.pathname.startsWith("/admin") && (user?.roles?.some(({ rol }) => rol.rol === "Administrador" || rol.rol === "Líder Instructor" || rol.rol === "Instructor")) && (
+                                {!location.pathname.startsWith("/admin") && (user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor" || rol === "Instructor")) && (
                                     <DropdownMenuItem onClick={() => navigate("/admin")}>
                                         <LayoutDashboard className="h-4 w-4 mr-2" />
                                         Panel Administrativo
                                     </DropdownMenuItem>
                                 )}
 
-                                {!location.pathname.startsWith("/admin") && (!user?.roles?.some(({ rol }) => rol.rol === "Administrador" || rol.rol === "Líder Instructor" || rol.rol === "Instructor")) && (
+                                {!location.pathname.startsWith("/admin") && (!user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor" || rol === "Instructor")) && (
                                     <DropdownMenuItem onClick={() => navigate("/admin/yo")}>
                                         <LayoutDashboard className="h-4 w-4 mr-2" />
                                         Mi perfil

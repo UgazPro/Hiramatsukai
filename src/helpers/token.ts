@@ -14,7 +14,7 @@ export interface IToken {
   phone:          string;
   sex:            string;
   dojoId:         number;
-  roles:          ITokenRoles[];
+  roles:          Role[];
   birthday:       Date;
   profileImg:     string;
   active:         boolean;
@@ -24,12 +24,6 @@ export interface IToken {
   dojo:           IDojo;
   iat:            number;
   exp:            number;
-}
-
-export interface ITokenRoles {
-  userId: number;
-  rolId: number;
-  rol: Role;
 }
 
 export interface Role {

@@ -81,10 +81,10 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                             <div className="grid grid-cols-2 gap-3">
                                 <div>
                                     <p className="text-xs text-gray-500 mb-1">Rol</p>
-                                    <Badge className={`${student.roles && student.roles.some(r => r.rol.rol === 'Instructor') ? 'bg-red-100 text-red-800 border-red-200' :
+                                    <Badge className={`${student.roles && student.roles.some(r => r.rol === 'Instructor') ? 'bg-red-100 text-red-800 border-red-200' :
                                         'bg-yellow-100 text-yellow-800 border-yellow-200'
                                         } border font-medium`}>
-                                        {student.roles[0].rol.rol}
+                                        {student.roles[0].rol}
                                     </Badge>
                                 </div>
                                 <div>

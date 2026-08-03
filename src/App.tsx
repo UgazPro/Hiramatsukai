@@ -32,7 +32,7 @@ function AxiosInterceptorProvider() {
 
 function AdminGuard() {
   const userData = useUserData();
-  if (userData?.roles.some(({ rol }) => rol.rol === "Estudiante" || rol.rol === "Representante")) {
+  if (userData?.roles.some(({ rol }) => rol === "Estudiante" || rol === "Representante")) {
     return <Navigate to="/admin/yo" replace />;
   }
   return <AdminPanel />;

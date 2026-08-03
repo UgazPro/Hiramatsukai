@@ -23,7 +23,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
   const user = useUserData();
 
   const restrictedNames = ["Alumnos", "Pagos", "Configuración", "Inicio"];
-  const isRestricted = user?.roles.some(({ rol }) => rol.rol === "Estudiante" || rol.rol === "Representante");
+  const isRestricted = user?.roles.some(({ rol }) => rol === "Estudiante" || rol === "Representante");
 
   const filteredSidebarGroups = useMemo(() => {
     if (!isRestricted) return sidebarData;
@@ -198,7 +198,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
                     <p className="text-sm font-medium text-white truncate">
                       {user.name} {user.lastName}
                     </p>
-                    <p className="text-xs text-gray-400 truncate">{user.roles?.map(({ rol }) => rol.rol).join(", ")}</p>
+                    <p className="text-xs text-gray-400 truncate">{user.roles?.map(({ rol }) => rol).join(", ")}</p>
                   </div>
                 </div>
               )}
