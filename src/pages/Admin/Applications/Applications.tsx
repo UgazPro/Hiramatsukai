@@ -25,7 +25,7 @@ export default function Applications() {
   const [searchTerm, setSearchTerm] = useState('');
 
   const userData = useUserData();
-  const isStudent = userData?.rol.rol === "Estudiante";
+  const isStudent = userData?.roles.some(({ rol }) => rol.rol === "Estudiante");
 
   const filteredTabs = useMemo(() => {
     if (!isStudent) return applicationsTabs;

@@ -1,15 +1,15 @@
 import { getDataApi } from "../api";
-import { IRol, IStudent } from "./student.interface";
+import { IRoles, IStudent } from "./student.interface";
 
 const usersUrl = '/users';
 const rolesUrl = 'users/roles';
 
-export const getUsers = async (dojoId?: number) : Promise<IStudent[]> => {
-    const url = dojoId ? `${usersUrl}?dojoId=${dojoId}` : usersUrl;
+export const getUsers = async (dojoId?: number | null) : Promise<IStudent[]> => {
+    const url = dojoId != null ? `${usersUrl}?dojoId=${dojoId}` : usersUrl;
     return await getDataApi(url);
 };
 
-export const getRoles = async () : Promise<IRol[]> => {
+export const getRoles = async () : Promise<IRoles[]> => {
     return await getDataApi(rolesUrl);
 }
 

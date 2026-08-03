@@ -99,12 +99,17 @@ export interface DojoMaster {
     email: string;
     phone: string;
     profileImg: string;
-    rol: Rol;
+    roles: Roles[];
     userRanks: DojoMasterRanks[];
 }
 
-export interface Rol {
-    rol: string;
+export interface Roles {
+    userId: string;
+    rolId: string;
+    rol: {
+        id: number;
+        rol: string;
+    };
 }
 
 

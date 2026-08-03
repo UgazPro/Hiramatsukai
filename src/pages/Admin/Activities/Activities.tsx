@@ -29,7 +29,7 @@ export default function Activities() {
   const { mutateAsync: deleteActivity } = useDeleteActivity();
 
   const userData = useUserData();
-  const canModify = userData?.rol.rol === "Administrador" || userData?.rol.rol === "Líder Instructor" || userData?.rol.rol === "Instructor";
+  const canModify = userData?.roles.some(({ rol }) => rol.rol === "Administrador" || rol.rol === "Líder Instructor" || rol.rol === "Instructor");
 
   const columns = getActivitiesColumns({ startEdit, setSelectedActivity, setScreen, deleteActivity, canModify });
 
