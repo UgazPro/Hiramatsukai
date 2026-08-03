@@ -99,7 +99,7 @@ export default function StudentsForm() {
             phone: selectedStudent!.phone,
             sex: selectedStudent!.sex,
             dojoId: selectedStudent!.dojoId,
-            rolId: selectedStudent!.rolId,
+            rolId: selectedStudent!.roles?.[0]?.id ?? 0,
             birthday: new Date(selectedStudent!.birthday),
             enrollmentDate: new Date(selectedStudent!.enrollmentDate),
             martialArtRank: dojoMAs.map(ma => {

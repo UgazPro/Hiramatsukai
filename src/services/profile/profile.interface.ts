@@ -1,24 +1,26 @@
 export interface IProfile {
-  identification: string;
   name: string;
   lastName: string;
   username: string;
   email: string;
   address: string;
   phone: string;
+  sex: string;
+  identification: string;
   enrollmentDate: string;
   birthday: string;
-  sex: string;
-  rolId?: number;
-  rol: {
-    id: number;
-    rol: string;
-  };
+  roles: IProfileRole[];
   dojo: {
     dojo: string;
     id: number;
+    code: string;
   };
   userRanks: IProfileRank[];
+}
+
+export interface IProfileRole {
+  id: number;
+  rol: string;
 }
 
 export interface IProfileRank {

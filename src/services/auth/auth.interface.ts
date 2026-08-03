@@ -28,17 +28,4 @@ export interface AuthCompleteProfileData {
     enrollmentDate: Date;
 }
 
-export interface DecodedToken {
-    name: string;
-    lastName: string;
-    roles: {
-        id: number;
-        rol: string
-    }[];
-}
-
-
-
-
-
 
