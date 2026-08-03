@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Users, Award, Shield, MapPin, Globe, Calendar, Swords, TargetIcon, Zap } from "lucide-react";
+import { Users, Award, Shield, MapPin, Globe, Calendar, Swords, TargetIcon, Zap, Mail } from "lucide-react";
 import CarouselComponent from "@/components/CarouselComponent";
 import { useDojos } from "@/hooks/useDojos";
 
@@ -14,27 +14,87 @@ export default function AboutUsInfo() {
         { id: "artes", label: "Artes Marciales", icon: Swords }
     ];
 
-    const foundingMembers = [
+    const boardMembers = [
         {
-            name: "Shihan Miguel Rodríguez",
-            position: "Presidente Fundador",
-            rank: "8° Dan Hanshi",
-            arts: ["Karate Goju-Ryu", "Kobudo Matayoshi", "Kendo Iaido"],
-            image: "/shihan-miguel.jpg"
+            position: "Presidente",
+            name: "Carlos M. Gonzalez A.",
+            rank: "7mo Dan Cinturón Negro",
+            id: "13.000.711",
+            location: "4001 Maracaibo, Zulia, Venezuela",
+            phones: ["+58 414 6220277", "+58 416 6514935"],
+            email: "kyoshicarlosgonzalez@gmail.com"
         },
         {
-            name: "Sensei Ana Martínez",
-            position: "Vicepresidenta Técnica",
-            rank: "7° Dan Kyoshi",
-            arts: ["Karate Goju-Ryu", "Kobudo", "Defensa Personal"],
-            image: "/sensei-ana.jpg"
+            position: "Vice-Presidente",
+            name: "Miguel A. Dávila A.",
+            rank: "7mo Dan Cinturón Negro",
+            id: "8.504.782",
+            location: "4001 Maracaibo, Zulia, Venezuela",
+            phones: ["+58 414 6411694", "+58 412 6756928"],
+            email: "okinawakan@gmail.com"
         },
         {
-            name: "Sensei Carlos Takahashi",
-            position: "Director de Kobudo",
-            rank: "7° Dan Renshi",
-            arts: ["Kobudo Matayoshi", "Armas Tradicionales", "Historia Marcial"],
-            image: "/sensei-carlos.jpg"
+            position: "Secretario General",
+            name: "Luis A. Ugaz M.",
+            rank: "6to Dan Cinturón Negro",
+            id: "11.393.035",
+            location: "4001 Maracaibo, Zulia, Venezuela",
+            phones: ["+58 412 9681574"],
+            email: "kenzendougaz@gmail.com"
+        },
+        {
+            position: "Secretario de Finanzas",
+            name: "Jose B. Sanchez R.",
+            rank: "3er Dan Cinturón Negro",
+            id: "17.805.752",
+            location: "4001 Maracaibo, Zulia, Venezuela",
+            phones: ["+58 414 5950475", "+58 424 6752070"],
+            email: "josben.21@gmail.com"
+        },
+        {
+            position: "Secretario de Fichaje",
+            name: "Argenis A. Castro T.",
+            rank: "5to Dan Cinturón Negro",
+            id: "15.408.993",
+            location: "4017 Ciudad Ojeda, Zulia, Venezuela",
+            phones: ["+58 424 6367361"],
+            email: "argenisc-51@hotmail.com"
+        },
+        {
+            position: "Consultor Jurídico",
+            name: "Joanny V. Medina A.",
+            rank: "3er Dan Cinturón Negro",
+            id: "16.149.211",
+            location: "4001 Maracaibo, Zulia, Venezuela",
+            phones: ["+58 414 6846202"],
+            email: "joanny_medina84@hotmail.com"
+        },
+        {
+            position: "Miembro",
+            name: "Elizabeth V. Gonzalez L.",
+            rank: "3er Dan Cinturón Negro",
+            id: "19.936.393",
+            location: "4001 Maracaibo, Zulia, Venezuela",
+            phones: ["+58 412 0716227"],
+            email: "elizabeth.vgl@gmail.com"
+        },
+        {
+            position: "Miembro",
+            name: "Luis E. Collantes A.",
+            rank: "3er Dan Cinturón Negro",
+            id: "16.353.635",
+            location: "4001 Maracaibo, Zulia, Venezuela",
+            phones: ["+58 414 0633631"],
+            email: "luiscollantes.remax@gmail.com"
+        },
+        {
+            position: "Miembro",
+            name: "Jeancarlos Morillo",
+            rank: "2do Dan Cinturón Negro",
+            id: "16.886.601",
+            location: "4001 Maracaibo, Zulia, Venezuela",
+            phones: ["+58 424 6303215"],
+            email: "jeanmorillo66@gmail.com"
         }
     ];
 
@@ -75,8 +135,8 @@ export default function AboutUsInfo() {
 
             {/* Introducción */}
             <section className="bg-white">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-4xl mx-auto text-center">
+                <div className="px-4">
+                    <div className="text-center">
                         <Shield className="h-16 w-16 text-yellow-600 mx-auto mb-6" />
                         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
                             Organización <span className="text-red-600">Hiramatsukai</span>
@@ -106,9 +166,9 @@ export default function AboutUsInfo() {
             </section>
 
             {/* Navegación por pestañas */}
-            <section className="py-12 bg-gray-50">
-                <div className="container mx-auto px-4">
-                    <div className="max-w-4xl mx-auto">
+            <section className="py-8 bg-gray-50">
+                <div className="px-4">
+                    <div className="">
                         <div className="flex flex-wrap gap-2 justify-center">
                             {tabs.map((tab) => {
                                 const Icon = tab.icon;
@@ -134,9 +194,9 @@ export default function AboutUsInfo() {
 
             {/* Contenido de Historia */}
             {activeTab === "historia" && (
-                <section className="py-20">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-6xl mx-auto">
+                <section className="py-8">
+                    <div className="px-4">
+                        <div>
                             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
                                 <div>
                                     <h2 className="text-3xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
@@ -179,9 +239,9 @@ export default function AboutUsInfo() {
 
             {/* Junta Directiva */}
             {activeTab === "directiva" && (
-                <section className="py-20 bg-gray-50">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-6xl mx-auto">
+                <section className="py-8 bg-gray-50">
+                    <div className="px-4">
+                        <div>
                             <div className="text-center mb-12">
                                 <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                                     Junta <span className="text-red-600">Directiva</span>
@@ -191,30 +251,41 @@ export default function AboutUsInfo() {
                                 </p>
                             </div>
 
-                            <div className="grid md:grid-cols-3 gap-8">
-                                {foundingMembers.map((member, index) => (
-                                    <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-                                        <div className="h-48 bg-linear-to-r from-gray-200 to-gray-300 relative">
-                                            {/* Placeholder para imagen */}
-                                            <div className="absolute inset-0 flex items-center justify-center">
-                                                <Users className="h-24 w-24 text-gray-400" />
-                                            </div>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {boardMembers.map((member, index) => (
+                                    <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-bold uppercase">
+                                                {member.position}
+                                            </span>
                                         </div>
-                                        <div className="p-6">
-                                            <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                                            <div className="flex items-center gap-2 mb-4">
-                                                <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-bold">
-                                                    {member.rank}
-                                                </span>
+                                        <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                                        <div className="flex items-center gap-2 mb-4">
+                                            <Award className="h-4 w-4 text-red-500" />
+                                            <span className="text-sm font-semibold text-gray-700">{member.rank}</span>
+                                        </div>
+                                        <div className="space-y-2 text-sm text-gray-600">
+                                            <div className="flex items-center">
+                                                <MapPin className="h-4 w-4 text-gray-400 mr-2 shrink-0" />
+                                                {member.location}
                                             </div>
-                                            <p className="text-gray-600 mb-4">{member.position}</p>
-                                            <div className="space-y-2">
-                                                {member.arts.map((art, idx) => (
-                                                    <div key={idx} className="flex items-center text-sm text-gray-500">
-                                                        <div className="h-1.5 w-1.5 bg-red-500 rounded-full mr-2"></div>
-                                                        {art}
-                                                    </div>
-                                                ))}
+                                            <div className="flex items-center">
+                                                <Users className="h-4 w-4 text-gray-400 mr-2 shrink-0" />
+                                                C.I: {member.id}
+                                            </div>
+                                            <div className="flex items-start">
+                                                <Globe className="h-4 w-4 text-gray-400 mr-2 shrink-0 mt-0.5" />
+                                                <div>
+                                                    <a href={`tel:${member.phones[0].replace(/[^+\d]/g, "")}`} className="hover:text-red-600 block">
+                                                        {member.phones.join(" / ")}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center">
+                                                <Mail className="h-4 w-4 text-gray-400 mr-2 shrink-0" />
+                                                <a href={`mailto:${member.email}`} className="hover:text-red-600 break-all">
+                                                    {member.email}
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -222,7 +293,7 @@ export default function AboutUsInfo() {
                             </div>
 
                             {/* Rangos Jerárquicos */}
-                            <div className="mt-20">
+                            <div className="mt-20 hidden">
                                 <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: "Kavoon" }}>
                                     Sistema de <span className="text-red-600">Rangos</span>
                                 </h3>
@@ -258,9 +329,9 @@ export default function AboutUsInfo() {
 
             {/* Nuestros Dojos */}
             {activeTab === "dojos" && (
-                <section className="">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-6xl mx-auto">
+                <section>
+                    <div className="px-4">
+                        <div>
                             <div className="text-center mb-12">
                                 <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                                     Nuestros <span className="text-red-600">Dojos</span>
@@ -341,8 +412,8 @@ export default function AboutUsInfo() {
             {/* Artes Marciales */}
             {activeTab === "artes" && (
                 <section className="py-20 bg-gray-50">
-                    <div className="container mx-auto px-4">
-                        <div className="max-w-6xl mx-auto">
+                    <div className="px-4">
+                        <div>
                             <div className="text-center mb-12">
                                 <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
                                     Artes <span className="text-red-600">Marciales</span>
