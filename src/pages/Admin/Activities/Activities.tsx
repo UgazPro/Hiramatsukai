@@ -81,12 +81,14 @@ export default function Activities() {
                 <div className="flex flex-wrap items-center gap-3">
 
                   {/* Filters Button */}
-                  <SearchFilterComponent
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    placeHolder="Buscar por nombre o lugar de la actividad..."
-                    width="w-50"
-                  />
+                  <div className="w-full lg:w-auto">
+                    <SearchFilterComponent
+                      searchTerm={searchTerm}
+                      setSearchTerm={setSearchTerm}
+                      placeHolder="Buscar por nombre o lugar de la actividad..."
+                      width="w-full lg:w-50"
+                    />
+                  </div>
                 
                   <ActivityFilter />
 
@@ -185,7 +187,7 @@ export default function Activities() {
               {isLoading ? (
                 <ActivitiesSkeleton />
               ) : (
-                <div className="flex flex-col lg:flex-row items-start justify-between gap-8">
+                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 lg:gap-8">
 
                   <div className="flex-1 overflow-x-auto order-2 lg:order-1">
                     {viewMode === "table" && (
@@ -222,9 +224,26 @@ export default function Activities() {
                     )}
                   </div>
 
-                  <div className="order-1 lg:order-2">
+                  {/* Mobile */}
+                  <div className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${showCalendar ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <div className="pb-2">
+                      <CalendarComponent
+                        styles="w-full"
+                        currentDate={currentDate}
+                        setCurrentDate={setCurrentDate}
+                        activities={activitiesData ?? []}
+                        cSelectedActivity={cSelectedActivity}
+                        setCSelectedActivity={setCSelectedActivity}
+                        GoToTodayButton
+                        onDayClick={(date) => setFilters({ startDate: date, endDate: date })}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Desktop: toggle w-80/w-0 */}
+                  <div className={`hidden lg:block order-2 transition-all duration-500 ease-in-out ${showCalendar ? 'w-80' : 'w-0 overflow-hidden'}`}>
                     <CalendarComponent
-                      styles={`${showCalendar ? 'w-80' : 'w-0'} overflow-hidden transition-all ease-in-out duration-500 `}
+                      styles="w-80"
                       currentDate={currentDate}
                       setCurrentDate={setCurrentDate}
                       activities={activitiesData ?? []}

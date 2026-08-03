@@ -42,8 +42,8 @@ export default function ActivityDetailView() {
         </div>
       }
       avatar={
-        <div className="h-16 w-16 rounded-full bg-yellow-100 flex items-center justify-center">
-          <Tag className="h-7 w-7 text-yellow-600" />
+        <div className="h-12 w-12 md:h-16 md:w-16 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
+          <Tag className="h-5 w-5 md:h-7 md:w-7 text-yellow-600" />
         </div>
       }
     />

@@ -6,15 +6,15 @@ interface DetailLayoutProps {
 
 export function DetailLayout({ header, children, footer }: DetailLayoutProps) {
     return (
-        <div className="min-h-full p-6 w-full max-w-6xl mx-auto my-6 bg-white shadow-xl border border-gray-200 rounded-xl">
+        <div className="min-h-full p-3 md:p-6 w-full max-w-6xl mx-auto my-2 md:my-6 bg-white shadow-xl border border-gray-200 rounded-xl">
             {header}
 
-            <div className="py-6 space-y-8">
+            <div className="py-4 space-y-4 md:py-6 md:space-y-8">
                 {children}
             </div>
 
             {footer && (
-                <div className="sticky bottom-0 bg-white border-t border-gray-300 p-4 z-20">
+                <div className="sticky bottom-0 bg-white border-t border-gray-300 p-3 md:p-4 z-20">
                     {footer}
                 </div>
             )}

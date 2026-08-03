@@ -102,7 +102,7 @@ export const useActivitiesStore = create<ActivitiesStore>((set) => ({
   cSelectedActivity: null,
   setCSelectedActivity: (activity) => set({ cSelectedActivity: activity }),
 
-  showCalendar: true,
+  showCalendar: typeof window !== 'undefined' ? window.innerWidth >= 1024 : true,
   toggleCalendar: (state: boolean) => set({ showCalendar: !state }),
 
   // Filters

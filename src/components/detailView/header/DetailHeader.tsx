@@ -15,22 +15,21 @@ export function DetailHeader({
     onClose,
 }: DetailHeaderProps) {
     return (
-        <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-300 rounded-lg p-6">
-            <div className="flex justify-between items-start">
-                <div className="flex items-center gap-4">
+        <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-300 rounded-lg p-4 md:p-6">
+            <div className="flex justify-between items-start gap-3">
+                <div className="flex items-center gap-3 md:gap-4 min-w-0">
                     {avatar}
 
-                    <div>
-                        <h2 className="text-3xl font-bold text-gray-900">{title}</h2>
+                    <div className="min-w-0">
+                        <h2 className="text-xl md:text-3xl font-bold text-gray-900 break-words">{title}</h2>
                         {subtitle && <div className="mt-2">{subtitle}</div>}
                     </div>
                 </div>
 
-                <Button variant="ghost" size="sm" onClick={onClose}>
+                <Button variant="ghost" size="sm" onClick={onClose} className="shrink-0">
                     <X className="h-4 w-4" />
                 </Button>
             </div>
         </div>
     );
 }
-
