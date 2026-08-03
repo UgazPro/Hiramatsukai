@@ -23,7 +23,7 @@ export default function ActivityForm() {
 
     const user = useUserData();
 
-    const isAdminOrLeader = user?.roles?.some(({ rol }) => rol.rol === "Administrador" || rol.rol === "Líder Instructor");
+    const isAdminOrLeader = user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor");
     const dojosOptions = dojos.filter(dojo => isAdminOrLeader || dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
 
     const { mutateAsync: createActivity, isPending: isCreating } = useCreateActivity();
@@ -148,7 +148,7 @@ export default function ActivityForm() {
                                     form={form}
                                     fields={activityLeftFields(
                                         dojosOptions,
-                                        user?.roles?.some(({ rol }) => rol.rol === "Administrador" || rol.rol === "Líder Instructor") ?? false,
+                                        user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor") ?? false,
                                     )}
                                 />
 

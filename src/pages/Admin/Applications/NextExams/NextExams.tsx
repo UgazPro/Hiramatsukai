@@ -19,7 +19,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
 
     const { openPostulationForm, openNextExamDetail } = useApplicationsStore();
     const userData = useUserData();
-    const isStudent = userData?.roles.some(({ rol }) => rol.rol === "Estudiante");
+    const isStudent = userData?.roles.some(({ rol }) => rol === "Estudiante");
     
     if (isLoading) {
         return (

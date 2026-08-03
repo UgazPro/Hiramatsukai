@@ -32,12 +32,8 @@ export interface DecodedToken {
     name: string;
     lastName: string;
     roles: {
-        userId: number;
-        rolId: number;
-        rol: {
-            id: number;
-            rol: string
-        };
+        id: number;
+        rol: string
     }[];
 }
 

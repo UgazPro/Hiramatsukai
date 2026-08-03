@@ -20,7 +20,7 @@ export default function ActivityCardView({ filteredActivities }: ActivityCardVie
     const { mutateAsync: deleteActivity } = useDeleteActivity();
 
     const userData = useUserData();
-    const canModify = userData?.roles.some(({ rol }) => rol.rol === "Administrador" || rol.rol === "Líder Instructor" || rol.rol === "Instructor");
+    const canModify = userData?.roles.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor" || rol === "Instructor");
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">

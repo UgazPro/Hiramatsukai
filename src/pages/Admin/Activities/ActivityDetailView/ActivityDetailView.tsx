@@ -16,7 +16,7 @@ export default function ActivityDetailView() {
   const { selectedActivity, setSelectedActivity, setScreen, startEdit } = useActivitiesStore();
 
   const userData = useUserData();
-  const canModify = userData?.roles.some(({ rol }) => rol.rol === "Administrador" || rol.rol === "Líder Instructor" || rol.rol === "Instructor");
+  const canModify = userData?.roles.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor" || rol === "Instructor");
 
   if (!selectedActivity) return null;
 

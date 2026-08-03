@@ -5,7 +5,7 @@ import { getUserDataSafe } from "@/helpers/token";
 
 export const useStudents = () => {
   const user = getUserDataSafe();
-  const dojoId = user?.roles[0].rol.rol === 'Administrador' ? null : user?.dojoId;
+  const dojoId = user?.roles[0].rol === 'Administrador' ? null : user?.dojoId;
 
   return useQuery({
     queryKey: ["students", dojoId],
