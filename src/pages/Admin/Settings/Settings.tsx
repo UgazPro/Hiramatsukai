@@ -321,7 +321,7 @@ export default function DojoConfigPage() {
 
           {/* Información Básica */}
           <TabsContent value="info" className="space-y-6">
-            <form onSubmit={form.handleSubmit(updateDojo)} className="grid grid-cols-1 lg:grid-cols-2">
+            <form onSubmit={form.handleSubmit(updateDojo)} className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {/* Información General */}
               <Card>
                 <CardHeader className="pt-4">
@@ -412,7 +412,7 @@ export default function DojoConfigPage() {
               </Card>
 
               {/* Contacto y Redes */}
-              <Card className="my-4">
+              <Card className="">
                 <CardHeader className="pt-4">
                   <CardTitle>Contacto y Redes Sociales</CardTitle>
                   <CardDescription>Información de contacto pública</CardDescription>

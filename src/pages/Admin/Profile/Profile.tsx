@@ -66,7 +66,6 @@ export default function Profile() {
     const payload = {
       ...editData,
       dojoId: profile?.dojo?.id,
-      rolId: profile?.rol?.id,
       enrollmentDate: profile?.enrollmentDate,
       martialArtRank: profile?.userRanks.map(rank => {
         return {
