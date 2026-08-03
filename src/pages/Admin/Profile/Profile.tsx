@@ -67,6 +67,7 @@ export default function Profile() {
       ...editData,
       dojoId: profile?.dojo?.id,
       enrollmentDate: profile?.enrollmentDate,
+      rolesIds: profile?.roles?.map(r => r.id) ?? [],
       martialArtRank: profile?.userRanks.map(rank => {
         return {
           martialArtId: rank.martialArt.id,

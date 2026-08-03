@@ -3,10 +3,8 @@ import { Link, useLocation } from "react-router";
 import { sidebarData } from "./AdminSidebar.data";
 import { LogOut } from "lucide-react";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
-import { useAuthStore } from "@/stores/auth.store";
-import { useStudentsStore } from "@/stores/students.store";
 import { useUserData } from "@/helpers/token";
-import { queryClient } from "@/main";
+import { clearSession } from "@/utils/clearSession";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 interface AdminSidebarProps {
@@ -19,7 +17,6 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const location = useLocation();
-  const logout = useAuthStore((s) => s.logout);
   const user = useUserData();
 
   const restrictedNames = ["Alumnos", "Pagos", "Configuración", "Inicio"];
@@ -38,10 +35,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
   const handleLogout = () => {
     setIsLoggingOut(true);
     setShowSpinner(true);
-
-    useStudentsStore.getState().clearSelectedStudent();
-    queryClient.clear();
-    logout();
+    clearSession();
   };
 
   if (isLoggingOut) {
