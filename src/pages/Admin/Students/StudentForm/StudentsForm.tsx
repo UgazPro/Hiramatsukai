@@ -59,7 +59,7 @@ export default function StudentsForm() {
             username: '',
             address: '',
             phone: '',
-            dojoId: user?.dojoId || 0,
+            dojoId: user?.dojo.id || 0,
             rolId: filteredRoles[0]?.id ?? 0,
             profileImg: '',
             birthday: new Date(),
@@ -73,7 +73,7 @@ export default function StudentsForm() {
         if (mode === "edit" && (!selectedStudent || !filteredRoles.length)) return;
 
         if (mode === "create") {
-            const defaultDojo = dojos.find(d => d.id === (user?.dojoId || 0));
+            const defaultDojo = dojos.find(d => d.id === (user?.dojo.id || 0));
             const dojoMAs = defaultDojo?.dojoMartialArts ?? [];
             form.reset({
                 ...form.getValues(),
@@ -119,7 +119,7 @@ export default function StudentsForm() {
         return code
     }
 
-    const dojosOptions = dojos.filter(dojo => user?.roles?.some(({ rol }) => rol === "Administrador") ? dojos.map(d => d) : dojo.id === user?.dojoId).map(d => ({ label: d.dojo, value: d.id }));
+    const dojosOptions = dojos.filter(dojo => user?.roles?.some(({ rol }) => rol === "Administrador") ? dojos.map(d => d) : dojo.id === user?.dojo.id).map(d => ({ label: d.dojo, value: d.id }));
 
     const ranksOptions = dojoRanks.map(rank => ({
         label: `${returnTitle(rank.code)} ${rank.belt} ${rank.rank_name}`,

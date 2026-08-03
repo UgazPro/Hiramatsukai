@@ -90,7 +90,7 @@ export const useAdvancedStudents = (students: IStudent[]) => {
 
 export const useDashboard = () => {
   const user = getUserDataSafe();
-  const dojoId = user?.dojoId;
+  const dojoId = user?.dojo.id;
 
   const { data: students = [], isLoading: studentsLoading } = useStudents();
   const { upcomingExams, isLoading: examsLoading } = useUpcomingExams();
