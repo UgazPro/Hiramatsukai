@@ -1,10 +1,8 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   X,
-  Search,
   Check,
   CalendarDays,
   Users,
@@ -75,17 +73,39 @@ const beltColors: Record<string, { bg: string; text: string; stripe: string }> =
 const getBeltStyle = (belt: string) =>
   beltColors[belt] || beltColors["Blanco"];
 
-const martialArtIcons: Record<string, string> = {
-  Karate: "🥋",
-  Kobudo: "🔱",
+const maLogos: Record<string, string> = {
+  Karate: "/oki2.png",
+  Kobudo: "/Logo_de_Kobudo-Sin_Fondo mejorado.png",
 };
 
-function getMartialArtIcon(name: string) {
-  return martialArtIcons[name] || "🥋";
+function getMaLogo(name: string) {
+  return maLogos[name] || "/kendo-iaido-icono.png";
 }
 
-function onlyKarateAndKobudo(ma: { martialArt: string }) {
-  return ma.martialArt === "Karate" || ma.martialArt === "Kobudo";
+const martialArtColors: Record<string, { tabBorder: string; tabHoverBorder: string; tabText: string; tabBadgeBg: string }> = {
+  Karate: {
+    tabBorder: "border-red-300",
+    tabHoverBorder: "hover:border-red-100",
+    tabText: "text-red-700",
+    tabBadgeBg: "bg-red-50",
+  },
+  Kobudo: {
+    tabBorder: "border-yellow-300",
+    tabHoverBorder: "hover:border-yellow-100",
+    tabText: "text-yellow-700",
+    tabBadgeBg: "bg-yellow-50",
+  },
+};
+
+const defaultMaColor = {
+  tabBorder: "border-blue-300",
+  tabHoverBorder: "hover:border-blue-100",
+  tabText: "text-blue-700",
+  tabBadgeBg: "bg-blue-50",
+};
+
+function getMaColor(name: string) {
+  return martialArtColors[name] || defaultMaColor;
 }
 
 export default function PostulationForm() {
@@ -102,12 +122,8 @@ export default function PostulationForm() {
 
   const [selectedMartialArtId, setSelectedMartialArtId] = useState<number | null>(null);
   const [selectedStudentIds, setSelectedStudentIds] = useState<Set<number>>(new Set());
-  const [searchTerm, setSearchTerm] = useState("");
 
-  const visibleMartialArts = useMemo(
-    () => (dojo?.dojoMartialArts || []).filter(onlyKarateAndKobudo),
-    [dojo],
-  );
+  const visibleMartialArts = dojo?.dojoMartialArts || [];
 
   const ranksMap = useMemo(() => {
     const map = new Map<number, IDojoRanks>();
@@ -153,20 +169,6 @@ export default function PostulationForm() {
     [eligibleStudents, selectedMartialArtId, appliedUserMartialArtPairs],
   );
 
-  const filteredStudents = useMemo(
-    () =>
-      studentsForMartialArt.filter((s: ISuggestionStudentApplied) => {
-        if (!searchTerm) return true;
-        const fullName = `${s.name} ${s.lastName}`.toLowerCase();
-        const id = s.identification?.toLowerCase() || "";
-        return (
-          fullName.includes(searchTerm.toLowerCase()) ||
-          id.includes(searchTerm.toLowerCase())
-        );
-      }),
-    [studentsForMartialArt, searchTerm],
-  );
-
   const martialArtCounts = useMemo(() => {
     const counts: Record<number, number> = {};
     for (const ma of dojo?.dojoMartialArts || []) {
@@ -190,9 +192,14 @@ export default function PostulationForm() {
     if (screen !== "postulationForm") {
       setSelectedMartialArtId(null);
       setSelectedStudentIds(new Set());
-      setSearchTerm("");
     }
   }, [screen]);
+
+  useEffect(() => {
+    if (visibleMartialArts.length > 0 && selectedMartialArtId === null) {
+      setSelectedMartialArtId(visibleMartialArts[0].id);
+    }
+  }, [visibleMartialArts, selectedMartialArtId]);
 
   const toggleStudent = (id: number) => {
     setSelectedStudentIds((prev) => {
@@ -305,11 +312,12 @@ export default function PostulationForm() {
         <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
           <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
             <section>
-              <div className="flex gap-1 p-1 bg-gray-100 rounded-xl">
+              <div className="flex gap-2 p-2 bg-gray-100 rounded-2xl">
                 {visibleMartialArts.map((ma) => {
                   const count = martialArtCounts[ma.id] || 0;
                   const isSelected = selectedMartialArtId === ma.id;
                   const hasStudents = count > 0;
+                  const maColor = getMaColor(ma.martialArt);
 
                   return (
                     <button
@@ -320,28 +328,24 @@ export default function PostulationForm() {
                         setSelectedMartialArtId(isSelected ? null : ma.id)
                       }
                       className={`
-                        flex-1 flex items-center justify-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-all
+                        flex-1 flex items-center justify-center gap-2.5 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 border-2
                         ${isSelected
-                          ? "shadow-sm"
+                          ? `bg-white shadow-sm ${maColor.tabBorder} ${maColor.tabText} cursor-pointer`
                           : hasStudents
-                            ? "bg-transparent text-gray-500 hover:bg-gray-200 hover:text-gray-800"
-                            : "bg-transparent text-gray-300 cursor-not-allowed"
+                            ? `bg-white/60 text-gray-500 border-transparent ${maColor.tabHoverBorder} hover:bg-white hover:text-gray-700 hover:cursor-pointer`
+                            : "bg-transparent text-gray-300 cursor-not-allowed border-transparent"
                         }
                       `}
-                      style={{
-                        backgroundColor: isSelected ? "#000" : undefined,
-                        color: isSelected ? "#fff" : undefined,
-                      }}
                     >
-                      <span className="text-base">{getMartialArtIcon(ma.martialArt)}</span>
+                      <img src={getMaLogo(ma.martialArt)} alt={ma.martialArt} className="w-5 h-5 rounded-full object-contain shrink-0" />
                       <span>{ma.martialArt}</span>
                       {count > 0 && (
                         <span
                           className={`
                             text-[10px] px-1.5 py-0.5 rounded-full font-medium tabular-nums
                             ${isSelected
-                              ? "bg-white/20 text-white"
-                              : "bg-gray-200 text-gray-500"
+                              ? `${maColor.tabBadgeBg} ${maColor.tabText}`
+                              : "bg-gray-200/60 text-gray-500"
                             }
                           `}
                         >
@@ -356,28 +360,9 @@ export default function PostulationForm() {
 
             {selectedMartialArtId && (
               <section>
-                <div className="flex items-center gap-3 mb-4">
-                  <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap">
-                    Alumnos para postular
-                  </h3>
-                  <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-300 pointer-events-none" />
-                    <Input
-                      placeholder="Buscar alumno por nombre o cédula..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-9 h-9 text-sm bg-gray-50 border-gray-100 rounded-lg placeholder:text-gray-300 focus-visible:bg-white focus-visible:border-gray-300 transition-all w-full"
-                    />
-                  </div>
-                  <span className="text-xs font-medium text-gray-500 tabular-nums whitespace-nowrap">
-                    {selectedStudentIds.size} de{" "}
-                    {studentsForMartialArt.length} seleccionados
-                  </span>
-                </div>
-
-                {filteredStudents.length > 0 ? (
+                {studentsForMartialArt.length > 0 ? (
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pb-1">
-                    {filteredStudents.map(
+                    {studentsForMartialArt.map(
                       (student: ISuggestionStudentApplied) => {
                         const isSelected = selectedStudentIds.has(student.id);
                         const targetInfo =
@@ -412,21 +397,18 @@ export default function PostulationForm() {
                             key={student.id}
                             onClick={() => toggleStudent(student.id)}
                             className={`
-                              group relative text-left w-full rounded-xl border transition-all duration-200 overflow-hidden
+                              group relative text-left w-full rounded-xl border transition-all duration-200 overflow-visible
                               ${isSelected
-                                ? "shadow-sm"
-                                : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-sm hover:bg-gray-50/50"
+                                ? "-translate-y-1 shadow-md border-yellow-300 bg-white"
+                                : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm hover:bg-gray-50/50"
                             }
                             `}
-                            style={{
-                              borderColor: isSelected
-                                ? "#000"
-                                : undefined,
-                              backgroundColor: isSelected
-                                ? "#f3f4f6"
-                                : undefined,
-                            }}
                           >
+                            {/* Left accent bar */}
+                            {isSelected && (
+                              <div className="absolute left-0 top-2 bottom-2 w-0.5 bg-yellow-500 rounded-full" />
+                            )}
+
                             <div className="p-3.5">
                               <div className="flex items-start gap-3">
                                 {/* Avatar */}
@@ -437,14 +419,6 @@ export default function PostulationForm() {
                                     ${currentRankBelt ? getBeltStyle(currentRankBelt).bg : "bg-gray-100"}
                                     ${currentRankBelt ? getBeltStyle(currentRankBelt).text : "text-gray-500"}
                                   `}
-                                  style={{
-                                    outline: isSelected
-                                      ? "2px solid #000"
-                                      : undefined,
-                                    outlineOffset: isSelected
-                                      ? "2px"
-                                      : undefined,
-                                  }}
                                 >
                                   {getInitials(
                                     student.name,
@@ -479,28 +453,17 @@ export default function PostulationForm() {
                                         {targetRankBelt}
                                       </span>
                                     </div>
-                                    {isSelected && (
-                                      <Check
-                                        className="h-3 w-3 ml-auto shrink-0"
-                                        style={{
-                                          color: "#000",
-                                        }}
-                                      />
-                                    )}
                                   </div>
                                 </div>
                               </div>
                             </div>
 
-                            {/* Selection bar */}
-                            <div
-                              className="h-0.5 w-full transition-all duration-300"
-                              style={{
-                                backgroundColor: isSelected
-                                  ? "#000"
-                                  : "transparent",
-                              }}
-                            />
+                            {/* Floating badge */}
+                            {isSelected && (
+                              <div className="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-yellow-500 flex items-center justify-center shadow-md">
+                                <Check className="h-3.5 w-3.5 text-white" />
+                              </div>
+                            )}
                           </button>
                         );
                       },
@@ -510,14 +473,10 @@ export default function PostulationForm() {
                   <div className="flex flex-col items-center justify-center py-12 text-gray-400">
                     <Users className="h-8 w-8 mb-2 text-gray-200" />
                     <p className="text-sm font-medium text-gray-500">
-                      {searchTerm
-                        ? "No se encontraron alumnos"
-                        : "No hay alumnos disponibles"}
+                      No hay alumnos disponibles
                     </p>
                     <p className="text-xs text-gray-400 mt-0.5">
-                      {searchTerm
-                        ? "Intenta con otro nombre o cédula"
-                        : "Todos los alumnos elegibles ya fueron postulados"}
+                      Todos los alumnos elegibles ya fueron postulados
                     </p>
                   </div>
                 )}
