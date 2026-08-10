@@ -11,13 +11,13 @@ interface MartialRanksComponentProps {
     form: UseFormReturn<StudentFormValues>;
 }
 
-const maIcons: Record<string, string> = {
-    Karate: "🥋",
-    Kobudo: "🔱",
+const maLogos: Record<string, string> = {
+    Karate: "/oki2.png",
+    Kobudo: "/Logo_de_Kobudo-Sin_Fondo mejorado.png",
 };
 
-function getMaIcon(name: string) {
-    return maIcons[name] || "⚔️";
+function getMaLogo(name: string) {
+    return maLogos[name] || "/kendo-iaido-icono.png";
 }
 
 export default function MartialRanksComponent({ dojoMartialArts, ranksOptions, form }: MartialRanksComponentProps) {
@@ -46,15 +46,15 @@ export default function MartialRanksComponent({ dojoMartialArts, ranksOptions, f
                 const currentValue = form.watch(`martialArtRank.${index}.rankId`);
 
                 return (
-                    <div key={field.id} className="flex items-center gap-3">
-                        <div className="flex items-center gap-2 min-w-0 w-40 shrink-0">
-                            <span className="text-base">{getMaIcon(field.martialArt)}</span>
-                            <span className="text-sm font-medium text-gray-800 truncate">
+                    <div key={field.id} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                        <div className="flex items-center gap-2 min-w-0 sm:w-40 shrink-0">
+                            <img src={getMaLogo(field.martialArt)} alt={field.martialArt} className="w-6 h-6 md:w-8 md:h-8 rounded-full object-contain shrink-0" />
+                            <span className="text-sm md:text-base font-medium text-gray-800 truncate">
                                 {field.martialArt}
                             </span>
                         </div>
 
-                        <div className="flex-1">
+                        <div className="flex-1 w-full">
                             <SelectComponent
                                 label=""
                                 placeholder={isExistingRank ? "Rango actual" : "Seleccionar rango"}

@@ -76,7 +76,7 @@ export function SelectComponentForm<TFieldValues extends FieldValues>({ form, la
 export function SelectComponent({ label, value, placeholder, options, onChange, disabled }: FormSelectProps) {
 
     return (
-        <div className='space-y-2 w-40'>
+        <div className='space-y-2 w-full sm:w-40'>
             <Label>{label}</Label>
             <Select
                 onValueChange={onChange}

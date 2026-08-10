@@ -113,7 +113,7 @@ export default function StudentsForm() {
 
         setIsFormLoading(false);
 
-    }, [mode, selectedStudent, filteredRoles, dojos]);
+    }, [mode, selectedStudent, dojos]);
 
     const returnTitle = (code: string) => {
         return code
