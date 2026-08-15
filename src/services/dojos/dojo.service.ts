@@ -1,5 +1,5 @@
 import { deleteDataApi, getDataApi, getImagesApi, postDataApi, putDataApi } from "../api";
-import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IDojoRanks } from "./dojo.interface";
+import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IRanks } from "./dojo.interface";
 import { MonthlyPaymentBody, MonthlyPayments, PaymentMethodBody, PaymentMethods } from "./payments.interface";
 
 const dojosUrl = '/dojos';
@@ -22,7 +22,7 @@ export const getDojoMartialArts = async (): Promise<IDojoMartialArts[]> => {
     return await getDataApi(`${dojosUrl}/martial-arts`);
 }
 
-export const getDojoRanks = async (): Promise<IDojoRanks[]> => {
+export const getRanks = async (): Promise<IRanks[]> => {
     return await getDataApi(`${dojosUrl}/ranks`);
 }
 

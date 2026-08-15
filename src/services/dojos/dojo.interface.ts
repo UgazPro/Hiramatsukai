@@ -50,7 +50,7 @@ export interface IDojoMartialArts {
     icon: string;
 }
 
-export interface IDojoRanks {
+export interface IRanks {
     id: string;
     code: string;
     rank_name: string;

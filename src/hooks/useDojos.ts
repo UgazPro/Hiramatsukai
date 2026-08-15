@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createPaymentMethod, createScheduleDojos, deleteScheduleDojos, getDojoMartialArts, getDojoRanks, getDojos, getDojosInfoApi, getMonthlyPayments, getPaymentMethods, postMonthlyPayments, updateDojoInfo, updateMonthlyPayments, updatePaymentMethod, updateSchedulesDojos } from "@/services/dojos/dojo.service";
-import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IDojoRanks } from "@/services/dojos/dojo.interface";
+import { createPaymentMethod, createScheduleDojos, deleteScheduleDojos, getDojoMartialArts, getDojos, getDojosInfoApi, getMonthlyPayments, getPaymentMethods, getRanks, postMonthlyPayments, updateDojoInfo, updateMonthlyPayments, updatePaymentMethod, updateSchedulesDojos } from "@/services/dojos/dojo.service";
+import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IRanks } from "@/services/dojos/dojo.interface";
 import { MonthlyPaymentBody, MonthlyPayments, PaymentMethodBody, PaymentMethods } from "@/services/dojos/payments.interface";
 
 const upsertById = <T extends { id: number }>(list: T[] = [], newItem: T): T[] => {
@@ -82,10 +82,10 @@ export const useDojoMartialArts = () => {
   });
 }
 
-export const useDojoRanks = () => {
-  return useQuery<IDojoRanks[]>({
-    queryKey: ["dojoRanks"],
-    queryFn: getDojoRanks,
+export const useRanks = () => {
+  return useQuery<IRanks[]>({
+    queryKey: ["ranks"],
+    queryFn: getRanks,
     staleTime: 1000 * 60 * 5,
   });
 }

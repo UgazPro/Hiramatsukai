@@ -5,10 +5,10 @@ import { IRoles } from "./student.interface";
 // === PASO 1: Datos Personales ===
 
 export const step1Col1Fields: FormField[] = [
-  { type: "text", name: "username", label: "Nombre de Usuario" },
   { type: "text", name: "name", label: "Nombres" },
   { type: "text", name: "lastName", label: "Apellidos" },
   { type: "text", name: "identification", label: "Cédula" },
+  { type: "text", name: "username", label: "Usuario" },
 ];
 
 export const step1Col2Fields: FormField[] = [

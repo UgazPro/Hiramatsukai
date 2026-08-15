@@ -59,10 +59,9 @@ export default function MartialRanksComponent({ dojoMartialArts, ranksOptions, f
                                 label=""
                                 placeholder={isExistingRank ? "Rango actual" : "Seleccionar rango"}
                                 options={[
-                                    { label: "Sin rango", value: 0 },
                                     ...ranksOptions.filter(r => r.martialArtId === field.id),
                                 ]}
-                                value={String(currentValue ?? 0)}
+                                value={String(currentValue)}
                                 onChange={v => {
                                     form.setValue(`martialArtRank.${index}.rankId`, Number(v));
                                     form.trigger("martialArtRank");

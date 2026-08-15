@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Loader } from "@/components/spinner/Loader";
 import { useStudentsStore } from "@/stores/students.store";
-import { useDojoRanks, useDojos } from "@/hooks/useDojos";
+import { useRanks, useDojos } from "@/hooks/useDojos";
 import { StudentFormValues, studentSchema } from "@/services/students/student.schema";
 import { useCreateStudent, useUpdateStudent } from "@/queries/useStudentMutations";
 import { useUserData } from "@/helpers/token";
@@ -25,7 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 export default function StudentsForm() {
 
     // const { data: dojoMartialArts = [] } = useDojoMartialArts();
-    const { data: dojoRanks = [] } = useDojoRanks();
+    const { data: ranks = [] } = useRanks();
     const { data: dojos = [] } = useDojos();
     const { data: roles = [] } = useRoles();
 
@@ -75,12 +75,14 @@ export default function StudentsForm() {
         if (mode === "create") {
             const defaultDojo = dojos.find(d => d.id === (user?.dojo.id || 0));
             const dojoMAs = defaultDojo?.dojoMartialArts ?? [];
+            const martialArtRank = dojoMAs.map(ma => ({
+                martialArtId: ma.id,
+                rankId: Number(ranks.filter(ra => ra.martialArtId == Number(ma.id))[0].id)
+            }));
+            
             form.reset({
                 ...form.getValues(),
-                martialArtRank: dojoMAs.map(ma => ({
-                    martialArtId: ma.id,
-                    rankId: 0,
-                })),
+                martialArtRank
             });
             setIsFormLoading(false);
             return;
@@ -121,7 +123,7 @@ export default function StudentsForm() {
 
     const dojosOptions = dojos.filter(dojo => user?.roles?.some(({ rol }) => rol === "Administrador") ? dojos.map(d => d) : dojo.id === user?.dojo.id).map(d => ({ label: d.dojo, value: d.id }));
 
-    const ranksOptions = dojoRanks.map(rank => ({
+    const ranksOptions = ranks.map(rank => ({
         label: `${returnTitle(rank.code)} ${rank.belt} ${rank.rank_name}`,
         value: Number(rank.id),
         martialArtId: rank.martialArtId
