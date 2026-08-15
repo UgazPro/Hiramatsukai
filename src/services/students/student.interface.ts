@@ -1,5 +1,5 @@
 
-import { IDojo, IDojoMartialArts, IDojoRanks } from "../dojos/dojo.interface";
+import { IDojo, IDojoMartialArts, IRanks } from "../dojos/dojo.interface";
 
 export type ViewMode = "list" | "grid" | "cards" | "longCards";
 export type userRolesNames = "Administrador" | "Líder Maestro" | "Líder Instructor" | "Instructor" | "Estudiante" | "Representante";
@@ -59,7 +59,7 @@ export interface IExamHistoryItem {
         date: Date;
     };
     martialArt: IDojoMartialArts;
-    rank: IDojoRanks;
+    rank: IRanks;
     approved: boolean;
 }
 

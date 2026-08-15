@@ -9,13 +9,12 @@ import KendoIaidoInfo from './pages/KendoIaidoInfo/KendoIaidoInfo';
 import AdminPanel from './pages/Admin/AdminPanel/AdminPanel';
 import AdminLayout from './layouts/AdminLayout';
 import Students from './pages/Admin/Students/Students';
-import MyselfView from './pages/Admin/Yo/MyselfView';
+import MyInformation from './pages/Admin/myInformation/myInformation';
 import Activities from './pages/Admin/Activities/Activities';
 import Training from './pages/Admin/Training/Training';
 import Applications from './pages/Admin/Applications/Applications';
 import Payments from './pages/Admin/Payments/Payments';
 import Settings from './pages/Admin/Settings/Settings';
-import Profile from './pages/Admin/Profile/Profile';
 import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
 import DojosInfo from './pages/DojosInfo/DojosInfo';
 import ProtectedRoute from './ProtectedRoute';
@@ -71,7 +70,7 @@ function App() {
             <ProtectedRoute><AdminLayout /></ProtectedRoute>
           }>
             <Route path="/admin" element={<AdminGuard />} />
-            <Route path="/admin/yo" element={<MyselfView />} />
+            <Route path="/admin/yo" element={<MyInformation />} />
             <Route path="/admin/alumnos" element={
               <RoleProtectedRoute allowedRoles={["Administrador", "Líder Instructor", "Instructor"]}>
                 <Students />
@@ -91,7 +90,7 @@ function App() {
                 <Settings />
               </RoleProtectedRoute>
             } />
-            <Route path="/admin/perfil" element={<Profile />} />
+            <Route path="/admin/perfil" element={<Navigate to="/admin/yo" replace />} />
           </Route>
 
         </Routes>

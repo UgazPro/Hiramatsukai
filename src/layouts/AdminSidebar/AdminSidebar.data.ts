@@ -5,7 +5,6 @@ import { FaMoneyBillWave } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiAncientGateFill } from "react-icons/ri";
-import { FaUser } from "react-icons/fa";
 
 export interface SidebarContent {
   name: string;
@@ -75,15 +74,9 @@ export const sidebarData: SidebarGroup[] = [
     header: "Mi Información",
     items: [
       {
-        name: "Mis Datos",
-        icon: FaUser,
-        redirectTo: "/admin/yo",
-        active: false,
-      },
-      {
-        name: "Perfil",
+        name: "Mi Información",
         icon: FaRegUserCircle,
-        redirectTo: "/admin/perfil",
+        redirectTo: "/admin/yo",
         active: false,
       },
     ],
