@@ -184,7 +184,7 @@ export default function MyInformation() {
   const renderReadItem = (label: string, value?: string) => (
     <div className="space-y-1">
       <Label>{label}</Label>
-      <p className="text-sm font-medium text-gray-900 break-words">{value || "—"}</p>
+      <p className="text-sm font-medium text-gray-900">{value || "—"}</p>
     </div>
   );
 
