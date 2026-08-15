@@ -67,6 +67,7 @@ export default function Profile() {
       ...editData,
       dojoId: profile?.dojo?.id,
       enrollmentDate: profile?.enrollmentDate,
+      rolesIds: profile?.roles?.map(r => r.id) ?? [],
       martialArtRank: profile?.userRanks.map(rank => {
         return {
           martialArtId: rank.martialArt.id,
@@ -183,7 +184,7 @@ export default function Profile() {
   const displayBirthday = isEditing ? editData.birthday : (profile?.birthday ?? "");
 
   return (
-    <div className="min-h-screen w-full bg-linear-to-b from-gray-50 to-gray-100 p-3 sm:p-4 md:p-6">
+    <div className="w-full bg-linear-to-b from-gray-50 to-gray-100 p-3 sm:p-4 md:p-6">
       <div className="">
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -195,12 +196,10 @@ export default function Profile() {
               <CardContent className="relative pt-16 pb-4">
                 <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
                   <div className="relative group">
-                    <div className="h-32 w-32 rounded-full border-4 border-white bg-white shadow-xl overflow-hidden">
-                      <img
-                        src="https://api.dicebear.com/7.x/avataaars/svg?seed=default"
-                        alt={displayName}
-                        className="h-full w-full object-cover"
-                      />
+                    <div className="h-32 w-32 rounded-full border-4 border-white bg-yellow-500 shadow-xl flex items-center justify-center">
+                      <span className="text-white text-4xl font-bold">
+                        {displayName?.[0] || ""}{displayLastName?.[0] || ""}
+                      </span>
                     </div>
                     <label className="absolute bottom-2 right-2 h-8 w-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110">
                       <Camera className="h-4 w-4" />

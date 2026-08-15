@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { NavBar, NavBarMobile } from "./NavBar";
 import { useAuthStore } from "@/stores/auth.store";
 import { useUserData } from "@/helpers/token";
+import { clearSession } from "@/utils/clearSession";
 import { House, LogOut, LayoutDashboard, Building2, Menu } from "lucide-react";
 
 import {
@@ -25,12 +26,11 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
     const [visible, setVisible] = useState(true);
 
     const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
-    const logout = useAuthStore((s) => s.logout);
 
     const user = useUserData();
 
     const handleLogout = () => {
-        logout();
+        clearSession();
         navigate("/");
     };
 

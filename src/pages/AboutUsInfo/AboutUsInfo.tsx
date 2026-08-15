@@ -204,15 +204,8 @@ export default function AboutUsInfo() {
                                     </h2>
                                     <div className="space-y-4 text-gray-700">
                                         <p>
-                                            Hiramatsukai fue fundada en 1997 por un grupo de maestros dedicados a preservar
-                                            las artes marciales tradicionales de Okinawa en su forma más auténtica. El nombre
-                                            "Hiramatsukai" significa "Guardián de la Tradición", reflejando nuestro compromiso
-                                            con la preservación del patrimonio marcial.
-                                        </p>
-                                        <p>
-                                            Desde nuestros inicios en un pequeño dojo en Okinawa, hemos crecido hasta convertirnos
-                                            en una organización internacional con presencia en tres continentes, manteniendo
-                                            siempre los más altos estándares de enseñanza y práctica.
+                                            La Hiramatsukai fue fundada en 1997 por un grupo de maestros dedicados a preservar
+                                            las artes marciales tradicionales de Okinawa en su forma más auténtica impartidas por el Maestro Hiramatsu.
                                         </p>
                                     </div>
                                 </div>
@@ -359,7 +352,7 @@ export default function AboutUsInfo() {
 
                                         <div className="mb-4">
                                             <p className="text-gray-700 mb-2">
-                                                <span className="font-semibold">Instructor Principal:</span> {dojo.leaderInstructor.userRanks[0].rank.rank_name} {dojo.leaderInstructor.name} {dojo.leaderInstructor.lastName}
+                                                <span className="font-semibold">Instructor Principal:</span> {dojo.leaderInstructor?.userRanks?.[0]?.rank?.rank_name} {dojo.leaderInstructor?.name} {dojo.leaderInstructor?.lastName}
                                             </p>
                                             <div className="flex flex-wrap gap-2">
                                                 {dojo.dojoMartialArts.map((art, idx) => (

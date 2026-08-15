@@ -3,10 +3,8 @@ import { Link, useLocation } from "react-router";
 import { sidebarData } from "./AdminSidebar.data";
 import { LogOut } from "lucide-react";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
-import { useAuthStore } from "@/stores/auth.store";
-import { useStudentsStore } from "@/stores/students.store";
 import { useUserData } from "@/helpers/token";
-import { queryClient } from "@/main";
+import { clearSession } from "@/utils/clearSession";
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 interface AdminSidebarProps {
@@ -19,7 +17,6 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const location = useLocation();
-  const logout = useAuthStore((s) => s.logout);
   const user = useUserData();
 
   const restrictedNames = ["Alumnos", "Pagos", "Configuración", "Inicio"];
@@ -38,10 +35,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
   const handleLogout = () => {
     setIsLoggingOut(true);
     setShowSpinner(true);
-
-    useStudentsStore.getState().clearSelectedStudent();
-    queryClient.clear();
-    logout();
+    clearSession();
   };
 
   if (isLoggingOut) {
@@ -75,7 +69,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
             <div
               className="ml-3 overflow-hidden whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 transform -translate-x-2 group-hover:translate-x-0"
             >
-              <span className="text-xl font-bold">Dojo Kenzendo</span>
+              <span className="text-xl font-bold">{user?.dojo?.dojo || "Dojo"}</span>
             </div>
           </div>
 
@@ -150,7 +144,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
             <div className="pr-12 p-5 border-b border-gray-800">
               <div className="flex items-center gap-3">
                 <img src="/oki2.png" className="h-10 w-10 shrink-0" alt="Logo" />
-                <span className="text-xl font-bold">Dojo Kenzendo</span>
+                <span className="text-xl font-bold">{user?.dojo?.dojo || "Dojo"}</span>
               </div>
             </div>
 
