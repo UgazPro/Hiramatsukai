@@ -11,6 +11,7 @@ import AdminLayout from './layouts/AdminLayout';
 import Students from './pages/Admin/Students/Students';
 import MyInformation from './pages/Admin/myInformation/myInformation';
 import Activities from './pages/Admin/Activities/Activities';
+import Dojos from './pages/Admin/Dojos/Dojos';
 import Training from './pages/Admin/Training/Training';
 import Applications from './pages/Admin/Applications/Applications';
 import Payments from './pages/Admin/Payments/Payments';
@@ -78,6 +79,11 @@ function App() {
             } />
             {/* <Route path="/admin/horario" element={<Schedule />} /> */}
             <Route path="/admin/actividades" element={<Activities />} />
+            <Route path="/admin/dojos" element={
+              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Maestro"]}>
+                <Dojos />
+              </RoleProtectedRoute>
+            } />
             <Route path="/admin/entrenamientos" element={<Training />} />
             <Route path="/admin/postulaciones" element={<Applications />} />
             <Route path="/admin/pagos" element={

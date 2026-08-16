@@ -5,6 +5,7 @@ import { FaMoneyBillWave } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiAncientGateFill } from "react-icons/ri";
+import { RiBuilding2Fill } from "react-icons/ri";
 
 export interface SidebarContent {
   name: string;
@@ -43,6 +44,12 @@ export const sidebarData: SidebarGroup[] = [
         name: "Actividades",
         icon: IoCalendar,
         redirectTo: "/admin/actividades",
+        active: false,
+      },
+      {
+        name: "Dojos",
+        icon: RiBuilding2Fill,
+        redirectTo: "/admin/dojos",
         active: false,
       },
       {
