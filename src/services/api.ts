@@ -3,9 +3,7 @@ import { clearSession } from "@/utils/clearSession";
 import axios from "axios";
 
 export const api = axios.create({
-    // baseURL: `https://bj8nvndr-3000.use2.devtunnels.ms/api`,
-    // baseURL: `${import.meta.env.VITE_API_URL}/api`,
-    baseURL: `https://hiramatsukai-api.onrender.com/api`,
+    baseURL: `${import.meta.env.VITE_API_URL}/api`,
 });
 
 export const getDataApi = async (url: string) => {
@@ -40,6 +38,14 @@ export const postDataApi = async (url: string, data: object) => {
 
 export const putDataApi = async (endpoint: string, data: object) => {
     return await api.put(endpoint, data).then((response) => {
+        return response.data;
+    }).catch((err) => {
+        return err.response.data;
+    })
+}
+
+export const patchDataApi = async (endpoint: string, data: object) => {
+    return await api.patch(endpoint, data).then((response) => {
         return response.data;
     }).catch((err) => {
         return err.response.data;
