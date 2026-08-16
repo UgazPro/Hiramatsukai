@@ -3,11 +3,14 @@ export interface IDojo {
     id: number;
     dojo: string;
     address: string;
+    addressShort: string;
     logo: string;
     code: string;
+    parentDojoId: number | null;
+    childDojos: number[];
     dojoMartialArts: IDojoMartialArts[];
     students: number;
-    leaderInstructor: LeaderInstructor;
+    leaderInstructor: LeaderInstructor | null;
 }
 
 export interface LeaderInstructor {
@@ -16,7 +19,7 @@ export interface LeaderInstructor {
     lastName: string;
     profileImg: string;
     dojoId: number;
-    rol: Rol;
+    roles: Rol[];
     userRanks: UserRank[];
 }
 
@@ -50,7 +53,7 @@ export interface IDojoMartialArts {
     icon: string;
 }
 
-export interface IDojoRanks {
+export interface IRanks {
     id: string;
     code: string;
     rank_name: string;

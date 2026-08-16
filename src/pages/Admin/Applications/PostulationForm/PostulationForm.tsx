@@ -18,10 +18,10 @@ import {
   useAppliedStudents,
   useCreateAppliedStudent,
 } from "@/hooks/useActivities";
-import { useDojosInfo, useDojoRanks } from "@/hooks/useDojos";
+import { useDojosInfo, useRanks } from "@/hooks/useDojos";
 import { dateFormatterIntoLong } from "@/helpers/formatter";
 import { ISuggestionStudentApplied } from "@/services/students/student.interface";
-import { IDojoRanks } from "@/services/dojos/dojo.interface";
+import { IRanks } from "@/services/dojos/dojo.interface";
 import { IAppliedStudent } from "@/services/activities/activity.interface";
 import { useUserData } from "@/helpers/token";
 import { IProfile } from "@/services/profile/profile.interface";
@@ -118,7 +118,7 @@ export default function PostulationForm() {
   const { data: dojo } = useDojosInfo(user.dojo.code || "");
   const { mutateAsync: createPostulation, isPending } =
     useCreateAppliedStudent();
-  const { data: ranks = [] } = useDojoRanks();
+  const { data: ranks = [] } = useRanks();
 
   const [selectedMartialArtId, setSelectedMartialArtId] = useState<number | null>(null);
   const [selectedStudentIds, setSelectedStudentIds] = useState<Set<number>>(new Set());
@@ -126,7 +126,7 @@ export default function PostulationForm() {
   const visibleMartialArts = dojo?.dojoMartialArts || [];
 
   const ranksMap = useMemo(() => {
-    const map = new Map<number, IDojoRanks>();
+    const map = new Map<number, IRanks>();
     for (const r of ranks) {
       map.set(Number(r.id), r);
     }

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createPaymentMethod, createScheduleDojos, deleteScheduleDojos, getDojoMartialArts, getDojoRanks, getDojos, getDojosInfoApi, getMonthlyPayments, getPaymentMethods, postMonthlyPayments, updateDojoInfo, updateMonthlyPayments, updatePaymentMethod, updateSchedulesDojos } from "@/services/dojos/dojo.service";
-import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IDojoRanks } from "@/services/dojos/dojo.interface";
+import { createDojo, createPaymentMethod, createScheduleDojos, deleteDojo, deleteScheduleDojos, getDojoMartialArts, getDojos, getDojosInfoApi, getMonthlyPayments, getPaymentMethods, getRanks, linkDojoParent, postMonthlyPayments, updateDojoInfo, updateMonthlyPayments, updatePaymentMethod, updateSchedulesDojos } from "@/services/dojos/dojo.service";
+import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IRanks } from "@/services/dojos/dojo.interface";
 import { MonthlyPaymentBody, MonthlyPayments, PaymentMethodBody, PaymentMethods } from "@/services/dojos/payments.interface";
 
 const upsertById = <T extends { id: number }>(list: T[] = [], newItem: T): T[] => {
@@ -82,10 +82,10 @@ export const useDojoMartialArts = () => {
   });
 }
 
-export const useDojoRanks = () => {
-  return useQuery<IDojoRanks[]>({
-    queryKey: ["dojoRanks"],
-    queryFn: getDojoRanks,
+export const useRanks = () => {
+  return useQuery<IRanks[]>({
+    queryKey: ["ranks"],
+    queryFn: getRanks,
     staleTime: 1000 * 60 * 5,
   });
 }
@@ -107,6 +107,19 @@ type DeleteDojoSchedulePayload = {
 type UpdateDojoInfoPayload = {
   dojoId: number;
   dojoInfo: DojoBody;
+  logo?: File | null;
+  banner?: File | null;
+}
+
+type CreateDojoPayload = {
+  dojoInfo: DojoBody;
+  logo?: File | null;
+  banner?: File | null;
+}
+
+type LinkDojoParentPayload = {
+  dojoId: number;
+  parentDojoId: number | null;
 }
 
 type CreateDojoPaymentMethodPayload = PaymentMethodBody;
@@ -163,11 +176,49 @@ export const useUpdateDojoInfo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ dojoId, dojoInfo }: UpdateDojoInfoPayload) =>
-      updateDojoInfo(dojoId, dojoInfo),
+    mutationFn: ({ dojoId, dojoInfo, logo, banner }: UpdateDojoInfoPayload) =>
+      updateDojoInfo(dojoId, dojoInfo, logo, banner),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["dojos"] });
       queryClient.invalidateQueries({ queryKey: ["dojosInfo", variables.dojoInfo.code] });
+      queryClient.invalidateQueries({ queryKey: ["dojosInfo"] });
+    },
+  });
+}
+
+export const useCreateDojo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ dojoInfo, logo, banner }: CreateDojoPayload) =>
+      createDojo(dojoInfo, logo, banner),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dojos"] });
+      queryClient.invalidateQueries({ queryKey: ["dojosInfo"] });
+    },
+  });
+}
+
+export const useDeleteDojo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number) => deleteDojo(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dojos"] });
+      queryClient.invalidateQueries({ queryKey: ["dojosInfo"] });
+    },
+  });
+}
+
+export const useLinkDojoParent = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ dojoId, parentDojoId }: LinkDojoParentPayload) =>
+      linkDojoParent(dojoId, parentDojoId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["dojos"] });
       queryClient.invalidateQueries({ queryKey: ["dojosInfo"] });
     },
   });

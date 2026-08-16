@@ -1,5 +1,5 @@
-import { deleteDataApi, getDataApi, getImagesApi, postDataApi, putDataApi } from "../api";
-import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IDojoRanks } from "./dojo.interface";
+import { api, deleteDataApi, getDataApi, getImagesApi, patchDataApi, postDataApi, putDataApi } from "../api";
+import { DojoBody, DojoScheduleBody, IDojo, IDojoInfo, IDojoMartialArts, IRanks } from "./dojo.interface";
 import { MonthlyPaymentBody, MonthlyPayments, PaymentMethodBody, PaymentMethods } from "./payments.interface";
 
 const dojosUrl = '/dojos';
@@ -22,14 +22,32 @@ export const getDojoMartialArts = async (): Promise<IDojoMartialArts[]> => {
     return await getDataApi(`${dojosUrl}/martial-arts`);
 }
 
-export const getDojoRanks = async (): Promise<IDojoRanks[]> => {
+export const getRanks = async (): Promise<IRanks[]> => {
     return await getDataApi(`${dojosUrl}/ranks`);
 }
 
-export const updateDojoInfo = async (id: number, dojoInfo: DojoBody) => {
+export const updateDojoInfo = async (id: number, dojoInfo: DojoBody, logo?: File | null, banner?: File | null) => {
     const formData = new FormData();
     formData.append('dojoData', JSON.stringify(dojoInfo));
+    if (logo) formData.append('logo', logo);
+    if (banner) formData.append('banner', banner);
     return await putDataApi(`${dojosUrl}/${id}`, formData);
+}
+
+export const createDojo = async (dojoInfo: DojoBody, logo?: File | null, banner?: File | null) => {
+    const formData = new FormData();
+    formData.append('dojoData', JSON.stringify(dojoInfo));
+    if (logo) formData.append('logo', logo);
+    if (banner) formData.append('banner', banner);
+    return await api.post(`${dojosUrl}`, formData).then((res) => res.data).catch((err) => err.response?.data);
+}
+
+export const deleteDojo = async (id: number) => {
+    return await deleteDataApi(`${dojosUrl}/${id}`);
+}
+
+export const linkDojoParent = async (id: number, parentDojoId: number | null) => {
+    return await patchDataApi(`${dojosUrl}/${id}/parent`, { parentDojoId });
 }
 
 
