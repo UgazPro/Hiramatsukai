@@ -73,7 +73,7 @@ function App() {
             <Route path="/admin" element={<AdminGuard />} />
             <Route path="/admin/yo" element={<MyInformation />} />
             <Route path="/admin/alumnos" element={
-              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Instructor", "Instructor"]}>
+              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Maestro", "Líder Instructor", "Instructor"]}>
                 <Students />
               </RoleProtectedRoute>
             } />
@@ -87,12 +87,12 @@ function App() {
             <Route path="/admin/entrenamientos" element={<Training />} />
             <Route path="/admin/postulaciones" element={<Applications />} />
             <Route path="/admin/pagos" element={
-              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Instructor", "Instructor"]}>
+              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Maestro", "Líder Instructor", "Instructor"]}>
                 <Payments />
               </RoleProtectedRoute>
             } />
             <Route path="/admin/configuracion" element={
-              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Instructor", "Instructor"]}>
+              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Maestro","Líder Instructor", "Instructor"]}>
                 <Settings />
               </RoleProtectedRoute>
             } />
