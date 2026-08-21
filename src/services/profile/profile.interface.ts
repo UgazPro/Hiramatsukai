@@ -1,3 +1,5 @@
+import { userRolesNames } from "../students/student.interface";
+
 export interface IProfile {
   name: string;
   lastName: string;
@@ -20,7 +22,7 @@ export interface IProfile {
 
 export interface IProfileRole {
   id: number;
-  rol: string;
+  rol: userRolesNames;
 }
 
 export interface IProfileRank {

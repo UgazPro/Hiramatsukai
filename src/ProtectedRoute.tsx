@@ -25,6 +25,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     }
 
     if (user) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
       return;
     }
