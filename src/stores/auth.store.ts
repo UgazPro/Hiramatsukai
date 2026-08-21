@@ -40,7 +40,15 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-storage",
-      version: 1,
+      version: 2,
+      migrate: (persisted) => {
+        const state = persisted as Pick<AuthState, "token" | "isAuthenticated"> | undefined;
+        return {
+          token: state?.token ?? null,
+          isAuthenticated: state?.isAuthenticated ?? false,
+          user: null,
+        } as AuthState;
+      },
     },
   ),
 );

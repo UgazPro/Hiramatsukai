@@ -1,10 +1,9 @@
 import { IProfile } from "@/services/profile/profile.interface";
+import { userRolesNames } from "@/services/students/student.interface";
 
 interface RawProfileRole {
-  rol: {
-    id: number;
-    rol: string;
-  };
+  id: number;
+  rol: userRolesNames;
 }
 
 interface RawProfile extends Omit<IProfile, "roles"> {
@@ -14,6 +13,6 @@ interface RawProfile extends Omit<IProfile, "roles"> {
 export function transformProfile(raw: RawProfile): IProfile {
   return {
     ...raw,
-    roles: raw.roles.map((r) => r.rol),
+    roles: raw.roles.map((r) => ({ id: r.id, rol: r.rol })),
   };
 }
