@@ -1,8 +1,11 @@
+import AboutUs from "./AboutUs/AboutUs";
+import HiramatsukaiInfo from "./HiramatsukaiInfo/HiramatsukaiInfo";
+import GreatMasters from "./GreatMasters/GreatMasters";
 import Karatedo from "./Karatedo/Karatedo";
 import Kobudo from "./Kobudo/Kobudo";
-import KendoIaido from "./KendoIaido/KendoIaido";
+import Kendo from "./Kendo/Kendo";
+import Iaido from "./Iaido/Iaido";
 import Dojos from "./Dojos/Dojos";
-import AboutUs from "./AboutUs/AboutUs";
 
 export default function Home() {
 
@@ -11,11 +14,17 @@ export default function Home() {
             
             <AboutUs />
 
+            <HiramatsukaiInfo />
+
+            <GreatMasters />
+
             <Karatedo />
 
             <Kobudo />
 
-            <KendoIaido />
+            <Kendo />
+
+            <Iaido />
 
             <Dojos />
 
