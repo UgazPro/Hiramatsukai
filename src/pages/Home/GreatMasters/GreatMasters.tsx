@@ -15,7 +15,7 @@ export default function GreatMasters() {
             color: "red",
         },
         {
-            name: "Chōjun Miyagi",
+            name: "Chōjun Miyagi Sensei",
             art: "Goju-Ryu Karate-Do",
             initials: "宮",
             image: "/chojunmiyagi.jpg",
@@ -24,7 +24,7 @@ export default function GreatMasters() {
             color: "blue",
         },
         {
-            name: "Kanken Toyama",
+            name: "Kanken Toyama Sensei",
             art: "Kobudo",
             initials: "外",
             image: "/kankentoyama.jpg",
