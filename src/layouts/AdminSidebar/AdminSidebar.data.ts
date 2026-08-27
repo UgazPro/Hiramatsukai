@@ -6,6 +6,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { FaRegUserCircle } from "react-icons/fa";
 import { RiAncientGateFill } from "react-icons/ri";
 import { RiBuilding2Fill } from "react-icons/ri";
+import { Shield } from "lucide-react";
 
 export interface SidebarContent {
   name: string;
@@ -84,6 +85,17 @@ export const sidebarData: SidebarGroup[] = [
         name: "Mi Información",
         icon: FaRegUserCircle,
         redirectTo: "/admin/yo",
+        active: false,
+      },
+    ],
+  },
+  {
+    header: "Hiramatsukai",
+    items: [
+      {
+        name: "Hiramatsukai",
+        icon: Shield,
+        redirectTo: "/admin/hiramatsukai",
         active: false,
       },
     ],

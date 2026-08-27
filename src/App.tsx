@@ -18,6 +18,7 @@ import Training from './pages/Admin/Training/Training';
 import Applications from './pages/Admin/Applications/Applications';
 import Payments from './pages/Admin/Payments/Payments';
 import Settings from './pages/Admin/Settings/Settings';
+import Hiramatsukai from './pages/Admin/Hiramatsukai/Hiramatsukai';
 import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
 import DojosInfo from './pages/DojosInfo/DojosInfo';
 import ProtectedRoute from './ProtectedRoute';
@@ -86,6 +87,11 @@ function App() {
             <Route path="/admin/dojos" element={
               <RoleProtectedRoute allowedRoles={["Administrador", "Líder Maestro"]}>
                 <Dojos />
+              </RoleProtectedRoute>
+            } />
+            <Route path="/admin/hiramatsukai" element={
+              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Maestro"]}>
+                <Hiramatsukai />
               </RoleProtectedRoute>
             } />
             <Route path="/admin/entrenamientos" element={<Training />} />
