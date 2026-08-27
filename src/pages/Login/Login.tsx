@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GoogleLogin } from "@react-oauth/google";
+import { Eye, EyeOff } from "lucide-react";
 
 import { LoginSchema } from "./Login.data";
 import ErrorMessage from "@/components/form/renderFormComponents/ErrorMessage";
@@ -12,6 +13,7 @@ import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 
 export default function Login() {
     const [loginErrorMessage, setLoginErrorMessage] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const loginMutation = useLoginMutation();
     const googleLoginMutation = useGoogleLoginMutation();
@@ -75,12 +77,21 @@ export default function Login() {
                             {/* Password */}
                             <div className="flex flex-col space-y-1">
                                 <label className="text-white font-bold mb-3 pl-2">Contraseña</label>
-                                <input
-                                    type="password"
-                                    {...register("password")}
-                                    className="bg-black border rounded-xl px-3 py-2 text-white focus:outline-none focus:border-(--yellowColor)"
-                                    placeholder="*********"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        {...register("password")}
+                                        className="bg-black border rounded-xl px-3 py-2 text-white focus:outline-none focus:border-(--yellowColor) w-full pr-10"
+                                        placeholder="*********"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-white/60 hover:text-white"
+                                    >
+                                        {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                    </button>
+                                </div>
                                 {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
                                 {loginErrorMessage && <ErrorMessage>{loginErrorMessage}</ErrorMessage>}
                             </div>

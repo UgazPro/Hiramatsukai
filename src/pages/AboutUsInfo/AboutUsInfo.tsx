@@ -357,7 +357,7 @@ export default function AboutUsInfo() {
                                             <div className="flex flex-wrap gap-2">
                                                 {dojo.dojoMartialArts.map((art, idx) => (
                                                     <span key={idx} className="flex items-center gap-2 py-1 px-2 bg-gray-100 text-gray-700 rounded-full text-sm">
-                                                        <img src={`/${art.icon}`} className="w-8 h-8" alt={art.martialArt} /> {art.martialArt}
+                                                        <img src={`/${art.icon}`} className={art.martialArt === "Kobudo" ? "h-7 w-9" : "w-8 h-8"} alt={art.martialArt} /> {art.martialArt}
                                                     </span>
                                                 ))}
                                             </div>
