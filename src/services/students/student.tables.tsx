@@ -68,11 +68,12 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
     {
         header: "Cinturón",
         render: (s) => (
-            <div className="text-xs">
+            <div className="text-xs space-y-1 max-w-68 w-68">
                 {s.userRanks?.map((r, i) => (
-                    <p key={i}>
-                        {r.rank.rank_name} {r.rank.code}, Cinturón {r.rank.belt} - {r.martialArt.martialArt}
-                    </p>
+                    <div key={i} className="flex items-center justify-start gap-2">
+                        <img src={r.martialArt.icon} className="h-5 w-5 shrink-0 rounded object-contain" alt={r.martialArt.martialArt} />
+                        <p className=" whitespace-break-spaces">{r.rank.rank_name} {r.rank.code}, Cinturón {r.rank.belt}</p>
+                    </div>
                 )) || <p>—</p>}
             </div>
         ),
