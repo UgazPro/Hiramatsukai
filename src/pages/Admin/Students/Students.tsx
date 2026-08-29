@@ -8,8 +8,8 @@ import StudentsForm from "./StudentForm/StudentsForm";
 
 import StudentsHeader from "./StudentViews/StudentsHeader";
 import StudentsNoResults from "./StudentViews/StudentsNoResults";
+import StudentsSkeleton from "./StudentViews/StudentsSkeleton";
 import StudentDetailView from "./StudentDetailView/StudentDetailView";
-import { Loader } from "@/components/spinner/Loader";
 import PageTransitionComponent from "@/components/PageTransitionComponent";
 
 export default function Students() {
@@ -38,9 +38,7 @@ export default function Students() {
               <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} />
 
               {isLoading ? (
-                <div className="flex items-center justify-center py-20">
-                  <Loader size="lg" message="Cargando estudiantes..." />
-                </div>
+                <StudentsSkeleton />
               ) : (
                 <>
                   {/* Views */}

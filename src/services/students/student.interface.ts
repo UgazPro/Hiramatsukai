@@ -132,7 +132,7 @@ export interface StudentBody {
     address: string;
     phone: string;
     dojoId: number;
-    rolId: number;
+    rolIds: number[];
     birthday: Date;
     enrollmentDate: Date;
     martialArtRank: MartialArtRank[];

@@ -198,7 +198,7 @@ export default function StudentsForm() {
             address: data.address,
             phone: `${data.phoneCountryCode}${data.phone}`,
             dojoId: data.dojoId,
-            rolId: data.rolId,
+            rolIds: [data.rolId],
             birthday: data.birthday,
             enrollmentDate: data.enrollmentDate,
             martialArtRank: data.martialArtRank.filter(m => m.martialArtId > 0 && m.rankId > 0),
