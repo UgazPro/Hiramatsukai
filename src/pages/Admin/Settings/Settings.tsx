@@ -391,7 +391,7 @@ console.log(user)
                       {martialArts.map((ma, index) => (
                         <div className="space-y-2" key={index}>
                           <div className="flex items-center justify-between">
-                            <Label><img src={resolverImageUrl(ma.icon)} alt={ma.martialArt} className="h-8 w-8" /> {ma.martialArt}</Label>
+                            <Label><img src={resolverImageUrl(ma.icon)} alt={ma.martialArt} className={ma.martialArt === "Kobudo" ? "h-7 w-9" : "h-8 w-8"} /> {ma.martialArt}</Label>
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <Button variant="ghost" type="button" size="icon" className="lg:ml-auto" onClick={() => setMartialArts(prev => prev.filter(m => m.id !== ma.id))}>

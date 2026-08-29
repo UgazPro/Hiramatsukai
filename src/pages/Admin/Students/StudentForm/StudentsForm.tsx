@@ -25,7 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 export default function StudentsForm() {
 
     // const { data: dojoMartialArts = [] } = useDojoMartialArts();
-    const { data: ranks = [] } = useRanks();
+    const { data: ranks = [], isLoading: isLoadingRanks } = useRanks();
     const { data: dojos = [] } = useDojos();
     const { data: roles = [] } = useRoles();
 
@@ -35,7 +35,7 @@ export default function StudentsForm() {
 
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [isFormLoading, setIsFormLoading] = useState(true);
+    const [isLoadingForm, setIsLoadingForm] = useState(mode === "edit");
     const prevDojoId = useRef<number | null>(null);
 
     const { mutateAsync: createStudent, isPending: isCreatePending } = useCreateStudent();
@@ -77,14 +77,13 @@ export default function StudentsForm() {
             const dojoMAs = defaultDojo?.dojoMartialArts ?? [];
             const martialArtRank = dojoMAs.map(ma => ({
                 martialArtId: ma.id,
-                rankId: Number(ranks.filter(ra => ra.martialArtId == Number(ma.id))[0].id)
+                rankId: Number(ranks.filter(ra => ra.martialArtId == Number(ma.id))[0]?.id ?? 0)
             }));
             
             form.reset({
                 ...form.getValues(),
                 martialArtRank
             });
-            setIsFormLoading(false);
             return;
         }
 
@@ -113,9 +112,9 @@ export default function StudentsForm() {
             }),
         });
 
-        setIsFormLoading(false);
+        setIsLoadingForm(false);
 
-    }, [mode, selectedStudent, dojos]);
+    }, [mode, selectedStudent, dojos, filteredRoles]);
 
     const returnTitle = (code: string) => {
         return code
@@ -209,7 +208,7 @@ export default function StudentsForm() {
         finishForm();
     };
 
-    if (isFormLoading || isSubmitting) {
+    if (isLoadingForm || isSubmitting) {
         return (
             <div className="p-4 w-full">
                 <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[400px]">
@@ -304,6 +303,7 @@ export default function StudentsForm() {
                                             dojoMartialArts={filteredDojoMartialArts}
                                             ranksOptions={ranksOptions}
                                             form={form}
+                                            isLoadingRanks={isLoadingRanks}
                                         />
                                     }
                                 />

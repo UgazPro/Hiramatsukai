@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Reveal from "@/components/animation/Reveal";
 import { motion } from "motion/react"
-import { Link } from "react-router";
 
 export default function AboutUs() {
 
@@ -50,10 +49,6 @@ export default function AboutUs() {
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button asChild size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-6 text-base" style={{ fontFamily: "Kavoon" }}>
                             <a href="#karate">Comienza tu viaje</a>
-                        </Button>
-
-                        <Button asChild size="lg" variant="clickRed" className="border-2 border-white text-white hover:bg-gray-500 px-8 py-6 text-base" style={{ fontFamily: "Kavoon" }}>
-                            <Link to="/nosotros">Conocenos</Link>
                         </Button>
                         </div>
                     </Reveal>

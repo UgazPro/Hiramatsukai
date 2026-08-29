@@ -23,14 +23,38 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
   const isRestricted = user?.roles.some(({ rol }) => rol === "Estudiante" || rol === "Representante");
 
   const filteredSidebarGroups = useMemo(() => {
-    if (!isRestricted) return sidebarData;
-    return sidebarData
-      .map((group) => ({
+    let groups = sidebarData;
+
+    if (isRestricted) {
+      groups = groups
+        .map((group) => ({
+          ...group,
+          items: group.items.filter((item) => !restrictedNames.includes(item.name)),
+        }))
+        .filter((group) => group.items.length > 0);
+    }
+
+    const hiramatsukaiAllowed = user?.roles.some(
+        ({ rol }) => rol === "Administrador" || rol === "Líder Maestro"
+    );
+
+    if (!hiramatsukaiAllowed) {
+      groups = groups.filter((group) => group.header !== "Hiramatsukai");
+    }
+
+    const dojosAllowed = user?.roles.some(
+        ({ rol }) => rol === "Administrador"
+    );
+
+    if (!dojosAllowed) {
+      groups = groups.map((group) => ({
         ...group,
-        items: group.items.filter((item) => !restrictedNames.includes(item.name)),
-      }))
-      .filter((group) => group.items.length > 0);
-  }, [isRestricted]);
+        items: group.items.filter((item) => item.name !== "Dojos"),
+      })).filter((group) => group.items.length > 0);
+    }
+
+    return groups;
+  }, [isRestricted, user?.roles]);
 
   const handleLogout = () => {
     setIsLoggingOut(true);

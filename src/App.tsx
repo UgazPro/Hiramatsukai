@@ -5,7 +5,9 @@ import AppLayout from './layouts/AppLayout';
 import Login from './pages/Login/Login';
 import KaratedoInfo from './pages/KaratedoInfo/KaratedoInfo';
 import KobudoInfo from './pages/KobudoInfo/KobudoInfo';
-import KendoIaidoInfo from './pages/KendoIaidoInfo/KendoIaidoInfo';
+import KendoInfo from './pages/KendoInfo/KendoInfo';
+import IaidoInfo from './pages/IaidoInfo/IaidoInfo';
+import MasterInfo from './pages/MasterInfo/MasterInfo';
 import AdminPanel from './pages/Admin/AdminPanel/AdminPanel';
 import AdminLayout from './layouts/AdminLayout';
 import Students from './pages/Admin/Students/Students';
@@ -16,6 +18,7 @@ import Training from './pages/Admin/Training/Training';
 import Applications from './pages/Admin/Applications/Applications';
 import Payments from './pages/Admin/Payments/Payments';
 import Settings from './pages/Admin/Settings/Settings';
+import Hiramatsukai from './pages/Admin/Hiramatsukai/Hiramatsukai';
 import AboutUsInfo from './pages/AboutUsInfo/AboutUsInfo';
 import DojosInfo from './pages/DojosInfo/DojosInfo';
 import ProtectedRoute from './ProtectedRoute';
@@ -62,7 +65,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/karatedo" element={<KaratedoInfo />} />
             <Route path="/kobudo" element={<KobudoInfo />} />
-            <Route path="/kendoIaido" element={<KendoIaidoInfo />} />
+            <Route path="/kendo" element={<KendoInfo />} />
+            <Route path="/iaido" element={<IaidoInfo />} />
+            <Route path="/maestro/:slug" element={<MasterInfo />} />
             <Route path="/dojos/dojo/:id" element={<DojosInfo />} />
           </Route>
 
@@ -82,6 +87,11 @@ function App() {
             <Route path="/admin/dojos" element={
               <RoleProtectedRoute allowedRoles={["Administrador", "Líder Maestro"]}>
                 <Dojos />
+              </RoleProtectedRoute>
+            } />
+            <Route path="/admin/hiramatsukai" element={
+              <RoleProtectedRoute allowedRoles={["Administrador", "Líder Maestro"]}>
+                <Hiramatsukai />
               </RoleProtectedRoute>
             } />
             <Route path="/admin/entrenamientos" element={<Training />} />
