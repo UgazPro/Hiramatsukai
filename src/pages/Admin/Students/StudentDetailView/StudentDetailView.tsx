@@ -13,7 +13,7 @@ import { es } from "date-fns/locale";
 import { format } from "date-fns";
 import { useStudentsStore } from "@/stores/students.store";
 import { useExamsByUser } from "@/hooks/useActivities";
-import { calculateMartialTime, dateFormatterIntoLong, formatNumberWithDots, formatPhoneNumber } from "@/helpers/formatter";
+import { calculateMartialTime, dateFormatterIntoLong, formatIdentification, formatPhoneWithCode } from "@/helpers/formatter";
 import { useStudentAllInfo } from "@/hooks/useStudents";
 import { IExam } from "@/services/activities/activity.interface";
 import { IActivityAttendanceItem, IStudent } from "@/services/students/student.interface";
@@ -145,7 +145,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                             <div className="space-y-4">
                                 <div>
                                     <p className="text-sm text-gray-500 mb-1">Cédula</p>
-                                    <p className="font-mono font-medium text-gray-900">{formatNumberWithDots(selectedStudent.identification)}</p>
+                                    <p className="font-mono font-medium text-gray-900">{formatIdentification(selectedStudent.identification)}</p>
                                 </div>
                                 <div>
                                     <p className="text-sm text-gray-500 mb-1">Sexo</p>
@@ -190,7 +190,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-sm text-gray-500 mb-1">Teléfono</p>
-                                        <p className="font-medium text-gray-900">{formatPhoneNumber(selectedStudent.phone)}</p>
+                                        <p className="font-medium text-gray-900">{formatPhoneWithCode(selectedStudent.phone)}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">

@@ -2,7 +2,7 @@ import { DeleteDialog } from "@/components/deleteDialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { calculateAge, formatNumberWithDots } from "@/helpers/formatter";
+import { calculateAge, formatIdentification } from "@/helpers/formatter";
 import { useDeleteStudent } from "@/queries/useStudentMutations";
 import { IStudent } from "@/services/students/student.interface";
 import { useStudentsStore } from "@/stores/students.store";
@@ -242,7 +242,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
                                         <p className="text-xs text-gray-500 mb-1">Cédula</p>
-                                        <p className="font-mono text-xs text-gray-900 font-semibold">{formatNumberWithDots(student.identification)}</p>
+                                        <p className="font-mono text-xs text-gray-900 font-semibold">{formatIdentification(student.identification)}</p>
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-500 mb-1">Edad</p>

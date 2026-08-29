@@ -7,19 +7,23 @@ export const martialArtRankSchema = z.object({
 
 export const studentSchema = z.object({
 
-  identification: z.string().nonempty('Cédula Requerida').min(7, "La cédula debe tener al menos 7 caracteres"),
+  identification: z.string().nonempty('Cédula Requerida').min(7, "La cédula debe tener al menos 7 dígitos").regex(/^\d+$/, "La cédula solo debe contener números"),
 
-  name: z.string().nonempty("Nombre Requerido").min(2, "Nombre requerido"),
+  identificationType: z.string(),
 
-  lastName: z.string().nonempty("Apellido Requerido").min(2, "Apellido requerido"),
+  name: z.string().nonempty("Nombre Requerido").min(2, "Nombre requerido").regex(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]+$/, "El nombre solo puede contener letras y espacios"),
+
+  lastName: z.string().nonempty("Apellido Requerido").min(2, "Apellido requerido").regex(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]+$/, "El apellido solo puede contener letras y espacios"),
 
   email: z.email("Correo inválido"),
 
-  username: z.string().min(3, "Nombre de Usuario requerido").nonempty("Nombre de Usuario requerido"),
+  username: z.string().min(3, "Nombre de Usuario requerido").nonempty("Nombre de Usuario requerido").regex(/^[A-Za-z0-9]+$/, "El usuario solo puede contener letras y números"),
 
   address: z.string().min(3, "Dirección requerida").nonempty("Dirección requerida"),
 
-  phone: z.string().min(7, "Teléfono requerido").nonempty("Teléfono requerido"),
+  phone: z.string().min(7, "Teléfono requerido").nonempty("Teléfono requerido").regex(/^\d+$/, "El teléfono solo debe contener números"),
+
+  phoneCountryCode: z.string(),
 
   sex: z.string().nonempty("Seleccione un género"),
 

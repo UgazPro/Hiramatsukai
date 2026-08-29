@@ -92,7 +92,114 @@ export const formatPhoneNumber = (phone: string): string => {
 
 export const formatNumberWithDots = (num: number | string): string => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+};
+
+export const sanitizeDigits = (value: string): string => {
+    return value.replace(/\D+/g, "");
+};
+
+export const sanitizeLetters = (value: string): string => {
+    return value.replace(/[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]+/g, "");
+};
+
+export const sanitizeAlphanumeric = (value: string): string => {
+    return value.replace(/[^A-Za-z0-9]+/g, "");
+};
+
+export const isValidEmail = (value: string): boolean => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+};
+
+export const IDENTIFICATION_TYPES = ["V", "E", "NIT", "C.I"] as const;
+export type IdentificationType = (typeof IDENTIFICATION_TYPES)[number];
+
+export const COUNTRY_PHONE_CODES: { code: string; label: string; country: string; group: number[] }[] = [
+    { code: "+58", label: "+58", country: "Venezuela", group: [3, 3, 4] },
+    { code: "+57", label: "+57", country: "Colombia", group: [3, 3, 4] },
+    { code: "+56", label: "+56", country: "Chile", group: [1, 4, 4] },
+];
+
+export const formatIdentification = (value: string): string => {
+    const raw = ('' + (value ?? '')).trim();
+    if (!raw) return "-";
+
+    const match = raw.match(/^([A-Za-zÁÉÍÓÚÜÑáéíóúüñ.]+)\s*[-\s]?\s*(\d+)$/);
+    if (match) {
+        const prefix = match[1].trim();
+        return `${prefix}-${formatNumberWithDots(match[2])}`;
+    }
+
+    if (/^\d+$/.test(raw)) {
+        return formatNumberWithDots(raw);
+    }
+
+    return raw;
+};
+
+export const splitIdentification = (value: string): { type: IdentificationType; digits: string } => {
+    const raw = ('' + (value ?? '')).trim();
+    const match = raw.match(/^([A-Za-zÁÉÍÓÚÜÑáéíóúüñ.]+)\s*[-\s]?\s*(\d+)$/);
+    if (match) {
+        const normalized = match[1].toUpperCase().replace(/\./g, "");
+        const type = IDENTIFICATION_TYPES.find((t) => t.toUpperCase().replace(/\./g, "") === normalized) ?? "V";
+        return { type, digits: match[2] };
+    }
+    return { type: "V", digits: sanitizeDigits(raw) };
+};
+
+export const formatPhoneByCountry = (countryCode: string, digits: string): string => {
+    const clean = sanitizeDigits(digits);
+    const country = COUNTRY_PHONE_CODES.find((c) => c.code === countryCode);
+    const group = country?.group ?? [3, 3, 4];
+
+    let result = "";
+    let index = 0;
+    for (let i = 0; i < group.length; i++) {
+        const size = group[i];
+        if (index >= clean.length) break;
+        const chunk = clean.slice(index, index + size);
+        index += size;
+
+        if (i > 0) {
+            if (i === 2 && (countryCode === "+58" || countryCode === "+57")) {
+                result += "-" + chunk;
+            } else if (i === 1 && (countryCode === "+58" || countryCode === "+57")) {
+                result += ") " + chunk;
+            } else {
+                result += " " + chunk;
+            }
+        } else {
+            if (countryCode === "+58" || countryCode === "+57") {
+                result += "(" + chunk;
+            } else {
+                result += chunk;
+            }
+        }
+    }
+
+    if (clean.length === 0) return "";
+    return result;
+};
+
+export const parseStoredPhone = (phone: string): { countryCode: string; digits: string } => {
+    const clean = sanitizeDigits(phone);
+    const country = COUNTRY_PHONE_CODES.find(
+        (c) => clean.startsWith(c.code.replace("+", ""))
+    );
+    if (country) {
+        return {
+            countryCode: country.code,
+            digits: clean.slice(country.code.replace("+", "").length),
+        };
+    }
+    return { countryCode: "+58", digits: clean };
+};
+
+export const formatPhoneWithCode = (phone: string): string => {
+    const { countryCode, digits } = parseStoredPhone(phone);
+    if (!digits) return phone || "-";
+    return `${countryCode} ${formatPhoneByCountry(countryCode, digits)}`;
+};
 
 export const timeFormatter = (date: Date | string) => {
     try {

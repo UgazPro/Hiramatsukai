@@ -11,6 +11,7 @@ import { useCreateStudent, useUpdateStudent } from "@/queries/useStudentMutation
 import { useUserData } from "@/helpers/token";
 import { useRoles } from "@/hooks/useStudents";
 import { FormComponent } from "@/components/form/FormComponent";
+import { parseStoredPhone, splitIdentification } from "@/helpers/formatter";
 import {
     step1Col1Fields,
     step1Col2Fields,
@@ -52,6 +53,7 @@ export default function StudentsForm() {
         resolver: zodResolver(studentSchema),
         defaultValues: {
             identification: '',
+            identificationType: 'V',
             sex: '',
             name: '',
             lastName: '',
@@ -59,6 +61,7 @@ export default function StudentsForm() {
             username: '',
             address: '',
             phone: '',
+            phoneCountryCode: '+58',
             dojoId: user?.dojo.id || 0,
             rolId: filteredRoles[0]?.id ?? 0,
             profileImg: '',
@@ -90,14 +93,19 @@ export default function StudentsForm() {
         const studentDojo = dojos.find(d => d.id === selectedStudent!.dojoId);
         const dojoMAs = studentDojo?.dojoMartialArts ?? [];
 
+        const { countryCode, digits: phoneDigits } = parseStoredPhone(selectedStudent!.phone);
+        const { type, digits: idDigits } = splitIdentification(selectedStudent!.identification);
+
         form.reset({
-            identification: selectedStudent!.identification,
+            identification: idDigits,
+            identificationType: type,
             name: selectedStudent!.name,
             lastName: selectedStudent!.lastName,
             email: selectedStudent!.email,
             username: selectedStudent!.username,
             address: selectedStudent!.address,
-            phone: selectedStudent!.phone,
+            phone: phoneDigits,
+            phoneCountryCode: countryCode,
             sex: selectedStudent!.sex,
             dojoId: selectedStudent!.dojoId,
             rolId: selectedStudent!.roles?.[0]?.id ?? 0,
@@ -181,14 +189,14 @@ export default function StudentsForm() {
 
         const payload = {
             ...(mode === "edit" && selectedStudent?.id ? { id: selectedStudent.id } : {}),
-            identification: data.identification,
+            identification: `${data.identificationType}-${data.identification}`,
             sex: data.sex,
             name: data.name,
             lastName: data.lastName,
             email: data.email,
             username: data.username,
             address: data.address,
-            phone: data.phone,
+            phone: `${data.phoneCountryCode}${data.phone}`,
             dojoId: data.dojoId,
             rolId: data.rolId,
             birthday: data.birthday,

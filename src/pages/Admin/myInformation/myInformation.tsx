@@ -16,8 +16,11 @@ import ProfileSkeleton from "@/pages/Admin/Profile/ProfileSkeleton";
 import { LiaIdCardSolid } from "react-icons/lia";
 import { toast } from "sonner";
 import {
-  dateFormatterIntoLong, formatNumberWithDots, formatPhoneNumber,
+  dateFormatterIntoLong, formatIdentification, formatPhoneWithCode, isValidEmail,
+  parseStoredPhone, sanitizeAlphanumeric, sanitizeLetters, splitIdentification,
 } from "@/helpers/formatter";
+import { IdentificationFieldComponent } from "@/components/form/renderFormComponents/IdentificationFieldComponent";
+import { PhoneFieldComponent } from "@/components/form/renderFormComponents/PhoneFieldComponent";
 
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]).{8,}$/;
 const PASSWORD_REQUIREMENTS = [
@@ -28,14 +31,30 @@ const PASSWORD_REQUIREMENTS = [
   { label: "Un carácter especial (!@#$%^&*...)", test: (p: string) => /[!@#$%^&*()_+=\-[\]{};':"\\|,.<>/?]/.test(p) },
 ];
 
-const EMPTY_EDIT_DATA = {
+interface EditData {
+  name: string;
+  lastName: string;
+  email: string;
+  username: string;
+  phone: string;
+  phoneCountryCode: string;
+  address: string;
+  identification: string;
+  identificationType: string;
+  sex: string;
+  birthday: string;
+}
+
+const EMPTY_EDIT_DATA: EditData = {
   name: "",
   lastName: "",
   email: "",
   username: "",
   phone: "",
+  phoneCountryCode: "+58",
   address: "",
   identification: "",
+  identificationType: "V",
   sex: "",
   birthday: "",
 };
@@ -47,7 +66,7 @@ export default function MyInformation() {
   const changePasswordMutation = useChangePassword();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [editData, setEditData] = useState(EMPTY_EDIT_DATA);
+  const [editData, setEditData] = useState<EditData>(EMPTY_EDIT_DATA);
 
   const [passwords, setPasswords] = useState({ current: "", new: "", confirm: "" });
   const [showPasswords, setShowPasswords] = useState(false);
@@ -58,14 +77,19 @@ export default function MyInformation() {
   };
 
   const startEditing = () => {
+    const { countryCode, digits: phoneDigits } = parseStoredPhone(me?.phone ?? "");
+    const { type, digits: idDigits } = splitIdentification(me?.identification ?? "");
+
     setEditData({
       name: me?.name ?? "",
       lastName: me?.lastName ?? "",
       email: me?.email ?? "",
       username: me?.username ?? "",
-      phone: me?.phone ?? "",
+      phone: phoneDigits,
+      phoneCountryCode: countryCode,
       address: me?.address ?? "",
-      identification: me?.identification ?? "",
+      identification: idDigits,
+      identificationType: type,
       sex: me?.sex ?? "",
       birthday: me?.birthday ? new Date(me.birthday).toISOString() : "",
     });
@@ -78,8 +102,12 @@ export default function MyInformation() {
   };
 
   const saveAll = () => {
+    const { identificationType, phoneCountryCode, ...restEditData } = editData;
+
     const payload = {
-      ...editData,
+      ...restEditData,
+      identification: `${identificationType}-${editData.identification}`,
+      phone: `${phoneCountryCode}${editData.phone}`,
       dojoId: me?.dojo?.id,
       enrollmentDate: me?.enrollmentDate,
       rolesIds: me?.roles?.map((r) => r.id) ?? [],
@@ -268,11 +296,11 @@ export default function MyInformation() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="h-4 w-4 shrink-0" />
-                  <span className="text-sm sm:text-base">{formatPhoneNumber(me.phone)}</span>
+                  <span className="text-sm sm:text-base">{formatPhoneWithCode(me.phone)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <LiaIdCardSolid className="h-4 w-4 shrink-0" />
-                  <span className="text-sm sm:text-base">{formatNumberWithDots(me.identification)}</span>
+                  <span className="text-sm sm:text-base">{formatIdentification(me.identification)}</span>
                 </div>
               </div>
             </div>
@@ -330,38 +358,47 @@ export default function MyInformation() {
                   {renderEditItem("Nombre", (
                     <Input
                       value={editData.name}
-                      onChange={(e) => setEditData((prev) => ({ ...prev, name: e.target.value }))}
+                      onChange={(e) => setEditData((prev) => ({ ...prev, name: sanitizeLetters(e.target.value) }))}
                     />
                   ))}
                   {renderEditItem("Apellido", (
                     <Input
                       value={editData.lastName}
-                      onChange={(e) => setEditData((prev) => ({ ...prev, lastName: e.target.value }))}
+                      onChange={(e) => setEditData((prev) => ({ ...prev, lastName: sanitizeLetters(e.target.value) }))}
                     />
                   ))}
                   {renderEditItem("Nombre de usuario", (
                     <Input
                       value={editData.username}
-                      onChange={(e) => setEditData((prev) => ({ ...prev, username: e.target.value }))}
+                      onChange={(e) => setEditData((prev) => ({ ...prev, username: sanitizeAlphanumeric(e.target.value) }))}
                     />
                   ))}
                   {renderEditItem("Correo electrónico", (
-                    <Input
-                      type="email"
-                      value={editData.email}
-                      onChange={(e) => setEditData((prev) => ({ ...prev, email: e.target.value }))}
-                    />
+                    <>
+                      <Input
+                        type="email"
+                        value={editData.email}
+                        onChange={(e) => setEditData((prev) => ({ ...prev, email: e.target.value }))}
+                      />
+                      {editData.email && !isValidEmail(editData.email) && (
+                        <p className="text-xs text-red-500">Correo electrónico inválido</p>
+                      )}
+                    </>
                   ))}
                   {renderEditItem("Teléfono", (
-                    <Input
+                    <PhoneFieldComponent
                       value={editData.phone}
-                      onChange={(e) => setEditData((prev) => ({ ...prev, phone: e.target.value }))}
+                      countryCode={editData.phoneCountryCode}
+                      onValueChange={(value) => setEditData((prev) => ({ ...prev, phone: value }))}
+                      onCountryChange={(countryCode) => setEditData((prev) => ({ ...prev, phoneCountryCode: countryCode }))}
                     />
                   ))}
                   {renderEditItem("Cédula", (
-                    <Input
+                    <IdentificationFieldComponent
                       value={editData.identification}
-                      onChange={(e) => setEditData((prev) => ({ ...prev, identification: e.target.value }))}
+                      typeValue={(editData.identificationType || "V") as "V" | "E" | "NIT" | "C.I"}
+                      onValueChange={(value) => setEditData((prev) => ({ ...prev, identification: value }))}
+                      onTypeChange={(type) => setEditData((prev) => ({ ...prev, identificationType: type }))}
                     />
                   ))}
                   {renderEditItem("Dirección", (
@@ -398,8 +435,8 @@ export default function MyInformation() {
                   {renderReadItem("Apellido", me.lastName)}
                   {renderReadItem("Nombre de usuario", `@${me.username}`)}
                   {renderReadItem("Correo electrónico", me.email)}
-                  {renderReadItem("Teléfono", formatPhoneNumber(me.phone))}
-                  {renderReadItem("Cédula", formatNumberWithDots(me.identification))}
+                  {renderReadItem("Teléfono", formatPhoneWithCode(me.phone))}
+                  {renderReadItem("Cédula", formatIdentification(me.identification))}
                   {renderReadItem("Dirección", me.address)}
                   {renderReadItem("Sexo", me.sex)}
                   {renderReadItem("Fecha de nacimiento", dateFormatterIntoLong(me.birthday))}

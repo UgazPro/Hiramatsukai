@@ -7,6 +7,9 @@ import { FormField } from "./formComponent.interface";
 import { Controller, FieldValues, Path, UseFormReturn } from "react-hook-form";
 import ErrorMessage from "./renderFormComponents/ErrorMessage";
 import { MultiSelectField } from "./renderFormComponents/MultiSelectField";
+import { IdentificationFieldComponent } from "./renderFormComponents/IdentificationFieldComponent";
+import { PhoneFieldComponent } from "./renderFormComponents/PhoneFieldComponent";
+import { sanitizeAlphanumeric, sanitizeLetters, IdentificationType } from "@/helpers/formatter";
 
 const inputClass =
     "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg";
@@ -43,18 +46,86 @@ export function FormComponent<TFieldValues extends FieldValues>({ fields, form, 
                             </div>
                         );
 
-                    case "text":
+                    case "text": {
+                        const registerResult = form.register(field.name as Path<TFieldValues>);
+                        const sanitizeFn =
+                            field.sanitize === "letters"
+                                ? sanitizeLetters
+                                : field.sanitize === "alphanumeric"
+                                    ? sanitizeAlphanumeric
+                                    : undefined;
+
                         return (
                             <div key={field.name} className="space-y-1.5 relative">
                                 <Label className={labelClass}>{field.label}</Label>
                                 <Input
                                     className={inputClass}
                                     type={field.inputType ?? "text"}
-                                    {...form.register(field.name as Path<TFieldValues>)}
+                                    {...registerResult}
+                                    onChange={
+                                        sanitizeFn
+                                            ? (e) => {
+                                                e.target.value = sanitizeFn(e.target.value);
+                                                void registerResult.onChange(e);
+                                            }
+                                            : registerResult.onChange
+                                    }
                                 />
                                 {fieldError && (<ErrorMessage>{String(fieldError.message ?? "")}</ErrorMessage>)}
                             </div>
+                        );
+                    }
 
+                    case "identification":
+                        return (
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
+                                <Controller
+                                    control={form.control}
+                                    name={field.name as Path<TFieldValues>}
+                                    render={({ field: identificationField }) => (
+                                        <Controller
+                                            control={form.control}
+                                            name={"identificationType" as Path<TFieldValues>}
+                                            render={({ field: typeField }) => (
+                                                <IdentificationFieldComponent
+                                                    value={identificationField.value ?? ""}
+                                                    typeValue={(typeField.value ?? "V") as IdentificationType}
+                                                    onValueChange={identificationField.onChange}
+                                                    onTypeChange={(type) => typeField.onChange(type)}
+                                                />
+                                            )}
+                                        />
+                                    )}
+                                />
+                                {fieldError && (<ErrorMessage>{String(fieldError.message ?? "")}</ErrorMessage>)}
+                            </div>
+                        );
+
+                    case "phone":
+                        return (
+                            <div key={field.name} className="space-y-1.5 relative">
+                                <Label className={labelClass}>{field.label}</Label>
+                                <Controller
+                                    control={form.control}
+                                    name={field.name as Path<TFieldValues>}
+                                    render={({ field: phoneField }) => (
+                                        <Controller
+                                            control={form.control}
+                                            name={"phoneCountryCode" as Path<TFieldValues>}
+                                            render={({ field: countryField }) => (
+                                                <PhoneFieldComponent
+                                                    value={phoneField.value ?? ""}
+                                                    countryCode={countryField.value ?? "+58"}
+                                                    onValueChange={phoneField.onChange}
+                                                    onCountryChange={countryField.onChange}
+                                                />
+                                            )}
+                                        />
+                                    )}
+                                />
+                                {fieldError && (<ErrorMessage>{String(fieldError.message ?? "")}</ErrorMessage>)}
+                            </div>
                         );
 
                     case "textarea":
