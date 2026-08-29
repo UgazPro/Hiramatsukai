@@ -25,3 +25,7 @@ dist-ssr
 
 # Environment files
 .env
+
+#Opencode
+.opencode
+demo
