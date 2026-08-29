@@ -34,7 +34,7 @@ export function PhoneFieldComponent({
                 onValueChange={onCountryChange}
                 disabled={disabled}
             >
-                <SelectTrigger className={`${selectClass} w-28 shrink-0`}>
+                <SelectTrigger className={`${selectClass} w-20 shrink-0`}>
                     <SelectValue placeholder="País" />
                 </SelectTrigger>
                 <SelectContent>

@@ -1,6 +1,16 @@
 import { FormField } from "@/components/form/formComponent.interface";
 import { IOptions } from "@/components/form/renderFormComponents/SelectComponent";
-import { IRoles } from "./student.interface";
+import { IRoles, userRolesNames } from "./student.interface";
+
+export const studentRoleOrder: userRolesNames[] = [
+    "Administrador",
+    "Líder Maestro",
+    "Comisión de Grado",
+    "Líder Instructor",
+    "Instructor",
+    "Estudiante",
+    "Representante",
+];
 
 // === PASO 1: Datos Personales ===
 
@@ -44,10 +54,10 @@ export const step2Col1Fields: (dojosOptions: IOptions[], roles: IRoles[], isAdmi
     disabled: !isAdmin,
   },
   {
-    type: "select",
-    name: "rolId",
+    type: "multiselect",
+    name: "rolIds",
     label: "Rol",
-    placeholder: "Seleccione un rol",
+    placeholder: "Seleccione uno o más roles",
     options: roles.map(r => ({ label: r.rol, value: r.id })),
   },
 ];

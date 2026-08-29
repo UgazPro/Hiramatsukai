@@ -29,7 +29,7 @@ export const studentSchema = z.object({
 
   dojoId: z.number().min(1, "Seleccione un dojo"),
 
-  rolId: z.number().min(1, "Seleccione un rol"),
+  rolIds: z.array(z.number().min(1)).min(1, "Seleccione al menos un rol"),
 
   birthday: z.date().refine((date) => !isNaN(date.getTime()), {
     message: "Fecha de nacimiento inválida",

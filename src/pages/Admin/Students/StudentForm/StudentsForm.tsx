@@ -2,8 +2,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft } from "lucide-react";
-import { Loader } from "@/components/spinner/Loader";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { useStudentsStore } from "@/stores/students.store";
 import { useRanks, useDojos } from "@/hooks/useDojos";
 import { StudentFormValues, studentSchema } from "@/services/students/student.schema";
@@ -18,6 +17,7 @@ import {
     step2Col1Fields,
     step2Col2Fields,
     step2Col3Fields,
+    studentRoleOrder,
 } from "../../../../services/students/studentsForm.data";
 import ProfilePictureComponent from "@/components/ProfilePictureComponent";
 import MartialRanksComponent from "@/components/form/renderFormComponents/MartialRanksComponent";
@@ -44,9 +44,25 @@ export default function StudentsForm() {
 
     const isSubmitting = isCreatePending || isUpdatePending;
 
-    const filteredRoles = useMemo(
-        () => roles.filter(r => r.rol === "Estudiante" || r.rol === "Representante"),
-        [roles]
+    const isBusy = isLoadingForm || isSubmitting;
+
+    const userRoleIndex = user?.roles
+        ? Math.max(...user.roles.map(r => studentRoleOrder.indexOf(r.rol)))
+        : -1;
+
+    const defaultRoleId = (): number => {
+        const estudianteId = availableRoles.find(r => r.rol === "Estudiante")?.id;
+        return estudianteId ?? availableRoles[0]?.id ?? 0;
+    };
+
+    const availableRoles = useMemo(
+        () => userRoleIndex >= 0
+            ? roles.filter(r => {
+                const i = studentRoleOrder.indexOf(r.rol);
+                return i >= userRoleIndex && i !== -1;
+            })
+            : [],
+        [roles, userRoleIndex]
     );
 
     const form = useForm<StudentFormValues>({
@@ -63,7 +79,7 @@ export default function StudentsForm() {
             phone: '',
             phoneCountryCode: '+58',
             dojoId: user?.dojo.id || 0,
-            rolId: filteredRoles[0]?.id ?? 0,
+            rolIds: availableRoles.length ? [defaultRoleId()] : [],
             profileImg: '',
             birthday: new Date(),
             enrollmentDate: new Date(),
@@ -73,7 +89,7 @@ export default function StudentsForm() {
 
     useEffect(() => {
         if (!dojos.length) return;
-        if (mode === "edit" && (!selectedStudent || !filteredRoles.length)) return;
+        if (mode === "edit" && (!selectedStudent || !availableRoles.length)) return;
 
         if (mode === "create") {
             const defaultDojo = dojos.find(d => d.id === (user?.dojo.id || 0));
@@ -108,7 +124,7 @@ export default function StudentsForm() {
             phoneCountryCode: countryCode,
             sex: selectedStudent!.sex,
             dojoId: selectedStudent!.dojoId,
-            rolId: selectedStudent!.roles?.[0]?.id ?? 0,
+            rolIds: selectedStudent!.roles?.map(r => r.id) ?? [],
             birthday: new Date(selectedStudent!.birthday),
             enrollmentDate: new Date(selectedStudent!.enrollmentDate),
             martialArtRank: dojoMAs.map(ma => {
@@ -122,7 +138,7 @@ export default function StudentsForm() {
 
         setIsLoadingForm(false);
 
-    }, [mode, selectedStudent, dojos, filteredRoles]);
+    }, [mode, selectedStudent, dojos, availableRoles]);
 
     const returnTitle = (code: string) => {
         return code
@@ -198,7 +214,7 @@ export default function StudentsForm() {
             address: data.address,
             phone: `${data.phoneCountryCode}${data.phone}`,
             dojoId: data.dojoId,
-            rolIds: [data.rolId],
+            rolIds: data.rolIds.filter(id => id > 0),
             birthday: data.birthday,
             enrollmentDate: data.enrollmentDate,
             martialArtRank: data.martialArtRank.filter(m => m.martialArtId > 0 && m.rankId > 0),
@@ -216,20 +232,17 @@ export default function StudentsForm() {
         finishForm();
     };
 
-    if (isLoadingForm || isSubmitting) {
-        return (
-            <div className="p-4 w-full">
-                <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[400px]">
-                    <Loader size="lg" message="Cargando..." />
-                </div>
-            </div>
-        );
-    }
-
     return (
 
         <div className="p-4 w-full">
-            <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
+            <div className="relative">
+                {isBusy && (
+                    <div className="absolute inset-0 z-20 flex items-center justify-center min-h-[400px]">
+                        <Loader2 className="h-8 w-8 animate-spin text-[var(--yellowColor)]" />
+                    </div>
+                )}
+
+                <div className={`bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden ${isBusy ? "opacity-40 pointer-events-none" : ""}`}>
 
                 {/* Header */}
                 <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 px-6 py-4">
@@ -286,17 +299,11 @@ export default function StudentsForm() {
                                     className="!p-4 !space-y-3"
                                 />
 
-                                {/* Col 3: dojoId, rolId, enrollmentDate + MartialRanks */}
+                                {/* Col 3: dojoId, rolIds, enrollmentDate + MartialRanks */}
                                 <FormComponent
                                     form={form}
                                     fields={[
-                                        ...(
-                                            mode === "edit"
-                                                ? step2Col1Fields(dojosOptions, roles, user?.roles?.some(({ rol }) => rol === "Administrador") ?? false).map(f =>
-                                                    f.name === "rolId" ? { ...f, disabled: true } : f
-                                                )
-                                                : step2Col1Fields(dojosOptions, filteredRoles, user?.roles?.some(({ rol }) => rol === "Administrador") ?? false)
-                                        ),
+                                        ...step2Col1Fields(dojosOptions, availableRoles, user?.roles?.some(({ rol }) => rol === "Administrador") ?? false),
                                         ...(mode === "edit"
                                             ? step2Col2Fields.map(f =>
                                                 f.name === "enrollmentDate" ? { ...f, disabled: true } : f
@@ -325,12 +332,13 @@ export default function StudentsForm() {
                                     variant="outline"
                                     className="cursor-pointer"
                                     onClick={finishForm}
+                                    disabled={isBusy}
                                 >
                                     Cancelar
                                 </Button>
                                 <Button
                                     type="submit"
-                                    disabled={isSubmitting}
+                                    disabled={isBusy}
                                     className="bg-red-700 hover:bg-red-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isSubmitting
@@ -343,6 +351,7 @@ export default function StudentsForm() {
                         </form>
                     </Form>
                 </div>
+            </div>
             </div>
         </div>
 
