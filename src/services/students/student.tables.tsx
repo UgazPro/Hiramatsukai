@@ -11,6 +11,14 @@ interface Actions {
     deleteStudent: (id: number) => void;
 }
 
+export const studentSortFields = [
+    { value: "name", label: "Alumno" },
+    { value: "identification", label: "Cédula" },
+    { value: "roles[0].rol", label: "Rol" },
+    { value: "dojo.dojo", label: "Dojo" },
+    { value: "enrollmentDate", label: "Fecha de inscripción" },
+];
+
 function userRolColor(rol: userRolesNames) {
 
     switch (rol) {
@@ -30,6 +38,7 @@ function userRolColor(rol: userRolesNames) {
 export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Column<IStudent>[] => [
     {
         header: "Alumno",
+        orderBy: "name",
         render: (student) => (
             <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-linear-to-br from-yellow-100 to-red-100 border border-yellow-200 flex items-center justify-center">
@@ -55,6 +64,7 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
 
     {
         header: "Cédula",
+        orderBy: "identification",
         render: (s) => (
             <span className="font-mono text-gray-800">{formatNumberWithDots(s.identification)}</span>
         ),
@@ -80,6 +90,7 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
     },
     {
         header: "Rol",
+        orderBy: "roles[0].rol",
         render: (s) => (
             <FieldBadge
                 label={s.roles?.map((r) => r.rol).join(", ") || "—"}
@@ -90,6 +101,7 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
 
     {
         header: "Dojo",
+        orderBy: "dojo.dojo",
         render: (s) => (
             <FieldBadge
                 label={s.dojo.dojo}
@@ -110,6 +122,7 @@ export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Colum
 
     {
         header: "Inscripción",
+        orderBy: "enrollmentDate",
         render: (s) => (
             <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-gray-500" />

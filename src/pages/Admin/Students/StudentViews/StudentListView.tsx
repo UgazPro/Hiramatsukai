@@ -14,6 +14,8 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
 
     const selectStudent = useStudentsStore((state) => state.selectStudent);
 
+    const { sort, setSort } = useStudentsStore();
+
     const { mutateAsync: deleteStudent } = useDeleteStudent();
 
     const columns = getStudentColumns({ startEdit, deleteStudent, });
@@ -25,6 +27,8 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
             <TableComponent
                 data={filteredStudents}
                 columns={columns}
+                sort={sort}
+                onSortChange={setSort}
                 onRowClick={(student) => {
                     selectStudent(student);
                     window.scrollTo({ top: 0, behavior: "smooth" });

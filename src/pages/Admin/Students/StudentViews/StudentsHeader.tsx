@@ -1,8 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { ViewMode } from "@/services/students/student.interface";
-import { LayoutGrid, List, UserPlus } from "lucide-react";
+import { LayoutGrid, List, UserPlus, School } from "lucide-react";
 import { useStudentsStore } from "@/stores/students.store";
 import SearchFilterComponent from "@/components/Filters/SearchFilter";
+import { useDojos } from "@/hooks/useDojos";
+import { useUserData } from "@/helpers/token";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 interface StudentsHeaderProps {
     viewMode: ViewMode;
@@ -11,7 +20,17 @@ interface StudentsHeaderProps {
 
 export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeaderProps) {
 
-    const { searchTerm, setSearchTerm, startCreate } = useStudentsStore();
+    const { searchTerm, setSearchTerm, startCreate, dojoFilter, setDojoFilter } = useStudentsStore();
+
+    const { data: dojos = [] } = useDojos();
+
+    const user = useUserData();
+
+    const isAdmin = user?.roles?.some(({ rol }) => rol === "Administrador") ?? false;
+
+    const selectableDojos = isAdmin ? dojos : [];
+
+    const selectedDojoValue = isAdmin ? (dojoFilter == null ? "all" : String(dojoFilter)) : "all";
 
     const views = [
         { key: "list", icon: List },
@@ -38,6 +57,29 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
                     placeHolder="Buscar por nombre, apellido, cédula o email..."
                     width="w-full md:w-92"
                 />
+
+                {/* Dojo filter */}
+                {isAdmin && (
+                    <div className="relative">
+                        <School className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4 pointer-events-none" />
+                        <Select
+                            value={selectedDojoValue}
+                            onValueChange={(value) => setDojoFilter(value === "all" ? null : Number(value))}
+                        >
+                            <SelectTrigger className="w-full md:w-52 h-9 pl-9 text-sm border-2 border-gray-300 focus:border-yellow-500 focus:ring-yellow-500/20 rounded-lg bg-white shadow-sm text-gray-700">
+                                <SelectValue placeholder="Todos los dojos" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">Todos los dojos</SelectItem>
+                                {selectableDojos.map((dojo) => (
+                                    <SelectItem key={dojo.id} value={String(dojo.id)}>
+                                        {dojo.dojo}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
+                )}
 
                 <div className="hidden lg:flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
                     {views.map(({ key, icon: Icon }) => (

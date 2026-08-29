@@ -1,4 +1,5 @@
 import { IStudent, ViewMode } from "@/services/students/student.interface";
+import { SortState } from "@/helpers/sort";
 import { create } from "zustand";
 
 type StudentScreen = "list" | "detail" | "edit" | "form";
@@ -23,6 +24,13 @@ interface StudentsStore {
 
   searchTerm: string;
   setSearchTerm: (v: string) => void;
+
+  dojoFilter: number | null;
+  setDojoFilter: (id: number | null) => void;
+
+  sort: SortState;
+  setSort: (sort: SortState) => void;
+  resetSort: () => void;
 }
 
 export const useStudentsStore = create<StudentsStore>((set) => ({
@@ -59,5 +67,12 @@ export const useStudentsStore = create<StudentsStore>((set) => ({
 
   searchTerm: "",
   setSearchTerm: (v) => set({ searchTerm: v }),
+
+  dojoFilter: null,
+  setDojoFilter: (id) => set({ dojoFilter: id }),
+
+  sort: { field: null, direction: null },
+  setSort: (sort) => set({ sort }),
+  resetSort: () => set({ sort: { field: null, direction: null } }),
 
 }));

@@ -1,15 +1,16 @@
 import { useMemo } from "react";
 import { IStudent } from "@/services/students/student.interface";
 import { useStudentsStore } from "@/stores/students.store";
+import { getSorted } from "@/helpers/sort";
 
 export const useFilteredStudents = (students: IStudent[] = []) => {
   
-  const { searchTerm } = useStudentsStore();
+  const { searchTerm, sort } = useStudentsStore();
 
   return useMemo(() => {
     const searchLower = searchTerm.toLowerCase();
 
-    return students.filter((student) => {
+    const filtered = students.filter((student) => {
       const matchesSearch =
         student.name.toLowerCase().includes(searchLower) ||
         student.lastName.toLowerCase().includes(searchLower) ||
@@ -19,5 +20,7 @@ export const useFilteredStudents = (students: IStudent[] = []) => {
 
       return matchesSearch;
     });
-  }, [ students, searchTerm ]);
+
+    return getSorted(filtered, sort);
+  }, [ students, searchTerm, sort ]);
 };

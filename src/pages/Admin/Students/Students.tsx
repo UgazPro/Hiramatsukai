@@ -14,7 +14,9 @@ import PageTransitionComponent from "@/components/PageTransitionComponent";
 
 export default function Students() {
 
-  const { data: students = [], isLoading } = useStudents();
+  const dojoFilter = useStudentsStore((state) => state.dojoFilter);
+
+  const { data: students = [], isLoading } = useStudents(dojoFilter);
 
   const { viewMode, setViewMode, screen, setScreen } = useStudentsStore();
 

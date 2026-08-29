@@ -3,10 +3,10 @@ import { getRoles, getUserAllInfo, getUsers, getMe } from "@/services/students/s
 import { IStudent, IStudentAllInfo } from "@/services/students/student.interface";
 import { getUserDataSafe } from "@/helpers/token";
 
-export const useStudents = () => {
+export const useStudents = (selectedDojoId?: number | null) => {
   const user = getUserDataSafe();
   const isAdmin = user?.roles?.some(({ rol }) => rol === "Administrador") ?? false;
-  const dojoId = isAdmin ? null : user?.dojo.id;
+  const dojoId = isAdmin ? (selectedDojoId ?? null) : user?.dojo.id ?? null;
 
   return useQuery({
     queryKey: ["students", dojoId],

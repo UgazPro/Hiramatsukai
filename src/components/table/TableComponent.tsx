@@ -1,9 +1,13 @@
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
+import { useState } from "react";
+import { SortDirection, SortState } from "@/helpers/sort";
 
 export interface Column<T> {
     header: string;
     accessor?: keyof T;
+    orderBy?: string;
     render?: (row: T) => React.ReactNode;
     className?: string;
     headerClassName?: string;
@@ -16,9 +20,37 @@ interface TableComponentProps<T> {
     rowClassName?: (row: T) => string;
     loading?: boolean;
     skeletonRows?: number;
+    sort?: SortState;
+    onSortChange?: (sort: SortState) => void;
 }
 
-export function TableComponent<T>({ data, columns, onRowClick, rowClassName, loading, skeletonRows = 5 }: TableComponentProps<T>) {
+function nextSort(orderBy: string, current: SortState): SortState {
+    if (current.field !== orderBy) {
+        return { field: orderBy, direction: "asc" as SortDirection };
+    }
+
+    if (current.direction === "asc") {
+        return { field: orderBy, direction: "desc" as SortDirection };
+    }
+
+    return { field: null, direction: null };
+}
+
+export function TableComponent<T>({ data, columns, onRowClick, rowClassName, loading, skeletonRows = 5, sort, onSortChange }: TableComponentProps<T>) {
+
+    const [internalSort, setInternalSort] = useState<SortState>({ field: null, direction: null });
+
+    const activeSort = sort ?? internalSort;
+
+    const handleSort = (orderBy: string) => {
+        const next = nextSort(orderBy, activeSort);
+
+        if (sort && onSortChange) {
+            onSortChange(next);
+        } else {
+            setInternalSort(next);
+        }
+    };
 
     return (
         <div className="rounded-lg border border-gray-300 shadow-sm overflow-x-auto bg-white">
@@ -30,7 +62,24 @@ export function TableComponent<T>({ data, columns, onRowClick, rowClassName, loa
                                 key={i}
                                 className={`text-gray-900 font-semibold py-4 ${col.headerClassName ?? ""}`}
                             >
-                                {col.header}
+                                {col.orderBy ?
+                                    <button
+                                        type="button"
+                                        onClick={() => handleSort(col.orderBy!)}
+                                        className={`flex items-center gap-1.5 cursor-pointer select-none transition-colors hover:text-yellow-700 ${activeSort.field === col.orderBy ? "text-yellow-700" : ""}`}
+                                    >
+                                        {col.header}
+                                        {activeSort.field === col.orderBy && activeSort.direction === "asc" ? (
+                                            <ArrowUp className="h-3.5 w-3.5" />
+                                        ) : activeSort.field === col.orderBy && activeSort.direction === "desc" ? (
+                                            <ArrowDown className="h-3.5 w-3.5" />
+                                        ) : (
+                                            <ArrowUpDown className="h-3.5 w-3.5 text-gray-400" />
+                                        )}
+                                    </button>
+                                    :
+                                    col.header
+                                }
                             </TableHead>
                         ))}
                     </TableRow>
