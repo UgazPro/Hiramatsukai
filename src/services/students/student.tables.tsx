@@ -11,12 +11,13 @@ interface Actions {
     deleteStudent: (id: number) => void;
 }
 
-function userRolColor(rol : userRolesNames) {
+function userRolColor(rol: userRolesNames) {
 
-    switch(rol) {
+    switch (rol) {
 
         case 'Administrador': return 'red';
-        case 'Líder Maestro': return 'blue';
+        case 'Líder Maestro': return 'red';
+        case 'Comisión de Grado': return 'orange';
         case 'Líder Instructor': return 'blue';
         case 'Instructor': return 'green';
         case 'Estudiante': return 'yellow';
@@ -27,117 +28,129 @@ function userRolColor(rol : userRolesNames) {
 }
 
 export const getStudentColumns = ({ startEdit, deleteStudent, }: Actions): Column<IStudent>[] => [
-        {
-            header: "Alumno",
-            render: (student) => (
-                <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-linear-to-br from-yellow-100 to-red-100 border border-yellow-200 flex items-center justify-center">
-                        {student.profileImg?.trim() ? (
-                            <img
-                                src={student.profileImg}
-                                className="h-10 w-10 rounded-full object-cover"
-                                alt={student.name}
-                            />
-                        ) : (
-                            <User className="h-5 w-5 text-yellow-600" />
-                        )}
+    {
+        header: "Alumno",
+        render: (student) => (
+            <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-linear-to-br from-yellow-100 to-red-100 border border-yellow-200 flex items-center justify-center">
+                    {student.profileImg?.trim() ? (
+                        <img
+                            src={student.profileImg}
+                            className="h-10 w-10 rounded-full object-cover"
+                            alt={student.name}
+                        />
+                    ) : (
+                        <User className="h-5 w-5 text-yellow-600" />
+                    )}
+                </div>
+                <div>
+                    <div className="font-semibold text-gray-900">
+                        {student.name} {student.lastName}
                     </div>
-                    <div>
-                        <div className="font-semibold text-gray-900">
-                            {student.name} {student.lastName}
-                        </div>
-                        <div className="text-sm text-gray-600">@{student.username}</div>
-                    </div>
+                    <div className="text-sm text-gray-600">@{student.username}</div>
                 </div>
-            ),
-        },
+            </div>
+        ),
+    },
 
-        {
-            header: "Cédula",
-            render: (s) => (
-                <span className="font-mono text-gray-800">{formatNumberWithDots(s.identification)}</span>
-            ),
-        },
+    {
+        header: "Cédula",
+        render: (s) => (
+            <span className="font-mono text-gray-800">{formatNumberWithDots(s.identification)}</span>
+        ),
+    },
 
-        {
-            header: "Edad",
-            render: (s) => `${calculateAge(s.birthday)} años`,
-        },
+    {
+        header: "Edad",
+        render: (s) => `${calculateAge(s.birthday)} años`,
+    },
 
-        {
-            header: "Rol",
-            render: (s) => (
-                <FieldBadge 
-                    label={s.roles?.map((r) => r.rol).join(", ") || "—"}
-                    color={userRolColor(s.roles[0]?.rol ?? "Estudiante")}
+    {
+        header: "Cinturón",
+        render: (s) => (
+            <div className="text-xs">
+                {s.userRanks?.map((r, i) => (
+                    <p key={i}>
+                        {r.rank.rank_name} {r.rank.code}, Cinturón {r.rank.belt} - {r.martialArt.martialArt}
+                    </p>
+                )) || <p>—</p>}
+            </div>
+        ),
+    },
+    {
+        header: "Rol",
+        render: (s) => (
+            <FieldBadge
+                label={s.roles?.map((r) => r.rol).join(", ") || "—"}
+                color={userRolColor(s.roles[0]?.rol ?? "Estudiante")}
+            />
+        ),
+    },
+
+    {
+        header: "Dojo",
+        render: (s) => (
+            <FieldBadge
+                label={s.dojo.dojo}
+                color="transparent"
+            />
+        ),
+    },
+
+    {
+        header: "Contacto",
+        render: (s) => (
+            <div className="flex items-center gap-2">
+                <Phone className="h-3 w-3 text-gray-500" />
+                <span className="text-sm text-gray-700">{formatPhoneNumber(s.phone)}</span>
+            </div>
+        ),
+    },
+
+    {
+        header: "Inscripción",
+        render: (s) => (
+            <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-gray-500" />
+                <span className="text-sm text-gray-700">
+                    {dateFormatter(s.enrollmentDate)}
+                </span>
+            </div>
+        ),
+    },
+
+    {
+        header: "Estado",
+        render: (s) =>
+            <FieldBadge
+                label={s.active ? 'Activo' : 'Inactivo'}
+                color={s.active ? 'green' : 'red'}
+            />
+    },
+
+    {
+        header: "Acciones",
+        headerClassName: "text-right",
+        className: "text-right",
+        render: (student) => (
+            <div className="flex justify-end">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        startEdit(student);
+                    }}
+                >
+                    <Edit className="h-4 w-4" />
+                </Button>
+
+                <DeleteDialog
+                    preposition="a"
+                    whatsDeleting={`${student.name} ${student.lastName}`}
+                    onConfirm={() => deleteStudent(student.id)}
                 />
-            ),
-        },
-
-        {
-            header: "Dojo",
-            render: (s) => (
-                <FieldBadge 
-                    label={s.dojo.dojo}
-                    color="transparent"
-                />
-            ),
-        },
-
-        {
-            header: "Contacto",
-            render: (s) => (
-                <div className="flex items-center gap-2">
-                    <Phone className="h-3 w-3 text-gray-500" />
-                    <span className="text-sm text-gray-700">{formatPhoneNumber(s.phone)}</span>
-                </div>
-            ),
-        },
-
-        {
-            header: "Inscripción",
-            render: (s) => (
-                <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-gray-700">
-                        {dateFormatter(s.enrollmentDate)}
-                    </span>
-                </div>
-            ),
-        },
-
-        {
-            header: "Estado",
-            render: (s) =>
-                <FieldBadge 
-                    label={s.active ? 'Activo' : 'Inactivo'}
-                    color={s.active ? 'green' : 'red'}
-                />
-        },
-
-        {
-            header: "Acciones",
-            headerClassName: "text-right",
-            className: "text-right",
-            render: (student) => (
-                <div className="flex justify-end">
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            startEdit(student);
-                        }}
-                    >
-                        <Edit className="h-4 w-4" />
-                    </Button>
-
-                    <DeleteDialog
-                        preposition="a"
-                        whatsDeleting={`${student.name} ${student.lastName}`}
-                        onConfirm={() => deleteStudent(student.id)}
-                    />
-                </div>
-            ),
-        },
-    ];
+            </div>
+        ),
+    },
+];
