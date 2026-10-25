@@ -66,7 +66,7 @@ export default function KendoInfo() {
                                 <div className="inline-block px-4 py-2 bg-red-500 text-white rounded-full text-sm font-bold mb-6">
                                     La Vía de la Espada
                                 </div>
-                                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
+                                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                                     Kendo <span className="text-red-600">剣道</span>
                                 </h1>
                                 <p className="text-lg text-gray-700 mb-6 leading-relaxed">
@@ -94,7 +94,7 @@ export default function KendoInfo() {
                                         <div className="aspect-square rounded-xl overflow-hidden bg-linear-to-br from-red-50 to-white flex items-center justify-center">
                                             <div className="text-center">
                                                 <Sword className="h-24 w-24 text-red-600 mx-auto mb-4" />
-                                                <h3 className="text-2xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
+                                                <h3 className="text-2xl font-bold text-gray-900">
                                                     Kendo
                                                 </h3>
                                                 <div className="flex gap-4 justify-center mt-4">
@@ -118,7 +118,7 @@ export default function KendoInfo() {
                             <div className="inline-block p-3 bg-red-100 rounded-full mb-4">
                                 <Sword className="h-8 w-8 text-red-600" />
                             </div>
-                            <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                            <h2 className="text-4xl font-bold text-gray-900 mb-4">
                                 Equipo <span className="text-red-600">del Kendo</span>
                             </h2>
                             <p className="text-xl text-gray-700">
@@ -150,7 +150,7 @@ export default function KendoInfo() {
                         </div>
 
                         <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 mb-16">
-                            <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: "Kavoon" }}>
+                            <h3 className="text-3xl font-bold text-gray-900 mb-8 text-center">
                                 Áreas de <span className="text-red-600">Golpe</span> (Datotsu-bui)
                             </h3>
                             <div className="grid md:grid-cols-4 gap-6">
@@ -173,7 +173,7 @@ export default function KendoInfo() {
                         </div>
 
                         <div>
-                            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: "Kavoon" }}>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
                                 Principios <span className="text-red-600">Fundamentales</span>
                             </h3>
                             <div className="grid md:grid-cols-2 gap-6">
@@ -194,7 +194,7 @@ export default function KendoInfo() {
                 <div className="container mx-auto px-4">
                     <div className="max-w-6xl mx-auto">
                         <div className="text-center mb-16">
-                            <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                            <h2 className="text-4xl font-bold text-gray-900 mb-4">
                                 Beneficios del <span className="text-red-600">Kendo</span>
                             </h2>
                             <p className="text-xl text-gray-700">
@@ -243,7 +243,7 @@ export default function KendoInfo() {
                 <div className="container mx-auto px-4">
                     <div className="max-w-4xl mx-auto text-center text-white">
                         <Sword className="h-16 w-16 mx-auto mb-6" />
-                        <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: "Kavoon" }}>
+                        <h2 className="text-4xl font-bold mb-6">
                             Descubre el Camino del <span className="text-yellow-300">Kendo</span>
                         </h2>
                         <p className="text-xl mb-8 opacity-90">

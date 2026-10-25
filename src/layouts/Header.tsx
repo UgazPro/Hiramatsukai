@@ -54,139 +54,148 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
     }, [location.pathname]);
 
     const goHead = () => {
-        const section = document.getElementById('home');
+        if (location.pathname !== "/") return;
+        const section = document.getElementById("home");
         if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
+            section.scrollIntoView({ behavior: "smooth" });
         }
     };
 
     const goToScroll = (id: string) => {
         const section = document.getElementById(id);
         if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
+            section.scrollIntoView({ behavior: "smooth" });
         }
-    }
+    };
 
+    const isAdmin = location.pathname.includes("/admin");
+    const isLogin = location.pathname.includes("/login");
 
     return (
         <header
             className={
-                location.pathname.includes("/admin") || location.pathname.includes("/login")
-                    ? `z-50 w-full bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 transition-all`
-                    : `sticky ${visible ? "top-0" : "-top-60"} z-50 w-full bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 transition-all`
+                isAdmin || isLogin
+                    ? "z-50 w-full transition-all duration-300"
+                    : `sticky ${visible ? "top-0" : "-top-60"} z-50 w-full transition-all duration-300`
             }
         >
-            <div className="flex h-16 items-center justify-between bg-black py-12 px-2 lg:px-7 space-x-5 md:space-x-0">
-                <div className="flex items-center gap-2">
-                    <div className="block lg:hidden">
-                        {location.pathname === "/" && <NavBarMobile goToScroll={goToScroll} />}
-                    </div>
-                    <button
-                        onClick={onToggleMobileNav}
-                        className={`${location.pathname.includes('/admin') ? 'block' : 'hidden'} md:hidden text-white p-2 hover:bg-gray-800 rounded-lg transition-colors`}
-                    >
-                        <Menu className="h-6 w-6" />
-                    </button>
-                    <Link
-                        to={location.pathname.includes("/admin") ? "/admin" : "/"}
-                        style={{ fontFamily: "Kaushan Script" }}
-                        onClick={goHead}
-                        className={
-                            "flex items-center space-x-2 text-gray-100 hover:text-white shadow-2xl"
-                        }
-                    >
-                        {!location.pathname.includes("/admin") && !location.pathname.includes("/login") && (
-                            <img
-                                src="/artesmarciales.jpg"
-                                alt="Todas las Artes Marciales"
-                                className="hidden md:block md:h-15 md:w-50 rounded-full mr-3 shadow-2xl h-8 w-30"
-                            />
-                        )}
-                        <div className="flex flex-col items-start lg:items-center leading-tight">
-                            <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white tracking-wide">
-                                Hiramatsukai
-                            </span>
-                            <span className="text-[10px] sm:text-sm md:text-base lg:text-lg text-yellow-400 tracking-[0.15em]">
-                                ⸻ Internacional ⸻
-                            </span>
+            <div className="border-b border-white/10 bg-brand-sumi/90 backdrop-blur-xl supports-[backdrop-filter]:bg-brand-sumi/85">
+                <div className="flex h-18 w-full items-center justify-between gap-4 px-2 lg:px-8 lg:h-20">
+                    <div className="flex items-center gap-2">
+                        <div className="block lg:hidden">
+                            {!isAdmin && !isLogin && <NavBarMobile goToScroll={goToScroll} />}
                         </div>
-                    </Link>
-                </div>
+                        <button
+                            type="button"
+                            onClick={onToggleMobileNav}
+                            aria-label="Abrir menú de administración"
+                            className={`${isAdmin ? "flex" : "hidden"} h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi transition-colors hover:bg-white/10 focus-visible:border-brand-gold md:hidden`}
+                        >
+                            <Menu className="h-5 w-5" />
+                        </button>
+                        <Link
+                            to={isAdmin ? "/admin" : "/"}
+                            onClick={goHead}
+                            aria-label="Hiramatsukai Internacional - Inicio"
+                            className="group flex items-center gap-3 rounded-full focus-visible:outline-offset-4"
+                        >
+                            <span className="rounded-full bg-white p-0.5 shadow-soft ring-1 ring-brand-gold/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-brand-gold">
+                                <img
+                                    src="/oki2.png"
+                                    alt="Emblema Hiramatsukai Internacional"
+                                    className="h-10 w-10 rounded-full object-contain sm:h-12 sm:w-12"
+                                />
+                            </span>
+                            <span className="flex flex-col items-start leading-none">
+                                <span className="font-script text-xl text-brand-washi transition-colors duration-300 group-hover:text-white sm:text-3xl lg:text-4xl">
+                                    Hiramatsukai
+                                </span>
+                                <span className="mt-1.5 mx-auto text-[9px] font-semibold uppercase tracking-[0.32em] text-brand-gold sm:text-[10px] lg:text-[11px]">
+                                    Internacional
+                                </span>
+                            </span>
+                        </Link>
+                    </div>
 
-                <div className="flex items-center gap-3">
-                    {/* Auth section */}
-                    {isAuthenticated ? (
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild className="cursor-pointer">
-                                <div className="flex items-center justify-center gap-4">
-                                    <div className="text-white hidden lg:flex flex-col items-end">
-                                        <p className="text-xl">{userName} {userLastName}</p>
-                                        <p className="text-sm text-gray-200">{userRole}</p>
+                    <div className="flex items-center gap-3">
+                        {isAuthenticated ? (
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild className="cursor-pointer">
+                                    <button
+                                        type="button"
+                                        aria-label="Abrir menú de usuario"
+                                        className="flex items-center justify-center gap-4 rounded-full focus-visible:outline-offset-4"
+                                    >
+                                        <span className="hidden flex-col items-end text-right lg:flex">
+                                            <span className="text-sm font-medium text-brand-washi">
+                                                {userName} {userLastName}
+                                            </span>
+                                            <span className="text-xs text-brand-washi/60">{userRole}</span>
+                                        </span>
+                                        <Avatar size="lg" className="bg-brand-gold text-brand-sumi ring-1 ring-brand-gold/40">
+                                            <AvatarFallback className="font-bold text-sm text-brand-sumi">
+                                                {userName?.[0]}{userLastName?.[0]}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                    </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end" className="w-48">
+                                    <div className="p-1">
+                                        <p className="font-medium">{userName} {userLastName}</p>
+                                        <p className="text-xs text-muted-foreground">{userRole}</p>
                                     </div>
-                                    <Avatar size="lg" className="bg-yellow-500 text-black">
-                                        <AvatarFallback className="font-bold text-sm">
-                                            {userName?.[0]}{userLastName?.[0]}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </div>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-48">
-                                <div className="p-1">
-                                    <p className="font-medium">{userName} {userLastName}</p>
-                                    <p className="text-xs text-muted-foreground">{userRole}</p>
-                                </div>
-                                <DropdownMenuSeparator />
-                                {location.pathname !== "/" && (
-                                    <DropdownMenuItem onClick={() => navigate("/")}>
-                                        <House className="h-4 w-4 mr-2" />
-                                        Home
-                                    </DropdownMenuItem>
-                                )}
+                                    <DropdownMenuSeparator />
+                                    {location.pathname !== "/" && (
+                                        <DropdownMenuItem onClick={() => navigate("/")}>
+                                            <House className="h-4 w-4 mr-2" />
+                                            Home
+                                        </DropdownMenuItem>
+                                    )}
 
-                                {!location.pathname.startsWith("/admin") && (user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor" || rol === "Instructor")) && (
-                                    <DropdownMenuItem onClick={() => navigate("/admin")}>
-                                        <LayoutDashboard className="h-4 w-4 mr-2" />
-                                        Panel Administrativo
-                                    </DropdownMenuItem>
-                                )}
+                                    {!location.pathname.startsWith("/admin") && (user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor" || rol === "Instructor")) && (
+                                        <DropdownMenuItem onClick={() => navigate("/admin")}>
+                                            <LayoutDashboard className="h-4 w-4 mr-2" />
+                                            Panel Administrativo
+                                        </DropdownMenuItem>
+                                    )}
 
-                                {!location.pathname.startsWith("/admin") && (!user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor" || rol === "Instructor")) && (
-                                    <DropdownMenuItem onClick={() => navigate("/admin/yo")}>
-                                        <LayoutDashboard className="h-4 w-4 mr-2" />
-                                        Mi perfil
-                                    </DropdownMenuItem>
-                                )}
+                                    {!location.pathname.startsWith("/admin") && (!user?.roles?.some(({ rol }) => rol === "Administrador" || rol === "Líder Instructor" || rol === "Instructor")) && (
+                                        <DropdownMenuItem onClick={() => navigate("/admin/yo")}>
+                                            <LayoutDashboard className="h-4 w-4 mr-2" />
+                                            Mi perfil
+                                        </DropdownMenuItem>
+                                    )}
 
-                                {!location.pathname.startsWith("/dojos/dojo/") && (
-                                    <DropdownMenuItem onClick={() => navigate(`/dojos/dojo/${user?.dojo.code}`)}>
-                                        <Building2 className="h-4 w-4 mr-2" />
-                                        Ir a mi Dojo
-                                    </DropdownMenuItem>
-                                )}
+                                    {!location.pathname.startsWith("/dojos/dojo/") && (
+                                        <DropdownMenuItem onClick={() => navigate(`/dojos/dojo/${user?.dojo.code}`)}>
+                                            <Building2 className="h-4 w-4 mr-2" />
+                                            Ir a mi Dojo
+                                        </DropdownMenuItem>
+                                    )}
 
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={handleLogout}>
-                                    <LogOut className="h-4 w-4 mr-2" />
-                                    Cerrar Sesión
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    ) : (
-                        !location.pathname.includes("/admin") && !location.pathname.includes("/login") && (
-                            <Link
-                                to="/login"
-                                style={{ fontFamily: "JetBrains Mono" }}
-                                className="text-white cursor-pointer text-xs md:text-base border text-center rounded-full px-4 py-2 hover:bg-white hover:text-black transition-colors"
-                            >
-                                Iniciar Sesión
-                            </Link>
-                        )
-                    )}
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem onClick={handleLogout}>
+                                        <LogOut className="h-4 w-4 mr-2" />
+                                        Cerrar Sesión
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        ) : (
+                            !isAdmin && !isLogin && (
+                                <Link
+                                    to="/login"
+                                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-brand-gold/45 bg-white/5 px-4 text-xs font-medium tracking-wide text-brand-washi transition-all duration-300 hover:border-brand-gold hover:bg-brand-gold hover:text-brand-sumi md:px-5 md:text-sm lg:min-h-9"
+                                >
+                                    Ingresar
+                                </Link>
+                            )
+                        )}
+                    </div>
                 </div>
             </div>
 
             <div className="hidden lg:block">
-                {location.pathname === "/" && <NavBar />}
+                {!isAdmin && !isLogin && <NavBar />}
             </div>
         </header>
     );

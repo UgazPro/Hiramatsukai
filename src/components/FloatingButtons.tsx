@@ -15,7 +15,7 @@ export default function FloatingButtons() {
             setShowBackButton(window.history.length > 1);
         };
 
-        handleHistoryChange(); 
+        handleHistoryChange();
         window.addEventListener('popstate', handleHistoryChange);
 
         return () => window.removeEventListener('popstate', handleHistoryChange);
@@ -43,42 +43,30 @@ export default function FloatingButtons() {
     };
 
     return (
-        
-        <div className=" fixed bottom-6 left-6 z-50 flex flex-col gap-3 w-auto">
 
-            {/* Go-back Button (only if there's a previous history) */}
+        <div className="fixed bottom-5 left-4 z-50 flex flex-col gap-2.5 sm:bottom-6 sm:left-6 sm:gap-3">
+
             {showBackButton && location.pathname !== '/' && (
                 <Button
+                    type="button"
                     onClick={handleBack}
                     size="icon"
-                    className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500 to-yellow-600 shadow-lg hover:shadow-yellow-500/30 hover:scale-105 active:scale-95 transition-all duration-300 group animate-slide-up"
-                    style={{ animationDelay: '100ms' }}
+                    aria-label="Volver atrás"
+                    className="group h-11 w-11 rounded-full sm:h-12 sm:w-12 border border-brand-gold/50 bg-brand-washi/80 text-brand-ink shadow-soft backdrop-blur-lg transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold hover:text-brand-sumi hover:shadow-gold active:translate-y-0"
                 >
-                    <ArrowLeft className="h-6 w-6 text-white" />
-
-                    <span className="absolute inset-0 bg-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                    <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        Volver atrás
-                    </span>
+                    <ArrowLeft className="h-5 w-5" aria-hidden="true" />
                 </Button>
             )}
 
-            {/* Get-back-up Button (only if the user has scrolled) */}
             {showScrollTop && (
                 <Button
+                    type="button"
                     onClick={scrollToTop}
                     size="icon"
-                    className="h-14 w-14 rounded-full bg-linear-to-br from-red-800 to-red-900 shadow-lg hover:shadow-red-500/30 hover:scale-105 active:scale-95 transition-all duration-300 group animate-slide-up"
-                    style={{ animationDelay: '200ms' }}
+                    aria-label="Ir arriba"
+                    className="group h-11 w-11 rounded-full sm:h-12 sm:w-12 border border-white/10 bg-brand-vermilion text-white shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-vermilion-dark active:translate-y-0"
                 >
-                    <ArrowUp className="h-6 w-6 text-white" />
-
-                    <span className="absolute inset-0 bg-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                    <span className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-3 py-1 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        Ir arriba
-                    </span>
+                    <ArrowUp className="h-5 w-5" aria-hidden="true" />
                 </Button>
             )}
 

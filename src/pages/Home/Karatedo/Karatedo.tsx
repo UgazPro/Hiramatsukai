@@ -2,6 +2,7 @@ import { CardComponent, CardComponentProps } from "@/components/card/CardCompone
 import Reveal from "@/components/animation/Reveal";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import { ArrowRight } from "lucide-react";
 
 export default function Karatedo() {
 
@@ -10,95 +11,98 @@ export default function Karatedo() {
       title: "Fuerza (Go)",
       description: 'Técnicas lineales y poderosas',
       icon: "力",
-      bgIcon: "bg-linear-to-br from-red-500 to-red-800",
-      bg: "bg-linear-to-br from-red-200 to-red-300",
-      border: "border-red-400",
+      bgIcon: "bg-linear-to-br from-brand-vermilion to-brand-vermilion-dark",
+      bg: "bg-linear-to-br from-red-50 to-red-100",
+      border: "border-brand-vermilion/25",
     },
     {
       title: "Suavidad (Ju)",
       description: 'Movimientos circulares y flexibles',
       icon: "柔",
-      bgIcon: "bg-linear-to-br from-blue-700 to-blue-900",
-      bg: "bg-linear-to-br from-blue-200 to-blue-300",
-      border: "border-blue-400",
+      bgIcon: "bg-linear-to-br from-brand-indigo to-brand-sumi",
+      bg: "bg-linear-to-br from-blue-50 to-blue-100",
+      border: "border-brand-indigo/25",
     }
   ];
 
   return (
 
-    <section id="karate" aria-labelledby="karatedo-title" className="py-16 sm:py-10 bg-muted">
+    <section id="karate" aria-labelledby="karatedo-title" className="relative scroll-mt-32 overflow-hidden bg-brand-washi-deep py-20 sm:py-24">
 
-      <div className="container mx-auto px-4">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood opacity-40" />
 
-        <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
 
-          <div className="lg:w-1/2 w-full order-1 lg:order-2">
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+
+        <div className="flex flex-col items-start gap-10 lg:flex-row lg:gap-14">
+
+          <div className="order-1 w-full lg:order-2 lg:w-1/2">
 
             <Reveal className="space-y-6" y={24}>
 
-              <div className="flex items-center gap-2">
-
-                <div className="h-15 w-15 lg:hidden">
-                  <img src="oki2.png" alt="Emblema de Goju-Ryu Karate-Do" />
+              <div className="flex items-center gap-3">
+                <div className="h-12 w-12 lg:hidden">
+                  <img src="/oki2.png" alt="Emblema de Goju-Ryu Karate-Do" />
                 </div>
 
-                <h2 id="karatedo-title" className="text-2xl lg:text-4xl font-bold text-gray-900">
-                  Goju-Ryu Karate-Do
-                </h2>
-
+                <span className="section-eyebrow text-brand-gold-deep">Arte marcial</span>
               </div>
 
-              <p className="text-lg text-gray-700 leading-relaxed">
+              <h2 id="karatedo-title" className="text-3xl font-semibold leading-tight text-brand-ink sm:text-4xl lg:text-5xl">
+                Goju-Ryu <span className="text-brand-vermilion">Karate-Do</span>
+              </h2>
+
+              <p className="text-measure text-base leading-relaxed text-brand-muted sm:text-lg">
                 Estilo tradicional de karatedo fundado por el maestro
-                <span className="font-semibold text-yellow-600"> Chōjun Miyagi</span>.
+                <span className="font-semibold text-brand-gold-deep"> Chōjun Miyagi</span>.
                 Su nombre significa "estilo duro-suave", combinando técnicas poderosas
                 con movimientos circulares y fluidos.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+              <div className="grid grid-cols-1 gap-4 pt-2 sm:grid-cols-2">
                 {cardsKarate.map((card, index) => (
-                  <Reveal key={index} delay={index * 0.08} y={16}>
+                  <Reveal key={card.title} delay={index * 0.08} y={16}>
                     <CardComponent card={card} />
                   </Reveal>
                 ))}
               </div>
 
-              <div className="h-50 w-50 mx-auto hidden lg:block">
-                <img src="oki2.png" alt="Emblema tradicional de Okinawa" />
+              <div className="mx-auto hidden h-44 w-44 lg:block">
+                <img src="/oki2.png" alt="Emblema tradicional de Okinawa" className="opacity-80" />
               </div>
 
             </Reveal>
           </div>
 
-          <div className="lg:w-1/2 w-full space-y-9 order-2 lg:order-1">
+          <div className="order-2 w-full space-y-6 lg:order-1 lg:w-1/2">
 
-            {/* First Image */}
-            <Reveal className="relative rounded-2xl overflow-hidden shadow-2xl" y={20}>
-              <img
-                src="/Hiramatsukai.jpg"
-                alt="Practicantes de Goju-Ryu"
-                className="w-full h-100 lg:h-62.5 object-cover object-center"
-              />
-
-              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent pointer-events-none" />
-
-              <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                Goju-Ryu
+            <Reveal className="glass group rounded-3xl p-2" y={20}>
+              <div className="relative overflow-hidden rounded-2xl">
+                <img
+                  src="/Hiramatsukai.jpg"
+                  alt="Practicantes de Goju-Ryu"
+                  loading="lazy"
+                  className="h-80 w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 lg:h-72"
+                />
+                <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-brand-sumi/70 via-transparent to-transparent" />
+                <div className="absolute left-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-xs font-semibold text-brand-sumi shadow-soft">
+                  Goju-Ryu
+                </div>
               </div>
             </Reveal>
 
-            {/* Second Image */}
-            <Reveal className="relative rounded-2xl overflow-hidden shadow-2xl" y={20} delay={0.12}>
-              <img
-                src="/Hiramatsukai.jpg"
-                alt="Practicantes de Goju-Ryu"
-                className="w-full h-[400px] lg:h-[250px] object-cover object-center"
-              />
-
-              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent pointer-events-none" />
-
-              <div className="absolute top-4 left-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                Goju-Ryu
+            <Reveal className="glass group rounded-3xl p-2" y={20} delay={0.12}>
+              <div className="relative overflow-hidden rounded-2xl">
+                <img
+                  src="/Hiramatsukai.jpg"
+                  alt="Practicantes de Goju-Ryu"
+                  loading="lazy"
+                  className="h-80 w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 lg:h-72"
+                />
+                <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-brand-sumi/70 via-transparent to-transparent" />
+                <div className="absolute left-4 top-4 rounded-full bg-brand-gold px-3 py-1 text-xs font-semibold text-brand-sumi shadow-soft">
+                  Goju-Ryu
+                </div>
               </div>
             </Reveal>
 
@@ -108,9 +112,12 @@ export default function Karatedo() {
 
       </div>
 
-      <Reveal className="mt-10 text-center" y={14}>
-        <Button asChild variant="link" style={{ fontFamily: "JetBrains Mono" }}>
-          <Link to="/karatedo">Descubre mas sobre el KARATEDO</Link>
+      <Reveal className="relative mt-10 text-center" y={14}>
+        <Button asChild variant="link">
+          <Link to="/karatedo">
+            Descubre más sobre el Karatedo
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </Button>
       </Reveal>
 

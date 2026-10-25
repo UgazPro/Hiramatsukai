@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "motion/react"
 import { Link } from "react-router";
 import SpinnerComponent from "@/components/spinner/SpinnerComponent";
 import { useDojos } from "@/hooks/useDojos";
+import { ChevronDown } from "lucide-react";
 import { Loader } from "@/components/spinner/Loader";
 
 const MAX_DOJOS = 4;
@@ -22,34 +23,38 @@ export default function Dojos() {
         [showAllDojos, dojos]
     );
 
-    // if (isLoading) return <SpinnerComponent />;
     if (isError) return <SpinnerComponent />;
 
     return (
 
-        <section id="dojos" aria-labelledby="dojos-title" className="px-4 md:px-16 py-10 bg-muted">
+        <section
+            id="dojos"
+            aria-labelledby="dojos-title"
+            className="relative scroll-mt-32 overflow-hidden bg-brand-washi px-4 py-20 md:px-16 sm:py-24"
+        >
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood opacity-40" />
 
-            <div className="container mx-auto">
+            <div className="relative mx-auto max-w-7xl">
 
-                <div className="mx-auto text-center">
+                <div className="text-center">
 
                     <Reveal y={18}>
-                        <h2 id="dojos-title" className="text-3xl font-bold tracking-tight sm:text-4xl">
-                            Dojos Afiliados
+                        <h2 id="dojos-title" className="mt-4 text-3xl font-semibold text-brand-ink sm:text-4xl lg:text-5xl">
+                            Dojos <span className="text-brand-vermilion">Afiliados</span>
                         </h2>
                     </Reveal>
 
                     <Reveal y={14} delay={0.08}>
-                        <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                        <p className="text-measure mx-auto mt-5 text-base leading-relaxed text-brand-muted sm:text-lg">
                             ¿Interesado en unirte a alguna de nuestras escuelas? Contáctanos para
                             más información sobre clases y horarios.
                         </p>
                     </Reveal>
 
-                    <div className="mt-10">
+                    <div className="mt-12">
 
                         {isLoading ? <div className="flex flex-col items-center gap-2"><Loader message="Cargando dojos..." /></div> : (
-                            <ul id="dojo-list" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <ul id="dojo-list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                                 <AnimatePresence mode="popLayout">
                                     {visibleDojos.map((dojo, index) => (
                                         <motion.li
@@ -63,7 +68,7 @@ export default function Dojos() {
                                         >
                                             <Link
                                                 to={`/dojos/dojo/${dojo.code}`}
-                                                className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg"
+                                                className="block h-full rounded-3xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-brand-washi-deep"
                                                 aria-label={`Ver informacion del dojo ${dojo.dojo}`}
                                             >
                                                 <InformationSchema
@@ -85,31 +90,19 @@ export default function Dojos() {
                 {hasMoreThanFour && (
                     <Reveal className="mt-10 w-full text-center" y={12}>
                         <Button
+                            type="button"
                             onClick={() => setShowAllDojos((prev) => !prev)}
-                            variant="clickRed"
-                            style={{ fontFamily: "JetBrains Mono" }}
+                            variant="brand"
                             size="lg"
                             aria-expanded={showAllDojos}
                             aria-controls="dojo-list"
-                            className="text-sm font-normal px-4 py-4 hover:scale-105 active:scale-95 transition-transform duration-300"
+                            className="rounded-full px-6"
                         >
-                            <span className="flex items-center gap-2">
-                                {showAllDojos ? "Ver menos" : "Ver más"}
-                                <svg
-                                    className={`w-5 h-5 transition-transform duration-500 ${showAllDojos ? "rotate-180" : ""
-                                        }`}
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M19 9l-7 7-7-7"
-                                    />
-                                </svg>
-                            </span>
+                            {showAllDojos ? "Ver menos" : "Ver más dojos"}
+                            <ChevronDown
+                                className={`h-4 w-4 transition-transform duration-500 ${showAllDojos ? "rotate-180" : ""}`}
+                                aria-hidden="true"
+                            />
                         </Button>
                     </Reveal>
                 )}

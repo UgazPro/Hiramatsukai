@@ -19,7 +19,7 @@ export const ProgressStepper = <T,>({ steps, onSelectStep }: ProgressStepperProp
     const [selectedIndex, setSelectedIndex] = useState(0);
     const intervalRef = useRef<number | null>(null);
     const progressContainerRef = useRef<HTMLDivElement | null>(null);
-    const stepRefs = useRef<Array<HTMLDivElement | null>>([]);
+    const stepRefs = useRef<Array<HTMLElement | null>>([]);
 
     const safeSelectedIndex = Math.min(selectedIndex, Math.max(0, steps.length - 1));
     const currentStep = steps[safeSelectedIndex];
@@ -116,22 +116,24 @@ export const ProgressStepper = <T,>({ steps, onSelectStep }: ProgressStepperProp
 
 
     return (
-        <div className="flex items-center relative w-full">
-            <div className="absolute -top-2 left-0 right-0 w-[95%] mx-auto z-50">
+        <div className="relative flex w-full items-center">
+            <div className="absolute -top-2 left-0 right-0 z-50 mx-auto w-[95%]">
                 <div className="grid grid-cols-[1fr_auto_1fr] items-center">
                     <div className="flex justify-around">
                         {leftSteps.map((step, index) => (
-                            <div
+                            <button
                                 key={index}
+                                type="button"
                                 ref={(el) => {
                                     stepRefs.current[index] = el;
                                 }}
                                 onClick={() => changeStep(index)}
-                                className="cursor-pointer"
+                                aria-label={`Ver ${step.label} (${step.year})`}
+                                className="group flex cursor-pointer flex-col items-center gap-1 rounded-lg px-1 py-0.5 focus-visible:outline-offset-4"
                             >
-                                <div className={`w-5 h-5 rounded-full ${index <= safeSelectedIndex ? "bg-red-600" : "bg-white border-gray-500 border-2"}`}></div>
-                                <p>{step.year}</p>
-                            </div>
+                                <span className={`h-4 w-4 rounded-full border-2 transition-colors duration-200 ${index <= safeSelectedIndex ? "border-brand-vermilion bg-brand-vermilion" : "border-brand-ink/30 bg-brand-washi group-hover:border-brand-vermilion/60"}`} />
+                                <span className={`text-[10px] font-medium ${index <= safeSelectedIndex ? "text-brand-vermilion" : "text-brand-muted"}`}>{step.year}</span>
+                            </button>
                         ))}
                     </div>
 
@@ -141,32 +143,32 @@ export const ProgressStepper = <T,>({ steps, onSelectStep }: ProgressStepperProp
                         {rightSteps.map((step, index) => {
                             const realIndex = index + leftSteps.length;
                             return (
-                                <div
+                                <button
                                     key={realIndex}
+                                    type="button"
                                     ref={(el) => {
                                         stepRefs.current[realIndex] = el;
                                     }}
                                     onClick={() => changeStep(realIndex)}
-                                    className="cursor-pointer"
+                                    aria-label={`Ver ${step.label} (${step.year})`}
+                                    className="group flex cursor-pointer flex-col items-center gap-1 rounded-lg px-1 py-0.5 focus-visible:outline-offset-4"
                                 >
-                                    <div className={`w-5 h-5 rounded-full ${realIndex <= safeSelectedIndex ? "bg-red-600" : "bg-white border-gray-500 border-2"}`}></div>
-                                    <p>{step.year}</p>
-                                </div>
+                                    <span className={`h-4 w-4 rounded-full border-2 transition-colors duration-200 ${realIndex <= safeSelectedIndex ? "border-brand-vermilion bg-brand-vermilion" : "border-brand-ink/30 bg-brand-washi group-hover:border-brand-vermilion/60"}`} />
+                                    <span className={`text-[10px] font-medium ${realIndex <= safeSelectedIndex ? "text-brand-vermilion" : "text-brand-muted"}`}>{step.year}</span>
+                                </button>
                             );
                         })}
                     </div>
                 </div>
             </div>
 
-            <div className="absolute w-full flex items-center justify-center -top-14">
-                <div className="border-2 rounded-lg w-60 sm:w-80 md:w-120 h-28 shadow-2xl bg-white p-4 z-50">
-                    <div className="flex items-center justify-start w-full gap-4">
-                        <Swords className="h-18 w-1/4 text-red-500" />
+            <div className="absolute -top-16 flex w-full items-center justify-center">
+                <div className="glass z-50 flex h-28 w-60 items-center gap-4 rounded-2xl p-4 sm:w-80 md:w-120">
+                    <Swords className="h-16 w-1/4 shrink-0 text-brand-vermilion" aria-hidden="true" />
 
-                        <div className="">
-                            <p className="font-bold text-lg">{currentStep?.label}</p>
-                            <p>{currentStep?.year}</p>
-                        </div>
+                    <div>
+                        <p className="font-serif text-lg font-semibold text-brand-ink">{currentStep?.label}</p>
+                        <p className="text-sm text-brand-muted">{currentStep?.year}</p>
                     </div>
                 </div>
             </div>

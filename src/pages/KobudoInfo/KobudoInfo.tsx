@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Book } from "lucide-react";
-import CarouselComponent from "@/components/CarouselComponent";
 import { AnimatePresence, motion } from "motion/react";
 import { GiSai } from "react-icons/gi";
 import { GiNunchaku } from "react-icons/gi";
@@ -36,59 +35,54 @@ export default function KobudoInfo() {
     const visibleKatas = showAllKatas ? weaponKatas : weaponKatas.slice(0, 3);
     const hasMoreKatas = weaponKatas.length > 3;
 
-    useEffect(() => {
-        setShowAllKatas(false);
-    }, [selectedWeapon]);
-
     return (
-        <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
-            <section className="relative">
-                <div className="pb-4">
-                    <CarouselComponent />
-                </div>
-            </section>
-
+        <div className="min-h-screen bg-brand-washi">
             {/* Introducción */}
-            <section className="bg-white">
-                <div className="lg:px-10 px-4">
-                    <div className="grid lg:grid-cols-2 lg:gap-12 items-center mb-6 lg:mb-0">
+            <section className="relative overflow-hidden bg-brand-washi pb-12 pt-12 lg:pb-16 lg:pt-16">
+                <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood opacity-25" />
+
+                <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+                    <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                         <div>
-                            <div className="inline-block px-4 py-2 bg-blue-500 text-white rounded-full text-sm font-bold mb-6">
+                            <span className="section-eyebrow rounded-full border border-brand-indigo/25 bg-brand-indigo/10 px-4 py-2 text-brand-indigo">
                                 Línea Matayoshi-Jinbukai
-                            </div>
-                            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
-                                Kobudo <span className="text-blue-600">Matayoshi</span>
+                            </span>
+                            <h1 className="mt-6 text-balance font-serif text-4xl font-semibold leading-[1.1] text-brand-ink md:text-5xl lg:text-6xl">
+                                Kobudo <span className="text-brand-vermilion">Matayoshi</span>
                             </h1>
-                            <p className="text-lg text-gray-700 mb-6 leading-relaxed">
-                                Fundado por el gran maestro <strong>Shinko Matayoshi</strong> (1888-1947)
+                            <div aria-hidden="true" className="gold-rule mt-6 h-px w-32" />
+                            <p className="mt-6 max-w-xl text-base leading-relaxed text-brand-muted sm:text-lg">
+                                Fundado por el gran maestro <strong className="font-semibold text-brand-ink">Shinko Matayoshi</strong> (1888-1947)
                                 y continuado por su hijo Shinpo Matayoshi, nuestro Kobudo integra la
                                 tradición Matayoshi con los refinamientos técnicos de la Jinbukai.
                             </p>
-                            <p className="text-lg text-gray-700 mb-8">
+                            <p className="mt-4 max-w-xl text-base leading-relaxed text-brand-muted sm:text-lg">
                                 En la organización Hiramatsukai, enseñamos el Kobudo como un sistema completo de
                                 armas tradicionales, preservando los katas originales y las aplicaciones
                                 prácticas de cada arma.
                             </p>
                         </div>
+
                         <div className="relative">
-                            <div className="">
-                                <div className="bg-white rounded-2xl p-4 border-4 border-blue-600">
-                                    <div className="aspect-square rounded-xl overflow-hidden bg-linear-to-br from-blue-50 to-white flex items-center justify-center">
-                                        <div className="text-center">
-                                            <div className="grid grid-cols-3 gap-4">
-                                                <GiBo className="h-12 w-full text-blue-500 " />
-                                                <GiSai className="h-12 w-full text-blue-500 " />
-                                                <GiNunchaku className="h-12 w-full text-blue-500 " />
-                                                <div className="flex items-center justify-around col-span-3 ">
-                                                    <GiBaton className="h-12 w-12 text-blue-500" />
-                                                    <GiStickGrenade className="h-12 w-12 text-blue-500" />
-                                                </div>
-                                            </div>
-                                            <h3 className="text-2xl font-bold text-gray-900 mt-4" style={{ fontFamily: "Kavoon" }}>
-                                                5 Armas Principales
-                                            </h3>
-                                        </div>
+                            <div className="group relative overflow-hidden rounded-[2rem] border border-brand-indigo/20 bg-white/55 p-7 shadow-lift backdrop-blur-md sm:p-9">
+                                <div aria-hidden="true" className="absolute inset-0 bg-wood opacity-20 transition-opacity duration-500 group-hover:opacity-30" />
+                                <div aria-hidden="true" className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-indigo/10 blur-3xl" />
+
+                                <div className="relative grid grid-cols-3 gap-5 text-brand-indigo/85 sm:gap-7">
+                                    <GiBo className="h-16 w-full transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105 sm:h-20" />
+                                    <GiSai className="h-16 w-full transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105 sm:h-20" />
+                                    <GiNunchaku className="h-16 w-full transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105 sm:h-20" />
+                                    <div className="col-span-3 flex items-center justify-around">
+                                        <GiBaton className="h-14 w-14 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105 sm:h-16 sm:w-16" />
+                                        <GiStickGrenade className="h-14 w-14 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-105 sm:h-16 sm:w-16" />
                                     </div>
+                                </div>
+
+                                <div className="relative mt-7 border-t border-brand-ink/10 pt-5 text-center">
+                                    <span className="section-eyebrow text-brand-gold-deep">Sistema Matayoshi</span>
+                                    <h3 className="mt-2 font-serif text-2xl font-semibold text-brand-ink">
+                                        5 armas principales
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -97,12 +91,13 @@ export default function KobudoInfo() {
             </section>
 
             {/* Selección de Armas Principales */}
-            <section className="lg:p-10 p-4 bg-gray-50">
+            <section className="bg-brand-washi-deep px-4 py-14 lg:px-10">
                 <div className="text-center mb-8">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
-                        Armas <span className="text-blue-600">Principales</span>
+                    <span className="section-eyebrow text-brand-gold-deep">Sistema Matayoshi</span>
+                    <h2 className="mb-4 mt-3 font-serif text-3xl font-semibold text-brand-ink sm:text-4xl">
+                        Armas <span className="text-brand-vermilion">Principales</span>
                     </h2>
-                    <p className="text-xl text-gray-700">
+                    <p className="text-base text-brand-muted sm:text-lg">
                         Las cinco armas fundamentales del sistema Matayoshi
                     </p>
                 </div>
@@ -119,7 +114,10 @@ export default function KobudoInfo() {
                                     type="button"
                                     layout
                                     initial={false}
-                                    onClick={() => setSelectedWeapon(weapon.id)}
+                                    onClick={() => {
+                                        setSelectedWeapon(weapon.id);
+                                        setShowAllKatas(false);
+                                    }}
                                     className={`relative min-w-44 md:min-w-0 cursor-pointer overflow-hidden flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 border ${isSelected
                                         ? "text-white shadow-lg scale-105 border-transparent"
                                         : "bg-white text-gray-700 hover:bg-gray-50 border-gray-200"
@@ -165,7 +163,7 @@ export default function KobudoInfo() {
                             >
                                 <div className="flex items-center justify-between mb-6">
                                     <div>
-                                        <h3 className="text-3xl font-bold" style={{ fontFamily: "Kavoon" }}>
+                                        <h3 className="text-3xl font-bold">
                                             {selectedWeaponData.name}
                                         </h3>
                                         <p className="opacity-90">{selectedWeaponData.description}</p>
@@ -258,7 +256,7 @@ export default function KobudoInfo() {
             {/* Armas Adicionales */}
             <section className="lg:px-10 px-4">
                 <div className="text-center mb-4">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                    <h2 className="text-4xl font-bold text-gray-900 mb-4">
                         Armas <span className="text-blue-600">Adicionales</span>
                     </h2>
                     <p className="text-xl text-gray-700">
@@ -288,7 +286,7 @@ export default function KobudoInfo() {
             <section className="lg:p-10 p-4 bg-linear-to-b from-gray-50 to-white">
                 <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
                     <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
                             Sistema de <span className="text-blue-600">Grados</span>
                         </h2>
                         <p className="text-xl text-gray-700">

@@ -1,24 +1,27 @@
-:root {
-    --yellowColor: #FFCB00;
-    --redColor: #DC291E;
-    --blueColor: #3b669c;
-    --kaushan: 'Kaushan Script';
-}
+/* Global tokens live in index.css — this file only holds shared helpers. */
 
-h1,h2,h3,h4,button,p {
-    font-family: "JetBrains Mono";
-}
-
-
-
-
-
-.interpolate{
+.interpolate {
     interpolate-size: allow-keywords;
 }
 
-.animationOpacity{
+.animationOpacity {
     animation: fadeIn 0.2s ease-in-out;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
 
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animationOpacity {
+        animation: none;
+    }
+}

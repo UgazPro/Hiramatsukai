@@ -18,8 +18,11 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "bg-black text-sm text-white rounded-lg font-bold !py-5 !px-7 cursor-pointer hover:bg-gray-800",
-        clickRed: "px-4 py-2 rounded-lg border-2 border-(--redColor) cursor-pointer hover:bg-(--redColor) hover:text-white transition-color",
+        glass: "border border-brand-ink/10 bg-white/60 text-brand-ink shadow-soft backdrop-blur-md hover:bg-white/85 hover:shadow-lift",
+        brand: "bg-brand-vermilion text-white shadow-soft hover:bg-brand-vermilion-dark hover:shadow-gold",
+        gold: "bg-brand-gold text-brand-sumi shadow-soft hover:bg-brand-gold-deep hover:text-white hover:shadow-gold",
+        link: "bg-transparent px-1 py-1 text-sm font-semibold text-brand-ink underline-offset-8 hover:text-brand-vermilion hover:underline",
+        clickRed: "px-4 py-2 rounded-lg border-2 border-(--redColor) cursor-pointer hover:bg-(--redColor) hover:text-white transition-colors",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

@@ -209,7 +209,7 @@ export default function Profile() {
                 </div>
 
                 <div className="text-center mt-2 space-y-3">
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
                     {displayName} {displayLastName}
                   </h2>
                   <p className="text-gray-600 text-sm sm:text-base">@{displayUsername}</p>

@@ -283,7 +283,7 @@ console.log(user)
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-8">
 
           <div className="text-center sm:text-left">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900" style={{ fontFamily: "Kavoon" }}>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
               Configuración del Dojo
             </h1>
             <p className="text-sm text-gray-600">Administra toda la información de tu dojo</p>

@@ -18,28 +18,32 @@ export default function InformationSchema({ img, dojo, address }: InformationSch
 
     return (
 
-        <article className="flex-col p-4 gap-3 flex items-center justify-start">
+        <article className="group flex h-full flex-col items-center gap-4 rounded-3xl border border-brand-ink/8 bg-white/55 p-5 text-center shadow-soft backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/85 hover:shadow-lift">
 
-            <div className="w-60 h-60 rounded-full overflow-hidden">
-                {img != '' ? (
-                    <img
-                        src={setImageDojo(img)}
-                        alt={`Dojo ${dojo} de Hiramatsukai`}
-                        loading="lazy"
-                        className="w-full h-full object-cover transition duration-300 ease-in-out lg:hover:-translate-y-3.5 lg:hover:scale-117 "
-                    />
-                ) : (
-                    <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <RiAncientGateFill className="text-gray-500 text-6xl" />
-                    </div>
-                )}
+            <div className="h-40 w-40 shrink-0 rounded-full bg-white/70 p-1.5 ring-1 ring-brand-gold/45 transition-all duration-300 group-hover:ring-brand-gold">
+                <div className="h-full w-full overflow-hidden rounded-full">
+                    {img !== '' ? (
+                        <img
+                            src={setImageDojo(img)}
+                            alt={`Dojo ${dojo} de Hiramatsukai`}
+                            loading="lazy"
+                            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                        />
+                    ) : (
+                        <div className="flex h-full w-full items-center justify-center bg-brand-washi-deep">
+                            <RiAncientGateFill className="text-5xl text-brand-muted/60" aria-hidden="true" />
+                        </div>
+                    )}
+                </div>
             </div>
 
-            <h3 className="font-bold text-xl">{dojo}</h3>
-            <address className="text-xs flex items-center gap-2 not-italic">
-                <FaLocationDot className="text-red-700" aria-hidden="true" />
-                {address}
-            </address>
+            <div className="space-y-2">
+                <h3 className="font-serif text-lg font-semibold text-brand-ink">{dojo}</h3>
+                <address className="flex items-start justify-center gap-1.5 text-xs not-italic leading-relaxed text-brand-muted">
+                    <FaLocationDot className="mt-0.5 shrink-0 text-brand-vermilion" aria-hidden="true" />
+                    <span>{address}</span>
+                </address>
+            </div>
 
         </article>
 

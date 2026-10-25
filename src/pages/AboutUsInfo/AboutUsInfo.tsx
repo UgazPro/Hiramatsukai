@@ -138,7 +138,7 @@ export default function AboutUsInfo() {
                 <div className="px-4">
                     <div className="text-center">
                         <Shield className="h-16 w-16 text-yellow-600 mx-auto mb-6" />
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
+                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
                             Organización <span className="text-red-600">Hiramatsukai</span>
                         </h1>
                         <p className="text-xl text-gray-700 mb-8 leading-relaxed">
@@ -199,7 +199,7 @@ export default function AboutUsInfo() {
                         <div>
                             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
                                 <div>
-                                    <h2 className="text-3xl font-bold text-gray-900 mb-6" style={{ fontFamily: "Kavoon" }}>
+                                    <h2 className="text-3xl font-bold text-gray-900 mb-6">
                                         Nuestra <span className="text-red-600">Historia</span>
                                     </h2>
                                     <div className="space-y-4 text-gray-700">
@@ -236,7 +236,7 @@ export default function AboutUsInfo() {
                     <div className="px-4">
                         <div>
                             <div className="text-center mb-12">
-                                <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                                <h2 className="text-4xl font-bold text-gray-900 mb-4">
                                     Junta <span className="text-red-600">Directiva</span>
                                 </h2>
                                 <p className="text-xl text-gray-700">
@@ -287,7 +287,7 @@ export default function AboutUsInfo() {
 
                             {/* Rangos Jerárquicos */}
                             <div className="mt-20 hidden">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: "Kavoon" }}>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
                                     Sistema de <span className="text-red-600">Rangos</span>
                                 </h3>
                                 <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
@@ -326,7 +326,7 @@ export default function AboutUsInfo() {
                     <div className="px-4">
                         <div>
                             <div className="text-center mb-12">
-                                <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                                <h2 className="text-4xl font-bold text-gray-900 mb-4">
                                     Nuestros <span className="text-red-600">Dojos</span>
                                 </h2>
                                 {/* <p className="text-xl text-gray-700">
@@ -374,7 +374,7 @@ export default function AboutUsInfo() {
                             <div className="hidden mt-16 bg-linear-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
                                 <div className="flex items-center gap-4 mb-6">
                                     <Globe className="h-8 w-8" />
-                                    <h3 className="text-2xl font-bold" style={{ fontFamily: "Kavoon" }}>
+                                    <h3 className="text-2xl font-bold">
                                         Presencia <span className="text-yellow-400">Global</span>
                                     </h3>
                                 </div>
@@ -408,7 +408,7 @@ export default function AboutUsInfo() {
                     <div className="px-4">
                         <div>
                             <div className="text-center mb-12">
-                                <h2 className="text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Kavoon" }}>
+                                <h2 className="text-4xl font-bold text-gray-900 mb-4">
                                     Artes <span className="text-red-600">Marciales</span>
                                 </h2>
                                 <p className="text-xl text-gray-700">
