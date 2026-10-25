@@ -99,13 +99,15 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             aria-label="Hiramatsukai Internacional - Inicio"
                             className="group flex items-center gap-3 rounded-full focus-visible:outline-offset-4"
                         >
-                            <span className="rounded-full bg-white p-0.5 shadow-soft ring-1 ring-brand-gold/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-brand-gold">
-                                <img
-                                    src="/oki2.png"
-                                    alt="Emblema Hiramatsukai Internacional"
-                                    className="h-10 w-10 rounded-full object-contain sm:h-12 sm:w-12"
-                                />
-                            </span>
+                            {!isLogin && (
+                                <span className="rounded-full bg-white p-0.5 shadow-soft ring-1 ring-brand-gold/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-brand-gold">
+                                    <img
+                                        src="/oki2.png"
+                                        alt="Emblema Hiramatsukai Internacional"
+                                        className="h-10 w-10 rounded-full object-contain sm:h-12 sm:w-12"
+                                    />
+                                </span>
+                            )}
                             <span className="flex flex-col items-start leading-none">
                                 <span className="font-script text-xl text-brand-washi transition-colors duration-300 group-hover:text-white sm:text-3xl lg:text-4xl">
                                     Hiramatsukai
