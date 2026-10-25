@@ -99,7 +99,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             aria-label="Hiramatsukai Internacional - Inicio"
                             className="group flex items-center gap-3 rounded-full focus-visible:outline-offset-4"
                         >
-                            {!isLogin && (
+                            {!isLogin || !isAdmin && (
                                 <span className="rounded-full bg-white p-0.5 shadow-soft ring-1 ring-brand-gold/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-brand-gold">
                                     <img
                                         src="/oki2.png"
