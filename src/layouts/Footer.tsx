@@ -4,7 +4,7 @@ import { FaInstagram, FaFacebook } from "react-icons/fa";
 export default function Footer() {
 
     return (
-        <footer className="relative overflow-hidden border-t border-brand-chestnut/40 bg-linear-to-b from-brand-sumi-soft to-brand-sumi text-brand-washi">
+        <footer className="relative overflow-hidden border-t border-brand-blue/30 bg-linear-to-b from-brand-blue-deep to-brand-blue-deep text-brand-washi">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood-dark opacity-40" />
             <div aria-hidden="true" className="pointer-events-none absolute -top-24 left-1/2 h-48 w-[32rem] -translate-x-1/2 rounded-full bg-brand-copper/12 blur-[90px]" />
             <div aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 h-40 w-64 rounded-full bg-brand-persimmon/10 blur-[100px]" />

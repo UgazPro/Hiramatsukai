@@ -175,7 +175,7 @@ export default function ApplyStudents({
                             <User className="h-7 w-7 text-brand-gold-deep" />
                           </div>
                         </div>
-                        <h3 className="font-bold text-foreground line-clamp-2 max-w-full">
+                        <h3 className="font-bold text-heading line-clamp-2 max-w-full">
                           {postulacion.user?.name}{" "}
                           {postulacion.user?.lastName}
                         </h3>
@@ -389,7 +389,7 @@ export default function ApplyStudents({
             </Button>
             <Button
               disabled={isSaving}
-              className="h-11 bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep hover:text-white sm:h-9 sm:w-auto"
+              className="h-11 bg-brand-blue text-white hover:bg-brand-blue-dark sm:h-9 sm:w-auto"
               onClick={handleSaveResults}
             >
               {isSaving ? "Guardando..." : "Guardar Resultados"}

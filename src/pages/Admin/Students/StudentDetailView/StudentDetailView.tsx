@@ -84,7 +84,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                                 </div>
                             </div>
                             <div className="min-w-0">
-                                <h2 className="text-xl font-bold break-words text-foreground sm:text-3xl">
+                                <h2 className="text-xl font-bold break-words text-heading sm:text-3xl">
                                     {selectedStudent.name} {selectedStudent.lastName}
                                 </h2>
                                 <div className="flex flex-wrap items-center gap-2 mt-2">
@@ -141,7 +141,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                         <CardContent className="p-4 sm:p-6">
                             <div className="flex items-center gap-2 mb-4">
                                 <User className="h-5 w-5 text-brand-gold-deep" />
-                                <h3 className="text-lg font-semibold text-foreground">Información Personal</h3>
+                                <h3 className="text-lg font-semibold text-heading">Información Personal</h3>
                             </div>
                             <div className="space-y-4">
                                 <div>
@@ -173,7 +173,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                         <CardContent className="p-4 sm:p-6">
                             <div className="flex items-center gap-2 mb-4">
                                 <Mail className="h-5 w-5 text-brand-gold-deep" />
-                                <h3 className="text-lg font-semibold text-foreground">Información de Contacto</h3>
+                                <h3 className="text-lg font-semibold text-heading">Información de Contacto</h3>
                             </div>
                             <div className="space-y-4">
                                 <div className="flex items-start gap-3">
@@ -211,7 +211,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                         <CardContent className="p-4 sm:p-6">
                             <div className="flex items-center gap-2 mb-4">
                                 <School className="h-5 w-5 text-brand-gold-deep" />
-                                <h3 className="text-lg font-semibold text-foreground">Información del Dojo</h3>
+                                <h3 className="text-lg font-semibold text-heading">Información del Dojo</h3>
                             </div>
                             <div className="space-y-4">
                                 <div>
@@ -250,7 +250,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                             <div className="mb-4 flex items-center justify-between gap-2">
                                 <div className="flex items-center gap-2">
                                     <Activity className="h-5 w-5 text-brand-gold-deep" />
-                                    <h3 className="text-lg font-semibold text-foreground">Asistencia</h3>
+                                    <h3 className="text-lg font-semibold text-heading">Asistencia</h3>
                                 </div>
                                 {!dynamicLoading && allInfo && (
                                     <Badge className={`text-sm px-3 py-1 ${
@@ -304,7 +304,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                         <CardContent className="p-4 sm:p-6">
                             <div className="flex items-center gap-2 mb-4">
                                 <DollarSign className="h-5 w-5 text-brand-gold-deep" />
-                                <h3 className="text-lg font-semibold text-foreground">Estado de Pagos</h3>
+                                <h3 className="text-lg font-semibold text-heading">Estado de Pagos</h3>
                             </div>
                             <div className="space-y-4">
                                 {dynamicLoading ? (
@@ -338,7 +338,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                         <CardContent className="p-4 sm:p-6">
                             <div className="flex items-center gap-2 mb-4">
                                 <Activity className="h-5 w-5 text-brand-gold-deep" />
-                                <h3 className="text-lg font-semibold text-foreground">Actividades Asistidas</h3>
+                                <h3 className="text-lg font-semibold text-heading">Actividades Asistidas</h3>
                             </div>
 
                             {dynamicLoading && (
@@ -389,7 +389,7 @@ export default function StudentDetailView({ student: propStudent }: StudentDetai
                     <CardContent className="p-4 sm:p-6">
                         <div className="flex items-center gap-2 mb-4">
                             <Award className="h-5 w-5 text-brand-gold-deep" />
-                            <h3 className="text-lg font-semibold text-foreground">Exámenes por Arte Marcial</h3>
+                            <h3 className="text-lg font-semibold text-heading">Exámenes por Arte Marcial</h3>
                         </div>
 
                         {examsLoading && (

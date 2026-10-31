@@ -32,7 +32,7 @@ export const CardComponent = ({ card }: CardComponentSimple) => {
                 </div>
 
                 <div className="space-y-1">
-                    <h4 className="text-sm font-semibold leading-snug text-brand-ink">{title}</h4>
+                    <h4 className="text-sm font-semibold leading-snug text-heading">{title}</h4>
                     <p className="text-xs leading-relaxed text-brand-muted">{description}</p>
                 </div>
             </div>

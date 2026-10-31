@@ -147,7 +147,7 @@ export default function AdminPanelSkeleton() {
         <div className="flex flex-col gap-4 sm:gap-5 lg:gap-6">
           {/* Próximas Actividades */}
           <Card className="overflow-hidden rounded-2xl border-border/70 bg-card/85 py-0 shadow-soft backdrop-blur-sm">
-            <div className="bg-brand-sumi px-5 py-4">
+            <div className="bg-brand-blue-deep px-5 py-4">
               <div className="flex items-center gap-3">
                 <Skeleton className="size-9 rounded-lg bg-white/10" />
                 <Skeleton className="h-5 w-40 bg-white/10" />

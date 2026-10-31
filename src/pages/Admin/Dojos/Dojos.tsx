@@ -100,7 +100,7 @@ export default function Dojos() {
 
                         <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
                             <div className="min-w-0">
-                                <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Dojos</h1>
+                                <h1 className="text-2xl font-bold text-heading sm:text-3xl">Dojos</h1>
                                 <p className="mt-2 text-muted-foreground">
                                     Gestión de dojos y su jerarquía
                                 </p>
@@ -119,7 +119,7 @@ export default function Dojos() {
 
                                 {canModify && (
                                     <Button
-                                        variant="wood"
+                                        variant="default"
                                         onClick={() => startCreate()}
                                         className="h-11 w-full sm:h-10 sm:w-auto"
                                     >

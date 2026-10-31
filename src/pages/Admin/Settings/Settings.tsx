@@ -283,7 +283,7 @@ console.log(user)
         <div className="mb-6 flex flex-col items-center justify-between gap-3 sm:mb-8 sm:flex-row">
 
           <div className="min-w-0 text-center sm:text-left">
-            <h1 className="text-2xl font-bold text-foreground md:text-3xl">
+            <h1 className="text-2xl font-bold text-heading md:text-3xl">
               Configuración del Dojo
             </h1>
             <p className="text-sm text-muted-foreground">Administra toda la información de tu dojo</p>

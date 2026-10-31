@@ -84,7 +84,7 @@ export default function ExamDetail() {
                                     </div>
                                 </div>
                                 <div className="min-w-0">
-                                    <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">
+                                    <h2 className="text-xl font-bold break-words text-heading sm:text-2xl">
                                         {activity?.name || "Examen"}
                                     </h2>
                                     <p className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
@@ -131,7 +131,7 @@ export default function ExamDetail() {
 
                         {approved.length > 0 && (
                             <div className="border-b border-border p-4 sm:p-6">
-                                <h3 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
+                                <h3 className="text-lg font-bold text-heading flex items-center gap-2 mb-4">
                                     <CheckCircle className="h-5 w-5 text-green-600" />
                                     Aprobados ({approved.length})
                                 </h3>
@@ -155,7 +155,7 @@ export default function ExamDetail() {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <h4 className="min-w-0 font-semibold break-words text-foreground">
+                                                    <h4 className="min-w-0 font-semibold break-words text-heading">
                                                         {exam.user?.name ?? ""}{" "}
                                                         {exam.user?.lastName ??
                                                             ""}
@@ -193,7 +193,7 @@ export default function ExamDetail() {
 
                         {rejected.length > 0 && (
                             <div className="border-b border-border p-4 sm:p-6">
-                                <h3 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
+                                <h3 className="text-lg font-bold text-heading flex items-center gap-2 mb-4">
                                     <XCircle className="h-5 w-5 text-red-600" />
                                     Reprobados ({rejected.length})
                                 </h3>
@@ -217,7 +217,7 @@ export default function ExamDetail() {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <h4 className="min-w-0 font-semibold break-words text-foreground">
+                                                    <h4 className="min-w-0 font-semibold break-words text-heading">
                                                         {exam.user?.name ?? ""}{" "}
                                                         {exam.user?.lastName ??
                                                             ""}
@@ -255,7 +255,7 @@ export default function ExamDetail() {
 
                         {pending.length > 0 && (
                             <div className="p-4 sm:p-6">
-                                <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-foreground">
+                                <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-heading">
                                     <Users className="h-5 w-5 text-brand-gold-deep" />
                                     Pendientes ({pending.length})
                                 </h3>
@@ -279,7 +279,7 @@ export default function ExamDetail() {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <h4 className="min-w-0 font-semibold break-words text-foreground">
+                                                    <h4 className="min-w-0 font-semibold break-words text-heading">
                                                         {exam.user?.name ?? ""}{" "}
                                                         {exam.user?.lastName ??
                                                             ""}

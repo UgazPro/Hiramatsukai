@@ -85,7 +85,7 @@ export default function StudentDetail() {
                             </div>
                         </div>
                         <div className="min-w-0">
-                            <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">
+                            <h2 className="text-xl font-bold break-words text-heading sm:text-2xl">
                                 {student?.name ?? ""} {student?.lastName ?? ""}
                             </h2>
                             {student?.identification && (
@@ -170,7 +170,7 @@ export default function StudentDetail() {
 
                     {!isLoading && exams.length > 0 && (
                         <div className="space-y-4">
-                            <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                            <h3 className="text-lg font-bold text-heading flex items-center gap-2">
                                 <Award className="h-5 w-5 text-brand-gold-deep" />
                                 Historial de Exámenes
                             </h3>

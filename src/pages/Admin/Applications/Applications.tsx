@@ -82,7 +82,7 @@ export default function Applications() {
 
             <div className="mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
               <div className="min-w-0">
-                <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Sistema de Postulaciones</h1>
+                <h1 className="text-2xl font-bold text-heading sm:text-3xl">Sistema de Postulaciones</h1>
                 <p className="mt-2 text-muted-foreground">
                   Gestiona exámenes, postulaciones e historial de alumnos
                 </p>
@@ -100,7 +100,7 @@ export default function Applications() {
               />
               {activeTab === 'postulaciones' && !isStudent && (
                 <Button
-                  variant="wood"
+                  variant="default"
                   className="h-11 w-full sm:h-10 sm:w-auto"
                   onClick={() => openPostulationForm()}
                 >

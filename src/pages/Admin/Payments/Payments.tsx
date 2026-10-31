@@ -353,7 +353,7 @@ export default function Payments() {
       {/* Header */}
       <div className="mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-center md:mb-8">
         <div className="min-w-0">
-          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Gestión de Pagos</h1>
+          <h1 className="text-2xl font-bold text-heading sm:text-3xl">Gestión de Pagos</h1>
           <p className="mt-2 text-muted-foreground">
             Administra las mensualidades y comprobantes de pago de los alumnos
           </p>
@@ -366,8 +366,8 @@ export default function Payments() {
           variant={activeTab === 'mes-actual' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('mes-actual')}
           className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'mes-actual'
-              ? 'bg-linear-to-r from-brand-gold to-brand-vermilion text-white shadow-md'
-              : 'text-foreground hover:bg-gray-200'
+              ? 'bg-linear-to-r from-brand-blue to-brand-blue-dark text-white shadow-md'
+              : 'text-foreground hover:bg-brand-blue/5'
             }`}
         >
           <CalendarDays className="h-4 w-4 mr-2" />
@@ -377,8 +377,8 @@ export default function Payments() {
           variant={activeTab === 'comprobantes' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('comprobantes')}
           className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'comprobantes'
-              ? 'bg-linear-to-r from-brand-gold to-brand-vermilion text-white shadow-md'
-              : 'text-foreground hover:bg-gray-200'
+              ? 'bg-linear-to-r from-brand-blue to-brand-blue-dark text-white shadow-md'
+              : 'text-foreground hover:bg-brand-blue/5'
             }`}
         >
           <Receipt className="h-4 w-4 mr-2" />
@@ -413,7 +413,7 @@ export default function Payments() {
                 <CardContent className="p-4">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-brand-gold-deep">{estadisticasMes.debeEsteMes}</div>
-                    <div className="text-xs text-yellow-600">Debe este mes</div>
+                    <div className="text-xs text-brand-blue">Debe este mes</div>
                   </div>
                 </CardContent>
               </Card>
@@ -466,13 +466,13 @@ export default function Payments() {
                     <CardContent className="p-5">
                       <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
                         <div className="flex min-w-0 items-center gap-3">
-                          <div className="h-12 w-12 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                          <div className="h-12 w-12 rounded-full bg-linear-to-br from-brand-blue to-brand-blue-dark p-0.5">
                             <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
-                              <User className="h-6 w-6 text-yellow-600" />
+                              <User className="h-6 w-6 text-brand-blue" />
                             </div>
                           </div>
                           <div className="min-w-0">
-                            <h3 className="truncate font-bold text-foreground">
+                            <h3 className="truncate font-bold text-heading">
                               {alumno.nombre} {alumno.apellido}
                             </h3>
                             <p className="text-sm text-muted-foreground">{alumno.grado}</p>
@@ -523,7 +523,7 @@ export default function Payments() {
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-foreground">{selectedYear}</h3>
+                    <h3 className="text-xl font-bold text-heading">{selectedYear}</h3>
                   </div>
                   <Button
                     variant="ghost"
@@ -574,7 +574,7 @@ export default function Payments() {
                         className={`
                           h-16 flex flex-col items-center justify-center transition-all duration-200
                           ${isCurrentMonth
-                            ? 'bg-linear-to-r from-brand-gold to-brand-vermilion text-white shadow-md'
+                            ? 'bg-linear-to-r from-brand-blue to-brand-blue-dark text-white shadow-md'
                             : 'text-foreground hover:bg-muted'
                           }
                         `}
@@ -588,7 +588,7 @@ export default function Payments() {
 
                 {/* Leyenda */}
                 <div className="mt-6 pt-4 border-t border-border space-y-2">
-                  <h4 className="text-sm font-medium text-foreground mb-2">Estados de pago</h4>
+                  <h4 className="text-sm font-medium text-heading mb-2">Estados de pago</h4>
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-green-500"></div>
                     <span className="text-xs text-foreground">Al día</span>
@@ -605,7 +605,7 @@ export default function Payments() {
 
                 {/* Resumen del mes */}
                 <div className="mt-6 pt-4 border-t border-border">
-                  <h4 className="text-sm font-medium text-foreground mb-3">Resumen {meses[selectedMonth]}</h4>
+                  <h4 className="text-sm font-medium text-heading mb-3">Resumen {meses[selectedMonth]}</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Al día:</span>
@@ -613,7 +613,7 @@ export default function Payments() {
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Debe este mes:</span>
-                      <span className="font-semibold text-yellow-600">{estadisticasMes.debeEsteMes}</span>
+                      <span className="font-semibold text-brand-blue">{estadisticasMes.debeEsteMes}</span>
                     </div>
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Morosos:</span>
@@ -670,16 +670,16 @@ export default function Payments() {
                 <CardContent className="p-0">
                   <div className="bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-5 border-b border-border">
                     <div className="flex justify-between items-start">
-                      <div className="h-12 w-12 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                      <div className="h-12 w-12 rounded-full bg-linear-to-br from-brand-blue to-brand-blue-dark p-0.5">
                         <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
-                          <Receipt className="h-6 w-6 text-yellow-600" />
+                          <Receipt className="h-6 w-6 text-brand-blue" />
                         </div>
                       </div>
                       <Badge className="bg-green-100 text-green-800 border-green-200">
                         Pagado
                       </Badge>
                     </div>
-                    <h3 className="font-bold text-lg text-foreground mt-3">{comprobante.alumnoNombre}</h3>
+                    <h3 className="font-bold text-lg text-heading mt-3">{comprobante.alumnoNombre}</h3>
                   </div>
 
                   <div className="p-5 space-y-4">
@@ -714,7 +714,7 @@ export default function Payments() {
                         <Eye className="h-4 w-4 mr-2" />
                         Ver
                       </Button>
-                      <Button size="sm" className="flex-1 bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep text-white">
+                      <Button size="sm" className="flex-1 bg-brand-blue text-white hover:bg-brand-blue-dark text-white">
                         <Download className="h-4 w-4 mr-2" />
                         PDF
                       </Button>
@@ -740,13 +740,13 @@ export default function Payments() {
             <div className="space-y-6 py-4">
               {/* Información del alumno */}
               <div className="flex items-center gap-4 p-4 bg-muted/40 rounded-lg border border-border">
-                <div className="h-16 w-16 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                <div className="h-16 w-16 rounded-full bg-linear-to-br from-brand-blue to-brand-blue-dark p-0.5">
                   <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
-                    <User className="h-8 w-8 text-yellow-600" />
+                    <User className="h-8 w-8 text-brand-blue" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-foreground">
+                  <h3 className="font-bold text-lg text-heading">
                     {selectedAlumno.nombre} {selectedAlumno.apellido}
                   </h3>
                   <p className="text-muted-foreground">C.I: {selectedAlumno.cedula}</p>
@@ -845,7 +845,7 @@ export default function Payments() {
                 >
                   Cancelar
                 </Button>
-                <Button className="h-11 w-full bg-linear-to-r from-brand-gold to-brand-vermilion text-white hover:from-brand-gold-deep hover:to-brand-vermilion-dark sm:h-9 sm:w-auto">
+                <Button className="h-11 w-full bg-linear-to-r from-brand-blue to-brand-blue-dark text-white hover:from-brand-blue-dark hover:to-brand-blue-deep sm:h-9 sm:w-auto">
                   Registrar Pago
                 </Button>
               </div>
@@ -870,12 +870,12 @@ export default function Payments() {
                 {/* Header del comprobante */}
                 <div className="mb-6 flex flex-col justify-between gap-3 border-b border-border pb-4 sm:mb-8 sm:flex-row sm:items-center">
                   <div>
-                    <h2 className="text-2xl font-bold text-foreground">DOJO KENZENDO</h2>
+                    <h2 className="text-2xl font-bold text-heading">DOJO KENZENDO</h2>
                     <p className="text-muted-foreground">RUT: 76.123.456-7</p>
                     <p className="text-muted-foreground">comprobantes@dojokenzendo.cl</p>
                   </div>
                   <div className="text-right">
-                    <Badge className="bg-linear-to-r from-brand-gold to-brand-vermilion text-white border-0 px-4 py-2">
+                    <Badge className="bg-linear-to-r from-brand-blue to-brand-blue-dark text-white border-0 px-4 py-2">
                       COMPROBANTE DE PAGO
                     </Badge>
                     <p className="text-sm text-muted-foreground mt-2">N° {selectedComprobante.id.toString().padStart(6, '0')}</p>
@@ -954,11 +954,11 @@ export default function Payments() {
                 >
                   Cerrar
                 </Button>
-                <Button className="h-11 w-full bg-linear-to-r from-brand-gold to-brand-vermilion text-white hover:from-brand-gold-deep hover:to-brand-vermilion-dark sm:h-9 sm:w-auto">
+                <Button className="h-11 w-full bg-linear-to-r from-brand-blue to-brand-blue-dark text-white hover:from-brand-blue-dark hover:to-brand-blue-deep sm:h-9 sm:w-auto">
                   <Printer className="h-4 w-4 mr-2" />
                   Imprimir
                 </Button>
-                <Button className="h-11 w-full bg-linear-to-r from-brand-gold to-brand-vermilion text-white hover:from-brand-gold-deep hover:to-brand-vermilion-dark sm:h-9 sm:w-auto">
+                <Button className="h-11 w-full bg-linear-to-r from-brand-blue to-brand-blue-dark text-white hover:from-brand-blue-dark hover:to-brand-blue-deep sm:h-9 sm:w-auto">
                   <Download className="h-4 w-4 mr-2" />
                   Descargar PDF
                 </Button>

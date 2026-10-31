@@ -52,7 +52,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
     if (this.state.hasError) {
       return (
         <div
-          className="fixed inset-0 z-[9999] bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[9999] bg-brand-blue-deep flex items-center justify-center p-4"
           style={{ overflow: "hidden" }}
         >
           <div className="max-w-md w-full text-center space-y-6">
@@ -66,14 +66,14 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
               <h1 className="text-2xl font-bold text-white">
                 Algo salió mal
               </h1>
-              <p className="text-gray-400">
+              <p className="text-brand-washi/70">
                 Ha ocurrido un error inesperado. Tu sesión ha sido limpiada automáticamente.
               </p>
             </div>
 
             <button
               onClick={this.handleReload}
-              className="inline-flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-6 py-3 rounded-lg transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 bg-brand-blue hover:bg-brand-blue-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors cursor-pointer"
             >
               <RefreshCw className="h-4 w-4" />
               Recargar página

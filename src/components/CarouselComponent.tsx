@@ -111,7 +111,7 @@ export default function CarouselComponent({
                         className="h-full w-full object-cover"
                     />
 
-                    <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-brand-sumi/90 via-brand-sumi/45 to-brand-sumi/15" />
+                    <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-brand-blue-deep/90 via-brand-blue-deep/45 to-brand-blue-deep/15" />
 
                     <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 text-white">
                         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
@@ -126,7 +126,7 @@ export default function CarouselComponent({
                         </div>
                     </div>
 
-                    <div className="absolute right-4 top-4 rounded-full border border-white/20 bg-brand-sumi/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+                    <div className="absolute right-4 top-4 rounded-full border border-white/20 bg-brand-blue-deep/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
                         {currentIndex + 1} / {images.length}
                     </div>
 
@@ -139,7 +139,7 @@ export default function CarouselComponent({
                             onClick={prevSlide}
                             size="icon"
                             aria-label="Diapositiva anterior"
-                            className="absolute left-4 top-1/2 h-11 w-11 -translate-y-1/2 rounded-full border border-white/25 bg-brand-sumi/50 text-white backdrop-blur-md transition-all duration-300 hover:bg-brand-sumi/80 hover:text-brand-gold md:h-12 md:w-12"
+                            className="absolute left-4 top-1/2 h-11 w-11 -translate-y-1/2 rounded-full border border-white/25 bg-brand-blue-deep/50 text-white backdrop-blur-md transition-all duration-300 hover:bg-brand-blue-deep/80 hover:text-brand-gold md:h-12 md:w-12"
                         >
                             <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
                         </Button>
@@ -149,7 +149,7 @@ export default function CarouselComponent({
                             onClick={nextSlide}
                             size="icon"
                             aria-label="Diapositiva siguiente"
-                            className="absolute right-4 top-1/2 h-11 w-11 -translate-y-1/2 rounded-full border border-white/25 bg-brand-sumi/50 text-white backdrop-blur-md transition-all duration-300 hover:bg-brand-sumi/80 hover:text-brand-gold md:h-12 md:w-12"
+                            className="absolute right-4 top-1/2 h-11 w-11 -translate-y-1/2 rounded-full border border-white/25 bg-brand-blue-deep/50 text-white backdrop-blur-md transition-all duration-300 hover:bg-brand-blue-deep/80 hover:text-brand-gold md:h-12 md:w-12"
                         >
                             <ChevronRight className="h-5 w-5 md:h-6 md:w-6" aria-hidden="true" />
                         </Button>

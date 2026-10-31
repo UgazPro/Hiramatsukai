@@ -101,7 +101,7 @@ function SectionTitle({
         <Icon className="size-5" aria-hidden="true" />
       </span>
       <div className="min-w-0">
-        <h3 className="truncate font-serif text-lg font-semibold text-foreground">{title}</h3>
+        <h3 className="truncate font-serif text-lg font-semibold text-heading">{title}</h3>
         {description && <p className="text-xs text-muted-foreground">{description}</p>}
       </div>
     </div>
@@ -161,7 +161,7 @@ export default function AdminPanel() {
       <header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="flex flex-col gap-1.5">
           <span className="section-eyebrow text-brand-gold-deep">Panel del Dojo</span>
-          <h1 className="font-serif text-2xl font-semibold leading-tight text-foreground sm:text-3xl lg:text-4xl">
+          <h1 className="font-serif text-2xl font-semibold leading-tight text-heading sm:text-3xl lg:text-4xl">
             ¡Bienvenido, {user?.name ?? "Sensei"} {user?.lastName ?? ""}!
           </h1>
           <p className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -249,7 +249,7 @@ export default function AdminPanel() {
                         </div>
                         <span className={cn("shrink-0 font-semibold tabular-nums", text)}>{pct}%</span>
                       </div>
-                      <Progress value={pct} className={cn("h-2.5 bg-brand-sumi/10", bar)} />
+                      <Progress value={pct} className={cn("h-2.5 bg-brand-blue-deep/10", bar)} />
                     </div>
                   );
                 })}
@@ -261,8 +261,8 @@ export default function AdminPanel() {
         {/* Right Column */}
         <div className="flex flex-col gap-4 sm:gap-5 lg:gap-6">
           <Card className="overflow-hidden rounded-2xl border-border/70 bg-card/85 py-0 shadow-soft backdrop-blur-sm">
-            <div className="flex items-center gap-3 border-b border-white/10 bg-brand-sumi px-5 py-4 text-brand-washi">
-              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-gold/15 text-brand-gold">
+            <div className="flex items-center gap-3 border-b border-white/10 bg-brand-blue-deep px-5 py-4 text-brand-washi">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-gold/15 text-brand-copper-light">
                 <Star className="size-5" aria-hidden="true" />
               </span>
               <h3 className="font-serif text-base font-semibold">Próximas Actividades</h3>
@@ -392,7 +392,7 @@ export default function AdminPanel() {
                           {examen.type}
                         </Badge>
                       </div>
-                      <h4 className="truncate font-serif text-base font-semibold text-foreground">{examen.name}</h4>
+                      <h4 className="truncate font-serif text-base font-semibold text-heading">{examen.name}</h4>
                       <div className="flex flex-col gap-1.5 text-sm text-muted-foreground">
                         <div className="flex items-center gap-2">
                           <Calendar className="size-3.5 shrink-0" aria-hidden="true" />

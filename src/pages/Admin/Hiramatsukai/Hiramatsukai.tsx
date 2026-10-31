@@ -193,7 +193,7 @@ export default function Hiramatsukai() {
                         <Shield className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Hiramatsukai</h1>
+                        <h1 className="text-2xl font-bold text-heading sm:text-3xl">Hiramatsukai</h1>
                         <p className="text-muted-foreground">Alumnos postulados a exámenes</p>
                     </div>
                 </div>
@@ -305,7 +305,7 @@ export default function Hiramatsukai() {
                                                 <img src={getMaLogo(artName)} alt={artName} className="h-full w-full object-contain" />
                                             </div>
                                             <div className="min-w-0">
-                                                <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">{artName}</h2>
+                                                <h2 className="text-xl font-bold break-words text-heading sm:text-2xl">{artName}</h2>
                                                 <p className="text-sm text-muted-foreground">{totalByArt} alumno{totalByArt !== 1 ? "s" : ""}</p>
                                             </div>
                                         </div>
@@ -320,7 +320,7 @@ export default function Hiramatsukai() {
                                                             <span className="text-xs font-bold text-foreground">{index + 1}</span>
                                                         </div>
                                                         <div>
-                                                            <h3 className="text-lg font-bold text-foreground">{rank}</h3>
+                                                            <h3 className="text-lg font-bold text-heading">{rank}</h3>
                                                         </div>
                                                     </div>
 

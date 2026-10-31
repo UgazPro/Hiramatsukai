@@ -23,12 +23,22 @@
   --brand-wood-deep: #4a3225;
   --brand-copper: #a8724a;
   --brand-copper-deep: #744a2d;
+  --brand-copper-light: #d6a77a;
   --brand-gold: var(--brand-copper);
   --brand-gold-deep: var(--brand-copper-deep);
   --brand-indigo: #274b63;
   --brand-clay: #b5654a;
   --brand-muted: #5a4f44;
   --brand-sand: #ead9c4;
+  --brand-linen: #f3e8d8;
+  --brand-blue: #1d3c92;
+  --brand-blue-dark: #162e70;
+  --brand-blue-light: #e5e9f6;
+  --brand-blue-deep: #0e1f4d;
+  --brand-blue-soft: #7f96d6;
+  --heading: var(--brand-blue-deep);
+  --heading-accent: var(--brand-copper-deep);
+  --heading-accent-dark: #d6a77a;
 
   /* Legacy aliases (kept for admin / login screens) */
   --yellowColor: var(--brand-gold-deep);
@@ -42,8 +52,8 @@
   --card-foreground: var(--brand-ink);
   --popover: var(--brand-washi-card);
   --popover-foreground: var(--brand-ink);
-  --primary: var(--brand-wood-dark);
-  --primary-foreground: var(--brand-washi);
+  --primary: var(--brand-blue);
+  --primary-foreground: #ffffff;
   --secondary: var(--brand-washi-deep);
   --secondary-foreground: var(--brand-ink);
   --muted: var(--brand-washi-deep);
@@ -54,21 +64,21 @@
   --destructive-foreground: #ffffff;
   --border: #dbcbb4;
   --input: #9c886d;
-  --ring: var(--brand-wood-dark);
+  --ring: var(--brand-blue);
   --chart-1: #c13b2b;
   --chart-2: #d8772f;
   --chart-3: #a8724a;
   --chart-4: #6e4633;
   --chart-5: #274b63;
   --radius: 0.75rem;
-  --sidebar: var(--brand-wood-deep);
-  --sidebar-foreground: var(--brand-washi);
-  --sidebar-primary: var(--brand-washi);
-  --sidebar-primary-foreground: var(--brand-wood-deep);
-  --sidebar-accent: var(--brand-wood-dark);
-  --sidebar-accent-foreground: var(--brand-washi);
-  --sidebar-border: rgb(247 241 229 / 0.14);
-  --sidebar-ring: var(--brand-copper);
+  --sidebar: var(--brand-linen);
+  --sidebar-foreground: var(--brand-blue-deep);
+  --sidebar-primary: var(--brand-blue);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--brand-blue-light);
+  --sidebar-accent-foreground: var(--brand-blue-dark);
+  --sidebar-border: rgb(122 85 60 / 0.2);
+  --sidebar-ring: var(--brand-blue);
 
   /* Elevation */
   --elevation-soft: 0 1px 2px rgb(20 17 16 / 0.05), 0 12px 32px -16px rgb(20 17 16 / 0.2);
@@ -84,8 +94,8 @@
   --card-foreground: var(--brand-washi);
   --popover: var(--brand-sumi-soft);
   --popover-foreground: var(--brand-washi);
-  --primary: var(--brand-wood);
-  --primary-foreground: var(--brand-washi);
+  --primary: var(--brand-blue-soft);
+  --primary-foreground: var(--brand-blue-deep);
   --secondary: #2a211b;
   --secondary-foreground: var(--brand-washi);
   --muted: #2a211b;
@@ -96,7 +106,7 @@
   --destructive-foreground: #ffffff;
   --border: rgb(247 241 229 / 0.14);
   --input: rgb(247 241 229 / 0.22);
-  --ring: var(--brand-wood);
+  --ring: var(--brand-blue-soft);
   --chart-1: #e05240;
   --chart-2: #e68a45;
   --chart-3: #c08a5e;
@@ -104,12 +114,14 @@
   --chart-5: #5c85a3;
   --sidebar: var(--brand-wood-deep);
   --sidebar-foreground: var(--brand-washi);
-  --sidebar-primary: var(--brand-washi);
-  --sidebar-primary-foreground: var(--brand-wood-deep);
+  --sidebar-primary: var(--brand-blue-soft);
+  --sidebar-primary-foreground: var(--brand-blue-deep);
   --sidebar-accent: var(--brand-wood-dark);
   --sidebar-accent-foreground: var(--brand-washi);
   --sidebar-border: rgb(247 241 229 / 0.14);
-  --sidebar-ring: var(--brand-copper);
+  --sidebar-ring: var(--brand-blue-soft);
+  --heading: var(--brand-washi);
+  --heading-accent: var(--heading-accent-dark);
 }
 
 @theme inline {
@@ -134,11 +146,20 @@
   --color-brand-wood-deep: var(--brand-wood-deep);
   --color-brand-copper: var(--brand-copper);
   --color-brand-copper-deep: var(--brand-copper-deep);
+  --color-brand-copper-light: var(--brand-copper-light);
   --color-brand-gold: var(--brand-gold);
   --color-brand-gold-deep: var(--brand-gold-deep);
   --color-brand-indigo: var(--brand-indigo);
   --color-brand-clay: var(--brand-clay);
   --color-brand-sand: var(--brand-sand);
+  --color-brand-linen: var(--brand-linen);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-dark: var(--brand-blue-dark);
+  --color-brand-blue-light: var(--brand-blue-light);
+  --color-brand-blue-deep: var(--brand-blue-deep);
+  --color-brand-blue-soft: var(--brand-blue-soft);
+  --color-heading: var(--heading);
+  --color-heading-accent: var(--heading-accent);
   --color-brand-muted: var(--brand-muted);
 
   --shadow-soft: var(--elevation-soft);
@@ -205,12 +226,23 @@
   h3,
   h4 {
     @apply font-serif text-balance;
+    color: var(--heading);
     letter-spacing: -0.01em;
   }
 
   h1,
   h2 {
     font-weight: 600;
+  }
+
+  :is(.bg-brand-blue-deep, .bg-brand-sumi, [class*="from-brand-blue-deep"], [class*="to-brand-blue-deep"], [class*="from-brand-sumi"], [class*="to-brand-sumi"]) :is(h1, h2, h3, h4),
+  .bg-brand-wood-deep :is(h1, h2, h3, h4) {
+    color: var(--brand-washi) !important;
+  }
+
+  :is(.bg-brand-blue-deep, .bg-brand-sumi, [class*="from-brand-blue-deep"], [class*="to-brand-blue-deep"], [class*="from-brand-sumi"], [class*="to-brand-sumi"]) :is(h1, h2, h3, h4) .text-heading-accent,
+  .bg-brand-wood-deep :is(h1, h2, h3, h4) .text-heading-accent {
+    color: var(--heading-accent-dark) !important;
   }
 
   p {

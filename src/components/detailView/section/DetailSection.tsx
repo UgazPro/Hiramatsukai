@@ -14,7 +14,7 @@ export function DetailSection({ icon, title, children, right }: DetailSectionPro
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                     <div className="flex min-w-0 items-center gap-2">
                         {icon}
-                        <h3 className="min-w-0 text-base font-semibold break-words text-foreground md:text-lg">{title}</h3>
+                        <h3 className="min-w-0 text-base font-semibold break-words text-heading md:text-lg">{title}</h3>
                     </div>
                     {right}
                 </div>

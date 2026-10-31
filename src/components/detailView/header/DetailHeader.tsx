@@ -22,7 +22,7 @@ export function DetailHeader({
                     {avatar}
 
                     <div className="min-w-0">
-                        <h2 className="text-lg font-bold break-words text-foreground sm:text-2xl md:text-3xl">{title}</h2>
+                        <h2 className="text-lg font-bold break-words text-heading sm:text-2xl md:text-3xl">{title}</h2>
                         {subtitle && <div className="mt-2">{subtitle}</div>}
                     </div>
                 </div>

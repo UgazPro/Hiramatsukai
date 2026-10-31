@@ -118,7 +118,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                                     </div>
                                                 </div>
 
-                                                <h3 className="font-bold text-foreground group-hover:text-brand-gold-deep transition-colors truncate w-full">
+                                                <h3 className="font-bold text-heading group-hover:text-heading-accent transition-colors truncate w-full">
                                                     {student.name}{" "}
                                                     {student.lastName}
                                                 </h3>

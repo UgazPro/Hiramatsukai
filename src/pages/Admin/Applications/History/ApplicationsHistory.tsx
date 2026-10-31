@@ -75,7 +75,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                                     <Award className="h-6 w-6 text-brand-gold-deep" />
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <h3 className="truncate text-base font-bold text-foreground sm:text-lg">
+                                                    <h3 className="truncate text-base font-bold text-heading sm:text-lg">
                                                         {examen.name}
                                                     </h3>
                                                     <div className="flex items-center gap-2 text-sm text-muted-foreground sm:gap-3">
@@ -134,7 +134,7 @@ export default function ApplicationsHistory({ activeTab, getBeltColor }: Applica
                                                                             className="p-4 border border-border rounded-lg hover:border-brand-gold transition-colors"
                                                                         >
                                                                             <div className="mb-2 flex items-center justify-between gap-2">
-                                                                                <h4 className="min-w-0 truncate font-semibold text-foreground">
+                                                                                <h4 className="min-w-0 truncate font-semibold text-heading">
                                                                                     {exam
                                                                                         .user
                                                                                         ?.name ?? ""}{" "}

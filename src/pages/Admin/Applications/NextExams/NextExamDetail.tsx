@@ -255,7 +255,7 @@ export default function NextExamDetail() {
                             </div>
                         </div>
                         <div className="min-w-0">
-                            <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">
+                            <h2 className="text-xl font-bold break-words text-heading sm:text-2xl">
                                 {activity.name}
                             </h2>
                             <p className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
@@ -310,7 +310,7 @@ export default function NextExamDetail() {
                 <div className="flex flex-col gap-6 p-4 sm:gap-8 sm:p-6">
                     {/* Resumen General — Top 2 más avanzados */}
                     <div>
-                        <h3 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
+                        <h3 className="text-lg font-bold text-heading flex items-center gap-2 mb-4">
                             <Award className="h-5 w-5 text-brand-gold-deep" />
                             Postulantes con Examen Más Avanzado
                         </h3>
@@ -434,7 +434,7 @@ export default function NextExamDetail() {
                     {/* Por Arte Marcial */}
                     {martialArtGroups.length > 0 && (
                         <div>
-                            <h3 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
+                            <h3 className="text-lg font-bold text-heading flex items-center gap-2 mb-4">
                                 <Users className="h-5 w-5 text-brand-gold-deep" />
                                 Por Arte Marcial
                             </h3>
@@ -451,7 +451,7 @@ export default function NextExamDetail() {
                                             className="space-y-3"
                                         >
                                             <div className="flex items-center justify-between">
-                                                <h4 className="font-bold text-foreground flex items-center gap-2">
+                                                <h4 className="font-bold text-heading flex items-center gap-2">
                                                     <span className="h-6 w-6 rounded bg-brand-gold/15 text-brand-gold-deep flex items-center justify-center text-xs font-bold">
                                                         {group.name.charAt(
                                                             0,

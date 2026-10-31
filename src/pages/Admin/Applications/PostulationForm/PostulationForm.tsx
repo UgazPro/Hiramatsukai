@@ -233,12 +233,12 @@ export default function PostulationForm() {
         <div className="flex items-center gap-3 min-w-0">
           <div
             className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0"
-            style={{ backgroundColor: "var(--redColor)" }}
+            style={{ backgroundColor: "var(--brand-blue)" }}
           >
             <UserCheck className="h-5 w-5 text-white" />
           </div>
           <div className="min-w-0">
-            <h2 className="text-lg font-semibold text-foreground leading-tight">
+            <h2 className="text-lg font-semibold text-heading leading-tight">
               Nueva Postulación
             </h2>
             {nextExam && (
@@ -518,7 +518,7 @@ export default function PostulationForm() {
                     backgroundColor:
                       !selectedMartialArtId || selectedStudentIds.size === 0
                         ? undefined
-                        : "var(--redColor)",
+                        : "var(--brand-blue)",
                   }}
                   className="h-11 border-0 px-5 text-sm font-medium text-white transition-all disabled:bg-muted sm:h-9"
                 >

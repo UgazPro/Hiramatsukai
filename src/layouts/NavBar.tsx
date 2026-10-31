@@ -28,14 +28,14 @@ export function NavBar() {
     };
 
     return (
-        <div className="border-b border-brand-chestnut/20 bg-brand-washi-card/85 backdrop-blur-xl transition-all duration-300">
+        <div className="transition-all duration-300">
             <nav aria-label="Secciones principales" className="mx-auto flex   items-center justify-center gap-1 px-4 py-1.5">
                 {menuItems.map((item) => (
                     <button
                         key={item.id}
                         type="button"
                         onClick={() => handleScroll(item.id)}
-                        className="group relative cursor-pointer rounded-full px-4 py-2 text-sm font-medium tracking-wide text-brand-ink/75 transition-colors duration-200 hover:bg-brand-ink/5 hover:text-brand-ink focus-visible:bg-brand-ink/5 focus-visible:text-brand-ink"
+                        className="group relative cursor-pointer rounded-full px-4 py-2 text-sm font-medium tracking-wide text-brand-ink/75 transition-colors duration-200 hover:bg-brand-blue/5 hover:text-brand-ink focus-visible:bg-brand-blue/5 focus-visible:text-brand-ink"
                     >
                         {item.label}
                         <span
@@ -117,7 +117,7 @@ export function NavBarMobile({ goToScroll }: NavBarMobileProps) {
                         className="fixed left-0 right-0 z-50"
                         style={{ top: headerHeight }}
                     >
-                        <div className="rounded-b-3xl border-b border-white/10 bg-brand-sumi shadow-lift">
+                        <div className="rounded-b-3xl border-b border-white/10 bg-brand-blue-deep shadow-lift">
                             <div className="mx-auto flex max-w-md flex-col gap-1 px-4 py-4">
                                 {menuItems.map((item) => (
                                     <button

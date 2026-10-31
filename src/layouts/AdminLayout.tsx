@@ -19,7 +19,7 @@ export default function AdminLayout() {
 
             <a
                 href="#contenido-admin"
-                className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-brand-sumi focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-brand-washi"
+                className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-brand-blue-deep focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-brand-washi"
             >
                 Saltar al contenido
             </a>

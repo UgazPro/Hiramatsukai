@@ -15,7 +15,7 @@ type MasterTone = {
 
 const tones: Record<string, MasterTone> = {
     red: {
-        hero: "from-brand-vermilion/35 via-brand-sumi/85 to-brand-sumi",
+        hero: "from-brand-vermilion/35 via-brand-blue-deep/85 to-brand-blue-deep",
         badge: "bg-brand-vermilion/15 text-brand-vermilion ring-1 ring-brand-vermilion/25",
         text: "text-brand-vermilion",
         border: "border-brand-vermilion/25",
@@ -23,7 +23,7 @@ const tones: Record<string, MasterTone> = {
         icon: "bg-brand-vermilion/10",
     },
     blue: {
-        hero: "from-brand-indigo/45 via-brand-sumi/85 to-brand-sumi",
+        hero: "from-brand-indigo/45 via-brand-blue-deep/85 to-brand-blue-deep",
         badge: "bg-brand-indigo/15 text-brand-indigo ring-1 ring-brand-indigo/25",
         text: "text-brand-indigo",
         border: "border-brand-indigo/25",
@@ -31,7 +31,7 @@ const tones: Record<string, MasterTone> = {
         icon: "bg-brand-indigo/10",
     },
     yellow: {
-        hero: "from-brand-gold/30 via-brand-sumi/85 to-brand-sumi",
+        hero: "from-brand-gold/30 via-brand-blue-deep/85 to-brand-blue-deep",
         badge: "bg-brand-gold/15 text-brand-gold-deep ring-1 ring-brand-gold/30",
         text: "text-brand-gold-deep",
         border: "border-brand-gold/30",
@@ -48,7 +48,7 @@ export default function MasterInfo() {
         return (
             <div className="flex min-h-[70vh] items-center justify-center py-20">
                 <div className="glass mx-4 max-w-md rounded-3xl px-8 py-12 text-center">
-                    <h1 className="font-serif text-3xl font-semibold text-brand-ink">
+                    <h1 className="font-serif text-3xl font-semibold text-heading">
                         Maestro no encontrado
                     </h1>
                     <p className="mt-3 text-brand-muted">No se encontró información para este maestro.</p>
@@ -160,7 +160,7 @@ export default function MasterInfo() {
                                         <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${tone.icon}`}>
                                             <Award className={`h-5 w-5 ${tone.text}`} aria-hidden="true" />
                                         </div>
-                                        <h2 className="font-serif text-2xl font-semibold text-brand-ink">
+                                        <h2 className="font-serif text-2xl font-semibold text-heading">
                                             {section.title}
                                         </h2>
                                     </div>
@@ -177,10 +177,10 @@ export default function MasterInfo() {
                     </div>
 
                     <Reveal className="mt-8" y={16}>
-                        <div className="relative overflow-hidden rounded-3xl bg-brand-sumi p-7 text-brand-washi sm:p-9">
+                        <div className="relative overflow-hidden rounded-3xl bg-brand-blue-deep p-7 text-brand-washi sm:p-9">
                             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood-dark opacity-30" />
                             <div className="relative">
-                                <span className="section-eyebrow text-brand-gold">Legado</span>
+                                <span className="section-eyebrow text-brand-copper-light">Legado</span>
                                 <h3 className="mt-3 font-serif text-2xl font-semibold text-white">
                                     Una herencia viva
                                 </h3>

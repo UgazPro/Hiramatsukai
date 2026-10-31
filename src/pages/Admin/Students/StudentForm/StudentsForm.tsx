@@ -248,7 +248,7 @@ export default function StudentsForm() {
                 <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 px-4 py-4 sm:px-6">
                     <div className="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-between items-center">
                         <div className="md:order-1 order-2">
-                            <h2 className="text-xl font-bold text-foreground">
+                            <h2 className="text-xl font-bold text-heading">
                                 {mode === "create" ? "Nuevo Estudiante" : "Editar Estudiante"}
                             </h2>
                             <p className="text-sm text-muted-foreground mt-0.5">
@@ -338,7 +338,7 @@ export default function StudentsForm() {
                                 <Button
                                     type="submit"
                                     disabled={isBusy}
-                                    className="h-11 w-full cursor-pointer bg-brand-vermilion hover:bg-brand-vermilion-dark disabled:cursor-not-allowed disabled:opacity-50 sm:h-9 sm:w-auto"
+                                    className="h-11 w-full cursor-pointer bg-brand-blue hover:bg-brand-blue-dark disabled:cursor-not-allowed disabled:opacity-50 sm:h-9 sm:w-auto"
                                 >
                                     {isSubmitting
                                         ? (mode === "create" ? "Guardando..." : "Actualizando...")

@@ -71,7 +71,7 @@ export default function ActivityFilter() {
             <PopoverContent className="w-[calc(100vw-2rem)] border-border p-0 shadow-xl sm:w-78" align="end">
                 <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4">
                     <div className="flex items-center justify-between gap-2">
-                        <h3 className="flex items-center gap-2 font-semibold text-foreground">
+                        <h3 className="flex items-center gap-2 font-semibold text-heading">
                             <Filter className="h-4 w-4 text-brand-gold-deep" />
                             Filtrar Actividades
                         </h3>
@@ -102,7 +102,7 @@ export default function ActivityFilter() {
                                     {date?.from ? (
                                         date.to ? (
                                             <>
-                                                {format(date.from, "dd/MM/yy")} -{" "}
+                                                {format(date.from, "dd/MM/yy")} -
                                                 {format(date.to, "dd/MM/yy")}
                                             </>
                                         ) : (

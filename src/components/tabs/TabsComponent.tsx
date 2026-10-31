@@ -35,7 +35,7 @@ export default function TabsComponent<T extends string>({
             aria-pressed={isActive}
             className={`min-h-11 shrink-0 rounded-lg px-3 text-xs transition-all duration-300 sm:flex-1 sm:px-4 sm:text-sm ${
               isActive
-                ? "bg-brand-wood-dark text-brand-washi shadow-md hover:bg-brand-wood-deep"
+                ? "bg-brand-blue text-white shadow-md hover:bg-brand-blue-dark"
                 : "text-foreground hover:bg-accent"
             }`}
           >

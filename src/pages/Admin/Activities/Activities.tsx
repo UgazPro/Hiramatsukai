@@ -74,7 +74,7 @@ export default function Activities() {
               {/* Header */}
               <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
                 <div className="min-w-0">
-                  <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Actividades</h1>
+                  <h1 className="text-2xl font-bold text-heading sm:text-3xl">Actividades</h1>
                   <p className="mt-2 text-muted-foreground">
                     Calendario de actividades del dojo y la organización
                   </p>
@@ -96,7 +96,7 @@ export default function Activities() {
 
                   {canModify && (
                     <Button
-                      variant="wood"
+                      variant="default"
                       onClick={() => startCreate()}
                       className="h-11 w-full sm:h-10 sm:w-auto"
                     >

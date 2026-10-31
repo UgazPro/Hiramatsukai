@@ -42,7 +42,7 @@ export default function DojoCardView({ dojos, getParentName, canModify = true }:
                             <div className="bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4 border-b border-border">
                                 <div className="flex items-start justify-between gap-2">
                                     <div className="min-w-0 flex-1">
-                                        <h3 className="font-bold text-sm text-foreground truncate group-hover:text-brand-gold-deep transition-colors">
+                                        <h3 className="font-bold text-sm text-heading truncate group-hover:text-heading-accent transition-colors">
                                             {dojo.dojo}
                                         </h3>
                                         <p className="text-xs text-muted-foreground mt-0.5">

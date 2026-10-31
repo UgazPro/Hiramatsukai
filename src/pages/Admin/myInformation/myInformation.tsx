@@ -233,7 +233,7 @@ export default function MyInformation() {
           <CardContent className="relative pt-16 pb-4">
             <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
               <div className="relative group">
-                <div className="h-32 w-32 rounded-full border-4 border-white bg-brand-gold shadow-xl overflow-hidden flex items-center justify-center">
+                <div className="h-32 w-32 rounded-full border-4 border-white bg-brand-blue/15 shadow-xl overflow-hidden flex items-center justify-center">
                   {me.profileImg ? (
                     <img
                       src={me.profileImg}
@@ -246,7 +246,7 @@ export default function MyInformation() {
                     </span>
                   )}
                 </div>
-                <label className="absolute right-1 bottom-1 flex size-10 cursor-pointer items-center justify-center rounded-full bg-brand-gold text-white transition-all duration-300 hover:scale-110 hover:bg-brand-gold-deep">
+                <label className="absolute right-1 bottom-1 flex size-10 cursor-pointer items-center justify-center rounded-full bg-brand-blue text-white transition-all duration-300 hover:scale-110 hover:bg-brand-blue-dark">
                   <Camera className="h-4 w-4" />
                   <input type="file" className="hidden" accept="image/*" onChange={handleAvatarChange} />
                 </label>
@@ -254,7 +254,7 @@ export default function MyInformation() {
             </div>
 
             <div className="text-center mt-2 space-y-3">
-              <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">
+              <h2 className="text-xl font-bold break-words text-heading sm:text-2xl">
                 {me.name} {me.lastName}
               </h2>
               <p className="text-muted-foreground text-sm sm:text-base">@{me.username}</p>
@@ -326,7 +326,7 @@ export default function MyInformation() {
                     <>
                       <Button
                         size="sm"
-                        className="bg-brand-gold hover:bg-brand-gold-deep"
+                        className="bg-brand-blue hover:bg-brand-blue-dark text-white"
                         onClick={saveAll}
                         disabled={updateProfile.isPending}
                       >

@@ -59,7 +59,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                     </div>
                                 </div>
                             </div>
-                            <h3 className="mt-4 text-lg font-bold break-words text-foreground sm:text-xl">{examen.name}</h3>
+                            <h3 className="mt-4 text-lg font-bold break-words text-heading sm:text-xl">{examen.name}</h3>
                         </div>
 
                         <div className="flex flex-col gap-4 p-5 sm:p-6">
@@ -91,7 +91,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                 {!isStudent && (
                                     <Button
                                         disabled={!isNextExam}
-                                        variant={isNextExam ? "wood" : "outline"}
+                                        variant={isNextExam ? "default" : "outline"}
                                         className="h-11 flex-1"
                                         onClick={() => {
                                             if (!isNextExam) return;

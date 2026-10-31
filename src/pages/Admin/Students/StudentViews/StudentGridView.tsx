@@ -94,7 +94,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                     <PopoverContent className="w-[calc(100vw-2rem)] sm:w-80 p-0 border-border shadow-xl" align="end">
                         <div className="p-4 border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10">
                             <div className="flex justify-between items-center">
-                                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                                <h3 className="font-semibold text-heading flex items-center gap-2">
                                     <SlidersHorizontal className="h-4 w-4 text-brand-gold-deep" />
                                     Filtros y orden
                                 </h3>
@@ -185,7 +185,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
 
                             <Button
                                 onClick={handleApply}
-                                className="h-11 w-full bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep hover:text-white sm:h-9 sm:w-auto"
+                                className="h-11 w-full bg-brand-blue text-white hover:bg-brand-blue-dark sm:h-9 sm:w-auto"
                             >
                                 Aplicar
                             </Button>
@@ -220,7 +220,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                             </div>
                                         </div>
                                         <div className="min-w-0">
-                                            <h3 className="font-bold text-sm text-foreground truncate group-hover:text-brand-gold-deep transition-colors">
+                                            <h3 className="font-bold text-sm text-heading truncate group-hover:text-heading-accent transition-colors">
                                                 {student.name} {student.lastName}
                                             </h3>
                                             <p className="text-xs text-muted-foreground truncate">@{student.username}</p>

@@ -115,7 +115,7 @@ export default function ActivityForm() {
                 <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 px-4 py-4 sm:px-6">
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                         <div className="min-w-0">
-                            <h2 className="text-lg font-bold text-foreground sm:text-xl">
+                            <h2 className="text-lg font-bold text-heading sm:text-xl">
                                 {mode === "create" ? "Nueva Actividad" : "Editar Actividad"}
                             </h2>
                             <p className="mt-0.5 text-sm text-muted-foreground">
@@ -167,7 +167,7 @@ export default function ActivityForm() {
                                 </Button>
                                 <Button
                                     type="submit"
-                                    className="h-11 w-full cursor-pointer bg-brand-vermilion hover:bg-brand-vermilion-dark sm:h-9 sm:w-auto"
+                                    className="h-11 w-full cursor-pointer bg-brand-blue hover:bg-brand-blue-dark sm:h-9 sm:w-auto"
                                 >
                                     {mode === "create" ? "Guardar Actividad" : "Actualizar Actividad"}
                                 </Button>

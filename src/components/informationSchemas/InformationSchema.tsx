@@ -38,7 +38,7 @@ export default function InformationSchema({ img, dojo, address }: InformationSch
             </div>
 
             <div className="space-y-2">
-                <h3 className="font-serif text-lg font-semibold text-brand-ink">{dojo}</h3>
+                <h3 className="font-serif text-lg font-semibold text-heading">{dojo}</h3>
                 <address className="flex items-start justify-center gap-1.5 text-xs not-italic leading-relaxed text-brand-muted">
                     <FaLocationDot className="mt-0.5 shrink-0 text-brand-vermilion" aria-hidden="true" />
                     <span>{address}</span>

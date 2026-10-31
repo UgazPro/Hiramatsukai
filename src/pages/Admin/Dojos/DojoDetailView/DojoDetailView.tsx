@@ -84,7 +84,7 @@ export default function DojoDetailView({ dojos }: DojoDetailViewProps) {
             }}
             subtitle={
                 <div className="flex flex-wrap items-center gap-2 mt-2">
-                    <Badge className="bg-gray-900 text-white border-gray-900">{selectedDojo.code}</Badge>
+                    <Badge className="border-brand-blue bg-brand-blue text-white">{selectedDojo.code}</Badge>
                     {parentDojo && (
                         <Badge className="border-brand-indigo/20 bg-brand-indigo/10 text-brand-indigo">
                             Hijo de: {parentDojo.dojo}

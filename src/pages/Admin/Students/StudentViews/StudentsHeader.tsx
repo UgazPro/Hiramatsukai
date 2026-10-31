@@ -42,7 +42,7 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
         <div className="mb-4 flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
 
             <div className="min-w-0">
-                <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Alumnos</h2>
+                <h2 className="text-2xl font-bold text-heading sm:text-3xl">Alumnos</h2>
                 <p className="mt-2 text-muted-foreground">
                     Gestiona todos los alumnos e instructores del dojo
                 </p>
@@ -98,7 +98,7 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
                 </div>
 
                 <Button
-                    variant="wood"
+                    variant="default"
                     onClick={startCreate}
                     className="h-11 w-full sm:h-10 sm:w-auto"
                 >

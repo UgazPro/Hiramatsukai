@@ -253,7 +253,7 @@ const disciplineTones: Record<string, {
     iconText: "text-brand-vermilion",
     title: "text-brand-vermilion",
     badge: "bg-brand-vermilion/10 text-brand-vermilion",
-    button: "bg-brand-vermilion hover:bg-brand-vermilion-dark text-white",
+    button: "bg-brand-blue hover:bg-brand-blue-dark text-white",
   },
   yellow: {
     border: "border-brand-gold/50",
@@ -271,7 +271,7 @@ const disciplineTones: Record<string, {
     iconText: "text-brand-indigo",
     title: "text-brand-indigo",
     badge: "bg-brand-indigo/10 text-brand-indigo",
-    button: "bg-brand-indigo hover:bg-brand-sumi text-white",
+    button: "bg-brand-indigo hover:bg-brand-blue-deep text-white",
   },
 };
 
@@ -382,7 +382,7 @@ export default function DojoPage() {
 
     if (social === "twitter" || social === "x") {
       return {
-        cardClass: "bg-brand-sumi/90 border-brand-chestnut/40 hover:bg-brand-sumi text-white",
+        cardClass: "bg-brand-blue-deep/90 border-brand-chestnut/40 hover:bg-brand-blue-deep text-white",
         Icon: Twitter,
       };
     }
@@ -492,11 +492,11 @@ export default function DojoPage() {
       {dojo && (
         <>
           {/* Hero Section */}
-          <div className="relative overflow-hidden bg-brand-sumi text-white">
+          <div className="relative overflow-hidden bg-brand-blue-deep text-white">
             <div className="absolute inset-0 opacity-30 bg-cover bg-center">
               <img src={getBannerDojo(dojo)} alt="Banner del Dojo" className="h-full w-full object-cover" />
             </div>
-            <div aria-hidden="true" className="absolute inset-0 bg-linear-to-b from-brand-sumi/80 via-brand-sumi/70 to-brand-sumi" />
+            <div aria-hidden="true" className="absolute inset-0 bg-linear-to-b from-brand-blue-deep/80 via-brand-blue-deep/70 to-brand-blue-deep" />
             <div aria-hidden="true" className="absolute inset-0 bg-wood-dark opacity-30" />
 
             <div className="container relative mx-auto px-4 py-16 md:py-24">
@@ -570,7 +570,7 @@ export default function DojoPage() {
                       <div className="text-center">
                         <div>
                           <span className="section-eyebrow text-brand-gold-deep">Nuestra esencia</span>
-                          <h2 className="mt-4 font-serif text-2xl font-semibold text-brand-ink sm:text-3xl">
+                          <h2 className="mt-4 font-serif text-2xl font-semibold text-heading sm:text-3xl">
                             Nuestra Historia y Filosofía
                           </h2>
                           <p className="text-measure mx-auto mt-5 leading-relaxed text-brand-muted">
@@ -583,11 +583,11 @@ export default function DojoPage() {
                       </div>
                     </section>
 
-                    <Separator className="bg-brand-ink/10" />
+                    <Separator className="bg-brand-wood/10" />
 
                     {/* Valores del Dojo */}
                     <section>
-                      <h2 className="text-center font-serif text-2xl font-semibold text-brand-ink sm:text-3xl">
+                      <h2 className="text-center font-serif text-2xl font-semibold text-heading sm:text-3xl">
                         Nuestros Valores Fundamentales
                       </h2>
 
@@ -596,10 +596,10 @@ export default function DojoPage() {
                           const Icon = value.icon;
                           return (
                             <div key={value.title} className="glass group rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-                              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-sumi text-brand-gold transition-colors duration-300 group-hover:bg-brand-vermilion group-hover:text-white">
+                              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-blue-deep text-brand-gold transition-colors duration-300 group-hover:bg-brand-vermilion group-hover:text-white">
                                 <Icon className="h-6 w-6" aria-hidden="true" />
                               </div>
-                              <h3 className="font-serif font-semibold text-brand-ink">{value.title}</h3>
+                              <h3 className="font-serif font-semibold text-heading">{value.title}</h3>
                               <p className="mt-2 text-sm leading-relaxed text-brand-muted">{value.description}</p>
                             </div>
                           );
@@ -611,7 +611,7 @@ export default function DojoPage() {
 
                     {/* Principios */}
                     {/* <section>
-                      <h2 className="text-2xl font-bold text-center text-foreground mb-8">
+                      <h2 className="text-2xl font-bold text-center text-heading mb-8">
                         Principios del Dojo
                       </h2>
 
@@ -653,7 +653,7 @@ export default function DojoPage() {
                                 <Icon className={`h-6 w-6 ${isActive ? tone.iconText : "text-brand-muted"}`} aria-hidden="true" />
                               </div>
                               <div className="text-center">
-                                <h3 className={`font-serif font-semibold ${isActive ? tone.title : "text-brand-ink"}`}>
+                                <h3 className={`font-serif font-semibold ${isActive ? tone.title : "text-heading"}`}>
                                   {discipline.name}
                                 </h3>
                                 <p className="text-xs text-brand-muted">{discipline.style}</p>
@@ -675,7 +675,7 @@ export default function DojoPage() {
                                   <currentDiscipline.icon className={`h-8 w-8 ${(disciplineTones[currentDiscipline.color] ?? disciplineTones.red).iconText}`} aria-hidden="true" />
                                 </div>
                                 <div>
-                                  <h2 className="font-serif text-2xl font-semibold text-brand-ink">
+                                  <h2 className="font-serif text-2xl font-semibold text-heading">
                                     {currentDiscipline.name}
                                   </h2>
                                   <p className="text-brand-muted">{currentDiscipline.style}</p>
@@ -687,7 +687,7 @@ export default function DojoPage() {
                               </p>
 
                               <div className="mb-6">
-                                <h3 className="mb-3 font-serif font-semibold text-brand-ink">Características Principales</h3>
+                                <h3 className="mb-3 font-serif font-semibold text-heading">Características Principales</h3>
                                 <div className="flex flex-wrap gap-2">
                                   {currentDiscipline.features.map((feature) => (
                                     <Badge
@@ -704,10 +704,10 @@ export default function DojoPage() {
 
                             <div>
                               <div className="rounded-2xl border border-brand-ink/8 bg-brand-washi-deep/70 p-6">
-                                <h3 className="mb-4 font-serif font-semibold text-brand-ink">Niveles y Horarios</h3>
+                                <h3 className="mb-4 font-serif font-semibold text-heading">Niveles y Horarios</h3>
 
                                 <div className="mb-6">
-                                  <h4 className="mb-2 text-sm font-medium text-brand-ink">Niveles Disponibles:</h4>
+                                  <h4 className="mb-2 text-sm font-medium text-heading">Niveles Disponibles:</h4>
                                   <ul className="space-y-2">
                                     {currentDiscipline.levels.map((level) => (
                                       <li key={level} className="flex items-center gap-2 text-sm text-brand-muted">
@@ -719,7 +719,7 @@ export default function DojoPage() {
                                 </div>
 
                                 <div>
-                                  <h4 className="mb-2 text-sm font-medium text-brand-ink">Horarios de Clase:</h4>
+                                  <h4 className="mb-2 text-sm font-medium text-heading">Horarios de Clase:</h4>
                                   <ul className="space-y-3">
                                     {currentDiscipline.schedule.map((item) => (
                                       <li key={`${item.day}-${item.time}`} className="rounded-xl border border-brand-ink/8 bg-card/70 p-3">
@@ -745,7 +745,7 @@ export default function DojoPage() {
 
                     {/* Alumnos Avanzados */}
                     <section>
-                      <h2 className="text-center font-serif text-2xl font-semibold text-brand-ink sm:text-3xl">
+                      <h2 className="text-center font-serif text-2xl font-semibold text-heading sm:text-3xl">
                         Alumnos Destacados
                       </h2>
 
@@ -761,12 +761,12 @@ export default function DojoPage() {
                                     className="h-full w-full rounded-full object-cover"
                                   />
                                 </div>
-                                <h3 className="font-serif text-lg font-semibold text-brand-ink">{student.name}</h3>
+                                <h3 className="font-serif text-lg font-semibold text-heading">{student.name}</h3>
                                 <Badge className="mt-2 border-none bg-brand-vermilion/10 text-brand-vermilion">{student.rank}</Badge>
                                 <p className="mt-2 text-sm text-brand-muted">{student.years} años en el dojo</p>
 
                                 <div className="mt-4">
-                                  <h4 className="mb-2 font-medium text-brand-ink">Logros:</h4>
+                                  <h4 className="mb-2 font-medium text-heading">Logros:</h4>
                                   <ul className="space-y-1">
                                     {student.achievements.map((achievement) => (
                                       <li key={achievement} className="flex items-center justify-center gap-1.5 text-sm text-brand-muted">
@@ -804,28 +804,28 @@ export default function DojoPage() {
                                   </div>
                                 )}
                               </div>
-                              <h3 className="font-serif text-xl font-semibold text-brand-ink">{master.userRanks[0].rank.rank_name} {master.name}</h3>
+                              <h3 className="font-serif text-xl font-semibold text-heading">{master.userRanks[0].rank.rank_name} {master.name}</h3>
                               <p className="mt-1 font-medium text-brand-vermilion">{master.roles?.map((r) => r.rol).join(", ")}</p>
                             </div>
 
                             <div className="space-y-4">
                               {/*   <div>
-                            <h4 className="font-bold text-foreground mb-2">Especialidad</h4>
+                            <h4 className="font-bold text-heading mb-2">Especialidad</h4>
                             <p className="text-foreground">{master.specialty}</p>
                           </div>
 
                           <div>
-                            <h4 className="font-bold text-foreground mb-2">Experiencia</h4>
+                            <h4 className="font-bold text-heading mb-2">Experiencia</h4>
                             <p className="text-foreground">{master.experience}</p>
                           </div>
 
                           <div>
-                            <h4 className="font-bold text-foreground mb-2">Biografía</h4>
+                            <h4 className="font-bold text-heading mb-2">Biografía</h4>
                             <p className="text-foreground text-sm">{master.bio}</p>
                           </div>
 
                           <div>
-                            <h4 className="font-bold text-foreground mb-2">Reconocimientos</h4>
+                            <h4 className="font-bold text-heading mb-2">Reconocimientos</h4>
                             <ul className="space-y-1">
                               {master.awards.map((award, idx) => (
                                 <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
@@ -846,7 +846,7 @@ export default function DojoPage() {
                   <TabsContent value="gallery" className="space-y-12 mt-8">
                     {/* Carousel Principal */}
                     <section>
-                      <h2 className="text-2xl font-bold text-foreground mb-6">
+                      <h2 className="text-2xl font-bold text-heading mb-6">
                         Galería de Entrenamiento
                       </h2>
                       <CarouselComponent />
@@ -854,23 +854,23 @@ export default function DojoPage() {
 
                     {/* Videos */}
                     <section>
-                      <h2 className="mb-6 font-serif text-2xl font-semibold text-brand-ink">
+                      <h2 className="mb-6 font-serif text-2xl font-semibold text-heading">
                         Videos del Dojo
                       </h2>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {dojoData.videos.map((video) => (
                           <Card key={video.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                            <div className="relative h-48 bg-linear-to-br from-brand-sumi to-black">
+                            <div className="relative h-48 bg-linear-to-br from-brand-blue-deep to-brand-blue-deep">
                               <div className="absolute inset-0 flex items-center justify-center">
                                 <Play className="h-12 w-12 text-white/70" />
                               </div>
-                              <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                              <div className="absolute bottom-2 right-2 bg-brand-blue-deep/80 text-white text-xs px-2 py-1 rounded">
                                 {video.duration}
                               </div>
                             </div>
                             <CardContent className="p-4">
-                              <h3 className="font-bold text-foreground mb-2">{video.title}</h3>
+                              <h3 className="font-bold text-heading mb-2">{video.title}</h3>
                               <Button variant="ghost" className="w-full text-brand-vermilion hover:text-brand-vermilion-dark">
                                 <Play className="h-4 w-4 mr-2" />
                                 Ver Video
@@ -883,7 +883,7 @@ export default function DojoPage() {
 
                     {/* Galería de Fotos */}
                     <section>
-                      <h2 className="text-2xl font-bold text-foreground mb-6">
+                      <h2 className="text-2xl font-bold text-heading mb-6">
                         Más Fotos
                       </h2>
 
@@ -939,7 +939,7 @@ export default function DojoPage() {
                       {/* Información de Contacto */}
                       <div>
                         <span className="section-eyebrow text-brand-gold-deep">Estamos cerca</span>
-                        <h2 className="mt-3 font-serif text-2xl font-semibold text-brand-ink sm:text-3xl">
+                        <h2 className="mt-3 font-serif text-2xl font-semibold text-heading sm:text-3xl">
                           Contacta con Nosotros
                         </h2>
 
@@ -949,7 +949,7 @@ export default function DojoPage() {
                               <MapPin className="h-6 w-6 text-brand-vermilion" aria-hidden="true" />
                             </div>
                             <div>
-                              <h3 className="font-serif font-semibold text-brand-ink">Dirección</h3>
+                              <h3 className="font-serif font-semibold text-heading">Dirección</h3>
                               <p className="mt-1 text-sm text-brand-muted lg:text-base">{dojo.address}</p>
                             </div>
                           </div>
@@ -966,7 +966,7 @@ export default function DojoPage() {
                                 <MdWhatsapp className="h-6 w-6 text-green-700" aria-hidden="true" />
                               </div>
                               <div>
-                                <h3 className="font-serif font-semibold text-brand-ink">Teléfonos</h3>
+                                <h3 className="font-serif font-semibold text-heading">Teléfonos</h3>
                                 <p className="mt-1 text-sm text-brand-muted lg:text-base">{formatPhoneNumber(dojo.phone)}</p>
                               </div>
                             </div>
@@ -977,7 +977,7 @@ export default function DojoPage() {
                               <Mail className="h-6 w-6 text-brand-indigo" aria-hidden="true" />
                             </div>
                             <div>
-                              <h3 className="font-serif font-semibold text-brand-ink">Email</h3>
+                              <h3 className="font-serif font-semibold text-heading">Email</h3>
                               <p className="mt-1 text-sm text-brand-muted lg:text-base">{dojo.email}</p>
                             </div>
                           </div>
@@ -987,10 +987,10 @@ export default function DojoPage() {
                               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-gold/15">
                                 <Clock className="h-6 w-6 text-brand-gold-deep" aria-hidden="true" />
                               </div>
-                              <h3 className="font-serif font-semibold text-brand-ink lg:hidden">Horarios</h3>
+                              <h3 className="font-serif font-semibold text-heading lg:hidden">Horarios</h3>
                             </div>
                             <div>
-                              <h3 className="hidden font-serif font-semibold text-brand-ink lg:block">Horarios</h3>
+                              <h3 className="hidden font-serif font-semibold text-heading lg:block">Horarios</h3>
                               {setDojoSchedule(dojo.Schedules)}
                             </div>
                           </div>
@@ -1001,7 +1001,7 @@ export default function DojoPage() {
                       <div>
                         <div className="glass rounded-3xl">
                           <div className="px-4 py-6 sm:px-6">
-                            <h3 className="mb-4 text-center font-serif text-xl font-semibold text-brand-ink lg:text-left">
+                            <h3 className="mb-4 text-center font-serif text-xl font-semibold text-heading lg:text-left">
                               Solicitar Información
                             </h3>
 
@@ -1117,7 +1117,7 @@ export default function DojoPage() {
                     </div>
 
                     {/* Redes Sociales */}
-                    <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-brand-sumi p-6 text-brand-washi lg:p-8">
+                    <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-brand-blue-deep p-6 text-brand-washi lg:p-8">
                       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood-dark opacity-30" />
                       <h2 className="relative text-center font-serif text-2xl font-semibold text-white">
                         Síguenos en Redes Sociales
@@ -1155,7 +1155,7 @@ export default function DojoPage() {
                     {/* Mapa */}
                     <Card className="hidden">
                       <CardContent className="p-8">
-                        <h3 className="text-xl font-bold text-foreground mb-6">
+                        <h3 className="text-xl font-bold text-heading mb-6">
                           Ubicación del Dojo
                         </h3>
 
@@ -1163,7 +1163,7 @@ export default function DojoPage() {
                           <div className="text-center">
                             <MapPin className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                             <p className="text-muted-foreground">Mapa interactivo de ubicación</p>
-                            <Button className="mt-4 bg-brand-vermilion hover:bg-brand-vermilion-dark text-white">
+                            <Button className="mt-4 bg-brand-blue hover:bg-brand-blue-dark text-white">
                               <Globe className="h-4 w-4 mr-2" />
                               Abrir en Google Maps
                             </Button>
