@@ -28,13 +28,13 @@ function DojoChildrenTree({ dojo, childrenByParent, depth = 0 }: {
     const children = childrenByParent.get(dojo.id) ?? [];
 
     return (
-        <div className={depth === 0 ? "space-y-2" : "ml-5 mt-2 space-y-2 border-l-2 border-yellow-200 pl-3"}>
+        <div className={depth === 0 ? "space-y-2" : "ml-3 mt-2 flex flex-col gap-2 border-l-2 border-brand-gold/30 pl-3 sm:ml-5"}>
             {children.map((child) => (
                 <div key={child.id}>
-                    <div className="flex items-center gap-2 p-2 rounded-lg border bg-gray-50">
-                        <Building2 className="h-4 w-4 text-yellow-600 shrink-0" />
-                        <p className="font-medium text-sm">{child.dojo}</p>
-                        <Badge variant="outline" className="ml-auto text-xs">{child.code}</Badge>
+                    <div className="flex min-w-0 items-center gap-2 rounded-lg border border-border bg-muted/40 p-2">
+                        <Building2 className="h-4 w-4 shrink-0 text-brand-gold-deep" />
+                        <p className="min-w-0 truncate text-sm font-medium">{child.dojo}</p>
+                        <Badge variant="outline" className="ml-auto shrink-0 text-xs">{child.code}</Badge>
                     </div>
                     <DojoChildrenTree
                         dojo={child}
@@ -93,11 +93,11 @@ export default function DojoDetailView({ dojos }: DojoDetailViewProps) {
                 </div>
             }
             avatar={
-                <div className="h-12 w-12 md:h-16 md:w-16 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center shrink-0 border border-gray-200">
+                <div className="h-12 w-12 md:h-16 md:w-16 rounded-full overflow-hidden bg-muted flex items-center justify-center shrink-0 border border-border">
                     {selectedDojo.logo ? (
                         <img src={getDojoLogo(selectedDojo.logo)} alt={selectedDojo.dojo} className="w-full h-full object-cover" />
                     ) : (
-                        <Building2 className="h-5 w-5 md:h-7 md:w-7 text-gray-400" />
+                        <Building2 className="h-5 w-5 md:h-7 md:w-7 text-muted-foreground" />
                     )}
                 </div>
             }
@@ -121,7 +121,7 @@ export default function DojoDetailView({ dojos }: DojoDetailViewProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                <DetailSection icon={<MapPin className="h-5 w-5 text-yellow-600" />} title="Información del dojo">
+                <DetailSection icon={<MapPin className="h-5 w-5 text-brand-gold-deep" />} title="Información del dojo">
                     <div className="space-y-4">
                         <InfoItem
                             label="Dirección"
@@ -170,10 +170,10 @@ export default function DojoDetailView({ dojos }: DojoDetailViewProps) {
                 </DetailSection>
 
                 <div className="space-y-6">
-                    <DetailSection icon={<Swords className="h-5 w-5 text-yellow-600" />} title="Artes marciales">
+                    <DetailSection icon={<Swords className="h-5 w-5 text-brand-gold-deep" />} title="Artes marciales">
                         <div className="flex flex-wrap gap-2">
                             {selectedDojo.dojoMartialArts.length === 0 && (
-                                <p className="text-sm text-gray-500">No hay artes marciales asignadas</p>
+                                <p className="text-sm text-muted-foreground">No hay artes marciales asignadas</p>
                             )}
                             {selectedDojo.dojoMartialArts.map((ma) => (
                                 <FieldBadge key={ma.id} label={ma.martialArt} color="yellow" />
@@ -181,37 +181,37 @@ export default function DojoDetailView({ dojos }: DojoDetailViewProps) {
                         </div>
                     </DetailSection>
 
-                    <DetailSection icon={<User className="h-5 w-5 text-yellow-600" />} title="Líder / Instructor">
+                    <DetailSection icon={<User className="h-5 w-5 text-brand-gold-deep" />} title="Líder / Instructor">
                         {selectedDojo.leaderInstructor ? (
                             <div className="space-y-2">
-                                <div className="flex items-center gap-3 p-3 rounded-lg border bg-gray-50">
-                                    <div className="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0">
-                                        <User className="h-5 w-5 text-gray-500" />
+                                <div className="flex min-w-0 items-center gap-3 rounded-lg border border-border bg-muted/40 p-3">
+                                    <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
+                                        <User className="h-5 w-5 text-muted-foreground" />
                                     </div>
-                                    <div>
-                                        <p className="font-medium">
+                                    <div className="min-w-0">
+                                        <p className="font-medium break-words">
                                             {selectedDojo.leaderInstructor.name} {selectedDojo.leaderInstructor.lastName}
                                         </p>
-                                        <p className="text-xs text-gray-500">
+                                        <p className="text-xs break-words text-muted-foreground">
                                             {selectedDojo.leaderInstructor.roles.map(({ rol }) => rol).join(", ")}
                                         </p>
                                     </div>
                                 </div>
                             </div>
                         ) : (
-                            <p className="text-sm text-gray-500">No hay líder/instructor asignado</p>
+                            <p className="text-sm text-muted-foreground">No hay líder/instructor asignado</p>
                         )}
                     </DetailSection>
                 </div>
 
             </div>
 
-            <DetailSection icon={<Building2 className="h-5 w-5 text-yellow-600" />} title="Jerarquía de dojos">
+            <DetailSection icon={<Building2 className="h-5 w-5 text-brand-gold-deep" />} title="Jerarquía de dojos">
                 <div className="space-y-3">
-                    <div className="p-3 rounded-lg border bg-gray-50">
+                    <div className="p-3 rounded-lg border bg-muted/40">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                             <div>
-                                <p className="text-xs text-gray-500 mb-1">Dojo padre</p>
+                                <p className="text-xs text-muted-foreground mb-1">Dojo padre</p>
                                 <p className="font-medium">
                                     {parentDojo ? parentDojo.dojo : "Sin dojo padre (raíz)"}
                                 </p>
@@ -227,9 +227,9 @@ export default function DojoDetailView({ dojos }: DojoDetailViewProps) {
                     </div>
 
                     <div>
-                        <p className="text-xs text-gray-500 mb-2">Dojos hijos</p>
+                        <p className="text-xs text-muted-foreground mb-2">Dojos hijos</p>
                         {selectedDojo.childDojos.length === 0 ? (
-                            <p className="text-sm text-gray-500">Este dojo no tiene dojos hijos</p>
+                            <p className="text-sm text-muted-foreground">Este dojo no tiene dojos hijos</p>
                         ) : (
                             <DojoChildrenTree
                                 dojo={selectedDojo}
@@ -241,8 +241,8 @@ export default function DojoDetailView({ dojos }: DojoDetailViewProps) {
             </DetailSection>
 
             {info.description && (
-                <DetailSection icon={<Users className="h-5 w-5 text-yellow-600" />} title="Descripción">
-                    <p className="text-sm text-gray-700 leading-relaxed">{info.description}</p>
+                <DetailSection icon={<Users className="h-5 w-5 text-brand-gold-deep" />} title="Descripción">
+                    <p className="text-sm text-foreground leading-relaxed">{info.description}</p>
                 </DetailSection>
             )}
 

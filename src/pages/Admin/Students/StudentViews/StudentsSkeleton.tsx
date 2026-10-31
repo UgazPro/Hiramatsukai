@@ -5,9 +5,9 @@ import { useStudentsStore } from "@/stores/students.store";
 
 function StudentCardSkeleton() {
     return (
-        <Card className="border border-gray-300 overflow-hidden hover:shadow-lg transition-all duration-200 py-0">
+        <Card className="border border-border overflow-hidden hover:shadow-lg transition-all duration-200 py-0">
             <CardContent className="p-0">
-                <div className="bg-linear-to-r from-yellow-50 to-red-50 p-4 border-b border-gray-200">
+                <div className="bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4 border-b border-border">
                     <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-3 min-w-0 flex-1">
                             <Skeleton className="h-12 w-12 rounded-full flex-shrink-0" />
@@ -41,7 +41,7 @@ function StudentCardSkeleton() {
                             <Skeleton className="h-3 w-24" />
                         </div>
                     </div>
-                    <div className="pt-3 border-t border-gray-200 flex flex-col gap-2">
+                    <div className="pt-3 border-t border-border flex flex-col gap-2">
                         <div className="flex items-center gap-2">
                             <Skeleton className="h-7 w-7 rounded" />
                             <Skeleton className="h-3 w-2/3" />
@@ -53,7 +53,7 @@ function StudentCardSkeleton() {
                     </div>
                 </div>
 
-                <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+                <div className="px-4 py-3 border-t border-border bg-muted/40">
                     <div className="flex justify-between gap-2">
                         <Skeleton className="h-8 flex-1" />
                         <Skeleton className="h-8 flex-1" />

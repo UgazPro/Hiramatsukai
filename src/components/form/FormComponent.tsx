@@ -12,9 +12,9 @@ import { PhoneFieldComponent } from "./renderFormComponents/PhoneFieldComponent"
 import { sanitizeAlphanumeric, sanitizeLetters, IdentificationType } from "@/helpers/formatter";
 
 const inputClass =
-    "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg";
+    "rounded-lg border-input transition-all duration-200 focus:border-ring focus:ring-2 focus:ring-ring/40";
 const labelClass =
-    "text-sm font-medium text-[var(--blueColor)]";
+    "text-sm font-medium text-brand-indigo";
 
 interface GenericFormComponentProps<TFieldValues extends FieldValues> {
     fields: FormField[];
@@ -27,7 +27,7 @@ export function FormComponent<TFieldValues extends FieldValues>({ fields, form, 
 
     return (
 
-        <div className={`bg-white shadow-sm border border-gray-200 rounded-xl p-6 space-y-5 ${className ?? ""}`}>
+        <div className={`flex flex-col gap-5 rounded-xl border border-border bg-card p-4 shadow-sm sm:p-6 ${className ?? ""}`}>
 
             {fields.map((field) => {
                 const fieldError = form.formState.errors[field.name as keyof typeof form.formState.errors] as { message?: unknown } | undefined;
@@ -36,8 +36,9 @@ export function FormComponent<TFieldValues extends FieldValues>({ fields, form, 
                     case "number":
                         return (
                             <div key={field.name} className="space-y-1.5 relative">
-                                <Label className={labelClass}>{field.label}</Label>
+                                <Label className={labelClass} htmlFor={field.name}>{field.label}</Label>
                                 <Input
+                                    id={field.name}
                                     className={inputClass}
                                     type="number"
                                     {...form.register(field.name as Path<TFieldValues>, { valueAsNumber: true })}
@@ -57,8 +58,9 @@ export function FormComponent<TFieldValues extends FieldValues>({ fields, form, 
 
                         return (
                             <div key={field.name} className="space-y-1.5 relative">
-                                <Label className={labelClass}>{field.label}</Label>
+                                <Label className={labelClass} htmlFor={field.name}>{field.label}</Label>
                                 <Input
+                                    id={field.name}
                                     className={inputClass}
                                     type={field.inputType ?? "text"}
                                     {...registerResult}
@@ -131,8 +133,9 @@ export function FormComponent<TFieldValues extends FieldValues>({ fields, form, 
                     case "textarea":
                         return (
                             <div key={field.name} className="space-y-1.5 relative">
-                                <Label className={labelClass}>{field.label}</Label>
+                                <Label className={labelClass} htmlFor={field.name}>{field.label}</Label>
                                 <Textarea
+                                    id={field.name}
                                     className={inputClass}
                                     {...form.register(field.name as Path<TFieldValues>)}
                                 />
@@ -179,8 +182,9 @@ export function FormComponent<TFieldValues extends FieldValues>({ fields, form, 
                     case "time":
                         return (
                             <div key={field.name} className="space-y-1.5 relative">
-                                <Label className={labelClass}>{field.label}</Label>
+                                <Label className={labelClass} htmlFor={field.name}>{field.label}</Label>
                                 <Input
+                                    id={field.name}
                                     className={inputClass}
                                     type="time"
                                     {...form.register(field.name as Path<TFieldValues>)}

@@ -27,20 +27,20 @@ export default function ActivityCardView({ filteredActivities }: ActivityCardVie
             {filteredActivities.map((activity) => (
                 <Card
                     key={activity.id}
-                    className="border border-gray-300 bg-white hover:border-yellow-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
+                    className="border border-border bg-card hover:border-brand-gold hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
                     onClick={() => {
                         setSelectedActivity(activity);
                         setScreen("detail");
                     }}
                 >
                     <CardContent className="p-0">
-                        <div className="bg-linear-to-r from-yellow-50 to-red-50 p-4 border-b border-gray-200">
+                        <div className="bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4 border-b border-border">
                             <div className="flex items-start justify-between gap-2">
                                 <div className="min-w-0 flex-1">
-                                    <h3 className="font-bold text-sm text-gray-900 truncate group-hover:text-yellow-700 transition-colors">
+                                    <h3 className="font-bold text-sm text-foreground truncate group-hover:text-brand-gold-deep transition-colors">
                                         {activity.name}
                                     </h3>
-                                    <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                                         {activity.description}
                                     </p>
                                 </div>
@@ -52,25 +52,25 @@ export default function ActivityCardView({ filteredActivities }: ActivityCardVie
                         </div>
 
                         <div className="p-4 space-y-3">
-                            <div className="flex items-center gap-2 text-sm text-gray-700">
-                                <MapPin className="h-4 w-4 text-gray-500 shrink-0" />
+                            <div className="flex items-center gap-2 text-sm text-foreground">
+                                <MapPin className="h-4 w-4 text-muted-foreground shrink-0" />
                                 <span className="truncate">{activity.place}</span>
                             </div>
 
                             <div className="flex justify-between items-center">
-                                <div className="flex items-center gap-2 text-sm text-gray-700">
-                                    <CalendarDays className="h-4 w-4 text-gray-500 shrink-0" />
+                                <div className="flex items-center gap-2 text-sm text-foreground">
+                                    <CalendarDays className="h-4 w-4 text-muted-foreground shrink-0" />
                                     <span>{format(parseISO(activity.date.toString()), "dd/MM/yyyy")}</span>
                                 </div>
-                                <div className="flex items-center gap-2 text-sm text-gray-700">
-                                    <Clock className="h-4 w-4 text-gray-500 shrink-0" />
+                                <div className="flex items-center gap-2 text-sm text-foreground">
+                                    <Clock className="h-4 w-4 text-muted-foreground shrink-0" />
                                     <span>{format(parseISO(activity.date.toString()), "hh:mm aaa")}</span>
                                 </div>
                             </div>
                         </div>
 
                         {canModify && (
-                            <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+                            <div className="px-4 py-3 border-t border-border bg-muted/40">
                                 <div className="flex justify-between gap-2">
                                     <DeleteDialog
                                         preposition="la actividad"
@@ -81,7 +81,7 @@ export default function ActivityCardView({ filteredActivities }: ActivityCardVie
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="border-yellow-300 text-yellow-700 hover:bg-yellow-50 hover:border-yellow-400 flex-1 text-xs"
+                                        className="h-10 flex-1 border-brand-gold/40 text-xs text-brand-gold-deep hover:border-brand-gold hover:bg-brand-gold/10 sm:h-9"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             startEdit(activity);

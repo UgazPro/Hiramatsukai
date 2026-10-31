@@ -18,7 +18,7 @@ import { IExam } from "@/services/activities/activity.interface";
 
 const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
-        Blanco: "bg-gray-100 text-gray-800 border-gray-300",
+        Blanco: "bg-gray-100 text-gray-800 border-border",
         Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
         Naranja: "bg-orange-100 text-orange-800 border-orange-300",
         Verde: "bg-green-100 text-green-800 border-green-300",
@@ -27,7 +27,7 @@ const getBeltColor = (grado: string) => {
         Negro: "bg-gray-900 text-white border-gray-950",
         Rojo: "bg-red-800 text-white border-red-900",
     };
-    return colors[grado] || "bg-gray-100 text-gray-800 border-gray-300";
+    return colors[grado] || "bg-gray-100 text-gray-800 border-border";
 };
 
 export default function ExamDetail() {
@@ -40,8 +40,8 @@ export default function ExamDetail() {
     const pending = exams.filter((e: IExam) => e.status === "Pendiente");
 
     return (
-        <div className="min-h-full p-6 w-full max-w-4xl mx-auto my-6">
-            <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
+        <div className="mx-auto my-3 min-h-full w-full max-w-4xl p-3 sm:my-6 sm:p-6">
+            <div className="bg-card shadow-xl border border-border rounded-xl overflow-hidden">
                 {isLoading && (
                     <div className="flex items-center justify-center py-20">
                         <Loader message="Cargando resultados..." />
@@ -49,14 +49,14 @@ export default function ExamDetail() {
                 )}
 
                 {!isLoading && exams.length === 0 && (
-                    <div className="flex flex-col items-center justify-center py-20 text-gray-500">
-                        <GraduationCap className="h-16 w-16 mb-4 text-gray-300" />
+                    <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
+                        <GraduationCap className="h-16 w-16 mb-4 text-border" />
                         <p className="text-lg font-medium">
                             No hay resultados disponibles
                         </p>
                         <Button
                             variant="outline"
-                            className="mt-4 border-gray-300"
+                            className="mt-4 border-border"
                             onClick={closeExamDetail}
                         >
                             <ArrowLeft className="h-4 w-4 mr-2" />
@@ -67,29 +67,28 @@ export default function ExamDetail() {
 
                 {!isLoading && exams.length > 0 && (
                     <>
-                        <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 p-6">
+                        <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4 sm:p-6">
                             <Button
                                 variant="ghost"
-                                size="sm"
-                                className="mb-4 text-gray-600 hover:text-gray-900"
+                                className="mb-4 h-11 text-muted-foreground hover:text-foreground sm:h-9"
                                 onClick={closeExamDetail}
                             >
-                                <ArrowLeft className="h-4 w-4 mr-2" />
+                                <ArrowLeft data-icon="inline-start" />
                                 Volver al historial
                             </Button>
 
-                            <div className="flex items-center gap-4">
-                                <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5">
-                                    <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                                        <Award className="h-7 w-7 text-yellow-600" />
+                            <div className="flex min-w-0 items-start gap-3 sm:gap-4">
+                                <div className="h-14 w-14 shrink-0 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                                    <div className="flex h-full w-full items-center justify-center rounded-full bg-card">
+                                        <Award className="h-7 w-7 text-brand-gold-deep" />
                                     </div>
                                 </div>
-                                <div>
-                                    <h2 className="text-2xl font-bold text-gray-900">
+                                <div className="min-w-0">
+                                    <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">
                                         {activity?.name || "Examen"}
                                     </h2>
-                                    <p className="text-gray-600 text-sm mt-1 flex items-center gap-2">
-                                        <CalendarDays className="h-4 w-4" />
+                                    <p className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                                        <CalendarDays className="h-4 w-4 shrink-0" />
                                         {dateFormatterIntoLong(
                                             activity?.date ?? new Date(),
                                         )}
@@ -122,7 +121,7 @@ export default function ExamDetail() {
                                 {pending.length > 0 && (
                                     <Badge
                                         variant="outline"
-                                        className="bg-yellow-50 text-yellow-700 border-yellow-200 text-sm px-3 py-1"
+                                        className="bg-brand-gold/15 text-brand-gold-deep border-brand-gold/30 text-sm px-3 py-1"
                                     >
                                         {pending.length} pendientes
                                     </Badge>
@@ -131,8 +130,8 @@ export default function ExamDetail() {
                         </div>
 
                         {approved.length > 0 && (
-                            <div className="p-6 border-b border-gray-200">
-                                <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
+                            <div className="border-b border-border p-4 sm:p-6">
+                                <h3 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
                                     <CheckCircle className="h-5 w-5 text-green-600" />
                                     Aprobados ({approved.length})
                                 </h3>
@@ -144,7 +143,7 @@ export default function ExamDetail() {
                                         >
                                             <div className="flex items-center gap-3 mb-2">
                                                 <div className="h-10 w-10 rounded-full bg-linear-to-br from-green-400 to-green-600 p-0.5">
-                                                    <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
+                                                    <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
                                                         <span className="text-xs font-bold text-green-700">
                                                             {exam.user?.name?.charAt(
                                                                 0,
@@ -156,18 +155,18 @@ export default function ExamDetail() {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-semibold text-gray-900">
+                                                    <h4 className="min-w-0 font-semibold break-words text-foreground">
                                                         {exam.user?.name ?? ""}{" "}
                                                         {exam.user?.lastName ??
                                                             ""}
                                                     </h4>
-                                                    <span className="text-xs text-gray-500">
+                                                    <span className="text-xs text-muted-foreground">
                                                         {exam.ranks?.martialArt
                                                             ?.martialArt ?? ""}
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-2 text-sm ml-[52px]">
+                                            <div className="flex flex-wrap items-center gap-2 text-sm sm:ml-[52px]">
                                                 <Badge
                                                     className={getBeltColor(
                                                         exam.previousRank
@@ -177,7 +176,7 @@ export default function ExamDetail() {
                                                     {exam.previousRank
                                                         ?.belt ?? "?"}
                                                 </Badge>
-                                                <ChevronRight className="h-3 w-3 text-gray-400" />
+                                                <ChevronRight className="h-3 w-3 text-muted-foreground" />
                                                 <Badge
                                                     className={getBeltColor(
                                                         exam.ranks?.belt ?? "",
@@ -193,8 +192,8 @@ export default function ExamDetail() {
                         )}
 
                         {rejected.length > 0 && (
-                            <div className="p-6 border-b border-gray-200">
-                                <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
+                            <div className="border-b border-border p-4 sm:p-6">
+                                <h3 className="text-lg font-bold text-foreground flex items-center gap-2 mb-4">
                                     <XCircle className="h-5 w-5 text-red-600" />
                                     Reprobados ({rejected.length})
                                 </h3>
@@ -206,7 +205,7 @@ export default function ExamDetail() {
                                         >
                                             <div className="flex items-center gap-3 mb-2">
                                                 <div className="h-10 w-10 rounded-full bg-linear-to-br from-red-400 to-red-600 p-0.5">
-                                                    <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
+                                                    <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
                                                         <span className="text-xs font-bold text-red-700">
                                                             {exam.user?.name?.charAt(
                                                                 0,
@@ -218,18 +217,18 @@ export default function ExamDetail() {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-semibold text-gray-900">
+                                                    <h4 className="min-w-0 font-semibold break-words text-foreground">
                                                         {exam.user?.name ?? ""}{" "}
                                                         {exam.user?.lastName ??
                                                             ""}
                                                     </h4>
-                                                    <span className="text-xs text-gray-500">
+                                                    <span className="text-xs text-muted-foreground">
                                                         {exam.ranks?.martialArt
                                                             ?.martialArt ?? ""}
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center gap-2 text-sm ml-[52px]">
+                                            <div className="flex flex-wrap items-center gap-2 text-sm sm:ml-[52px]">
                                                 <Badge
                                                     className={getBeltColor(
                                                         exam.previousRank
@@ -239,7 +238,7 @@ export default function ExamDetail() {
                                                     {exam.previousRank
                                                         ?.belt ?? "?"}
                                                 </Badge>
-                                                <ChevronRight className="h-3 w-3 text-gray-400" />
+                                                <ChevronRight className="h-3 w-3 text-muted-foreground" />
                                                 <Badge
                                                     className={getBeltColor(
                                                         exam.ranks?.belt ?? "",
@@ -255,21 +254,21 @@ export default function ExamDetail() {
                         )}
 
                         {pending.length > 0 && (
-                            <div className="p-6">
-                                <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-4">
-                                    <Users className="h-5 w-5 text-yellow-600" />
+                            <div className="p-4 sm:p-6">
+                                <h3 className="mb-4 flex items-center gap-2 text-lg font-bold text-foreground">
+                                    <Users className="h-5 w-5 text-brand-gold-deep" />
                                     Pendientes ({pending.length})
                                 </h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {pending.map((exam: IExam) => (
                                         <div
                                             key={exam.id}
-                                            className="p-4 border border-yellow-200 bg-yellow-50/30 rounded-lg hover:border-yellow-400 transition-colors"
+                                            className="p-4 border border-brand-gold/30 bg-brand-gold/10 rounded-lg hover:border-brand-gold transition-colors"
                                         >
                                             <div className="flex items-center gap-3 mb-2">
-                                                <div className="h-10 w-10 rounded-full bg-linear-to-br from-yellow-400 to-yellow-600 p-0.5">
-                                                    <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                                                        <span className="text-xs font-bold text-yellow-700">
+                                                <div className="h-10 w-10 rounded-full bg-linear-to-br from-brand-gold to-brand-gold-deep p-0.5">
+                                                    <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
+                                                        <span className="text-xs font-bold text-brand-gold-deep">
                                                             {exam.user?.name?.charAt(
                                                                 0,
                                                             ) ?? "?"}
@@ -280,12 +279,12 @@ export default function ExamDetail() {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <h4 className="font-semibold text-gray-900">
+                                                    <h4 className="min-w-0 font-semibold break-words text-foreground">
                                                         {exam.user?.name ?? ""}{" "}
                                                         {exam.user?.lastName ??
                                                             ""}
                                                     </h4>
-                                                    <span className="text-xs text-gray-500">
+                                                    <span className="text-xs text-muted-foreground">
                                                         {exam.ranks?.martialArt
                                                             ?.martialArt ?? ""}
                                                     </span>

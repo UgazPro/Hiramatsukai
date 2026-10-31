@@ -231,42 +231,42 @@ console.log(user)
 
   if (isDojoLoading) {
     return (
-      <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <div className="min-h-full bg-linear-to-b from-background to-muted/40 p-3 sm:p-4 md:p-6">
+        <div className="mx-auto w-full max-w-7xl space-y-6">
           <div className="flex items-center justify-between mb-8">
             <div className="space-y-2">
-              <div className="h-8 w-72 bg-gray-200 rounded-md animate-pulse" />
-              <div className="h-4 w-60 bg-gray-200 rounded-md animate-pulse" />
+              <div className="h-8 w-72 bg-muted rounded-md animate-pulse" />
+              <div className="h-4 w-60 bg-muted rounded-md animate-pulse" />
             </div>
-            <div className="h-10 w-36 bg-gray-200 rounded-md animate-pulse" />
+            <div className="h-10 w-36 bg-muted rounded-md animate-pulse" />
           </div>
 
-          <div className="h-10 w-full md:w-2/3 bg-gray-200 rounded-md animate-pulse" />
+          <div className="h-10 w-full md:w-2/3 bg-muted rounded-md animate-pulse" />
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card>
               <CardHeader className="pt-4">
-                <div className="h-6 w-40 bg-gray-200 rounded-md animate-pulse" />
-                <div className="h-4 w-56 bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-6 w-40 bg-muted rounded-md animate-pulse" />
+                <div className="h-4 w-56 bg-muted rounded-md animate-pulse" />
               </CardHeader>
               <CardContent className="space-y-4 px-4 pb-4">
-                <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
-                <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
-                <div className="h-28 w-full bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-10 w-full bg-muted rounded-md animate-pulse" />
+                <div className="h-10 w-full bg-muted rounded-md animate-pulse" />
+                <div className="h-28 w-full bg-muted rounded-md animate-pulse" />
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pt-4">
-                <div className="h-6 w-52 bg-gray-200 rounded-md animate-pulse" />
-                <div className="h-4 w-64 bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-6 w-52 bg-muted rounded-md animate-pulse" />
+                <div className="h-4 w-64 bg-muted rounded-md animate-pulse" />
               </CardHeader>
               <CardContent className="space-y-4 px-4 pb-4">
-                <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
-                <div className="h-24 w-full bg-gray-200 rounded-md animate-pulse" />
+                <div className="h-10 w-full bg-muted rounded-md animate-pulse" />
+                <div className="h-24 w-full bg-muted rounded-md animate-pulse" />
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
-                  <div className="h-10 w-full bg-gray-200 rounded-md animate-pulse" />
+                  <div className="h-10 w-full bg-muted rounded-md animate-pulse" />
+                  <div className="h-10 w-full bg-muted rounded-md animate-pulse" />
                 </div>
               </CardContent>
             </Card>
@@ -277,45 +277,45 @@ console.log(user)
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100 p-4 md:p-6">
+    <div className="min-h-full bg-linear-to-b from-background to-muted/40 p-3 sm:p-4 md:p-6">
       {/* Header */}
-      <div className="">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-8">
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="mb-6 flex flex-col items-center justify-between gap-3 sm:mb-8 sm:flex-row">
 
-          <div className="text-center sm:text-left">
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+          <div className="min-w-0 text-center sm:text-left">
+            <h1 className="text-2xl font-bold text-foreground md:text-3xl">
               Configuración del Dojo
             </h1>
-            <p className="text-sm text-gray-600">Administra toda la información de tu dojo</p>
+            <p className="text-sm text-muted-foreground">Administra toda la información de tu dojo</p>
           </div>
 
           <Button
             onClick={handleSaveAll}
             disabled={!dojo?.id || !hasMainInfoChanges || updateDojoInfoMutation.isPending}
-            className="bg-linear-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white w-full sm:w-auto"
+            className="h-11 w-full bg-linear-to-r from-brand-gold to-brand-gold-deep text-white hover:from-brand-gold-deep hover:to-brand-gold-deep sm:h-9 sm:w-auto"
           >
-            <Save className="h-4 w-4 mr-2" />
+            <Save data-icon="inline-start" />
             Guardar Todo
           </Button>
         </div>
 
         <Tabs defaultValue="info" className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-10 lg:mb-3">
-            <TabsTrigger value="info" className="flex items-center justify-center gap-2">
+          <TabsList className="mb-6 grid h-auto w-full grid-cols-2 gap-1 md:grid-cols-4 lg:mb-3">
+            <TabsTrigger value="info" className="flex min-h-11 items-center justify-center gap-2 px-2 text-xs sm:text-sm">
               <Globe className="h-5 w-5 md:h-4 md:w-4" />
-              <span className="">Información</span>
+              <span>Información</span>
             </TabsTrigger>
-            <TabsTrigger value="schedule" className="flex items-center justify-center gap-2">
+            <TabsTrigger value="schedule" className="flex min-h-11 items-center justify-center gap-2 px-2 text-xs sm:text-sm">
               <Clock className="h-5 w-5 md:h-4 md:w-4" />
-              <span className="">Horarios</span>
+              <span>Horarios</span>
             </TabsTrigger>
-            <TabsTrigger value="instructors" className="flex items-center justify-center gap-2">
+            <TabsTrigger value="instructors" className="flex min-h-11 items-center justify-center gap-2 px-2 text-xs sm:text-sm">
               <Users className="h-5 w-5 md:h-4 md:w-4" />
-              <span className="">Instructores</span>
+              <span>Instructores</span>
             </TabsTrigger>
-            <TabsTrigger value="plans" className="flex items-center justify-center gap-2">
+            <TabsTrigger value="plans" className="flex min-h-11 items-center justify-center gap-2 px-2 text-xs sm:text-sm">
               <DollarSign className="h-5 w-5 md:h-4 md:w-4" />
-              <span className="">Planes</span>
+              <span>Planes</span>
             </TabsTrigger>
           </TabsList>
 
@@ -332,13 +332,15 @@ console.log(user)
                   <div className="space-y-2">
                     <Label htmlFor="dojo-name">Nombre del Dojo</Label>
                     <Input
+                      id="dojo-name"
                       {...form.register("dojo")}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="translate">Traducción <span className="text-xs text-gray-400">(Traducción o Significado del dojo)</span> </Label>
+                    <Label htmlFor="translate">Traducción <span className="text-xs font-normal text-muted-foreground">(Traducción o Significado del dojo)</span></Label>
                     <Input
+                      id="translate"
                       {...form.register("translate")}
                     />
                   </div>
@@ -346,6 +348,7 @@ console.log(user)
                   <div className="space-y-2">
                     <Label htmlFor="slogan">Slogan o Lema</Label>
                     <Input
+                      id="slogan"
                       {...form.register("slogan")}
                     />
                   </div>
@@ -365,19 +368,20 @@ console.log(user)
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="description">Descripción <span className="text-gray-600 text-xs">(Opcional)</span></Label>
+                    <Label htmlFor="description">Descripción <span className="text-xs font-normal text-muted-foreground">(Opcional)</span></Label>
                     <Textarea
+                      id="description"
                       {...form.register("description")}
                       rows={4}
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
                       <Label htmlFor="martialArts">Artes Marciales</Label>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button size="sm" type="button">Abrir</Button>
+                          <Button type="button" className="h-11 sm:h-9">Abrir</Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                           {martialArtsOptions.map((type, index) => (
@@ -395,7 +399,7 @@ console.log(user)
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <Button variant="ghost" type="button" size="icon" className="lg:ml-auto" onClick={() => setMartialArts(prev => prev.filter(m => m.id !== ma.id))}>
-                                  <X className="h-4 w-4 text-red-600" />
+                                  <X className="h-4 w-4 text-destructive" />
                                 </Button>
                               </TooltipTrigger>
                               <TooltipContent>
@@ -430,11 +434,12 @@ console.log(user)
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="addressShort" className="flex items-center gap-2">
+                    <Label htmlFor="address" className="flex items-center gap-2">
                       <MapPin className="h-4 w-4" />
                       Dirección Completa
                     </Label>
                     <Textarea
+                      id="address"
                       {...form.register("address")}
                       rows={4}
                     />
@@ -466,12 +471,12 @@ console.log(user)
                   </div>
 
                   <Separator />
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <Label>Redes Sociales</Label>
 
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button size="sm" type="button">Agregar Nueva</Button>
+                        <Button type="button" className="h-11 sm:h-9">Agregar Nueva</Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
                         {typesSocialMedia.map((type, index) => (
@@ -489,7 +494,7 @@ console.log(user)
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <Button variant="ghost" type="button" size="icon" className="ml-auto" onClick={() => setSocialMedia(prev => prev.filter(s => s.socialMedia !== sm.socialMedia))}>
-                                <X className="h-4 w-4 text-red-600" />
+                                <X className="h-4 w-4 text-destructive" />
                               </Button>
                             </TooltipTrigger>
                             <TooltipContent>
@@ -522,11 +527,11 @@ console.log(user)
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <Label>Logo del Dojo</Label>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="h-11 sm:h-8">
                           Cambiar Logo
                         </Button>
                       </div>
-                      <div className="h-40 bg-white rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
+                      <div className="h-40 bg-card rounded-lg border-2 border-dashed border-border flex items-center justify-center overflow-hidden">
                         <img
                           src={setImageDojo(dojo?.logo || "")}
                           alt="Logo"
@@ -538,11 +543,11 @@ console.log(user)
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <Label>Banner del Dojo</Label>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="h-11 sm:h-8">
                           Cambiar Banner
                         </Button>
                       </div>
-                      <div className="h-40 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden">
+                      <div className="h-40 bg-muted rounded-lg border-2 border-dashed border-border flex items-center justify-center overflow-hidden">
                         <img
                           src={getBannerDojo(dojo)}
                           alt="Banner"
@@ -585,16 +590,16 @@ console.log(user)
                       <CardContent className="pt-6">
                         <div className="space-y-3">
                           <div className="text-center">
-                            <div className="h-16 w-16 mx-auto rounded-full bg-linear-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-white text-xl font-bold mb-2">
+                            <div className="h-16 w-16 mx-auto rounded-full bg-linear-to-br from-brand-gold to-brand-gold-deep flex items-center justify-center text-white text-xl font-bold mb-2">
                               {instructor.name.charAt(0)}
                             </div>
                             <h3 className="font-bold text-lg">{instructor.name} {instructor.lastName}</h3>
                             {instructor.userRanks[0] && (
-                              <p className="text-yellow-600 font-medium">{instructor.userRanks[0].rank.rank_name}</p>
+                              <p className="text-brand-gold-deep font-medium">{instructor.userRanks[0].rank.rank_name}</p>
                             )}
-                            {/* <p className="text-sm text-gray-600">{instructor.specialty}</p> */}
+                            {/* <p className="text-sm text-muted-foreground">{instructor.specialty}</p> */}
                           </div>
-                          {/* <p className="text-sm text-gray-700">{instructor.bio}</p> */}
+                          {/* <p className="text-sm text-foreground">{instructor.bio}</p> */}
                         </div>
                       </CardContent>
                     </Card>

@@ -9,10 +9,11 @@ interface PhoneFieldComponentProps {
     onCountryChange: (countryCode: string) => void;
     disabled?: boolean;
     className?: string;
+    id?: string;
 }
 
-const selectClass = "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg w-full overflow-hidden";
-const inputClass = "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg";
+const selectClass = "h-11 w-full overflow-hidden rounded-lg border-input transition-all duration-200 focus:border-ring focus:ring-2 focus:ring-ring/40 sm:h-9";
+const inputClass = "h-11 rounded-lg border-input transition-all duration-200 focus:border-ring focus:ring-2 focus:ring-ring/40 sm:h-9";
 
 export function PhoneFieldComponent({
     value,
@@ -21,6 +22,7 @@ export function PhoneFieldComponent({
     onCountryChange,
     disabled,
     className,
+    id,
 }: PhoneFieldComponentProps) {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const digits = sanitizeDigits(e.target.value);
@@ -47,6 +49,7 @@ export function PhoneFieldComponent({
             </Select>
 
             <Input
+                id={id}
                 type="text"
                 inputMode="numeric"
                 className={inputClass}

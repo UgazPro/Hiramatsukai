@@ -11,7 +11,7 @@ export default function MyselfView() {
 
   if (!myStudent) {
     return (
-      <div className="flex items-center justify-center h-full text-gray-500">
+      <div className="flex min-h-[50vh] items-center justify-center p-4 text-center text-muted-foreground">
         No se encontraron datos del usuario.
       </div>
     );

@@ -122,9 +122,9 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
         </CardHeader>
         <CardContent className="mx-2">
           {newSchedule.length > 0 && (
-            <div className="space-y-4 border border-gray-300 rounded-lg py-4 px-2">
+            <div className="space-y-4 border border-border rounded-lg py-4 px-2">
               {newSchedule.map((schedule, index) => (
-                <div key={index} className="flex flex-col md:flex-row items-start md:items-end gap-4 p-3 border border-gray-200 rounded-lg">
+                <div key={index} className="flex flex-col md:flex-row items-start md:items-end gap-4 p-3 border border-border rounded-lg">
                   <div className="space-y-2 w-full md:w-1/4">
                     <Label>Dia</Label>
                     <Select
@@ -149,8 +149,8 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                     </Select>
                   </div>
                   <div className="space-y-2 w-full md:w-1/4">
-                    <div className="flex items-center gap-2">
-                      <div className="space-y-2 w-1/2">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="min-w-0 space-y-2">
                         <Label>Desde</Label>
                         <Input
                           type="time"
@@ -160,7 +160,7 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                           className="appearance-none bg-background [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                         />
                       </div>
-                      <div className="space-y-2 w-1/2">
+                      <div className="min-w-0 space-y-2">
                         <Label>Hasta</Label>
                         <Input
                           type="time"
@@ -198,8 +198,8 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                     </Select>
                   </div>
                   <div className="flex md:items-end justify-end w-full md:w-auto">
-                    <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => removeSchedule(index)}>
-                      <X className="text-2xl" />
+                    <Button variant="ghost" aria-label="Quitar horario" className="size-11 text-destructive hover:bg-destructive/10" onClick={() => removeSchedule(index)}>
+                      <X className="size-5" />
                     </Button>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
           )}
 
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[520px]">
               <thead>
                 <tr className="border-b">
                   <th className="text-left py-3 px-4">Día</th>
@@ -230,7 +230,7 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
               </thead>
               <tbody>
                 {schedules.map((item) => (
-                  <tr key={item.id} className="border-b hover:bg-gray-50">
+                  <tr key={item.id} className="border-b hover:bg-muted/50">
                     {editingSchedule === item.id ? (
                       <>
                         <td className="py-3 px-4">
@@ -299,10 +299,10 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                         </td>
                         <td className="py-3 px-4 text-right">
                           <div className="flex justify-end gap-2">
-                            <Button size="sm" onClick={() => handleSaveEditedSchedule(item.id)}>
+                            <Button size="icon" aria-label="Guardar cambios" onClick={() => handleSaveEditedSchedule(item.id)}>
                               <Save className="h-3 w-3" />
                             </Button>
-                            <Button size="sm" variant="outline" onClick={cancelEditing}>
+                            <Button size="icon" variant="outline" aria-label="Cancelar edición" onClick={cancelEditing}>
                               <X className="h-3 w-3" />
                             </Button>
                           </div>
@@ -317,16 +317,18 @@ export default function Schedule({ martialArtsOptions, schedules, submitSchedule
                         <td className="py-3 px-4">
                           <div className="flex gap-2">
                             <Button
-                              size="sm"
+                              size="icon"
                               variant="outline"
+                              aria-label="Editar horario"
                               onClick={() => handleEditSchedule(item)}
                             >
                               <Edit className="h-3 w-3" />
                             </Button>
                             <Button
-                              size="sm"
+                              size="icon"
                               variant="outline"
-                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                              aria-label="Eliminar horario"
+                              className="text-destructive hover:bg-destructive/10"
                               onClick={() => deleteSchedule(item.id)}
                             >
                               <Trash2 className="h-3 w-3" />

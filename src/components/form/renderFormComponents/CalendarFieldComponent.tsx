@@ -22,7 +22,7 @@ export function CalendarFieldComponent({value, onChange, placeholder = "Seleccio
                     variant="outline"
                     data-empty={!value}
                     disabled={disabled}
-                    className="w-full justify-between text-left font-normal data-[empty=true]:text-muted-foreground"
+                    className="h-11 w-full justify-between text-left font-normal data-[empty=true]:text-muted-foreground sm:h-9"
                 >
                     {value
                         ? format(value, "PPP", { locale: es })
@@ -32,7 +32,7 @@ export function CalendarFieldComponent({value, onChange, placeholder = "Seleccio
                 </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent className="w-auto max-w-[calc(100vw-2rem)] overflow-x-auto p-0" align="start">
                 <Calendar
                     locale={es}
                     mode="single"

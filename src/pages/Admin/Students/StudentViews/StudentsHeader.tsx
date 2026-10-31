@@ -33,40 +33,40 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
     const selectedDojoValue = isAdmin ? (dojoFilter == null ? "all" : String(dojoFilter)) : "all";
 
     const views = [
-        { key: "list", icon: List },
-        { key: "grid", icon: LayoutGrid },
+        { key: "list", icon: List, label: "Vista de lista" },
+        { key: "grid", icon: LayoutGrid, label: "Vista de tarjetas" },
     ];
 
     return (
 
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-4">
+        <div className="mb-4 flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
 
-            <div>
-                <h2 className="text-3xl font-bold text-gray-900">Alumnos</h2>
-                <p className="text-gray-600 mt-2">
+            <div className="min-w-0">
+                <h2 className="text-2xl font-bold text-foreground sm:text-3xl">Alumnos</h2>
+                <p className="mt-2 text-muted-foreground">
                     Gestiona todos los alumnos e instructores del dojo
                 </p>
             </div>
 
-            <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 w-full md:w-auto">
+            <div className="flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center lg:w-auto lg:flex-nowrap">
 
                 {/* Filter */}
-                <SearchFilterComponent 
+                <SearchFilterComponent
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
                     placeHolder="Buscar por nombre, apellido, cédula o email..."
-                    width="w-full md:w-92"
+                    width="w-full sm:w-56 lg:w-72 xl:w-92"
                 />
 
                 {/* Dojo filter */}
                 {isAdmin && (
-                    <div className="relative">
-                        <School className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4 pointer-events-none" />
+                    <div className="relative w-full sm:w-auto">
+                        <School className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Select
                             value={selectedDojoValue}
                             onValueChange={(value) => setDojoFilter(value === "all" ? null : Number(value))}
                         >
-                            <SelectTrigger className="w-full md:w-52 h-9 pl-9 text-sm border-2 border-gray-300 focus:border-yellow-500 focus:ring-yellow-500/20 rounded-lg bg-white shadow-sm text-gray-700">
+                            <SelectTrigger className="h-11 w-full rounded-lg pl-9 text-base sm:h-10 sm:w-52 sm:text-sm">
                                 <SelectValue placeholder="Todos los dojos" />
                             </SelectTrigger>
                             <SelectContent>
@@ -81,14 +81,16 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
                     </div>
                 )}
 
-                <div className="hidden lg:flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
-                    {views.map(({ key, icon: Icon }) => (
+                <div className="hidden items-center overflow-hidden rounded-lg border border-border bg-card sm:flex">
+                    {views.map(({ key, icon: Icon, label }) => (
                         <Button
                             key={key}
-                            variant={viewMode === key ? "secondary" : "ghost"}
+                            variant="ghost"
                             size="sm"
                             onClick={() => setViewMode(key as ViewMode)}
-                            className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-yellow-500 text-white hover:bg-yellow-600" : "text-gray-700 hover:bg-gray-100"}`}
+                            aria-label={label}
+                            aria-pressed={viewMode === key}
+                            className={`h-11 rounded-none border-r border-border px-3 last:border-r-0 sm:h-10 ${viewMode === key ? "bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep hover:text-white" : "text-foreground hover:bg-muted"}`}
                         >
                             <Icon className="h-4 w-4" />
                         </Button>
@@ -96,10 +98,11 @@ export default function StudentsHeader({ viewMode, setViewMode }: StudentsHeader
                 </div>
 
                 <Button
-                    className="bg-linear-to-r from-yellow-600 to-yellow-400 hover:from-yellow-400 hover:to-yellow-600 text-white shadow-md hover:shadow-lg transition-colors ease-in-out"
+                    variant="gold"
                     onClick={startCreate}
+                    className="h-11 w-full sm:h-10 sm:w-auto"
                 >
-                    <UserPlus className="h-4 w-4 mr-2" />
+                    <UserPlus data-icon="inline-start" />
                     Nuevo Estudiante
                 </Button>
             </div>

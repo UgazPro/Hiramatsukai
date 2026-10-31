@@ -78,12 +78,12 @@ export default function Applications() {
 
       <PageTransitionComponent
         primaryChildren={
-          <div className="p-4">
+          <div className="mx-auto w-full max-w-7xl p-3 sm:p-4 md:p-6">
 
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
-              <div>
-                <h1 className="text-3xl font-bold text-gray-900">Sistema de Postulaciones</h1>
-                <p className="text-gray-600 mt-2">
+            <div className="mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
+              <div className="min-w-0">
+                <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Sistema de Postulaciones</h1>
+                <p className="mt-2 text-muted-foreground">
                   Gestiona exámenes, postulaciones e historial de alumnos
                 </p>
               </div>
@@ -91,19 +91,20 @@ export default function Applications() {
             </div>
 
             {/* Tabs */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8 justify-between">
+            <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
               <TabsComponent
                 tabs={filteredTabs}
                 activeTab={safeActiveTab}
                 onChange={(tab) => setActiveTab(tab as TabType)}
-                className="flex-1 max-w-3xl"
+                className="w-full sm:max-w-3xl"
               />
               {activeTab === 'postulaciones' && !isStudent && (
                 <Button
-                  className="bg-linear-to-r from-yellow-600 to-yellow-700 hover:from-yellow-500 hover:to-yellow-600 text-white shadow-md hover:shadow-lg transition-all"
+                  variant="gold"
+                  className="h-11 w-full sm:h-10 sm:w-auto"
                   onClick={() => openPostulationForm()}
                 >
-                  <Plus className="h-4 w-4 mr-2" />
+                  <Plus data-icon="inline-start" />
                   Nueva Postulación
                 </Button>
               )}

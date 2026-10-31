@@ -79,30 +79,31 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                         <Button
                             variant="outline"
                             size="sm"
-                            className="border-gray-300 text-gray-700 hover:bg-gray-50 relative"
+                            className="relative h-11 border-border text-foreground hover:bg-muted sm:h-9"
                             onClick={openPopover}
                         >
                             <SlidersHorizontal className="h-4 w-4 mr-2" />
                             Filtros y orden
                             {hasActiveControls && (
-                                <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-yellow-500 text-white text-xs">
+                                <Badge className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center bg-brand-gold p-0 text-xs text-brand-sumi">
                                     !
                                 </Badge>
                             )}
                         </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[calc(100vw-2rem)] sm:w-80 p-0 border-gray-300 shadow-xl" align="end">
-                        <div className="p-4 border-b border-gray-200 bg-linear-to-r from-yellow-50 to-red-50">
+                    <PopoverContent className="w-[calc(100vw-2rem)] sm:w-80 p-0 border-border shadow-xl" align="end">
+                        <div className="p-4 border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10">
                             <div className="flex justify-between items-center">
-                                <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                                    <SlidersHorizontal className="h-4 w-4 text-yellow-600" />
+                                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                                    <SlidersHorizontal className="h-4 w-4 text-brand-gold-deep" />
                                     Filtros y orden
                                 </h3>
                                 <Button
                                     variant="ghost"
                                     size="sm"
                                     onClick={() => setIsOpen(false)}
-                                    className="h-6 w-6 p-0 hover:bg-gray-200"
+                                    aria-label="Cerrar filtros"
+                                    className="size-9 p-0 hover:bg-muted"
                                 >
                                     <X className="h-4 w-4" />
                                 </Button>
@@ -113,7 +114,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                             {/* Dojo filter */}
                             {isAdmin && (
                                 <div className="space-y-2">
-                                    <Label className="text-sm font-medium text-gray-900">Dojo</Label>
+                                    <Label className="text-sm font-medium text-foreground">Dojo</Label>
                                     <Select
                                         value={localDojo}
                                         onValueChange={setLocalDojo}
@@ -135,7 +136,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
 
                             {/* Sort field */}
                             <div className="space-y-2">
-                                <Label className="text-sm font-medium text-gray-900">Ordenar por</Label>
+                                <Label className="text-sm font-medium text-foreground">Ordenar por</Label>
                                 <Select
                                     value={localField}
                                     onValueChange={setLocalField}
@@ -156,7 +157,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                             {/* Sort direction */}
                             {localField && (
                                 <div className="space-y-2">
-                                    <Label className="text-sm font-medium text-gray-900">Dirección</Label>
+                                    <Label className="text-sm font-medium text-foreground">Dirección</Label>
                                     <Select
                                         value={localDirection}
                                         onValueChange={setLocalDirection}
@@ -173,20 +174,18 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                             )}
                         </div>
 
-                        <div className="p-4 border-t border-gray-200 bg-gray-50 space-y-3 text-center">
+                        <div className="flex flex-col gap-2 border-t border-border bg-muted/40 p-4 sm:flex-row sm:justify-center">
                             <Button
                                 variant="outline"
-                                size="sm"
                                 onClick={handleReset}
-                                className="border-gray-300 text-gray-700 hover:bg-gray-100"
+                                className="h-11 w-full border-border text-foreground hover:bg-muted sm:h-9 sm:w-auto"
                             >
                                 Restaurar
                             </Button>
 
                             <Button
-                                size="sm"
                                 onClick={handleApply}
-                                className="bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white"
+                                className="h-11 w-full bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep hover:text-white sm:h-9 sm:w-auto"
                             >
                                 Aplicar
                             </Button>
@@ -200,7 +199,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                 {filteredStudents.map((student) => (
                     <Card
                         key={student.id}
-                        className="border border-gray-300 bg-white hover:border-yellow-400 hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
+                        className="border border-border bg-card hover:border-brand-gold hover:shadow-lg transition-all duration-200 overflow-hidden group hover:cursor-pointer py-0"
                         onClick={() => {
                             selectStudent(student);
                             window.scrollTo({ top: 0, behavior: "smooth" });
@@ -208,23 +207,23 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                     >
                         <CardContent className="p-0">
                             {/* Header */}
-                            <div className="bg-linear-to-r from-yellow-50 to-red-50 p-4 border-b border-gray-200">
+                            <div className="bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4 border-b border-border">
                                 <div className="flex items-start justify-between gap-2">
                                     <div className="flex items-center gap-3 min-w-0">
-                                        <div className="h-12 w-12 shrink-0 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5">
-                                            <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
+                                        <div className="h-12 w-12 shrink-0 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                                            <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
                                                 {student.profileImg ? (
                                                     <img src={student.profileImg} className="h-full w-full rounded-full object-cover" alt={student.name} />
                                                 ) : (
-                                                    <User className="h-6 w-6 text-yellow-600" />
+                                                    <User className="h-6 w-6 text-brand-gold-deep" />
                                                 )}
                                             </div>
                                         </div>
                                         <div className="min-w-0">
-                                            <h3 className="font-bold text-sm text-gray-900 truncate group-hover:text-yellow-700 transition-colors">
+                                            <h3 className="font-bold text-sm text-foreground truncate group-hover:text-brand-gold-deep transition-colors">
                                                 {student.name} {student.lastName}
                                             </h3>
-                                            <p className="text-xs text-gray-600 truncate">@{student.username}</p>
+                                            <p className="text-xs text-muted-foreground truncate">@{student.username}</p>
                                         </div>
                                     </div>
                                     <Badge className={`shrink-0 ${student.active
@@ -241,53 +240,53 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                 {/* Cédula + Edad */}
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <p className="text-xs text-gray-500 mb-1">Cédula</p>
-                                        <p className="font-mono text-xs text-gray-900 font-semibold">{formatIdentification(student.identification)}</p>
+                                        <p className="text-xs text-muted-foreground mb-1">Cédula</p>
+                                        <p className="font-mono text-xs text-foreground font-semibold">{formatIdentification(student.identification)}</p>
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-500 mb-1">Edad</p>
-                                        <p className="font-semibold text-xs text-gray-900">{calculateAge(student.birthday)} años</p>
+                                        <p className="text-xs text-muted-foreground mb-1">Edad</p>
+                                        <p className="font-semibold text-xs text-foreground">{calculateAge(student.birthday)} años</p>
                                     </div>
                                 </div>
 
                                 {/* Rol + Dojo */}
                                 <div className="grid grid-cols-2 gap-3">
                                     <div>
-                                        <p className="text-xs text-gray-500 mb-1">Rol</p>
+                                        <p className="text-xs text-muted-foreground mb-1">Rol</p>
                                         <Badge className={`${student.roles && student.roles.some(r => r.rol === 'Instructor') ? 'bg-red-100 text-red-800 border-red-200' :
-                                            'bg-yellow-100 text-yellow-800 border-yellow-200'
+                                            'bg-brand-gold/15 text-brand-gold-deep border-brand-gold/30'
                                             } border font-medium`}>
                                             {student.roles[0].rol}
                                         </Badge>
                                     </div>
                                     <div>
-                                        <p className="text-xs text-gray-500 mb-1">Dojo</p>
+                                        <p className="text-xs text-muted-foreground mb-1">Dojo</p>
                                         <div className="flex items-center gap-2">
-                                            <School className="h-3 w-3 text-gray-500 shrink-0" />
-                                            <span className="font-medium text-gray-900 text-xs truncate">{student.dojo.dojo}</span>
+                                            <School className="h-3 w-3 text-muted-foreground shrink-0" />
+                                            <span className="font-medium text-foreground text-xs truncate">{student.dojo.dojo}</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* Ranks */}
-                                <div className="pt-3 border-t border-gray-200 flex flex-col gap-2">
+                                <div className="pt-3 border-t border-border flex flex-col gap-2">
                                     {student.userRanks.map(r => (
                                         <div key={r.rank.id} className="flex items-center gap-1">
                                             <img src={r.martialArt.icon} className="h-7 w-7 shrink-0 rounded object-contain" alt={r.martialArt.martialArt} />
-                                            <span className="text-xs text-gray-900 font-medium truncate">{r.rank.rank_name} {r.rank.code} Cinturón {r.rank.belt}</span>
+                                            <span className="text-xs text-foreground font-medium truncate">{r.rank.rank_name} {r.rank.code} Cinturón {r.rank.belt}</span>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
                             {/* Buttons */}
-                            <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+                            <div className="px-4 py-3 border-t border-border bg-muted/40">
                                 <div className="flex justify-between gap-2">
                                     <DeleteDialog
                                         whatsDeleting={`${student.name} ${student.lastName}`}
                                         onConfirm={() => deleteStudent(student.id)}
                                         buttonText="Eliminar"
-                                        buttonStyles="border-red-300 text-red-700 hover:bg-red-100 hover:border-red-400 flex-1 text-xs"
+                                        buttonStyles="h-10 flex-1 border-destructive/30 text-xs text-destructive hover:border-destructive/50 hover:bg-destructive/10 sm:h-9"
                                         buttonType='outline'
                                         preposition="a"
                                     />
@@ -295,7 +294,7 @@ export default function StudentGridView({ filteredStudents }: StudentGridViewPro
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="border-yellow-300 text-yellow-700 hover:bg-yellow-50 hover:border-yellow-400 flex-1 text-xs"
+                                        className="h-10 flex-1 border-brand-gold/40 text-xs text-brand-gold-deep hover:border-brand-gold hover:bg-brand-gold/10 sm:h-9"
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             startEdit(student);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  Camera, Eye, EyeOff, Mail, Phone, User, Shield, Key, Check, Edit, Loader2, X
+  Camera, Eye, EyeOff, Mail, Phone, User, Shield, Key, Check, Edit, Loader2, X, Bell
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -184,24 +184,24 @@ export default function Profile() {
   const displayBirthday = isEditing ? editData.birthday : (profile?.birthday ?? "");
 
   return (
-    <div className="w-full bg-linear-to-b from-gray-50 to-gray-100 p-3 sm:p-4 md:p-6">
-      <div className="">
+    <div className="w-full bg-linear-to-b from-background to-muted/40 p-3 sm:p-4 md:p-6">
+      <div className="mx-auto w-full max-w-7xl">
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
           {/* Columna izquierda */}
-          <div className="lg:col-span-1 space-y-6">
-            <Card className="border-yellow-200 shadow-lg overflow-hidden">
-              <div className="h-24 bg-linear-to-r from-yellow-500 to-yellow-600" />
+          <div className="flex flex-col gap-6 lg:col-span-1">
+            <Card className="overflow-hidden border-brand-gold/30 shadow-lg">
+              <div className="h-24 bg-linear-to-r from-brand-gold to-brand-gold-deep" />
 
               <CardContent className="relative pt-16 pb-4">
                 <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
                   <div className="relative group">
-                    <div className="h-32 w-32 rounded-full border-4 border-white bg-yellow-500 shadow-xl flex items-center justify-center">
+                    <div className="h-32 w-32 rounded-full border-4 border-white bg-brand-gold shadow-xl flex items-center justify-center">
                       <span className="text-white text-4xl font-bold">
                         {displayName?.[0] || ""}{displayLastName?.[0] || ""}
                       </span>
                     </div>
-                    <label className="absolute bottom-2 right-2 h-8 w-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110">
+                    <label className="absolute right-1 bottom-1 flex size-10 cursor-pointer items-center justify-center rounded-full bg-brand-gold text-white transition-all duration-300 hover:scale-110 hover:bg-brand-gold-deep">
                       <Camera className="h-4 w-4" />
                       <input type="file" className="hidden" accept="image/*" onChange={handleAvatarChange} />
                     </label>
@@ -209,10 +209,10 @@ export default function Profile() {
                 </div>
 
                 <div className="text-center mt-2 space-y-3">
-                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+                  <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">
                     {displayName} {displayLastName}
                   </h2>
-                  <p className="text-gray-600 text-sm sm:text-base">@{displayUsername}</p>
+                  <p className="text-muted-foreground text-sm sm:text-base">@{displayUsername}</p>
 
                   <div className="flex flex-wrap justify-center gap-2">
                     <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm font-medium">
@@ -220,26 +220,26 @@ export default function Profile() {
                     </span>
                   </div>
                   <div className="flex flex-wrap justify-center gap-2">
-                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium">
+                    <span className="max-w-full rounded-full bg-brand-gold/15 px-3 py-1 text-xs font-medium break-words text-brand-gold-deep sm:text-sm">
                       {displayRank}
                     </span>
-                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium">
+                    <span className="max-w-full rounded-full bg-brand-gold/15 px-3 py-1 text-xs font-medium break-words text-brand-gold-deep sm:text-sm">
                       {displayRankKobudo}
                     </span>
                   </div>
 
                   <div className="pt-2 space-y-2">
-                    <div className="flex items-center justify-center gap-2 text-gray-700">
-                      <Mail className="h-4 w-4" />
-                      <span className="text-sm sm:text-base truncate max-w-full sm:max-w-none">{displayEmail}</span>
+                    <div className="flex min-w-0 items-center justify-center gap-2 text-foreground">
+                      <Mail className="h-4 w-4 shrink-0" />
+                      <span className="min-w-0 truncate text-sm sm:text-base">{displayEmail}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6">
-                      <div className="flex items-center justify-center gap-2 text-gray-700">
+                      <div className="flex items-center justify-center gap-2 text-foreground">
                         <Phone className="h-4 w-4" />
                         <span>{displayPhone}</span>
                       </div>
-                      <span className="text-gray-400 hidden sm:inline">|</span>
-                      <div className="flex items-center justify-center gap-2 text-gray-700">
+                      <span className="text-muted-foreground hidden sm:inline">|</span>
+                      <div className="flex items-center justify-center gap-2 text-foreground">
                         <LiaIdCardSolid className="h-4 w-4" />
                         <span>{displayIdentification}</span>
                       </div>
@@ -253,14 +253,18 @@ export default function Profile() {
           {/* Columna derecha */}
           <div className="lg:col-span-2">
             <Tabs defaultValue="general" className="w-full">
-              <TabsList className="flex w-full mb-2 overflow-x-auto">
-                <TabsTrigger value="general" className="flex-1 min-w-0 gap-1 text-xs sm:text-sm">
+              <TabsList className="mb-2 flex h-auto w-full overflow-x-auto gap-1">
+                <TabsTrigger value="general" className="min-h-11 min-w-0 flex-1 gap-1 text-xs sm:text-sm">
                   <User className="h-4 w-4 shrink-0" />
                   <span className="truncate">General</span>
                 </TabsTrigger>
-                <TabsTrigger value="security" className="flex-1 min-w-0 gap-1 text-xs sm:text-sm">
+                <TabsTrigger value="security" className="min-h-11 min-w-0 flex-1 gap-1 text-xs sm:text-sm">
                   <Shield className="h-4 w-4 shrink-0" />
                   <span className="truncate">Seguridad</span>
+                </TabsTrigger>
+                <TabsTrigger value="notifications" className="min-h-11 min-w-0 flex-1 gap-1 text-xs sm:text-sm">
+                  <Bell className="h-4 w-4 shrink-0" />
+                  <span className="truncate">Avisos</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -280,7 +284,7 @@ export default function Profile() {
                           <>
                             <Button
                               size="sm"
-                              className="bg-yellow-500 hover:bg-yellow-600"
+                              className="bg-brand-gold hover:bg-brand-gold-deep"
                               onClick={saveAll}
                               disabled={updateProfile.isPending}
                             >
@@ -305,7 +309,7 @@ export default function Profile() {
                       </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="space-y-4 grid grid-cols-1 md:grid-cols-2 gap-4 px-4 pb-4">
+                  <CardContent className="grid grid-cols-1 gap-4 px-4 pb-4 md:grid-cols-2">
                     {/* Nombre */}
                     <div className="space-y-2">
                       <Label htmlFor="name">Nombre</Label>
@@ -422,7 +426,7 @@ export default function Profile() {
                   <CardHeader className="pt-4">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-3">
                       <div className="flex items-center gap-2">
-                        <Key className="h-5 w-5 text-yellow-600" />
+                        <Key className="h-5 w-5 text-brand-gold-deep" />
                         <CardTitle className="text-lg sm:text-xl">Cambiar Contraseña</CardTitle>
                       </div>
                       <Button
@@ -463,8 +467,8 @@ export default function Profile() {
                         {passwords.new && (
                           <div className="mt-2 space-y-1">
                             {PASSWORD_REQUIREMENTS.map((req) => (
-                              <p key={req.label} className={`text-xs flex items-center gap-1 ${req.test(passwords.new) ? "text-green-600" : "text-gray-500"}`}>
-                                <Check className={`h-3 w-3 ${req.test(passwords.new) ? "text-green-600" : "text-gray-400"}`} />
+                              <p key={req.label} className={`text-xs flex items-center gap-1 ${req.test(passwords.new) ? "text-green-600" : "text-muted-foreground"}`}>
+                                <Check className={`h-3 w-3 ${req.test(passwords.new) ? "text-green-600" : "text-muted-foreground"}`} />
                                 {req.label}
                               </p>
                             ))}
@@ -515,13 +519,13 @@ export default function Profile() {
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                       <div className="flex-1">
                         <h4 className="font-medium">Autenticación por aplicación</h4>
-                        <p className="text-sm text-gray-500">Usa Google Authenticator</p>
+                        <p className="text-sm text-muted-foreground">Usa Google Authenticator</p>
                       </div>
                       <div
                         className={`h-6 w-11 rounded-full relative cursor-pointer transition-colors shrink-0 ${twoFactorEnabled ? 'bg-green-600' : 'bg-gray-300'}`}
                         onClick={() => setTwoFactorEnabled(!twoFactorEnabled)}
                       >
-                        <div className={`absolute top-1 h-4 w-4 bg-white rounded-full transition-transform ${twoFactorEnabled ? 'left-6' : 'left-1'}`} />
+                        <div className={`absolute top-1 h-4 w-4 bg-card rounded-full transition-transform ${twoFactorEnabled ? 'left-6' : 'left-1'}`} />
                       </div>
                     </div>
                   </CardContent>
@@ -536,10 +540,10 @@ export default function Profile() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {Object.entries(notifications).map(([key, value]) => (
-                      <div key={key} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 bg-gray-50 rounded-lg">
+                      <div key={key} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-3 bg-muted/40 rounded-lg">
                         <div className="flex-1">
                           <h4 className="font-medium capitalize">{key === 'email' ? 'Email' : key === 'reminders' ? 'Recordatorios' : key === 'news' ? 'Novedades' : 'Promociones'}</h4>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-muted-foreground">
                             {key === 'email' && 'Recibe notificaciones por email'}
                             {key === 'reminders' && 'Recordatorios de clases'}
                             {key === 'news' && 'Novedades del dojo'}
@@ -550,7 +554,7 @@ export default function Profile() {
                           className={`h-6 w-11 rounded-full relative cursor-pointer transition-colors ${value ? 'bg-blue-600' : 'bg-gray-300'}`}
                           onClick={() => toggleNotification(key as keyof typeof notifications)}
                         >
-                          <div className={`absolute top-1 h-4 w-4 bg-white rounded-full transition-transform ${value ? 'left-6' : 'left-1'}`} />
+                          <div className={`absolute top-1 h-4 w-4 bg-card rounded-full transition-transform ${value ? 'left-6' : 'left-1'}`} />
                         </div>
                       </div>
                     ))}

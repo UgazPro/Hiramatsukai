@@ -23,7 +23,7 @@ interface LinkResponse {
 }
 
 const triggerClass =
-    "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg w-full overflow-hidden";
+    "h-11 w-full overflow-hidden rounded-lg border-input transition-all duration-200 focus:border-ring focus:ring-2 focus:ring-ring/40 sm:h-9";
 
 export default function DojoLinkParentDialog({ dojo, dojos, canModify, onLinked }: DojoLinkParentDialogProps) {
 
@@ -85,7 +85,7 @@ export default function DojoLinkParentDialog({ dojo, dojos, canModify, onLinked 
                 variant="outline"
                 size="sm"
                 onClick={handleOpen}
-                className="border-yellow-500 text-yellow-700 hover:bg-yellow-50"
+                className="h-11 border-brand-gold/40 text-brand-gold-deep hover:bg-brand-gold/10 sm:h-9"
             >
                 <Link2 className="h-4 w-4" />
                 Enlazar / Cambiar
@@ -96,10 +96,10 @@ export default function DojoLinkParentDialog({ dojo, dojos, canModify, onLinked 
                 onClose={setOpen}
                 dialogTitle="Enlazar dojo padre"
                 dialogDescription={`Selecciona el dojo padre de ${dojo.dojo}`}
-                className="max-w-md"
+                className="max-w-[calc(100vw-2rem)] sm:max-w-md"
             >
                 <div className="space-y-2">
-                    <p className="text-sm font-medium text-[var(--blueColor)]">Dojo padre</p>
+                    <p className="text-sm font-medium text-brand-indigo">Dojo padre</p>
 
                     <Select
                         key={String(parentValue)}
@@ -120,7 +120,7 @@ export default function DojoLinkParentDialog({ dojo, dojos, canModify, onLinked 
                     </Select>
                 </div>
 
-                <div className="flex justify-end gap-3 mt-6">
+                <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
                     <Button
                         type="button"
                         variant="ghost"
@@ -134,7 +134,7 @@ export default function DojoLinkParentDialog({ dojo, dojos, canModify, onLinked 
                         type="button"
                         onClick={handleSave}
                         disabled={isPending}
-                        className="bg-yellow-500 text-white hover:bg-yellow-600"
+                        className="h-11 w-full bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep hover:text-white sm:h-9 sm:w-auto"
                     >
                         {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Guardar"}
                     </Button>

@@ -1,5 +1,4 @@
 
-
 interface PageTransitionComponentProps {
     primaryChildren: React.ReactNode;
     secondaryChildren: React.ReactNode;
@@ -8,18 +7,29 @@ interface PageTransitionComponentProps {
 
 export default function PageTransitionComponent({ primaryChildren, secondaryChildren, toggle } : PageTransitionComponentProps) {
     return (
-        <div className="relative w-screen h-full overflow-hidden">
+        <div className="relative h-full w-full overflow-hidden">
 
-            <div 
-                className={`flex w-[190%] h-full transition-transform duration-500 ease-in-out ${toggle ? '-translate-x-1/2' : 'translate-x-0'}`}
+            <div
+                className={`flex h-full w-[200%] transition-transform duration-500 ease-in-out ${toggle ? '-translate-x-1/2' : 'translate-x-0'}`}
             >
 
-                <div className="w-1/2 shrink-0 h-full overflow-auto">{primaryChildren}</div>
+                <div
+                    aria-hidden={toggle}
+                    inert={toggle}
+                    className="h-full w-1/2 min-w-0 shrink-0 overflow-y-auto overflow-x-hidden overscroll-contain"
+                >
+                    {primaryChildren}
+                </div>
 
-                <div className="w-1/2 shrink-0 h-full overflow-auto">{secondaryChildren}</div>
+                <div
+                    aria-hidden={!toggle}
+                    inert={!toggle}
+                    className="h-full w-1/2 min-w-0 shrink-0 overflow-y-auto overflow-x-hidden overscroll-contain"
+                >
+                    {secondaryChildren}
+                </div>
 
             </div>
-
         </div>
     );
 }

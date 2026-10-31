@@ -11,6 +11,7 @@ import StudentsNoResults from "./StudentViews/StudentsNoResults";
 import StudentsSkeleton from "./StudentViews/StudentsSkeleton";
 import StudentDetailView from "./StudentDetailView/StudentDetailView";
 import PageTransitionComponent from "@/components/PageTransitionComponent";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export default function Students() {
 
@@ -22,9 +23,15 @@ export default function Students() {
 
   const filteredStudents = useFilteredStudents(students);
 
+  const isMobile = useMediaQuery("(max-width: 639px)");
+
   useEffect(() => {
     setScreen("list");
   }, []);
+
+  useEffect(() => {
+    if (isMobile) setViewMode("grid");
+  }, [isMobile, setViewMode]);
 
   return (
 
@@ -32,7 +39,7 @@ export default function Students() {
 
       <PageTransitionComponent
         primaryChildren={
-          <div className="p-4">
+          <div className="p-3 sm:p-4 md:p-6">
             <>
               {/* Header */}
               <StudentsHeader viewMode={viewMode} setViewMode={setViewMode} />
@@ -46,7 +53,7 @@ export default function Students() {
                     <>
                       <StudentListView filteredStudents={filteredStudents} />
                       {filteredStudents.length !== 0 && (
-                        <div className="text-sm text-gray-600 mt-6 text-right">
+                        <div className="mt-6 text-right text-sm text-muted-foreground">
                           {filteredStudents.length} de {students.length} estudiantes
                         </div>
                       )}

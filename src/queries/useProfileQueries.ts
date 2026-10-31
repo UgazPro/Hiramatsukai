@@ -7,7 +7,7 @@ export const useProfile = () => {
     queryKey: ["profile"],
     queryFn: async () => {
       const raw = await getProfile();
-      return transformProfile(raw as any);
+      return transformProfile(raw);
     },
     staleTime: 1000 * 60 * 5,
   });

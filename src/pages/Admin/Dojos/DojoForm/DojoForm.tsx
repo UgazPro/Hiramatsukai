@@ -19,7 +19,7 @@ import { DojoBody } from "@/services/dojos/dojo.interface";
 import { IOptions } from "@/components/form/renderFormComponents/SelectComponent";
 
 const imageInputClass =
-    "border-gray-300 focus:border-[var(--yellowColor)] focus:ring-2 focus:ring-[var(--yellowColor)] focus:ring-opacity-40 transition-all duration-200 rounded-lg";
+    "h-11 rounded-lg border-input transition-all duration-200 focus:border-ring focus:ring-2 focus:ring-ring/40 file:mr-2 file:text-sm sm:h-9";
 
 const getDojoLogo = (logo: string) => `${import.meta.env.VITE_API_URL}/api${logo}`;
 
@@ -225,8 +225,8 @@ export default function DojoForm() {
 
     if (isCreating || isUpdating) {
         return (
-            <div className="p-6 w-full max-w-5xl mx-auto">
-                <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[400px]">
+            <div className="mx-auto my-3 w-full max-w-5xl p-3 sm:my-6 sm:p-6">
+                <div className="overflow-hidden rounded-xl border border-border bg-card shadow-xl flex items-center justify-center min-h-[400px]">
                     <Loader size="lg" message={isUpdating ? "Actualizando dojo..." : "Guardando dojo..."} />
                 </div>
             </div>
@@ -234,16 +234,16 @@ export default function DojoForm() {
     }
 
     return (
-        <div className="p-6 w-full max-w-5xl mx-auto">
-            <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
+        <div className="mx-auto my-3 w-full max-w-5xl p-3 sm:my-6 sm:p-6">
+            <div className="overflow-hidden rounded-xl border border-border bg-card shadow-xl">
 
-                <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 px-6 py-4">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h2 className="text-xl font-bold text-gray-900">
+                <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 px-4 py-4 sm:px-6">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="min-w-0">
+                            <h2 className="text-lg font-bold text-foreground sm:text-xl">
                                 {mode === "create" ? "Nuevo Dojo" : "Editar Dojo"}
                             </h2>
-                            <p className="text-sm text-gray-600 mt-0.5">
+                            <p className="mt-0.5 text-sm text-muted-foreground">
                                 {mode === "create"
                                     ? "Complete los campos para agregar un nuevo dojo"
                                     : "Modifique los campos del dojo"}
@@ -251,11 +251,10 @@ export default function DojoForm() {
                         </div>
                         <Button
                             variant="ghost"
-                            size="sm"
-                            className="text-gray-600 hover:text-gray-900"
+                            className="h-11 shrink-0 self-start text-muted-foreground hover:text-foreground sm:h-9"
                             onClick={finishForm}
                         >
-                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            <ArrowLeft data-icon="inline-start" />
                             Volver
                         </Button>
                     </div>
@@ -287,52 +286,58 @@ export default function DojoForm() {
                                 </div>
 
                                 {/* Images */}
-                                <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6 space-y-5 mt-6">
+                                <div className="mt-6 flex flex-col gap-5 rounded-xl border border-border bg-card p-3 shadow-sm sm:p-6">
                                     <div className="flex flex-col md:flex-row gap-6">
 
                                         <div className="flex-1 space-y-2">
-                                            <Label className="text-sm font-medium text-[var(--blueColor)]">
+                                            <Label className="text-sm font-medium text-brand-indigo">
                                                 Logo {mode === "create" && <span className="text-red-500">*</span>}
                                             </Label>
-                                            <div className="flex items-center gap-4">
-                                                <div className="h-20 w-20 rounded-full overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center shrink-0">
+                                            <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+                                                <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-muted">
                                                     {logoPreview ? (
-                                                        <img src={logoPreview} alt="Logo" className="w-full h-full object-cover" />
+                                                        <img src={logoPreview} alt="Logo" className="h-full w-full object-cover" />
                                                     ) : (
-                                                        <ImagePlus className="h-7 w-7 text-gray-400" />
+                                                        <ImagePlus className="h-7 w-7 text-muted-foreground" />
                                                     )}
                                                 </div>
-                                                <Input
-                                                    type="file"
-                                                    accept="image/*"
-                                                    className={imageInputClass}
-                                                    onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)}
-                                                />
+                                                <div className="min-w-0 w-full flex-1">
+                                                    <Input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        aria-label="Seleccionar logo del dojo"
+                                                        className={imageInputClass}
+                                                        onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)}
+                                                    />
+                                                </div>
                                             </div>
                                             {mode === "edit" && (
-                                                <p className="text-xs text-gray-500">Deje vacío para conservar el logo actual</p>
+                                                <p className="text-xs text-muted-foreground">Deje vacío para conservar el logo actual</p>
                                             )}
                                         </div>
 
                                         <div className="flex-1 space-y-2">
-                                            <Label className="text-sm font-medium text-[var(--blueColor)]">Banner (opcional)</Label>
-                                            <div className="flex items-center gap-4">
-                                                <div className="h-20 w-20 rounded-lg overflow-hidden border border-gray-200 bg-gray-100 flex items-center justify-center shrink-0">
+                                            <Label className="text-sm font-medium text-brand-indigo">Banner (opcional)</Label>
+                                            <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-4">
+                                                <div className="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-muted">
                                                     {bannerPreview ? (
-                                                        <img src={bannerPreview} alt="Banner" className="w-full h-full object-cover" />
+                                                        <img src={bannerPreview} alt="Banner" className="h-full w-full object-cover" />
                                                     ) : (
-                                                        <ImagePlus className="h-7 w-7 text-gray-400" />
+                                                        <ImagePlus className="h-7 w-7 text-muted-foreground" />
                                                     )}
                                                 </div>
-                                                <Input
-                                                    type="file"
-                                                    accept="image/*"
-                                                    className={imageInputClass}
-                                                    onChange={(e) => setBannerFile(e.target.files?.[0] ?? null)}
-                                                />
+                                                <div className="min-w-0 w-full flex-1">
+                                                    <Input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        aria-label="Seleccionar banner del dojo"
+                                                        className={imageInputClass}
+                                                        onChange={(e) => setBannerFile(e.target.files?.[0] ?? null)}
+                                                    />
+                                                </div>
                                             </div>
                                             {mode === "edit" && (
-                                                <p className="text-xs text-gray-500">Deje vacío para conservar el banner actual</p>
+                                                <p className="text-xs text-muted-foreground">Deje vacío para conservar el banner actual</p>
                                             )}
                                         </div>
 
@@ -340,14 +345,13 @@ export default function DojoForm() {
                                 </div>
 
                                 {/* Social media */}
-                                <div className="bg-white shadow-sm border border-gray-200 rounded-xl p-6 space-y-4 mt-6">
-                                    <div className="flex items-center justify-between">
-                                        <Label className="text-sm font-medium text-[var(--blueColor)]">Redes Sociales</Label>
+                                <div className="mt-6 flex flex-col gap-4 rounded-xl border border-border bg-card p-3 shadow-sm sm:p-6">
+                                    <div className="flex flex-wrap items-center justify-between gap-2">
+                                        <Label className="text-sm font-medium text-brand-indigo">Redes Sociales</Label>
                                         <Button
                                             type="button"
                                             variant="outline"
-                                            size="sm"
-                                            className="border-yellow-300 text-yellow-700 hover:bg-yellow-50 hover:border-yellow-400"
+                                            className="h-11 border-brand-gold/40 text-brand-gold-deep hover:border-brand-gold hover:bg-brand-gold/10 sm:h-9"
                                             onClick={() => append({ socialMedia: "", link: "", directUrl: "" })}
                                         >
                                             <Plus className="h-4 w-4 mr-1" />
@@ -356,17 +360,17 @@ export default function DojoForm() {
                                     </div>
 
                                     {fields.length === 0 && (
-                                        <p className="text-sm text-gray-500">No hay redes sociales configuradas</p>
+                                        <p className="text-sm text-muted-foreground">No hay redes sociales configuradas</p>
                                     )}
 
                                     <div className="space-y-3">
                                         {fields.map((field, index) => (
                                             <div
                                                 key={field.id}
-                                                className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr_1fr_auto] gap-3 items-end border border-gray-200 rounded-lg p-3"
+                                                className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr_1fr_auto] gap-3 items-end border border-border rounded-lg p-3"
                                             >
                                                 <div className="space-y-1">
-                                                    <Label className="text-xs text-gray-500">Red social</Label>
+                                                    <Label className="text-xs text-muted-foreground">Red social</Label>
                                                     <Controller
                                                         name={`socialMedia.${index}.socialMedia`}
                                                         control={form.control}
@@ -377,7 +381,7 @@ export default function DojoForm() {
                                                 </div>
 
                                                 <div className="space-y-1">
-                                                    <Label className="text-xs text-gray-500">Enlace</Label>
+                                                    <Label className="text-xs text-muted-foreground">Enlace</Label>
                                                     <Controller
                                                         name={`socialMedia.${index}.link`}
                                                         control={form.control}
@@ -388,7 +392,7 @@ export default function DojoForm() {
                                                 </div>
 
                                                 <div className="space-y-1">
-                                                    <Label className="text-xs text-gray-500">URL directa (opcional)</Label>
+                                                    <Label className="text-xs text-muted-foreground">URL directa (opcional)</Label>
                                                     <Controller
                                                         name={`socialMedia.${index}.directUrl`}
                                                         control={form.control}
@@ -402,7 +406,8 @@ export default function DojoForm() {
                                                     type="button"
                                                     variant="ghost"
                                                     size="icon"
-                                                    className="text-red-500 hover:text-red-700"
+                                                    aria-label="Eliminar red social"
+                                                    className="justify-self-end text-destructive hover:bg-destructive/10"
                                                     onClick={() => remove(index)}
                                                 >
                                                     <Trash2 className="h-4 w-4" />
@@ -412,16 +417,16 @@ export default function DojoForm() {
                                     </div>
                                 </div>
 
-                                <div className="flex justify-end space-x-4 pt-5 border-t border-gray-200 mt-6">
+                                <div className="mt-6 flex flex-col-reverse gap-2 border-t border-border pt-5 sm:flex-row sm:justify-end">
                                     <Button
-                                        type="button" variant="outline" className="cursor-pointer"
+                                        type="button" variant="outline" className="h-11 w-full cursor-pointer sm:h-9 sm:w-auto"
                                         onClick={() => finishForm()}
                                     >
                                         Cancelar
                                     </Button>
                                     <Button
                                         type="submit"
-                                        className="bg-red-700 hover:bg-red-800 cursor-pointer"
+                                        className="h-11 w-full cursor-pointer bg-brand-vermilion hover:bg-brand-vermilion-dark sm:h-9 sm:w-auto"
                                     >
                                         {mode === "create" ? "Guardar Dojo" : "Actualizar Dojo"}
                                     </Button>

@@ -19,6 +19,7 @@ import { useFilteredActivities } from "@/hooks/useFilteredActivities";
 import ActivityCardView from "./ActivityCardView";
 import ActivitiesSkeleton from "./ActivitiesSkeleton";
 import { useUserData } from "@/helpers/token";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export default function Activities() {
 
@@ -49,10 +50,11 @@ export default function Activities() {
     setScreen("main");
   }, []);
 
+  const isMobile = useMediaQuery("(max-width: 639px)");
+
   useEffect(() => {
-    const isMobile = window.innerWidth < 1024;
-    setViewMode(isMobile ? "cards" : "table");
-  }, []);
+    if (isMobile) setViewMode("cards");
+  }, [isMobile, setViewMode]);
 
   const views = [
     { key: "table", icon: List },
@@ -67,52 +69,51 @@ export default function Activities() {
 
         primaryChildren={
 
-            <div className="mx-auto p-4 md:p-6">
+            <div className="mx-auto w-full max-w-7xl p-3 sm:p-4 md:p-6">
 
               {/* Header */}
-              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                <div>
-                  <h1 className="text-3xl font-bold text-gray-900">Actividades</h1>
-                  <p className="text-gray-600 mt-2">
+              <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
+                <div className="min-w-0">
+                  <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Actividades</h1>
+                  <p className="mt-2 text-muted-foreground">
                     Calendario de actividades del dojo y la organización
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center lg:w-auto">
 
                   {/* Filters Button */}
-                  <div className="w-full lg:w-auto">
+                  <div className="w-full sm:w-64 lg:w-72">
                     <SearchFilterComponent
                       searchTerm={searchTerm}
                       setSearchTerm={setSearchTerm}
                       placeHolder="Buscar por nombre o lugar de la actividad..."
-                      width="w-full lg:w-50"
+                      width="w-full"
                     />
                   </div>
-                
+
                   <ActivityFilter />
 
                   {canModify && (
-                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
-                      <Button
-                        variant='secondary'
-                        size="sm"
-                        onClick={() => startCreate()}
-                        className={`rounded-none border-r border-gray-300 bg-yellow-500 text-white hover:bg-yellow-600`}
-                      >
-                        <PlusCircle /> Nueva Actividad
-                      </Button>
-                    </div>
+                    <Button
+                      variant="gold"
+                      onClick={() => startCreate()}
+                      className="h-11 w-full sm:h-10 sm:w-auto"
+                    >
+                      <PlusCircle data-icon="inline-start" /> Nueva Actividad
+                    </Button>
                   )}
 
-                  <div className="hidden lg:flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
+                  <div className="hidden items-center overflow-hidden rounded-lg border border-border bg-card sm:flex">
                     {views.map(({ key, icon: Icon }) => (
                       <Button
                         key={key}
-                        variant={viewMode === key ? "secondary" : "ghost"}
+                        variant="ghost"
                         size="sm"
                         onClick={() => setViewMode(key as ActivityViewMode)}
-                        className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-yellow-500 text-white hover:bg-yellow-600" : "text-gray-700 hover:bg-gray-100"}`}
+                        aria-label={key === "table" ? "Vista de tabla" : "Vista de tarjetas"}
+                        aria-pressed={viewMode === key}
+                        className={`h-11 rounded-none border-r border-border px-3 last:border-r-0 sm:h-10 ${viewMode === key ? "bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep hover:text-white" : "text-foreground hover:bg-muted"}`}
                       >
                         <Icon className="h-4 w-4" />
                       </Button>
@@ -121,11 +122,10 @@ export default function Activities() {
 
                   <Button
                     variant="outline"
-                    size="sm"
                     onClick={() => toggleCalendar(showCalendar)}
-                    className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                    className="h-11 w-full border-border text-foreground hover:bg-muted sm:h-10 sm:w-auto"
                   >
-                    <CalendarIcon className="h-4 w-4 mr-2" />
+                    <CalendarIcon data-icon="inline-start" />
                     {showCalendar ? 'Ocultar Calendario' : 'Mostrar Calendario'}
                   </Button>
                 </div>
@@ -142,31 +142,31 @@ export default function Activities() {
                   searchTerm) && (
                     <div className="flex flex-wrap gap-2">
                       {filters.startDate && (
-                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                        <Badge className="border-brand-gold/30 bg-brand-gold/15 text-brand-gold-deep">
                           Desde: {format(filters.startDate, "dd/MM/yyyy")}
                         </Badge>
                       )}
 
                       {filters.endDate && (
-                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                        <Badge className="border-brand-gold/30 bg-brand-gold/15 text-brand-gold-deep">
                           Hasta: {format(filters.endDate, "dd/MM/yyyy")}
                         </Badge>
                       )}
 
                       {filters.type && (
-                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                        <Badge className="border-brand-gold/30 bg-brand-gold/15 text-brand-gold-deep">
                           Tipo: {filters.type.charAt(0).toUpperCase() + filters.type.slice(1)}
                         </Badge>
                       )}
 
                       {searchTerm && (
-                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                        <Badge className="border-brand-gold/30 bg-brand-gold/15 text-brand-gold-deep">
                           Búsqueda: {searchTerm}
                         </Badge>
                       )}
 
                       {filters.includePast && (
-                        <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                        <Badge className="border-brand-gold/30 bg-brand-gold/15 text-brand-gold-deep">
                           Incluir pasadas
                         </Badge>
                       )}
@@ -175,7 +175,7 @@ export default function Activities() {
                         variant="ghost"
                         size="sm"
                         onClick={resetFilters}
-                        className="text-gray-500 hover:text-gray-700 h-6 text-xs"
+                        className="h-8 text-xs text-muted-foreground hover:text-foreground"
                       >
                         Limpiar todos
                       </Button>
@@ -199,7 +199,7 @@ export default function Activities() {
                           setCurrentDate(parseISO(activity.date.toString()));
                         }}
                         rowClassName={(activity) =>
-                          cSelectedActivity?.id === activity.id ? "bg-yellow-50" : ""
+                          cSelectedActivity?.id === activity.id ? "bg-brand-gold/10" : ""
                         }
                       />
                     )}
@@ -208,7 +208,7 @@ export default function Activities() {
                     )}
 
                     {filteredActivities.length > 0 && (
-                      <div className="hidden lg:block">
+                      <div>
                         <PaginationComponent
                           currentPage={currentPage}
                           totalPages={totalPages}
@@ -225,7 +225,7 @@ export default function Activities() {
                   </div>
 
                   {/* Mobile */}
-                  <div className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${showCalendar ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <div className={`overflow-hidden transition-all duration-500 ease-in-out lg:hidden ${showCalendar ? 'max-h-[70dvh] opacity-100' : 'max-h-0 opacity-0'}`}>
                     <div className="pb-2">
                       <CalendarComponent
                         styles="w-full"

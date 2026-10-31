@@ -98,8 +98,8 @@ export default function ActivityForm() {
 
     if (isCreating || isUpdating) {
         return (
-            <div className="p-6 w-full max-w-5xl mx-auto">
-                <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden flex items-center justify-center min-h-[400px]">
+            <div className="mx-auto my-3 w-full max-w-5xl p-3 sm:my-6 sm:p-6">
+                <div className="overflow-hidden rounded-xl border border-border bg-card shadow-xl flex items-center justify-center min-h-[400px]">
                     <Loader size="lg" message={isUpdating ? "Actualizando actividad..." : "Guardando actividad..."} />
                 </div>
             </div>
@@ -108,17 +108,17 @@ export default function ActivityForm() {
 
     return (
 
-        <div className="p-6 w-full max-w-5xl mx-auto">
-            <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
+        <div className="mx-auto my-3 w-full max-w-5xl p-3 sm:my-6 sm:p-6">
+            <div className="overflow-hidden rounded-xl border border-border bg-card shadow-xl">
 
                 {/* Header */}
-                <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 px-6 py-4">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h2 className="text-xl font-bold text-gray-900">
+                <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 px-4 py-4 sm:px-6">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="min-w-0">
+                            <h2 className="text-lg font-bold text-foreground sm:text-xl">
                                 {mode === "create" ? "Nueva Actividad" : "Editar Actividad"}
                             </h2>
-                            <p className="text-sm text-gray-600 mt-0.5">
+                            <p className="mt-0.5 text-sm text-muted-foreground">
                                 {mode === "create"
                                     ? "Complete los campos para agregar una nueva actividad"
                                     : "Modifique los campos de la actividad"}
@@ -126,11 +126,10 @@ export default function ActivityForm() {
                         </div>
                         <Button
                             variant="ghost"
-                            size="sm"
-                            className="text-gray-600 hover:text-gray-900"
+                            className="h-11 shrink-0 self-start text-muted-foreground hover:text-foreground sm:h-9"
                             onClick={finishForm}
                         >
-                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            <ArrowLeft data-icon="inline-start" />
                             Volver
                         </Button>
                     </div>
@@ -142,7 +141,7 @@ export default function ActivityForm() {
 
                         <form onSubmit={form.handleSubmit(sendForm, (errors) => console.error("Errores de validación:", errors))}>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                            <div className="my-6 grid grid-cols-1 gap-6 md:grid-cols-2">
 
                                 <FormComponent
                                     form={form}
@@ -159,16 +158,16 @@ export default function ActivityForm() {
 
                             </div>
 
-                            <div className="flex justify-end space-x-4 pt-5 border-t border-gray-200">
+                            <div className="flex flex-col-reverse gap-2 border-t border-border pt-5 sm:flex-row sm:justify-end">
                                 <Button
-                                    type="button" variant="outline" className="cursor-pointer"
+                                    type="button" variant="outline" className="h-11 w-full cursor-pointer sm:h-9 sm:w-auto"
                                     onClick={() => finishForm()}
                                 >
                                     Cancelar
                                 </Button>
                                 <Button
                                     type="submit"
-                                    className="bg-red-700 hover:bg-red-800 cursor-pointer"
+                                    className="h-11 w-full cursor-pointer bg-brand-vermilion hover:bg-brand-vermilion-dark sm:h-9 sm:w-auto"
                                 >
                                     {mode === "create" ? "Guardar Actividad" : "Actualizar Actividad"}
                                 </Button>

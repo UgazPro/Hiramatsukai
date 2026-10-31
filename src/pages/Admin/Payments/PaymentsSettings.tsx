@@ -108,13 +108,13 @@ export const PaymentsSettings = ({
                             Información que verán los alumnos para realizar sus pagos.
                         </CardDescription>
                     </div>
-                    <Button size="sm" onClick={openMonthlyForm} className="w-full sm:w-auto">
+                    <Button onClick={openMonthlyForm} className="h-11 w-full sm:h-9 sm:w-auto">
                         <Plus className="h-4 w-4 mr-2" />
                         Nueva Mensualidad
                     </Button>
                 </div>
             </CardHeader>
-            <CardContent className="px-6">
+            <CardContent className="px-4 sm:px-6">
                 {monthlyFormOpen && (
                     <MonthlyPaymentForm
                         key={selectedMonthlyPayment ? `monthly-${selectedMonthlyPayment.id}` : "monthly-new"}
@@ -126,32 +126,32 @@ export const PaymentsSettings = ({
                 )}
                 {isMonthlyPaymentsLoading ? (
                     <div className="space-y-3">
-                        <div className="h-16 w-full rounded-md bg-gray-200 animate-pulse" />
-                        <div className="h-16 w-full rounded-md bg-gray-200 animate-pulse" />
+                        <div className="h-16 w-full rounded-md bg-muted animate-pulse" />
+                        <div className="h-16 w-full rounded-md bg-muted animate-pulse" />
                     </div>
                 ) : monthlyPayments.length === 0 ? (
-                    <p className="text-sm text-gray-500">No hay métodos de pago registrados.</p>
+                    <p className="text-sm text-muted-foreground">No hay métodos de pago registrados.</p>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {monthlyPayments.map((item) => (
                             <Card key={item.id}>
                                 <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                                    <div>
+                                    <div className="min-w-0">
                                         <div className="flex items-center gap-2">
-                                            <CreditCard className="h-4 w-4 text-yellow-600" />
-                                            <p className="font-semibold text-gray-900">Mensualidad</p>
+                                            <CreditCard className="h-4 w-4 text-brand-gold-deep" />
+                                            <p className="font-semibold text-foreground">Mensualidad</p>
                                         </div>
-                                        <span className="text-gray-700 text-xs">{item.description}</span>
+                                        <span className="text-xs text-muted-foreground">{item.description}</span>
                                     </div>
 
-                                    <div className="flex sm:flex-col items-center sm:items-end gap-3 sm:gap-2">
-                                        <p className="font-semibold text-gray-900 text-xl">{item.amount}$</p>
+                                    <div className="flex items-center gap-3 sm:flex-col sm:items-end sm:gap-2">
+                                        <p className="text-xl font-semibold text-foreground">{item.amount}$</p>
                                         <Button
-                                            size="sm"
                                             variant="outline"
                                             onClick={() => openMonthlyEditForm(item)}
+                                            className="h-11 sm:h-9"
                                         >
-                                            <PenSquare className="h-4 w-4 mr-2" />
+                                            <PenSquare data-icon="inline-start" />
                                             Editar
                                         </Button>
                                     </div>
@@ -170,13 +170,13 @@ export const PaymentsSettings = ({
                             Información que verán los alumnos para realizar sus pagos.
                         </CardDescription>
                     </div>
-                    <Button size="sm" onClick={openPaymentMethodForm} className="w-full sm:w-auto">
+                    <Button onClick={openPaymentMethodForm} className="h-11 w-full sm:h-9 sm:w-auto">
                         <Plus className="h-4 w-4 mr-2" />
                         Agregar Método de Pago
                     </Button>
                 </div>
             </CardHeader>
-            <CardContent className="px-6 pb-6">
+            <CardContent className="px-4 pb-4 sm:px-6 sm:pb-6">
                 {paymentMethodFormOpen && (
                     <PaymentMethodForm
                         key={selectedPaymentMethod ? `payment-method-${selectedPaymentMethod.id}` : "payment-method-new"}
@@ -189,59 +189,60 @@ export const PaymentsSettings = ({
 
                 {isPaymentMethodsLoading ? (
                     <div className="space-y-3">
-                        <div className="h-16 w-full rounded-md bg-gray-200 animate-pulse" />
-                        <div className="h-16 w-full rounded-md bg-gray-200 animate-pulse" />
+                        <div className="h-16 w-full rounded-md bg-muted animate-pulse" />
+                        <div className="h-16 w-full rounded-md bg-muted animate-pulse" />
                     </div>
                 ) : paymentMethods.length === 0 ? (
-                    <p className="text-sm text-gray-500">No hay métodos de pago registrados.</p>
+                    <p className="text-sm text-muted-foreground">No hay métodos de pago registrados.</p>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {paymentMethods.map((method) => (
                             <Card key={method.id}>
-                                <CardContent className="space-y-1 p-2">
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                            <CreditCard className="h-4 w-4 text-yellow-600" />
-                                            <p className="font-semibold text-gray-900">{namePaymentMethod(method)}</p>
+                                <CardContent className="flex flex-col gap-2 p-3 sm:p-4">
+                                    <div className="flex items-start justify-between gap-2">
+                                        <div className="flex min-w-0 items-center gap-2">
+                                            <CreditCard className="h-4 w-4 shrink-0 text-brand-gold-deep" />
+                                            <p className="min-w-0 truncate font-semibold text-foreground">{namePaymentMethod(method)}</p>
                                         </div>
                                         <Button
-                                            size="sm"
                                             variant="outline"
                                             onClick={() => openPaymentMethodEditForm(method)}
+                                            aria-label={`Editar ${namePaymentMethod(method)}`}
+                                            className="h-11 shrink-0 sm:h-9"
                                         >
-                                            <PenSquare className="h-4 w-4 mr-2" />
+                                            <PenSquare data-icon="inline-start" />
                                             <span className="hidden lg:block">Editar</span>
                                         </Button>
                                     </div>
 
-                                    <div className="text-sm text-gray-700 space-y-2">
+                                    <div className="flex flex-col gap-1.5 text-sm text-foreground">
                                         {method.bank && (
                                             <p className="flex items-center gap-2">
-                                                <Building2 className="h-4 w-4 text-gray-500" />
+                                                <Building2 className="h-4 w-4 text-muted-foreground" />
                                                 {method.bank}
                                             </p>
                                         )}
                                         {method.identification && (
                                             <p className="flex items-center gap-2">
-                                                <UserCircle className="h-4 w-4 text-gray-500" />
+                                                <UserCircle className="h-4 w-4 text-muted-foreground" />
                                                 {method.identification}
                                             </p>
                                         )}
                                         {method.phone !== "" && (
                                             <p className="flex items-center gap-2">
-                                                <Phone className="h-4 w-4 text-gray-500" />
+                                                <Phone className="h-4 w-4 text-muted-foreground" />
                                                 {method.phone}
                                             </p>
                                         )}
                                         {method.email !== "" && (
                                             <p className="flex items-center gap-2">
-                                                <Mail className="h-4 w-4 text-gray-500" />
+                                                <Mail className="h-4 w-4 text-muted-foreground" />
                                                 {method.email}
                                             </p>
                                         )}
                                         {method.account !== "" && (
                                             <p className="flex items-center gap-2">
-                                                <Mail className="h-4 w-4 text-gray-500" />
+                                                <Mail className="h-4 w-4 text-muted-foreground" />
                                                 {method.account}
                                             </p>
                                         )}
@@ -279,7 +280,7 @@ const MonthlyPaymentForm = ({ initialData, onSubmit, onCancel, submitText }: Mon
     }
 
     return (
-        <form onSubmit={handleSubmit} className="border border-gray-300 rounded-lg p-4 mb-4 space-y-4">
+        <form onSubmit={handleSubmit} className="mb-4 flex flex-col gap-4 rounded-lg border border-border p-3 sm:p-4">
             <div className="space-y-2">
                 <Label htmlFor="monthly-amount">Precio</Label>
                 <Input
@@ -305,8 +306,8 @@ const MonthlyPaymentForm = ({ initialData, onSubmit, onCancel, submitText }: Mon
                 />
             </div>
 
-            <div className="flex justify-end gap-2">
-                <Button type="button" variant="secondary" onClick={onCancel}>
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                <Button type="button" variant="secondary" onClick={onCancel} className="h-11 w-full sm:h-9 sm:w-auto">
                     Cancelar
                 </Button>
                 <Button type="submit">
@@ -364,7 +365,7 @@ const PaymentMethodForm = ({ initialData, onSubmit, onCancel, submitText }: Paym
     }
 
     return (
-        <form onSubmit={handleSubmit} className="border border-gray-300 rounded-lg p-4 mb-4 space-y-4">
+        <form onSubmit={handleSubmit} className="mb-4 flex flex-col gap-4 rounded-lg border border-border p-3 sm:p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                     <Label>Método de pago</Label>
@@ -460,8 +461,8 @@ const PaymentMethodForm = ({ initialData, onSubmit, onCancel, submitText }: Paym
                 )}
             </div>
 
-            <div className="flex justify-end gap-2">
-                <Button type="button" variant="secondary" onClick={onCancel}>
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                <Button type="button" variant="secondary" onClick={onCancel} className="h-11 w-full sm:h-9 sm:w-auto">
                     Cancelar
                 </Button>
                 <Button

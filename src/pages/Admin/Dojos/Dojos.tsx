@@ -14,6 +14,7 @@ import DojoCardView from "./DojoCardView";
 import DojosSkeleton from "./DojosSkeleton";
 import SearchFilterComponent from "@/components/Filters/SearchFilter";
 import { useUserData } from "@/helpers/token";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { toast } from "sonner";
 
 interface DojoDeleteResponse {
@@ -77,10 +78,11 @@ export default function Dojos() {
         setScreen("main");
     }, [setScreen]);
 
+    const isMobile = useMediaQuery("(max-width: 639px)");
+
     useEffect(() => {
-        const isMobile = window.innerWidth < 1024;
-        setViewMode(isMobile ? "cards" : "table");
-    }, [setViewMode]);
+        if (isMobile) setViewMode("cards");
+    }, [isMobile, setViewMode]);
 
     const views = [
         { key: "table", icon: List },
@@ -94,48 +96,47 @@ export default function Dojos() {
 
                 primaryChildren={
 
-                    <div className="mx-auto p-4 md:p-6">
+                    <div className="mx-auto w-full max-w-7xl p-3 sm:p-4 md:p-6">
 
-                        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                            <div>
-                                <h1 className="text-3xl font-bold text-gray-900">Dojos</h1>
-                                <p className="text-gray-600 mt-2">
+                        <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
+                            <div className="min-w-0">
+                                <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Dojos</h1>
+                                <p className="mt-2 text-muted-foreground">
                                     Gestión de dojos y su jerarquía
                                 </p>
                             </div>
 
-                            <div className="flex flex-wrap items-center gap-3">
+                            <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center lg:w-auto lg:flex-nowrap">
 
-                                <div className="w-full lg:w-auto">
+                                <div className="w-full sm:w-64 lg:w-72">
                                     <SearchFilterComponent
                                         searchTerm={searchTerm}
                                         setSearchTerm={setSearchTerm}
                                         placeHolder="Buscar por nombre, código o dirección..."
-                                        width="w-full lg:w-50"
+                                        width="w-full"
                                     />
                                 </div>
 
                                 {canModify && (
-                                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
-                                        <Button
-                                            variant='secondary'
-                                            size="sm"
-                                            onClick={() => startCreate()}
-                                            className={`rounded-none border-r border-gray-300 bg-yellow-500 text-white hover:bg-yellow-600`}
-                                        >
-                                            <PlusCircle /> Nuevo Dojo
-                                        </Button>
-                                    </div>
+                                    <Button
+                                        variant="gold"
+                                        onClick={() => startCreate()}
+                                        className="h-11 w-full sm:h-10 sm:w-auto"
+                                    >
+                                        <PlusCircle data-icon="inline-start" /> Nuevo Dojo
+                                    </Button>
                                 )}
 
-                                <div className="hidden lg:flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
+                                <div className="hidden items-center overflow-hidden rounded-lg border border-border bg-card sm:flex">
                                     {views.map(({ key, icon: Icon }) => (
                                         <Button
                                             key={key}
-                                            variant={viewMode === key ? "secondary" : "ghost"}
+                                            variant="ghost"
                                             size="sm"
                                             onClick={() => setViewMode(key as DojoViewMode)}
-                                            className={`rounded-none border-r border-gray-300 ${viewMode === key ? "bg-yellow-500 text-white hover:bg-yellow-600" : "text-gray-700 hover:bg-gray-100"}`}
+                                            aria-label={key === "table" ? "Vista de tabla" : "Vista de tarjetas"}
+                                            aria-pressed={viewMode === key}
+                                            className={`h-11 rounded-none border-r border-border px-3 last:border-r-0 sm:h-10 ${viewMode === key ? "bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep hover:text-white" : "text-foreground hover:bg-muted"}`}
                                         >
                                             <Icon className="h-4 w-4" />
                                         </Button>
@@ -171,7 +172,7 @@ export default function Dojos() {
                                 )}
 
                                 {filtered.length > 0 && (
-                                    <div className="hidden lg:block mt-4">
+                                    <div className="mt-4">
                                         <PaginationComponent
                                             currentPage={currentPage}
                                             totalPages={totalPages}
@@ -187,8 +188,8 @@ export default function Dojos() {
                                 )}
 
                                 {filtered.length === 0 && (
-                                    <div className="text-center py-20">
-                                        <p className="text-gray-500">No se encontraron dojos</p>
+                                    <div className="py-20 text-center">
+                                        <p className="text-muted-foreground">No se encontraron dojos</p>
                                     </div>
                                 )}
                             </div>

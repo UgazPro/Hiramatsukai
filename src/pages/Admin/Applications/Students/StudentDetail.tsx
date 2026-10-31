@@ -21,7 +21,7 @@ import { IStudent, StudentRanks } from "@/services/students/student.interface";
 
 const getBeltColor = (grado: string) => {
     const colors: Record<string, string> = {
-        Blanco: "bg-gray-100 text-gray-800 border-gray-300",
+        Blanco: "bg-gray-100 text-gray-800 border-border",
         Amarillo: "bg-yellow-100 text-yellow-800 border-yellow-300",
         Naranja: "bg-orange-100 text-orange-800 border-orange-300",
         Verde: "bg-green-100 text-green-800 border-green-300",
@@ -30,7 +30,7 @@ const getBeltColor = (grado: string) => {
         Negro: "bg-gray-900 text-white border-gray-950",
         Rojo: "bg-red-800 text-white border-red-900",
     };
-    return colors[grado] || "bg-gray-100 text-gray-800 border-gray-300";
+    return colors[grado] || "bg-gray-100 text-gray-800 border-border";
 };
 
 export default function StudentDetail() {
@@ -58,22 +58,21 @@ export default function StudentDetail() {
     // };
 
     return (
-        <div className="min-h-full p-6 w-full max-w-4xl mx-auto my-6">
-            <div className="bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden">
-                <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 p-6">
+        <div className="mx-auto my-3 min-h-full w-full max-w-4xl p-3 sm:my-6 sm:p-6">
+            <div className="overflow-hidden rounded-xl border border-border bg-card shadow-xl">
+                <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4 sm:p-6">
                     <Button
                         variant="ghost"
-                        size="sm"
-                        className="mb-4 text-gray-600 hover:text-gray-900"
+                        className="mb-4 h-11 text-muted-foreground hover:text-foreground sm:h-9"
                         onClick={closeStudentDetail}
                     >
-                        <ArrowLeft className="h-4 w-4 mr-2" />
+                        <ArrowLeft data-icon="inline-start" />
                         Volver a alumnos
                     </Button>
 
-                    <div className="flex items-center gap-4">
-                        <div className="h-16 w-16 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5">
-                            <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
+                    <div className="flex min-w-0 items-start gap-3 sm:gap-4">
+                        <div className="h-16 w-16 shrink-0 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                            <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
                                 {student?.profileImg ? (
                                     <img
                                         src={student.profileImg}
@@ -81,16 +80,16 @@ export default function StudentDetail() {
                                         className="h-full w-full rounded-full object-cover"
                                     />
                                 ) : (
-                                    <User className="h-8 w-8 text-yellow-600" />
+                                    <User className="h-8 w-8 text-brand-gold-deep" />
                                 )}
                             </div>
                         </div>
-                        <div>
-                            <h2 className="text-2xl font-bold text-gray-900">
+                        <div className="min-w-0">
+                            <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">
                                 {student?.name ?? ""} {student?.lastName ?? ""}
                             </h2>
                             {student?.identification && (
-                                <p className="text-gray-600 text-sm mt-1">
+                                <p className="text-muted-foreground text-sm mt-1">
                                     C.I: {student.identification}
                                 </p>
                             )}
@@ -140,7 +139,7 @@ export default function StudentDetail() {
                             {pendingCount > 0 && (
                                 <Badge
                                     variant="outline"
-                                    className="bg-yellow-50 text-yellow-700 border-yellow-200 text-sm px-3 py-1"
+                                    className="bg-brand-gold/15 text-brand-gold-deep border-brand-gold/30 text-sm px-3 py-1"
                                 >
                                     {pendingCount} pendientes
                                 </Badge>
@@ -149,7 +148,7 @@ export default function StudentDetail() {
                     )}
                 </div>
 
-                <div className="p-6">
+                <div className="p-4 sm:p-6">
                     {isLoading && (
                         <div className="flex items-center justify-center py-16">
                             <Loader message="Cargando historial de exámenes..." />
@@ -157,8 +156,8 @@ export default function StudentDetail() {
                     )}
 
                     {!isLoading && exams.length === 0 && (
-                        <div className="flex flex-col items-center justify-center py-16 text-gray-500">
-                            <GraduationCap className="h-16 w-16 mb-4 text-gray-300" />
+                        <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+                            <GraduationCap className="h-16 w-16 mb-4 text-border" />
                             <p className="text-lg font-medium">
                                 No hay exámenes registrados
                             </p>
@@ -171,19 +170,19 @@ export default function StudentDetail() {
 
                     {!isLoading && exams.length > 0 && (
                         <div className="space-y-4">
-                            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                <Award className="h-5 w-5 text-yellow-600" />
+                            <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                                <Award className="h-5 w-5 text-brand-gold-deep" />
                                 Historial de Exámenes
                             </h3>
                             {exams.map((exam: IExam) => (
                                 <div
                                     key={exam.id}
-                                    className={`p-5 rounded-xl border-2 transition-all ${
+                                    className={`rounded-xl border-2 p-4 transition-all sm:p-5 ${
                                         exam.status === "Aprobado"
                                             ? "border-green-200 bg-green-50/20"
                                             : exam.status === "Reprobado"
                                               ? "border-red-200 bg-red-50/20"
-                                              : "border-yellow-200 bg-yellow-50/20"
+                                              : "border-brand-gold/30 bg-brand-gold/10"
                                     }`}
                                 >
                                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -195,17 +194,17 @@ export default function StudentDetail() {
                                                         : exam.status ===
                                                             "Reprobado"
                                                           ? "bg-red-100 text-red-700"
-                                                          : "bg-yellow-100 text-yellow-700"
+                                                          : "bg-brand-gold/15 text-brand-gold-deep"
                                                 }`}
                                             >
                                                 <Award className="h-5 w-5" />
                                             </div>
-                                            <div>
-                                                <p className="font-semibold text-gray-900">
+                                            <div className="min-w-0">
+                                                <p className="font-semibold break-words text-foreground">
                                                     {exam.activity?.name ??
                                                         "Examen"}
                                                 </p>
-                                                <p className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
+                                                <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
                                                     <CalendarDays className="h-3 w-3" />
                                                     {dateFormatterIntoLong(
                                                         exam.createdAt ??
@@ -222,7 +221,7 @@ export default function StudentDetail() {
                                                     : exam.status ===
                                                         "Reprobado"
                                                       ? "bg-red-100 text-red-800 border-red-200"
-                                                      : "bg-yellow-100 text-yellow-800 border-yellow-200"
+                                                      : "bg-yellow-100 text-yellow-800 border-brand-gold/30"
                                             }
                                         >
                                             {exam.status === "Aprobado" && (
@@ -235,12 +234,12 @@ export default function StudentDetail() {
                                         </Badge>
                                     </div>
 
-                                    <div className="mt-3 flex flex-wrap items-center gap-2 text-sm ml-[52px]">
-                                        <span className="text-gray-500 text-xs">
+                                    <div className="mt-3 flex flex-wrap items-center gap-2 text-sm sm:ml-[52px]">
+                                        <span className="text-muted-foreground text-xs">
                                             {exam.ranks?.martialArt
                                                 ?.martialArt ?? ""}
                                         </span>
-                                        <span className="text-gray-300">|</span>
+                                        <span className="text-border">|</span>
                                         <Badge
                                             className={getBeltColor(
                                                 exam.previousRank?.belt ?? "",
@@ -248,7 +247,7 @@ export default function StudentDetail() {
                                         >
                                             {exam.previousRank?.belt ?? "?"}
                                         </Badge>
-                                        <ChevronRight className="h-3 w-3 text-gray-400" />
+                                        <ChevronRight className="h-3 w-3 text-muted-foreground" />
                                         <Badge
                                             className={getBeltColor(
                                                 exam.ranks?.belt ?? "",
@@ -259,10 +258,10 @@ export default function StudentDetail() {
                                         {(exam.previousRank?.code ||
                                             exam.ranks?.code) && (
                                             <>
-                                                <span className="text-gray-300">
+                                                <span className="text-border">
                                                     |
                                                 </span>
-                                                <span className="text-gray-500 text-xs">
+                                                <span className="text-muted-foreground text-xs">
                                                     {exam.previousRank?.code ??
                                                         ""}
                                                     {exam.previousRank

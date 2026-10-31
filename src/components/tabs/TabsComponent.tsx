@@ -22,7 +22,7 @@ export default function TabsComponent<T extends string>({
 }: TabsComponentProps<T>) {
   return (
     <div
-      className={`flex flex-col sm:flex-row sm:flex-wrap gap-2 p-1 bg-gray-100 rounded-xl border border-gray-300 ${className}`}
+      className={`flex gap-2 overflow-x-auto rounded-xl border border-border bg-muted p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${className}`}
     >
       {tabs.map((tab) => {
         const isActive = activeTab === tab.value;
@@ -32,12 +32,14 @@ export default function TabsComponent<T extends string>({
             key={tab.value}
             variant={isActive ? "secondary" : "ghost"}
             onClick={() => onChange(tab.value)}
-            className={`sm:flex-1 rounded-lg transition-all duration-300 ${isActive
-                ? "bg-linear-to-r from-yellow-500 to-yellow-700 text-white shadow-md"
-                : "text-gray-700 hover:bg-gray-200"
-              }`}
+            aria-pressed={isActive}
+            className={`min-h-11 shrink-0 rounded-lg px-3 text-xs transition-all duration-300 sm:flex-1 sm:px-4 sm:text-sm ${
+              isActive
+                ? "bg-brand-gold text-brand-sumi shadow-md hover:bg-brand-gold-deep hover:text-white"
+                : "text-foreground hover:bg-accent"
+            }`}
           >
-            {tab.icon && <span className="mr-2">{tab.icon}</span>}
+            {tab.icon && <span className="mr-2 shrink-0">{tab.icon}</span>}
             {tab.label}
           </Button>
         );

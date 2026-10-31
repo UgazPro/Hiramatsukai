@@ -29,7 +29,7 @@ export default function ActivityDetailView() {
         setScreen("main");
       }}
       subtitle={
-        <div className="flex gap-2 mt-2">
+        <div className="mt-2 flex flex-wrap gap-2">
           <Badge className="bg-blue-100 text-blue-800 border-blue-200">
             {selectedActivity.type}
           </Badge>
@@ -43,7 +43,7 @@ export default function ActivityDetailView() {
       }
       avatar={
         <div className="h-12 w-12 md:h-16 md:w-16 rounded-full bg-yellow-100 flex items-center justify-center shrink-0">
-          <Tag className="h-5 w-5 md:h-7 md:w-7 text-yellow-600" />
+          <Tag className="h-5 w-5 md:h-7 md:w-7 text-brand-gold-deep" />
         </div>
       }
     />
@@ -60,7 +60,7 @@ export default function ActivityDetailView() {
       }}
       onPrimary={canModify ? () => startEdit(selectedActivity) : undefined}
     >
-      <div className="text-sm text-gray-600">
+      <div className="text-sm text-muted-foreground">
         Creada el{" "}
         {format(new Date(selectedActivity.createdDate), "dd/MM/yyyy HH:mm", {
           locale: es,
@@ -75,7 +75,7 @@ export default function ActivityDetailView() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <DetailSection icon={<Calendar className="h-5 w-5 text-yellow-600" />} title="Información de la actividad">
+        <DetailSection icon={<Calendar className="h-5 w-5 text-brand-gold-deep" />} title="Información de la actividad">
           <div className="space-y-4">
 
             <InfoItem
@@ -102,29 +102,29 @@ export default function ActivityDetailView() {
         </DetailSection>
 
         <DetailSection
-          icon={<Users className="h-5 w-5 text-yellow-600" />}
+          icon={<Users className="h-5 w-5 text-brand-gold-deep" />}
           title="Dojos participantes"
         >
 
         <div className="space-y-2">
 
           {selectedActivity.ActivityDojos.length === 0 && (
-            <p className="text-sm text-gray-500">No hay dojos asignados</p>
+            <p className="text-sm text-muted-foreground">No hay dojos asignados</p>
           )}
 
           {(selectedActivity.ActivityDojos as IDojoEdit[]).map((d, i) => (
             <div
               key={i}
-              className="flex items-center justify-between p-3 rounded-lg border bg-gray-50"
+              className="flex items-center justify-between p-3 rounded-lg border bg-muted/40"
             >
-              <div className="flex items-center gap-2">
-                <Building2 className="h-4 w-4 text-yellow-600" />
-                <p className="font-medium">
+              <div className="flex min-w-0 items-center gap-2">
+                <Building2 className="h-4 w-4 shrink-0 text-brand-gold-deep" />
+                <p className="min-w-0 truncate font-medium">
                   {d.dojo?.dojo || "Dojo"}
                 </p>
               </div>
 
-              <Badge variant="outline">Participa</Badge>
+              <Badge variant="outline" className="shrink-0">Participa</Badge>
             </div>
           ))}
         </div>

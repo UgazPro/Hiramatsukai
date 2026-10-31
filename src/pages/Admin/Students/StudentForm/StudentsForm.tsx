@@ -234,24 +234,24 @@ export default function StudentsForm() {
 
     return (
 
-        <div className="p-4 w-full">
+        <div className="w-full p-3 sm:p-4">
             <div className="relative">
                 {isBusy && (
                     <div className="absolute inset-0 z-20 flex items-center justify-center min-h-[400px]">
-                        <Loader2 className="h-8 w-8 animate-spin text-[var(--yellowColor)]" />
+                        <Loader2 className="h-8 w-8 animate-spin text-brand-gold" />
                     </div>
                 )}
 
-                <div className={`bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden ${isBusy ? "opacity-40 pointer-events-none" : ""}`}>
+                <div className={`overflow-hidden rounded-xl border border-border bg-card shadow-xl ${isBusy ? "opacity-40 pointer-events-none" : ""}`}>
 
                 {/* Header */}
-                <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-200 px-6 py-4">
+                <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 px-4 py-4 sm:px-6">
                     <div className="flex flex-col md:flex-row gap-5 md:gap-0 md:justify-between items-center">
                         <div className="md:order-1 order-2">
-                            <h2 className="text-xl font-bold text-gray-900">
+                            <h2 className="text-xl font-bold text-foreground">
                                 {mode === "create" ? "Nuevo Estudiante" : "Editar Estudiante"}
                             </h2>
-                            <p className="text-sm text-gray-600 mt-0.5">
+                            <p className="text-sm text-muted-foreground mt-0.5">
                                 {mode === "create"
                                     ? "Complete los campos para agregar un nuevo estudiante al dojo"
                                     : "Modifique los campos del estudiante"}
@@ -259,11 +259,10 @@ export default function StudentsForm() {
                         </div>
                         <Button
                             variant="ghost"
-                            size="sm"
-                            className="mb-3 text-gray-600 hover:text-gray-900 md:order-2 order-1"
+                            className="order-1 mb-3 h-11 shrink-0 text-muted-foreground hover:text-foreground md:order-2 sm:h-9"
                             onClick={finishForm}
                         >
-                            <ArrowLeft className="h-4 w-4 mr-2" />
+                            <ArrowLeft data-icon="inline-start" />
                             Volver
                         </Button>
                     </div>
@@ -273,7 +272,7 @@ export default function StudentsForm() {
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(sendForm)}>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
 
                                 {/* Col 1: username, name, lastName, identification + ProfilePicture */}
                                 <div className="space-y-4">
@@ -326,11 +325,11 @@ export default function StudentsForm() {
                             </div>
 
                             {/* Footer */}
-                            <div className="flex lg:justify-end items-center justify-between  pt-5 border-t border-gray-200 mt-5">
+                            <div className="mt-5 flex flex-col-reverse items-stretch gap-2 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-end">
                                 <Button
                                     type="button"
                                     variant="outline"
-                                    className="cursor-pointer"
+                                    className="h-11 w-full cursor-pointer sm:h-9 sm:w-auto"
                                     onClick={finishForm}
                                     disabled={isBusy}
                                 >
@@ -339,7 +338,7 @@ export default function StudentsForm() {
                                 <Button
                                     type="submit"
                                     disabled={isBusy}
-                                    className="bg-red-700 hover:bg-red-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="h-11 w-full cursor-pointer bg-brand-vermilion hover:bg-brand-vermilion-dark disabled:cursor-not-allowed disabled:opacity-50 sm:h-9 sm:w-auto"
                                 >
                                     {isSubmitting
                                         ? (mode === "create" ? "Guardando..." : "Actualizando...")

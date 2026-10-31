@@ -123,12 +123,13 @@ export default function ApplyStudents({
           {canManage && (
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                 <Input
+                  aria-label="Buscar postulante"
                   placeholder="Buscar postulante..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white border-gray-300"
+                  className="h-11 border-border bg-card pl-10 text-base"
                 />
               </div>
             </div>
@@ -141,8 +142,8 @@ export default function ApplyStudents({
           )}
 
           {!isLoading && !filtered.length && (
-            <div className="flex flex-col items-center justify-center py-16 text-gray-500">
-              <Users className="h-16 w-16 mb-4 text-gray-300" />
+            <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+              <Users className="h-16 w-16 mb-4 text-border" />
               <p className="text-lg font-medium">
                 No hay postulaciones activas
               </p>
@@ -165,16 +166,16 @@ export default function ApplyStudents({
                 return (
                   <Card
                     key={postulacion.id}
-                    className="h-full border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 overflow-hidden group"
+                    className="h-full border border-border hover:border-brand-gold hover:shadow-lg transition-all duration-300 overflow-hidden group"
                   >
                     <CardContent className="flex flex-col h-full">
-                      <div className="p-4 bg-linear-to-br from-white to-yellow-200 border-b border-gray-200 flex flex-col items-center text-center shrink-0">
-                        <div className="h-14 w-14 rounded-full bg-linear-to-br from-yellow-500 to-red-500 p-0.5 mb-3">
-                          <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
-                            <User className="h-7 w-7 text-yellow-600" />
+                      <div className="p-4 bg-linear-to-br from-card to-brand-gold/15 border-b border-border flex flex-col items-center text-center shrink-0">
+                        <div className="h-14 w-14 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5 mb-3">
+                          <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
+                            <User className="h-7 w-7 text-brand-gold-deep" />
                           </div>
                         </div>
-                        <h3 className="font-bold text-gray-900 line-clamp-2 max-w-full">
+                        <h3 className="font-bold text-foreground line-clamp-2 max-w-full">
                           {postulacion.user?.name}{" "}
                           {postulacion.user?.lastName}
                         </h3>
@@ -188,7 +189,7 @@ export default function ApplyStudents({
                             {postulacion.currentRank?.belt ||
                               "Sin grado"}
                           </Badge>
-                          <ChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0" />
+                          <ChevronRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                           <Badge
                             className={getBeltColor(
                               postulacion.ranks?.belt || "",
@@ -201,29 +202,29 @@ export default function ApplyStudents({
 
                       <div className="p-5 space-y-4 flex flex-col flex-1">
                         <div className="flex items-center gap-2 text-sm">
-                          <span className="text-gray-500 flex-shrink-0">
+                          <span className="text-muted-foreground flex-shrink-0">
                             Arte marcial:
                           </span>
-                          <span className="font-medium text-gray-900 truncate">
+                          <span className="font-medium text-foreground truncate">
                             {martialArtName}
                           </span>
                         </div>
 
                         <div className="flex items-center gap-2 text-sm">
-                          <span className="text-gray-500 flex-shrink-0">
+                          <span className="text-muted-foreground flex-shrink-0">
                             Examen:
                           </span>
-                          <span className="font-medium text-gray-900 truncate">
+                          <span className="font-medium text-foreground truncate">
                             {postulacion.activity?.name || "—"}
                           </span>
                         </div>
 
                         {passed && (
                           <div className="flex items-center gap-2 text-sm">
-                            <span className="text-gray-500 flex-shrink-0">
+                            <span className="text-muted-foreground flex-shrink-0">
                               Fecha:
                             </span>
-                            <span className="font-medium text-gray-900 truncate">
+                            <span className="font-medium text-foreground truncate">
                               {dateFormatterIntoLong(
                                 postulacion.activity?.date,
                               )}
@@ -235,24 +236,22 @@ export default function ApplyStudents({
                           {passed && canManage ? (
                             <Button
                               variant="outline"
-                              size="sm"
-                              className="flex-1 border-yellow-300 text-yellow-700 hover:bg-yellow-50"
+                              className="h-11 flex-1 border-brand-gold/40 text-brand-gold-deep hover:bg-brand-gold/10"
                               onClick={() =>
                                 openManageDialog(
                                   postulacion.activityId,
                                 )
                               }
                             >
-                              <ClipboardCheck className="h-4 w-4 mr-2" />
+                              <ClipboardCheck data-icon="inline-start" />
                               Gestionar
                             </Button>
                           ) : (
                             <Button
                               variant="outline"
-                              size="sm"
-                              className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100"
+                              className="h-11 flex-1 border-border text-foreground hover:bg-muted"
                             >
-                              <Eye className="h-4 w-4 mr-2" />
+                              <Eye data-icon="inline-start" />
                               Ver
                             </Button>
                           )}
@@ -268,20 +267,20 @@ export default function ApplyStudents({
       )}
 
       <Dialog open={manageDialogOpen} onOpenChange={setManageDialogOpen}>
-        <DialogContent className="max-w-2xl bg-white border-0 shadow-2xl max-h-[90vh] flex flex-col">
+        <DialogContent className="flex max-w-2xl flex-col border-0 bg-card shadow-2xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-gray-900">
+            <DialogTitle className="text-2xl font-bold text-foreground">
               Registrar Resultados
             </DialogTitle>
             {manageActivity && (
-              <DialogDescription className="text-gray-600">
+              <DialogDescription className="text-muted-foreground">
                 {manageActivity.name} —{" "}
                 {dateFormatterIntoLong(manageActivity.date ?? new Date())}
               </DialogDescription>
             )}
           </DialogHeader>
 
-          <div className="overflow-y-auto flex-1 -mx-6 px-6">
+          <div className="-mx-4 flex-1 overflow-y-auto px-4 sm:-mx-6 sm:px-6">
             <div className="space-y-3 py-2">
               {manageActivity &&
                 appliedStudents
@@ -321,11 +320,11 @@ export default function ApplyStudents({
                               <User className="h-5 w-5" />
                             </div>
                             <div className="min-w-0">
-                              <p className="font-semibold text-gray-900 truncate">
+                              <p className="font-semibold text-foreground truncate">
                                 {student.user?.name}{" "}
                                 {student.user?.lastName}
                               </p>
-                              <p className="text-xs text-gray-500">
+                              <p className="text-xs text-muted-foreground">
                                 {martialArtName}
                               </p>
                             </div>
@@ -341,7 +340,7 @@ export default function ApplyStudents({
                                 {student.currentRank?.belt ||
                                   "?"}
                               </Badge>
-                              <ChevronRight className="h-3 w-3 text-gray-400" />
+                              <ChevronRight className="h-3 w-3 text-muted-foreground" />
                               <Badge
                                 className={getBeltColor(
                                   student.ranks?.belt || "",
@@ -377,10 +376,10 @@ export default function ApplyStudents({
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 mt-4">
+          <div className="mt-4 flex flex-col-reverse gap-2 border-t border-border pt-4 sm:flex-row sm:justify-end">
             <Button
               variant="outline"
-              className="border-gray-300 text-gray-700 hover:bg-gray-100"
+              className="h-11 border-border text-foreground hover:bg-muted sm:h-9 sm:w-auto"
               onClick={() => {
                 setManageDialogOpen(false);
                 setManageActivity(null);
@@ -390,7 +389,7 @@ export default function ApplyStudents({
             </Button>
             <Button
               disabled={isSaving}
-              className="bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white"
+              className="h-11 bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep hover:text-white sm:h-9 sm:w-auto"
               onClick={handleSaveResults}
             >
               {isSaving ? "Guardando..." : "Guardar Resultados"}

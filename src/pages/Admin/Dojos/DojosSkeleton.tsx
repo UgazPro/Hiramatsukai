@@ -6,9 +6,9 @@ import { useDojosStore } from "@/stores/dojos.store";
 
 function DojoCardSkeleton() {
     return (
-        <Card className="border border-gray-300 overflow-hidden py-0">
+        <Card className="border border-border overflow-hidden py-0">
             <CardContent className="p-0">
-                <div className="bg-linear-to-r from-yellow-50 to-red-50 p-4 border-b border-gray-200">
+                <div className="bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4 border-b border-border">
                     <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0 flex-1 space-y-2">
                             <Skeleton className="h-5 w-3/4" />
@@ -34,7 +34,7 @@ function DojoCardSkeleton() {
                     </div>
                 </div>
 
-                <div className="px-4 py-3 border-t border-gray-200 bg-gray-50">
+                <div className="px-4 py-3 border-t border-border bg-muted/40">
                     <div className="flex justify-end gap-2">
                         <Skeleton className="h-8 w-8" />
                         <Skeleton className="h-8 w-8" />

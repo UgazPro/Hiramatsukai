@@ -1,3 +1,4 @@
+
 interface InfoItemProps {
     label: string;
     value: React.ReactNode;
@@ -6,11 +7,11 @@ interface InfoItemProps {
 
 export function InfoItem({ label, value, icon }: InfoItemProps) {
     return (
-        <div>
-            <p className="text-sm text-gray-500 mb-1">{label}</p>
-            <div className="flex items-center gap-2">
+        <div className="min-w-0">
+            <p className="mb-1 text-sm text-muted-foreground">{label}</p>
+            <div className="flex min-w-0 items-center gap-2">
                 {icon}
-                <p className="font-medium text-gray-900">{value}</p>
+                <p className="min-w-0 font-medium break-words text-foreground">{value}</p>
             </div>
         </div>
     );

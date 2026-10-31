@@ -53,20 +53,20 @@ export function TableComponent<T>({ data, columns, onRowClick, rowClassName, loa
     };
 
     return (
-        <div className="rounded-lg border border-gray-300 shadow-sm overflow-x-auto bg-white">
+        <div className="overflow-x-auto rounded-lg border border-border bg-card shadow-sm">
             <Table>
-                <TableHeader className="bg-gray-50">
-                    <TableRow>
+                <TableHeader className="bg-muted/60">
+                    <TableRow className="border-border">
                         {columns.map((col, i) => (
                             <TableHead
                                 key={i}
-                                className={`text-gray-900 font-semibold py-4 ${col.headerClassName ?? ""}`}
+                                className={`whitespace-nowrap py-3 font-semibold text-foreground sm:py-4 ${col.headerClassName ?? ""}`}
                             >
                                 {col.orderBy ?
                                     <button
                                         type="button"
                                         onClick={() => handleSort(col.orderBy!)}
-                                        className={`flex items-center gap-1.5 cursor-pointer select-none transition-colors hover:text-yellow-700 ${activeSort.field === col.orderBy ? "text-yellow-700" : ""}`}
+                                        className={`flex cursor-pointer items-center gap-1.5 select-none transition-colors hover:text-brand-gold-deep ${activeSort.field === col.orderBy ? "text-brand-gold-deep" : ""}`}
                                     >
                                         {col.header}
                                         {activeSort.field === col.orderBy && activeSort.direction === "asc" ? (
@@ -74,7 +74,7 @@ export function TableComponent<T>({ data, columns, onRowClick, rowClassName, loa
                                         ) : activeSort.field === col.orderBy && activeSort.direction === "desc" ? (
                                             <ArrowDown className="h-3.5 w-3.5" />
                                         ) : (
-                                            <ArrowUpDown className="h-3.5 w-3.5 text-gray-400" />
+                                            <ArrowUpDown className="h-3.5 w-3.5 text-muted-foreground" />
                                         )}
                                     </button>
                                     :
@@ -101,7 +101,7 @@ export function TableComponent<T>({ data, columns, onRowClick, rowClassName, loa
                             <TableRow
                                 key={rowIndex}
                                 onClick={() => onRowClick?.(row)}
-                                className={`border-b border-gray-200 hover:bg-gray-50/80 ${onRowClick ? "cursor-pointer" : ""} ${rowClassName ? rowClassName(row) : ""}`}
+                                className={`border-b border-border transition-colors hover:bg-muted/50 ${onRowClick ? "cursor-pointer" : ""} ${rowClassName ? rowClassName(row) : ""}`}
                             >
                                 {columns.map((col, colIndex) => (
                                     <TableCell key={colIndex} className={`py-4 ${col.className ?? ""}`}>

@@ -195,7 +195,7 @@ export default function MyInformation() {
 
   if (!me) {
     return (
-      <div className="flex items-center justify-center h-full text-gray-500">
+      <div className="flex min-h-[50vh] items-center justify-center text-muted-foreground">
         No se encontraron datos del usuario.
       </div>
     );
@@ -210,30 +210,30 @@ export default function MyInformation() {
     : "";
 
   const renderReadItem = (label: string, value?: string) => (
-    <div className="space-y-1">
-      <Label>{label}</Label>
-      <p className="text-sm font-medium text-gray-900">{value || "—"}</p>
+    <div className="flex flex-col gap-1">
+      <p className="text-sm text-muted-foreground">{label}</p>
+      <p className="text-sm font-medium break-words text-foreground">{value || "—"}</p>
     </div>
   );
 
-  const renderEditItem = (label: string, children: React.ReactNode) => (
-    <div className="space-y-2">
-      <Label>{label}</Label>
+  const renderEditItem = (label: string, id: string, children: React.ReactNode) => (
+    <div className="flex flex-col gap-2">
+      <Label htmlFor={id}>{label}</Label>
       {children}
     </div>
   );
 
   return (
-    <div className="w-full px-2 sm:px-4 lg:px-6 pb-6">
-      <div className="flex flex-col lg:flex-row items-start justify-between gap-4 w-full h-full">
+    <div className="w-full p-3 sm:p-4 md:p-6">
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-6">
         {/* Header de perfil */}
-        <Card className="border-yellow-200 shadow-lg overflow-hidden">
-          <div className="h-24 bg-linear-to-r from-yellow-500 to-yellow-600" />
+        <Card className="overflow-hidden border-brand-gold/30 shadow-lg lg:col-span-1">
+          <div className="h-24 bg-linear-to-r from-brand-gold to-brand-gold-deep" />
 
           <CardContent className="relative pt-16 pb-4">
             <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
               <div className="relative group">
-                <div className="h-32 w-32 rounded-full border-4 border-white bg-yellow-500 shadow-xl overflow-hidden flex items-center justify-center">
+                <div className="h-32 w-32 rounded-full border-4 border-white bg-brand-gold shadow-xl overflow-hidden flex items-center justify-center">
                   {me.profileImg ? (
                     <img
                       src={me.profileImg}
@@ -246,7 +246,7 @@ export default function MyInformation() {
                     </span>
                   )}
                 </div>
-                <label className="absolute bottom-2 right-2 h-8 w-8 rounded-full bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110">
+                <label className="absolute right-1 bottom-1 flex size-10 cursor-pointer items-center justify-center rounded-full bg-brand-gold text-white transition-all duration-300 hover:scale-110 hover:bg-brand-gold-deep">
                   <Camera className="h-4 w-4" />
                   <input type="file" className="hidden" accept="image/*" onChange={handleAvatarChange} />
                 </label>
@@ -254,10 +254,10 @@ export default function MyInformation() {
             </div>
 
             <div className="text-center mt-2 space-y-3">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+              <h2 className="text-xl font-bold break-words text-foreground sm:text-2xl">
                 {me.name} {me.lastName}
               </h2>
-              <p className="text-gray-600 text-sm sm:text-base">@{me.username}</p>
+              <p className="text-muted-foreground text-sm sm:text-base">@{me.username}</p>
 
               <div className="flex flex-wrap justify-center gap-2">
                 <Badge className="bg-blue-100 text-blue-800 border-blue-200 text-xs sm:text-sm font-medium px-3 py-1">
@@ -277,22 +277,22 @@ export default function MyInformation() {
               {(rankMain || rankKobudo) && (
                 <div className="flex flex-wrap justify-center gap-2">
                   {rankMain && (
-                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium">
+                    <span className="max-w-full rounded-full bg-brand-gold/15 px-3 py-1 text-xs font-medium break-words text-brand-gold-deep sm:text-sm">
                       {rankMain}
                     </span>
                   )}
                   {rankKobudo && (
-                    <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs sm:text-sm font-medium">
+                    <span className="max-w-full rounded-full bg-brand-gold/15 px-3 py-1 text-xs font-medium break-words text-brand-gold-deep sm:text-sm">
                       {rankKobudo}
                     </span>
                   )}
                 </div>
               )}
 
-              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-gray-700 flex-wrap">
-                <div className="flex items-center gap-2">
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 text-foreground flex-wrap">
+                <div className="flex min-w-0 items-center gap-2">
                   <Mail className="h-4 w-4 shrink-0" />
-                  <span className="text-sm sm:text-base">{me.email}</span>
+                  <span className="min-w-0 truncate text-sm sm:text-base">{me.email}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="h-4 w-4 shrink-0" />
@@ -307,14 +307,14 @@ export default function MyInformation() {
           </CardContent>
         </Card>
 
-        <div className="w-full flex flex-col gap-2">
+        <div className="flex w-full flex-col gap-2 lg:col-span-2">
           {/* Información personal */}
-          <Card className="shadow-lg border-gray-200">
+          <Card className="shadow-lg border-border">
             <CardHeader className="pt-4">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-3">
                 <div>
                   <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-                    <User className="h-5 w-5 text-yellow-600" />
+                    <User className="h-5 w-5 text-brand-gold-deep" />
                     Información Personal
                   </CardTitle>
                   <CardDescription>
@@ -326,7 +326,7 @@ export default function MyInformation() {
                     <>
                       <Button
                         size="sm"
-                        className="bg-yellow-500 hover:bg-yellow-600"
+                        className="bg-brand-gold hover:bg-brand-gold-deep"
                         onClick={saveAll}
                         disabled={updateProfile.isPending}
                       >
@@ -354,65 +354,72 @@ export default function MyInformation() {
 
             <CardContent className="px-4 pb-8">
               {isEditing ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {renderEditItem("Nombre", (
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {renderEditItem("Nombre", "edit-name", (
                     <Input
+                      id="edit-name"
                       value={editData.name}
                       onChange={(e) => setEditData((prev) => ({ ...prev, name: sanitizeLetters(e.target.value) }))}
                     />
                   ))}
-                  {renderEditItem("Apellido", (
+                  {renderEditItem("Apellido", "edit-lastName", (
                     <Input
+                      id="edit-lastName"
                       value={editData.lastName}
                       onChange={(e) => setEditData((prev) => ({ ...prev, lastName: sanitizeLetters(e.target.value) }))}
                     />
                   ))}
-                  {renderEditItem("Nombre de usuario", (
+                  {renderEditItem("Nombre de usuario", "edit-username", (
                     <Input
+                      id="edit-username"
                       value={editData.username}
                       onChange={(e) => setEditData((prev) => ({ ...prev, username: sanitizeAlphanumeric(e.target.value) }))}
                     />
                   ))}
-                  {renderEditItem("Correo electrónico", (
+                  {renderEditItem("Correo electrónico", "edit-email", (
                     <>
                       <Input
+                        id="edit-email"
                         type="email"
                         value={editData.email}
                         onChange={(e) => setEditData((prev) => ({ ...prev, email: e.target.value }))}
                       />
                       {editData.email && !isValidEmail(editData.email) && (
-                        <p className="text-xs text-red-500">Correo electrónico inválido</p>
+                        <p className="text-xs text-destructive">Correo electrónico inválido</p>
                       )}
                     </>
                   ))}
-                  {renderEditItem("Teléfono", (
+                  {renderEditItem("Teléfono", "edit-phone", (
                     <PhoneFieldComponent
+                      id="edit-phone"
                       value={editData.phone}
                       countryCode={editData.phoneCountryCode}
                       onValueChange={(value) => setEditData((prev) => ({ ...prev, phone: value }))}
                       onCountryChange={(countryCode) => setEditData((prev) => ({ ...prev, phoneCountryCode: countryCode }))}
                     />
                   ))}
-                  {renderEditItem("Cédula", (
+                  {renderEditItem("Cédula", "edit-identification", (
                     <IdentificationFieldComponent
+                      id="edit-identification"
                       value={editData.identification}
                       typeValue={(editData.identificationType || "V") as "V" | "E" | "NIT" | "C.I"}
                       onValueChange={(value) => setEditData((prev) => ({ ...prev, identification: value }))}
                       onTypeChange={(type) => setEditData((prev) => ({ ...prev, identificationType: type }))}
                     />
                   ))}
-                  {renderEditItem("Dirección", (
+                  {renderEditItem("Dirección", "edit-address", (
                     <Input
+                      id="edit-address"
                       value={editData.address}
                       onChange={(e) => setEditData((prev) => ({ ...prev, address: e.target.value }))}
                     />
                   ))}
-                  {renderEditItem("Sexo", (
+                  {renderEditItem("Sexo", "edit-sex", (
                     <Select
                       value={editData.sex}
                       onValueChange={(value) => setEditData((prev) => ({ ...prev, sex: value }))}
                     >
-                      <SelectTrigger className="w-full">
+                      <SelectTrigger id="edit-sex" className="w-full">
                         <SelectValue placeholder="Seleccionar..." />
                       </SelectTrigger>
                       <SelectContent>
@@ -421,7 +428,7 @@ export default function MyInformation() {
                       </SelectContent>
                     </Select>
                   ))}
-                  {renderEditItem("Fecha de nacimiento", (
+                  {renderEditItem("Fecha de nacimiento", "edit-birthday", (
                     <CalendarFieldComponent
                       value={editData.birthday ? new Date(editData.birthday) : undefined}
                       onChange={(date) => setEditData((prev) => ({ ...prev, birthday: date ? date.toISOString() : "" }))}
@@ -446,11 +453,11 @@ export default function MyInformation() {
           </Card>
 
           {/* Seguridad */}
-          <Card className="shadow-lg border-gray-200">
+          <Card className="shadow-lg border-border">
             <CardHeader className="pt-4">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-3">
                 <div className="flex items-center gap-2">
-                  <Key className="h-5 w-5 text-yellow-600" />
+                  <Key className="h-5 w-5 text-brand-gold-deep" />
                   <CardTitle className="text-lg sm:text-xl">Cambiar Contraseña</CardTitle>
                 </div>
                 <Button
@@ -465,7 +472,7 @@ export default function MyInformation() {
               </div>
             </CardHeader>
             <CardContent className="px-4 pb-4">
-              <form onSubmit={handlePasswordSubmit} className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+              <form onSubmit={handlePasswordSubmit} className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
                 <div className="space-y-2">
                   <Label htmlFor="current-password">Contraseña actual</Label>
                   <Input
@@ -491,8 +498,8 @@ export default function MyInformation() {
                   {passwords.new && (
                     <div className="mt-2 space-y-1">
                       {PASSWORD_REQUIREMENTS.map((req) => (
-                        <p key={req.label} className={`text-xs flex items-center gap-1 ${req.test(passwords.new) ? "text-green-600" : "text-gray-500"}`}>
-                          <Check className={`h-3 w-3 ${req.test(passwords.new) ? "text-green-600" : "text-gray-400"}`} />
+                        <p key={req.label} className={`text-xs flex items-center gap-1 ${req.test(passwords.new) ? "text-green-600" : "text-muted-foreground"}`}>
+                          <Check className={`h-3 w-3 ${req.test(passwords.new) ? "text-green-600" : "text-muted-foreground"}`} />
                           {req.label}
                         </p>
                       ))}
@@ -511,14 +518,14 @@ export default function MyInformation() {
                     required
                   />
                   {passwords.confirm && (
-                    <p className={`text-xs flex items-center gap-1 ${passwordsMatch ? "text-green-600" : "text-red-500"}`}>
-                      <Check className={`h-3 w-3 ${passwordsMatch ? "text-green-600" : "text-red-500"}`} />
+                    <p className={`text-xs flex items-center gap-1 ${passwordsMatch ? "text-green-600" : "text-destructive"}`}>
+                      <Check className={`h-3 w-3 ${passwordsMatch ? "text-green-600" : "text-destructive"}`} />
                       {passwordsMatch ? "Las contraseñas coinciden" : "Las contraseñas no coinciden"}
                     </p>
                   )}
                 </div>
 
-                <Button type="submit" className="w-full sm:w-auto" disabled={!canSubmitPassword || changePasswordMutation.isPending}>
+                <Button type="submit" className="h-11 w-full sm:col-span-2 sm:w-auto sm:justify-self-start xl:col-span-3" disabled={!canSubmitPassword || changePasswordMutation.isPending}>
                   {changePasswordMutation.isPending ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />

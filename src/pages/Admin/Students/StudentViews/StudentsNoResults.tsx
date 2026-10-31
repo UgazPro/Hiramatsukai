@@ -8,18 +8,18 @@ export default function StudentsNoResults() {
 
     return (
 
-        <div className="text-center py-16 border-2 border-dashed border-gray-300 rounded-2xl bg-linear-to-b from-white to-gray-50">
-            <Users className="h-16 w-16 mx-auto text-gray-400 mb-4" />
-            <h3 className="text-xl font-semibold mb-2">
+        <div className="rounded-2xl border-2 border-dashed border-border bg-linear-to-b from-card to-muted/40 py-16 text-center">
+            <Users className="mx-auto mb-4 h-16 w-16 text-muted-foreground" />
+            <h3 className="mb-2 text-xl font-semibold text-foreground">
                 No se encontraron estudiantes
             </h3>
-            <p className="text-gray-600 mb-8 max-w-md mx-auto">
+            <p className="mx-auto mb-8 max-w-md text-muted-foreground">
                 No hay estudiantes que coincidan con su búsqueda.
             </p>
 
-            <div className="flex gap-3 justify-center">
+            <div className="flex justify-center gap-3">
                 <Button
-                    className="bg-yellow-600 hover:bg-yellow-700 text-white"
+                    variant="gold"
                     onClick={startCreate}
                 >
                     <Plus className="h-4 w-4 mr-2" />

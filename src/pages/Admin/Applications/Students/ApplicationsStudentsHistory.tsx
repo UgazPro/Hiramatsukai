@@ -58,8 +58,8 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                     )}
 
                     {!isLoading && students.length === 0 && (
-                        <div className="flex flex-col items-center justify-center py-16 text-gray-500">
-                            <GraduationCap className="h-16 w-16 mb-4 text-gray-300" />
+                        <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+                            <GraduationCap className="h-16 w-16 mb-4 text-border" />
                             <p className="text-lg font-medium">
                                 No hay alumnos registrados
                             </p>
@@ -72,31 +72,32 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                     {!isLoading && students.length > 0 && (
                         <>
                             <div className="relative">
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                                 <Input
+                                    aria-label="Buscar alumno por nombre o cédula"
                                     placeholder="Buscar alumno por nombre o cédula..."
                                     value={searchTerm}
                                     onChange={(e) =>
                                         setSearchTerm(e.target.value)
                                     }
-                                    className="pl-10 bg-white border-gray-300"
+                                    className="h-11 border-border bg-card pl-10 text-base"
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                            <div className="grid grid-cols-1 gap-3 min-[400px]:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                                 {filteredStudents.map((student: IStudent) => (
                                     <Card
                                         key={student.id}
-                                        className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 cursor-pointer group"
+                                        className="border border-border hover:border-brand-gold hover:shadow-lg transition-all duration-300 cursor-pointer group"
                                         onClick={() =>
                                             openStudentDetail(student.id)
                                         }
                                     >
-                                        <CardContent className="p-5">
+                                        <CardContent className="p-4 sm:p-5">
                                             <div className="flex flex-col items-center text-center">
                                                 <div className="relative mb-4">
-                                                    <div className="h-20 w-20 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-1">
-                                                        <div className="h-full w-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                                                    <div className="h-20 w-20 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-1">
+                                                        <div className="h-full w-full rounded-full bg-card flex items-center justify-center overflow-hidden">
                                                             {student.profileImg ? (
                                                                 <img
                                                                     src={
@@ -106,7 +107,7 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                                                     className="h-full w-full object-cover"
                                                                 />
                                                             ) : (
-                                                                <span className="text-lg font-bold text-yellow-600">
+                                                                <span className="text-lg font-bold text-brand-gold-deep">
                                                                     {getInitials(
                                                                         student.name,
                                                                         student.lastName,
@@ -117,11 +118,11 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                                     </div>
                                                 </div>
 
-                                                <h3 className="font-bold text-gray-900 group-hover:text-yellow-700 transition-colors truncate w-full">
+                                                <h3 className="font-bold text-foreground group-hover:text-brand-gold-deep transition-colors truncate w-full">
                                                     {student.name}{" "}
                                                     {student.lastName}
                                                 </h3>
-                                                <p className="text-sm text-gray-600 mt-1 truncate w-full">
+                                                <p className="text-sm text-muted-foreground mt-1 truncate w-full">
                                                     C.I:{" "}
                                                     {student.identification ??
                                                         "—"}
@@ -154,8 +155,8 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                                                         </div>
                                                     )}
 
-                                                <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">
+                                                <div className="mt-4 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
+                                                    <Badge className="bg-brand-gold/15 text-brand-gold-deep border-brand-gold/30">
                                                         Ver historial{" "}
                                                         <ChevronRight className="h-3 w-3 ml-1 inline" />
                                                     </Badge>
@@ -167,8 +168,8 @@ export default function ApplicationsStudentsHistory({ activeTab, getBeltColor, }
                             </div>
 
                             {filteredStudents.length === 0 && (
-                                <div className="text-center py-8 text-gray-500">
-                                    <Search className="h-10 w-10 mx-auto mb-2 text-gray-300" />
+                                <div className="text-center py-8 text-muted-foreground">
+                                    <Search className="h-10 w-10 mx-auto mb-2 text-border" />
                                     <p className="text-sm">
                                         No se encontraron alumnos con ese
                                     </p>

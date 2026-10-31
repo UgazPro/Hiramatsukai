@@ -22,7 +22,7 @@ export default function StudentListView({ filteredStudents }: StudentListViewPro
 
     return (
 
-        <div className="rounded-lg border border-gray-300 shadow-sm overflow-hidden bg-white">
+        <div className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
 
             <TableComponent
                 data={filteredStudents}

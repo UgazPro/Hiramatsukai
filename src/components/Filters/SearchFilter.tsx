@@ -11,13 +11,13 @@ interface SearchFilterComponentProps {
 export default function SearchFilterComponent({ searchTerm, setSearchTerm, placeHolder, width }: SearchFilterComponentProps) {
 
     return (
-        <div className="relative max-w-2xl">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
+        <div className="relative w-full max-w-2xl min-w-0">
+            <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" />
             <Input
                 placeholder={placeHolder}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className={`pl-10 lg:pl-12 h-9 text-sm lg:text-base border-2 border-gray-300 focus:border-yellow-500 focus:ring-yellow-500/20 rounded-lg bg-white shadow-sm ${width || 'w-full'}`}
+                className={`h-11 rounded-lg border border-input bg-card pl-11 text-base shadow-sm transition-colors focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 md:h-10 md:text-sm ${width || 'w-full'}`}
             />
         </div>
     );

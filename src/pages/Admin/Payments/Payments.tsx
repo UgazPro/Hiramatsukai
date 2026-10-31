@@ -254,7 +254,7 @@ export default function Payments() {
     if (!pagoMes) {
       return {
         estado: 'Sin registro',
-        clase: 'bg-gray-100 text-gray-800 border-gray-200',
+        clase: 'bg-muted text-gray-800 border-border',
         icon: <AlertCircle />
       };
     }
@@ -287,7 +287,7 @@ export default function Payments() {
       default:
         return {
           estado: pagoMes.estado,
-          clase: 'bg-gray-100 text-gray-800 border-gray-200',
+          clase: 'bg-muted text-gray-800 border-border',
           icon: <AlertCircle />
         };
     }
@@ -299,7 +299,7 @@ export default function Payments() {
       case 'Al día': return 'border-green-400 bg-green-50/30';
       case 'Debe este mes': return 'border-yellow-400 bg-yellow-50/30';
       case 'Moroso': return 'border-red-400 bg-red-50/30';
-      default: return 'border-gray-300';
+      default: return 'border-border';
     }
   };
 
@@ -349,25 +349,25 @@ export default function Payments() {
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-6">
+    <div className="mx-auto w-full max-w-7xl p-3 sm:p-4 md:p-6">
       {/* Header */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestión de Pagos</h1>
-          <p className="text-gray-600 mt-2">
+      <div className="mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-center md:mb-8">
+        <div className="min-w-0">
+          <h1 className="text-2xl font-bold text-foreground sm:text-3xl">Gestión de Pagos</h1>
+          <p className="mt-2 text-muted-foreground">
             Administra las mensualidades y comprobantes de pago de los alumnos
           </p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap gap-2 mb-8 p-1 bg-gray-100 rounded-xl border border-gray-300 max-w-md">
+      <div className="mb-6 flex w-full max-w-full gap-2 rounded-xl border border-border bg-muted p-1 sm:mb-8 sm:max-w-md">
         <Button
           variant={activeTab === 'mes-actual' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('mes-actual')}
           className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'mes-actual'
-              ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white shadow-md'
-              : 'text-gray-700 hover:bg-gray-200'
+              ? 'bg-linear-to-r from-brand-gold to-brand-vermilion text-white shadow-md'
+              : 'text-foreground hover:bg-gray-200'
             }`}
         >
           <CalendarDays className="h-4 w-4 mr-2" />
@@ -377,8 +377,8 @@ export default function Payments() {
           variant={activeTab === 'comprobantes' ? 'default' : 'ghost'}
           onClick={() => setActiveTab('comprobantes')}
           className={`flex-1 rounded-lg transition-all duration-300 ${activeTab === 'comprobantes'
-              ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white shadow-md'
-              : 'text-gray-700 hover:bg-gray-200'
+              ? 'bg-linear-to-r from-brand-gold to-brand-vermilion text-white shadow-md'
+              : 'text-foreground hover:bg-gray-200'
             }`}
         >
           <Receipt className="h-4 w-4 mr-2" />
@@ -392,12 +392,12 @@ export default function Payments() {
           {/* Columna izquierda: Lista de alumnos (2/3) */}
           <div className="lg:col-span-2 space-y-6">
             {/* Estadísticas rápidas */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              <Card className="border border-gray-300 shadow-sm">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-5">
+              <Card className="border border-border shadow-sm">
                 <CardContent className="p-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-gray-900">{estadisticasMes.totalAlumnos}</div>
-                    <div className="text-xs text-gray-600">Total alumnos</div>
+                    <div className="text-2xl font-bold text-foreground">{estadisticasMes.totalAlumnos}</div>
+                    <div className="text-xs text-muted-foreground">Total alumnos</div>
                   </div>
                 </CardContent>
               </Card>
@@ -412,7 +412,7 @@ export default function Payments() {
               <Card className="border border-yellow-300 bg-yellow-50/30 shadow-sm">
                 <CardContent className="p-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-yellow-700">{estadisticasMes.debeEsteMes}</div>
+                    <div className="text-2xl font-bold text-brand-gold-deep">{estadisticasMes.debeEsteMes}</div>
                     <div className="text-xs text-yellow-600">Debe este mes</div>
                   </div>
                 </CardContent>
@@ -439,12 +439,12 @@ export default function Payments() {
 
             {/* Búsqueda */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 placeholder="Buscar alumno por nombre o cédula..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white border-gray-300"
+                className="h-11 border-border bg-card pl-10 text-base"
               />
             </div>
 
@@ -464,18 +464,18 @@ export default function Payments() {
                     }}
                   >
                     <CardContent className="p-5">
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <div className="h-12 w-12 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-0.5">
-                            <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
+                      <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <div className="h-12 w-12 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                            <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
                               <User className="h-6 w-6 text-yellow-600" />
                             </div>
                           </div>
-                          <div>
-                            <h3 className="font-bold text-gray-900">
+                          <div className="min-w-0">
+                            <h3 className="truncate font-bold text-foreground">
                               {alumno.nombre} {alumno.apellido}
                             </h3>
-                            <p className="text-sm text-gray-600">{alumno.grado}</p>
+                            <p className="text-sm text-muted-foreground">{alumno.grado}</p>
                           </div>
                         </div>
                         <Badge className={clase}>
@@ -486,19 +486,19 @@ export default function Payments() {
 
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 text-sm">
-                          <Phone className="h-4 w-4 text-gray-500" />
-                          <span className="text-gray-700">{alumno.telefono}</span>
+                          <Phone className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-foreground">{alumno.telefono}</span>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
-                          <Mail className="h-4 w-4 text-gray-500" />
-                          <span className="text-gray-700 truncate">{alumno.email}</span>
+                          <Mail className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-foreground truncate">{alumno.email}</span>
                         </div>
                       </div>
 
-                      <div className="mt-4 pt-4 border-t border-gray-200">
+                      <div className="mt-4 pt-4 border-t border-border">
                         <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-600">Mensualidad</span>
-                          <span className="font-bold text-gray-900">{formatMoneda(25000)}</span>
+                          <span className="text-sm text-muted-foreground">Mensualidad</span>
+                          <span className="font-bold text-foreground">{formatMoneda(25000)}</span>
                         </div>
                       </div>
                     </CardContent>
@@ -510,7 +510,7 @@ export default function Payments() {
 
           {/* Columna derecha: Calendario de meses (1/3) */}
           <div className="lg:col-span-1">
-            <Card className="border border-gray-300 shadow-sm sticky top-6">
+            <Card className="border border-border shadow-sm lg:sticky lg:top-6">
               <CardContent className="p-6">
                 {/* Selector de año */}
                 <div className="flex justify-between items-center mb-6">
@@ -518,18 +518,18 @@ export default function Payments() {
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedYear(selectedYear - 1)}
-                    className="h-8 w-8 p-0 hover:bg-gray-100"
+                    className="h-8 w-8 p-0 hover:bg-muted"
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-gray-900">{selectedYear}</h3>
+                    <h3 className="text-xl font-bold text-foreground">{selectedYear}</h3>
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectedYear(selectedYear + 1)}
-                    className="h-8 w-8 p-0 hover:bg-gray-100"
+                    className="h-8 w-8 p-0 hover:bg-muted"
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -541,12 +541,12 @@ export default function Payments() {
                     variant="outline"
                     size="sm"
                     onClick={prevMonth}
-                    className="border-gray-300"
+                    className="border-border"
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
                   <div className="text-center">
-                    <span className="text-lg font-semibold text-gray-900">
+                    <span className="text-lg font-semibold text-foreground">
                       {meses[selectedMonth]}
                     </span>
                   </div>
@@ -554,7 +554,7 @@ export default function Payments() {
                     variant="outline"
                     size="sm"
                     onClick={nextMonth}
-                    className="border-gray-300"
+                    className="border-border"
                   >
                     <ChevronRight className="h-4 w-4" />
                   </Button>
@@ -574,8 +574,8 @@ export default function Payments() {
                         className={`
                           h-16 flex flex-col items-center justify-center transition-all duration-200
                           ${isCurrentMonth
-                            ? 'bg-gradient-to-r from-yellow-600 to-red-600 text-white shadow-md'
-                            : 'text-gray-700 hover:bg-gray-100'
+                            ? 'bg-linear-to-r from-brand-gold to-brand-vermilion text-white shadow-md'
+                            : 'text-foreground hover:bg-muted'
                           }
                         `}
                       >
@@ -587,41 +587,41 @@ export default function Payments() {
                 </div>
 
                 {/* Leyenda */}
-                <div className="mt-6 pt-4 border-t border-gray-200 space-y-2">
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">Estados de pago</h4>
+                <div className="mt-6 pt-4 border-t border-border space-y-2">
+                  <h4 className="text-sm font-medium text-foreground mb-2">Estados de pago</h4>
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                    <span className="text-xs text-gray-700">Al día</span>
+                    <span className="text-xs text-foreground">Al día</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
-                    <span className="text-xs text-gray-700">Debe este mes</span>
+                    <span className="text-xs text-foreground">Debe este mes</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="h-3 w-3 rounded-full bg-red-500"></div>
-                    <span className="text-xs text-gray-700">Moroso (2+ meses)</span>
+                    <span className="text-xs text-foreground">Moroso (2+ meses)</span>
                   </div>
                 </div>
 
                 {/* Resumen del mes */}
-                <div className="mt-6 pt-4 border-t border-gray-200">
-                  <h4 className="text-sm font-medium text-gray-900 mb-3">Resumen {meses[selectedMonth]}</h4>
+                <div className="mt-6 pt-4 border-t border-border">
+                  <h4 className="text-sm font-medium text-foreground mb-3">Resumen {meses[selectedMonth]}</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Al día:</span>
+                      <span className="text-muted-foreground">Al día:</span>
                       <span className="font-semibold text-green-600">{estadisticasMes.alDia}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Debe este mes:</span>
+                      <span className="text-muted-foreground">Debe este mes:</span>
                       <span className="font-semibold text-yellow-600">{estadisticasMes.debeEsteMes}</span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Morosos:</span>
+                      <span className="text-muted-foreground">Morosos:</span>
                       <span className="font-semibold text-red-600">{estadisticasMes.morosos}</span>
                     </div>
                     <div className="flex justify-between text-sm font-bold pt-2">
-                      <span className="text-gray-900">Recaudado:</span>
-                      <span className="text-gray-900">{formatMoneda(estadisticasMes.totalRecaudado)}</span>
+                      <span className="text-foreground">Recaudado:</span>
+                      <span className="text-foreground">{formatMoneda(estadisticasMes.totalRecaudado)}</span>
                     </div>
                   </div>
                 </div>
@@ -637,14 +637,14 @@ export default function Payments() {
           {/* Filtros */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 placeholder="Buscar comprobante por alumno o referencia..."
-                className="pl-10 bg-white border-gray-300"
+                className="h-11 border-border bg-card pl-10 text-base"
               />
             </div>
             <Select defaultValue="todos">
-              <SelectTrigger className="w-full sm:w-48 border-gray-300">
+              <SelectTrigger className="w-full sm:w-48 border-border">
                 <SelectValue placeholder="Filtrar por mes" />
               </SelectTrigger>
               <SelectContent>
@@ -661,17 +661,17 @@ export default function Payments() {
             {comprobantesMock.map((comprobante) => (
               <Card
                 key={comprobante.id}
-                className="border border-gray-300 hover:border-yellow-400 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="border border-border hover:border-yellow-400 hover:shadow-lg transition-all duration-300 cursor-pointer"
                 onClick={() => {
                   setSelectedComprobante(comprobante);
                   setShowComprobanteModal(true);
                 }}
               >
                 <CardContent className="p-0">
-                  <div className="bg-gradient-to-r from-yellow-50 to-red-50 p-5 border-b border-gray-200">
+                  <div className="bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-5 border-b border-border">
                     <div className="flex justify-between items-start">
-                      <div className="h-12 w-12 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-0.5">
-                        <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                        <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
                           <Receipt className="h-6 w-6 text-yellow-600" />
                         </div>
                       </div>
@@ -679,42 +679,42 @@ export default function Payments() {
                         Pagado
                       </Badge>
                     </div>
-                    <h3 className="font-bold text-lg text-gray-900 mt-3">{comprobante.alumnoNombre}</h3>
+                    <h3 className="font-bold text-lg text-foreground mt-3">{comprobante.alumnoNombre}</h3>
                   </div>
 
                   <div className="p-5 space-y-4">
                     <div className="flex justify-between items-center">
                       <div>
-                        <p className="text-sm text-gray-500">Período</p>
-                        <p className="font-semibold text-gray-900">{comprobante.mes} {comprobante.año}</p>
+                        <p className="text-sm text-muted-foreground">Período</p>
+                        <p className="font-semibold text-foreground">{comprobante.mes} {comprobante.año}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">Monto</p>
-                        <p className="font-bold text-lg text-gray-900">{formatMoneda(comprobante.monto)}</p>
+                        <p className="text-sm text-muted-foreground">Monto</p>
+                        <p className="font-bold text-lg text-foreground">{formatMoneda(comprobante.monto)}</p>
                       </div>
                     </div>
 
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-sm">
-                        <CalendarDays className="h-4 w-4 text-gray-500" />
-                        <span className="text-gray-700">Pagado: {formatFecha(comprobante.fechaPago)}</span>
+                        <CalendarDays className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-foreground">Pagado: {formatFecha(comprobante.fechaPago)}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <CreditCard className="h-4 w-4 text-gray-500" />
-                        <span className="text-gray-700">{comprobante.metodoPago}</span>
+                        <CreditCard className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-foreground">{comprobante.metodoPago}</span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <FileText className="h-4 w-4 text-gray-500" />
-                        <span className="text-gray-700">Ref: {comprobante.referencia}</span>
+                        <FileText className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-foreground">Ref: {comprobante.referencia}</span>
                       </div>
                     </div>
 
                     <div className="pt-4 flex gap-2">
-                      <Button variant="outline" size="sm" className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-100">
+                      <Button variant="outline" size="sm" className="flex-1 border-border text-foreground hover:bg-muted">
                         <Eye className="h-4 w-4 mr-2" />
                         Ver
                       </Button>
-                      <Button size="sm" className="flex-1 bg-yellow-600 hover:bg-yellow-700 text-white">
+                      <Button size="sm" className="flex-1 bg-brand-gold text-brand-sumi hover:bg-brand-gold-deep text-white">
                         <Download className="h-4 w-4 mr-2" />
                         PDF
                       </Button>
@@ -729,9 +729,9 @@ export default function Payments() {
 
       {/* Modal de Configuración de Pago */}
       <Dialog open={showPagoModal} onOpenChange={setShowPagoModal}>
-        <DialogContent className="max-w-2xl bg-white border-0 shadow-2xl">
+        <DialogContent className="max-w-2xl border-0 bg-card shadow-2xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-gray-900">
+            <DialogTitle className="text-2xl font-bold text-foreground">
               Registrar Pago - {selectedAlumno?.nombre} {selectedAlumno?.apellido}
             </DialogTitle>
           </DialogHeader>
@@ -739,22 +739,22 @@ export default function Payments() {
           {selectedAlumno && (
             <div className="space-y-6 py-4">
               {/* Información del alumno */}
-              <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                <div className="h-16 w-16 rounded-full bg-gradient-to-br from-yellow-500 to-red-500 p-0.5">
-                  <div className="h-full w-full rounded-full bg-white flex items-center justify-center">
+              <div className="flex items-center gap-4 p-4 bg-muted/40 rounded-lg border border-border">
+                <div className="h-16 w-16 rounded-full bg-linear-to-br from-brand-gold to-brand-vermilion p-0.5">
+                  <div className="h-full w-full rounded-full bg-card flex items-center justify-center">
                     <User className="h-8 w-8 text-yellow-600" />
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-gray-900">
+                  <h3 className="font-bold text-lg text-foreground">
                     {selectedAlumno.nombre} {selectedAlumno.apellido}
                   </h3>
-                  <p className="text-gray-600">C.I: {selectedAlumno.cedula}</p>
+                  <p className="text-muted-foreground">C.I: {selectedAlumno.cedula}</p>
                   <div className="flex gap-2 mt-1">
-                    <Badge className="bg-gray-100 text-gray-800 border-gray-200">
+                    <Badge className="bg-muted text-gray-800 border-border">
                       {selectedAlumno.grado}
                     </Badge>
-                    <Badge className="bg-gray-100 text-gray-800 border-gray-200">
+                    <Badge className="bg-muted text-gray-800 border-border">
                       {selectedAlumno.dojo}
                     </Badge>
                   </div>
@@ -764,9 +764,9 @@ export default function Payments() {
               {/* Selector de mes */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label className="text-gray-900">Mes a pagar</Label>
+                  <Label className="text-foreground">Mes a pagar</Label>
                   <Select defaultValue={meses[selectedMonth]}>
-                    <SelectTrigger className="border-gray-300">
+                    <SelectTrigger className="border-border">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -777,9 +777,9 @@ export default function Payments() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-gray-900">Año</Label>
+                  <Label className="text-foreground">Año</Label>
                   <Select defaultValue={selectedYear.toString()}>
-                    <SelectTrigger className="border-gray-300">
+                    <SelectTrigger className="border-border">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -793,9 +793,9 @@ export default function Payments() {
 
               {/* Método de pago */}
               <div className="space-y-2">
-                <Label className="text-gray-900">Método de pago</Label>
+                <Label className="text-foreground">Método de pago</Label>
                 <Select defaultValue="efectivo">
-                  <SelectTrigger className="border-gray-300">
+                  <SelectTrigger className="border-border">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -809,43 +809,43 @@ export default function Payments() {
 
               {/* Referencia */}
               <div className="space-y-2">
-                <Label className="text-gray-900">Número de referencia</Label>
+                <Label className="text-foreground">Número de referencia</Label>
                 <Input
                   placeholder="Ej: TR-123456, Dep-789, etc."
-                  className="border-gray-300"
+                  className="border-border"
                 />
               </div>
 
               {/* Fecha de pago */}
               <div className="space-y-2">
-                <Label className="text-gray-900">Fecha de pago</Label>
+                <Label className="text-foreground">Fecha de pago</Label>
                 <Input
                   type="date"
                   defaultValue={format(new Date(), "yyyy-MM-dd")}
-                  className="border-gray-300"
+                  className="border-border"
                 />
               </div>
 
               {/* Monto */}
               <div className="space-y-2">
-                <Label className="text-gray-900">Monto</Label>
+                <Label className="text-foreground">Monto</Label>
                 <Input
                   type="number"
                   defaultValue="25000"
-                  className="border-gray-300"
+                  className="border-border"
                 />
               </div>
 
               {/* Botones */}
-              <div className="flex justify-end gap-3 pt-4">
+              <div className="flex flex-col-reverse gap-2 pt-4 sm:flex-row sm:justify-end">
                 <Button
                   variant="outline"
                   onClick={() => setShowPagoModal(false)}
-                  className="border-gray-300 text-gray-700 hover:bg-gray-100"
+                  className="h-11 w-full border-border text-foreground hover:bg-muted sm:h-9 sm:w-auto"
                 >
                   Cancelar
                 </Button>
-                <Button className="bg-gradient-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white">
+                <Button className="h-11 w-full bg-linear-to-r from-brand-gold to-brand-vermilion text-white hover:from-brand-gold-deep hover:to-brand-vermilion-dark sm:h-9 sm:w-auto">
                   Registrar Pago
                 </Button>
               </div>
@@ -856,9 +856,9 @@ export default function Payments() {
 
       {/* Modal de Comprobante */}
       <Dialog open={showComprobanteModal} onOpenChange={setShowComprobanteModal}>
-        <DialogContent className="max-w-3xl bg-white border-0 shadow-2xl">
+        <DialogContent className="max-w-3xl border-0 bg-card shadow-2xl">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-gray-900">
+            <DialogTitle className="text-2xl font-bold text-foreground">
               Comprobante de Pago
             </DialogTitle>
           </DialogHeader>
@@ -866,35 +866,36 @@ export default function Payments() {
           {selectedComprobante && (
             <div className="space-y-6 py-4">
               {/* Comprobante visual */}
-              <div className="border-2 border-gray-300 rounded-xl p-8 bg-gradient-to-br from-white to-gray-50">
+              <div className="border-2 border-border rounded-xl p-8 bg-linear-to-br from-white to-gray-50">
                 {/* Header del comprobante */}
-                <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-300">
+                <div className="mb-6 flex flex-col justify-between gap-3 border-b border-border pb-4 sm:mb-8 sm:flex-row sm:items-center">
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">DOJO KENZENDO</h2>
-                    <p className="text-gray-600">RUT: 76.123.456-7</p>
-                    <p className="text-gray-600">comprobantes@dojokenzendo.cl</p>
+                    <h2 className="text-2xl font-bold text-foreground">DOJO KENZENDO</h2>
+                    <p className="text-muted-foreground">RUT: 76.123.456-7</p>
+                    <p className="text-muted-foreground">comprobantes@dojokenzendo.cl</p>
                   </div>
                   <div className="text-right">
-                    <Badge className="bg-gradient-to-r from-yellow-600 to-red-600 text-white border-0 px-4 py-2">
+                    <Badge className="bg-linear-to-r from-brand-gold to-brand-vermilion text-white border-0 px-4 py-2">
                       COMPROBANTE DE PAGO
                     </Badge>
-                    <p className="text-sm text-gray-600 mt-2">N° {selectedComprobante.id.toString().padStart(6, '0')}</p>
+                    <p className="text-sm text-muted-foreground mt-2">N° {selectedComprobante.id.toString().padStart(6, '0')}</p>
                   </div>
                 </div>
 
                 {/* Información del alumno */}
-                <div className="grid grid-cols-2 gap-6 mb-6">
+                <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
                   <div>
-                    <p className="text-sm text-gray-500">Alumno</p>
-                    <p className="font-bold text-gray-900">{selectedComprobante.alumnoNombre}</p>
+                    <p className="text-sm text-muted-foreground">Alumno</p>
+                    <p className="font-bold text-foreground">{selectedComprobante.alumnoNombre}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Período</p>
-                    <p className="font-bold text-gray-900">{selectedComprobante.mes} {selectedComprobante.año}</p>
+                    <p className="text-sm text-muted-foreground">Período</p>
+                    <p className="font-bold text-foreground">{selectedComprobante.mes} {selectedComprobante.año}</p>
                   </div>
                 </div>
 
                 {/* Detalle del pago */}
+                <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
@@ -913,22 +914,23 @@ export default function Payments() {
                     </TableRow>
                   </TableBody>
                 </Table>
+                </div>
 
                 {/* Totales */}
-                <div className="mt-6 pt-4 border-t border-gray-300">
+                <div className="mt-6 pt-4 border-t border-border">
                   <div className="flex justify-end">
-                    <div className="w-64">
+                    <div className="w-full sm:w-64">
                       <div className="flex justify-between mb-2">
-                        <span className="text-gray-600">Subtotal:</span>
+                        <span className="text-muted-foreground">Subtotal:</span>
                         <span className="font-medium">{formatMoneda(selectedComprobante.monto)}</span>
                       </div>
                       <div className="flex justify-between mb-2">
-                        <span className="text-gray-600">IVA (19%):</span>
+                        <span className="text-muted-foreground">IVA (19%):</span>
                         <span className="font-medium">{formatMoneda(selectedComprobante.monto * 0.19)}</span>
                       </div>
-                      <div className="flex justify-between pt-2 border-t border-gray-300">
-                        <span className="font-bold text-gray-900">Total:</span>
-                        <span className="font-bold text-xl text-yellow-700">
+                      <div className="flex justify-between pt-2 border-t border-border">
+                        <span className="font-bold text-foreground">Total:</span>
+                        <span className="font-bold text-xl text-brand-gold-deep">
                           {formatMoneda(selectedComprobante.monto * 1.19)}
                         </span>
                       </div>
@@ -937,26 +939,26 @@ export default function Payments() {
                 </div>
 
                 {/* Footer */}
-                <div className="mt-8 pt-4 text-center text-sm text-gray-500 border-t border-gray-300">
+                <div className="mt-8 pt-4 text-center text-sm text-muted-foreground border-t border-border">
                   <p>Fecha de emisión: {formatFecha(selectedComprobante.fechaPago)}</p>
                   <p className="mt-1">Este comprobante es válido como constancia de pago</p>
                 </div>
               </div>
 
               {/* Botones de acción */}
-              <div className="flex justify-end gap-3">
+              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-end">
                 <Button
                   variant="outline"
                   onClick={() => setShowComprobanteModal(false)}
-                  className="border-gray-300 text-gray-700 hover:bg-gray-100"
+                  className="h-11 w-full border-border text-foreground hover:bg-muted sm:h-9 sm:w-auto"
                 >
                   Cerrar
                 </Button>
-                <Button className="bg-gradient-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white">
+                <Button className="h-11 w-full bg-linear-to-r from-brand-gold to-brand-vermilion text-white hover:from-brand-gold-deep hover:to-brand-vermilion-dark sm:h-9 sm:w-auto">
                   <Printer className="h-4 w-4 mr-2" />
                   Imprimir
                 </Button>
-                <Button className="bg-gradient-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white">
+                <Button className="h-11 w-full bg-linear-to-r from-brand-gold to-brand-vermilion text-white hover:from-brand-gold-deep hover:to-brand-vermilion-dark sm:h-9 sm:w-auto">
                   <Download className="h-4 w-4 mr-2" />
                   Descargar PDF
                 </Button>

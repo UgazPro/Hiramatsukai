@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 
@@ -15,18 +16,24 @@ export function DetailHeader({
     onClose,
 }: DetailHeaderProps) {
     return (
-        <div className="bg-linear-to-r from-yellow-50 to-red-50 border-b border-gray-300 rounded-lg p-4 md:p-6">
-            <div className="flex justify-between items-start gap-3">
-                <div className="flex items-center gap-3 md:gap-4 min-w-0">
+        <div className="rounded-lg border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4 md:p-6">
+            <div className="flex items-start justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-3 md:gap-4">
                     {avatar}
 
                     <div className="min-w-0">
-                        <h2 className="text-xl md:text-3xl font-bold text-gray-900 break-words">{title}</h2>
+                        <h2 className="text-lg font-bold break-words text-foreground sm:text-2xl md:text-3xl">{title}</h2>
                         {subtitle && <div className="mt-2">{subtitle}</div>}
                     </div>
                 </div>
 
-                <Button variant="ghost" size="sm" onClick={onClose} className="shrink-0">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={onClose}
+                    aria-label="Cerrar"
+                    className="size-11 shrink-0 sm:size-9"
+                >
                     <X className="h-4 w-4" />
                 </Button>
             </div>

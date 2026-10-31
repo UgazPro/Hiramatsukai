@@ -57,64 +57,63 @@ export default function ActivityFilter() {
             <PopoverTrigger asChild>
                 <Button
                     variant="outline"
-                    size="sm"
-                    className="border-gray-300 text-gray-700 hover:bg-gray-50 relative"
+                    className="relative h-11 border-border text-foreground hover:bg-muted sm:h-10"
                 >
-                    <Filter className="h-4 w-4 mr-2" />
+                    <Filter data-icon="inline-start" />
                     Filtros
                     {activeFiltersCount() > 0 && (
-                        <Badge className="absolute -top-2 -right-2 h-5 w-5 p-0 flex items-center justify-center bg-yellow-500 text-white text-xs">
+                        <Badge className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center bg-brand-gold p-0 text-xs text-brand-sumi">
                             {activeFiltersCount()}
                         </Badge>
                     )}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-[calc(100vw-2rem)] sm:w-78 p-0 border-gray-300 shadow-xl" align="end">
-                <div className="p-4 border-b border-gray-200 bg-linear-to-r from-yellow-50 to-red-50">
-                    <div className="flex justify-between items-center">
-                        <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-                            <Filter className="h-4 w-4 text-yellow-600" />
+            <PopoverContent className="w-[calc(100vw-2rem)] border-border p-0 shadow-xl sm:w-78" align="end">
+                <div className="border-b border-border bg-linear-to-r from-brand-gold/10 to-brand-vermilion/10 p-4">
+                    <div className="flex items-center justify-between gap-2">
+                        <h3 className="flex items-center gap-2 font-semibold text-foreground">
+                            <Filter className="h-4 w-4 text-brand-gold-deep" />
                             Filtrar Actividades
                         </h3>
                         <Button
                             variant="ghost"
-                            size="sm"
                             onClick={() => setIsFilterOpen(false)}
-                            className="h-6 w-6 p-0 hover:bg-gray-200"
+                            aria-label="Cerrar filtros"
+                            className="size-9 p-0 hover:bg-muted"
                         >
                             <X className="h-4 w-4" />
                         </Button>
                     </div>
                 </div>
 
-                <div className="p-4 space-y-4 max-h-[70vh] overflow-y-auto">
+                <div className="flex max-h-[70vh] flex-col gap-4 overflow-y-auto p-4">
 
                     {/* Date Range */}
-                    <div className="space-y-2">
-                        <Label className="text-sm font-medium text-gray-900">Rango de Fechas</Label>
+                    <div className="flex flex-col gap-2">
+                        <Label className="text-sm font-medium text-foreground">Rango de Fechas</Label>
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button
                                     variant="outline"
                                     id="date-picker-range"
-                                    className="justify-start px-2.5 font-normal"
+                                    className="h-auto min-h-11 w-full justify-start px-2.5 text-left font-normal whitespace-normal"
                                 >
-                                    <CalendarIcon />
+                                    <CalendarIcon className="shrink-0" />
                                     {date?.from ? (
                                         date.to ? (
                                             <>
-                                                {format(date.from, "LLL dd, y")} -{" "}
-                                                {format(date.to, "LLL dd, y")}
+                                                {format(date.from, "dd/MM/yy")} -{" "}
+                                                {format(date.to, "dd/MM/yy")}
                                             </>
                                         ) : (
-                                            format(date.from, "LLL dd, y")
+                                            format(date.from, "dd/MM/yy")
                                         )
                                     ) : (
                                         <span>Seleccione una Fecha</span>
                                     )}
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent className="w-auto max-w-[calc(100vw-2rem)] overflow-x-auto p-0" align="start">
                                 <Calendar
                                     mode="range"
                                     defaultMonth={date?.from}
@@ -126,20 +125,20 @@ export default function ActivityFilter() {
                     </div>
 
                     {/* Include past activities */}
-                    <div className="flex items-center space-x-2 pt-2">
+                    <div className="flex items-center gap-2 pt-2">
                         <Checkbox
                             id="includePast"
                             checked={localIncludePast}
                             onCheckedChange={(checked) => setLocalIncludePast(checked as boolean)}
                         />
-                        <Label htmlFor="includePast" className="text-sm text-gray-700 cursor-pointer">
+                        <Label htmlFor="includePast" className="cursor-pointer text-sm text-foreground">
                             Incluir actividades pasadas
                         </Label>
                     </div>
 
                     {/* Type of activity */}
-                    <div className="space-y-2">
-                        <Label className="text-sm font-medium text-gray-900">
+                    <div className="flex flex-col gap-2">
+                        <Label className="text-sm font-medium text-foreground">
                             Tipo de actividad
                         </Label>
                         <Select
@@ -160,20 +159,18 @@ export default function ActivityFilter() {
                     </div>
                 </div>
 
-                <div className="p-4 border-t border-gray-200 bg-gray-50 space-y-3 text-center">
+                <div className="flex flex-col gap-2 border-t border-border bg-muted/40 p-4 sm:flex-row sm:justify-center">
                     <Button
                         variant="outline"
-                        size="sm"
                         onClick={handleResetFilters}
-                        className="border-gray-300 text-gray-700 hover:bg-gray-100"
+                        className="h-11 w-full border-border text-foreground hover:bg-muted sm:h-9 sm:w-auto"
                     >
                         Limpiar filtros
                     </Button>
 
                     <Button
-                        size="sm"
                         onClick={handleApplyFilters}
-                        className="bg-linear-to-r from-yellow-600 to-red-600 hover:from-yellow-500 hover:to-red-500 text-white"
+                        className="h-11 w-full bg-linear-to-r from-brand-gold to-brand-vermilion text-white hover:from-brand-gold-deep hover:to-brand-vermilion-dark sm:h-9 sm:w-auto"
                     >
                         Aplicar filtros
                     </Button>
