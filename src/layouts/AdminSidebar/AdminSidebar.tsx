@@ -80,11 +80,11 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
         </div>
       )}
 
-      <aside className="group absolute inset-y-0 left-0 z-[60] hidden w-16 flex-col justify-between overflow-hidden border-r border-brand-chestnut/40 bg-brand-sumi p-4 pl-3 text-brand-washi transition-[width] duration-300 ease-in-out hover:w-72 md:flex">
+      <aside className="group absolute inset-y-0 left-0 z-[60] hidden w-16 flex-col justify-between overflow-hidden border-r border-brand-wood/30 bg-brand-wood-deep p-4 pl-3 text-brand-washi transition-[width] duration-300 ease-in-out hover:w-72 md:flex">
         <div className="w-full">
           {/* Logo/Header */}
           <div className="mt-2 flex items-center gap-3 rounded-xl p-1 transition-colors duration-300 group-hover:bg-white/5">
-            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-brand-gold/60">
+            <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-brand-copper/60">
               <img src="/oki2.png" className="size-full rounded-full object-contain" alt="Logo del dojo" />
             </span>
             <div className="ml-2 overflow-hidden whitespace-nowrap opacity-0 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 group-hover:opacity-100">
@@ -100,7 +100,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
               <div key={groupIndex} className="flex flex-col gap-1">
                 {group.header && (
                   <div className="mb-1 overflow-hidden whitespace-nowrap pl-3 opacity-0 transition-all duration-300 group-hover:opacity-100">
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-gold/70">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-copper/80">
                       {group.header}
                     </span>
                   </div>
@@ -115,7 +115,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
                         to={item.redirectTo}
                         title={item.name}
                         aria-current={isActive ? "page" : undefined}
-                        className={`group/item relative flex items-center gap-3 rounded-xl px-2 py-2 transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand-gold/60 focus-visible:outline-none ${
+                        className={`group/item relative flex items-center gap-3 rounded-xl px-2 py-2 transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-brand-copper/60 focus-visible:outline-none ${
                           isActive
                             ? 'bg-white/10 text-brand-washi'
                             : 'text-brand-washi/70 hover:bg-white/5 hover:text-brand-washi'
@@ -124,12 +124,12 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
                         {isActive && (
                           <span
                             aria-hidden="true"
-                            className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-full bg-brand-gold"
+                            className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-full bg-brand-copper"
                           />
                         )}
                         <span
                           className={`flex size-9 shrink-0 items-center justify-center rounded-lg transition-colors duration-300 ${
-                            isActive ? 'bg-brand-gold/15 text-brand-gold' : 'text-brand-washi/70 group-hover/item:text-brand-washi'
+                            isActive ? 'bg-brand-washi/10 text-brand-washi' : 'text-brand-washi/70 group-hover/item:text-brand-washi'
                           }`}
                         >
                           <item.icon className="size-5" />
@@ -150,7 +150,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
         <div className="w-full">
           <button
             type="button"
-            className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-brand-washi/70 transition-colors duration-300 hover:bg-white/5 hover:text-brand-washi focus-visible:ring-2 focus-visible:ring-brand-gold/60 focus-visible:outline-none"
+            className="flex w-full items-center gap-3 rounded-xl px-2 py-2 text-brand-washi/70 transition-colors duration-300 hover:bg-white/5 hover:text-brand-washi focus-visible:ring-2 focus-visible:ring-brand-copper/60 focus-visible:outline-none"
             onClick={handleLogout}
             disabled={isLoggingOut}
           >
@@ -166,13 +166,13 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
 
       {/* Mobile Drawer */}
       <Sheet open={isMobileNavOpen} onOpenChange={onCloseMobileNav}>
-        <SheetContent side="left" className="w-72 gap-0 border-brand-chestnut/40 bg-brand-sumi p-0 text-brand-washi sm:max-w-72">
+        <SheetContent side="left" className="w-72 gap-0 border-brand-wood/30 bg-brand-wood-deep p-0 text-brand-washi sm:max-w-72">
           <SheetTitle className="sr-only">Navegación</SheetTitle>
           <SheetDescription className="sr-only">Menú de navegación del dojo</SheetDescription>
           <div className="flex h-full flex-col">
-            <div className="border-b border-brand-chestnut/30 p-5 pr-12">
+            <div className="border-b border-brand-wood/25 p-5 pr-12">
               <div className="flex items-center gap-3">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-brand-gold/60">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-brand-copper/60">
                   <img src="/oki2.png" className="size-full rounded-full object-contain" alt="Logo del dojo" />
                 </span>
                 <span className="font-serif text-lg font-semibold text-brand-washi">{user?.dojo?.dojo || "Dojo"}</span>
@@ -184,7 +184,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
                 <div key={groupIndex} className="mb-2 flex flex-col gap-1">
                   {group.header && (
                     <div className="px-3 py-2">
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-gold/70">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-copper/80">
                         {group.header}
                       </span>
                     </div>
@@ -200,14 +200,14 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
                           aria-current={isActive ? "page" : undefined}
                           className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300 ${
                             isActive
-                              ? 'bg-brand-gold/15 text-brand-gold'
+                              ? 'bg-brand-washi/10 text-brand-washi'
                               : 'text-brand-washi/70 hover:bg-white/5 hover:text-brand-washi'
                           }`}
                         >
                           {isActive && (
                             <span
                               aria-hidden="true"
-                              className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-full bg-brand-gold"
+                              className="absolute left-0 top-1/2 h-6 w-0.5 -translate-y-1/2 rounded-full bg-brand-copper"
                             />
                           )}
                           <item.icon className="size-5 shrink-0" />
@@ -220,10 +220,10 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
               ))}
             </nav>
 
-            <div className="flex flex-col gap-3 border-t border-brand-chestnut/30 p-4">
+            <div className="flex flex-col gap-3 border-t border-brand-wood/25 p-4">
               {user && (
                 <div className="flex items-center gap-3">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-gold text-brand-sumi">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-wood text-brand-washi">
                     <span className="text-sm font-bold">
                       {user.name?.[0]}{user.lastName?.[0]}
                     </span>

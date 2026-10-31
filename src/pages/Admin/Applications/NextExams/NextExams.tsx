@@ -91,7 +91,7 @@ export default function NextExams({ setActiveTab, upcomingExams, /* setSelectedE
                                 {!isStudent && (
                                     <Button
                                         disabled={!isNextExam}
-                                        variant={isNextExam ? "gold" : "outline"}
+                                        variant={isNextExam ? "wood" : "outline"}
                                         className="h-11 flex-1"
                                         onClick={() => {
                                             if (!isNextExam) return;

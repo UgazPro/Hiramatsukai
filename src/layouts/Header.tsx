@@ -89,7 +89,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             type="button"
                             onClick={onToggleMobileNav}
                             aria-label="Abrir menú de administración"
-                            className={`${isAdmin ? "flex" : "hidden"} h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-brand-chestnut/40 bg-brand-washi/5 text-brand-washi transition-colors hover:bg-brand-washi/10 focus-visible:border-brand-gold md:hidden`}
+                            className={`${isAdmin ? "flex" : "hidden"} h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-brand-chestnut/40 bg-brand-washi/5 text-brand-washi transition-colors hover:bg-brand-washi/10 focus-visible:border-brand-wood md:hidden`}
                         >
                             <Menu className="h-5 w-5" />
                         </button>
@@ -100,7 +100,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             className="group flex items-center gap-3 rounded-full focus-visible:outline-offset-4"
                         >
                             {!isLogin || !isAdmin && (
-                                <span className="rounded-full bg-white p-0.5 shadow-soft ring-1 ring-brand-gold/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-brand-gold">
+                                <span className="rounded-full bg-white p-0.5 shadow-soft ring-1 ring-brand-copper/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-brand-copper">
                                     <img
                                         src="/oki2.png"
                                         alt="Emblema Hiramatsukai Internacional"
@@ -112,7 +112,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                                 <span className="font-script text-xl text-brand-washi transition-colors duration-300 group-hover:text-white sm:text-3xl lg:text-4xl">
                                     Hiramatsukai
                                 </span>
-                                <span className="mt-1.5 mx-auto text-[9px] font-semibold uppercase tracking-[0.32em] text-brand-gold sm:text-[10px] lg:text-[11px]">
+                                <span className="mt-1.5 mx-auto text-[9px] font-semibold uppercase tracking-[0.32em] text-brand-copper sm:text-[10px] lg:text-[11px]">
                                     Internacional
                                 </span>
                             </span>
@@ -134,8 +134,8 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                                             </span>
                                             <span className="text-xs text-brand-washi/60">{userRole}</span>
                                         </span>
-                                        <Avatar size="lg" className="bg-brand-gold text-brand-sumi ring-1 ring-brand-gold/40">
-                                            <AvatarFallback className="font-bold text-sm text-brand-sumi">
+                                        <Avatar size="lg" className="bg-brand-wood-dark text-brand-washi ring-1 ring-brand-washi/20">
+                                            <AvatarFallback className="font-bold text-sm text-brand-washi">
                                                 {userName?.[0]}{userLastName?.[0]}
                                             </AvatarFallback>
                                         </Avatar>
@@ -186,7 +186,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             !isAdmin && !isLogin && (
                                 <Link
                                     to="/login"
-                                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-brand-gold/45 bg-white/5 px-4 text-xs font-medium tracking-wide text-brand-washi transition-all duration-300 hover:border-brand-gold hover:bg-brand-gold hover:text-brand-sumi md:px-5 md:text-sm lg:min-h-9"
+                                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-brand-wood/45 bg-white/5 px-4 text-xs font-medium tracking-wide text-brand-washi transition-all duration-300 hover:border-brand-wood hover:bg-brand-wood-dark hover:text-brand-washi md:px-5 md:text-sm lg:min-h-9"
                                 >
                                     Ingresar
                                 </Link>

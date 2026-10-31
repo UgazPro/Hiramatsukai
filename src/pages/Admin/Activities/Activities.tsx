@@ -96,7 +96,7 @@ export default function Activities() {
 
                   {canModify && (
                     <Button
-                      variant="gold"
+                      variant="wood"
                       onClick={() => startCreate()}
                       className="h-11 w-full sm:h-10 sm:w-auto"
                     >

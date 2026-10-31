@@ -12,7 +12,7 @@ export default function AdminLayout() {
 
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
                 <div className="absolute inset-0 bg-wood opacity-40" />
-                <div className="absolute -left-48 -top-48 size-[32rem] rounded-full bg-brand-gold/12 blur-[120px]" />
+                <div className="absolute -left-48 -top-48 size-[32rem] rounded-full bg-brand-copper/12 blur-[120px]" />
                 <div className="absolute -right-48 top-1/3 size-[30rem] rounded-full bg-brand-persimmon/12 blur-[120px]" />
                 <div className="absolute bottom-0 left-1/3 size-[26rem] rounded-full bg-brand-chestnut/10 blur-[120px]" />
             </div>

@@ -17,7 +17,7 @@ function ScrollProgress() {
         <motion.div
             aria-hidden="true"
             style={{ scaleX: shouldReduceMotion ? scrollYProgress : scaleX }}
-            className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-linear-to-r from-brand-gold via-brand-vermilion to-brand-gold"
+            className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-linear-to-r from-brand-copper via-brand-vermilion to-brand-copper"
         />
     );
 }
@@ -29,7 +29,7 @@ export default function AppLayout() {
 
             <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 bg-background">
                 <div className="absolute inset-0 bg-wood opacity-50" />
-                <div className="absolute -left-48 -top-48 h-[36rem] w-[36rem] rounded-full bg-brand-gold/12 blur-[120px]" />
+                <div className="absolute -left-48 -top-48 h-[36rem] w-[36rem] rounded-full bg-brand-copper/12 blur-[120px]" />
                 <div className="absolute -right-48 top-1/3 h-[34rem] w-[34rem] rounded-full bg-brand-persimmon/12 blur-[120px]" />
                 <div className="absolute bottom-0 left-1/3 h-[28rem] w-[28rem] rounded-full bg-brand-chestnut/10 blur-[120px]" />
             </div>

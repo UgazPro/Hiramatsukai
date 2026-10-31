@@ -18,16 +18,17 @@
   --brand-persimmon-dark: #a4521a;
   --brand-chestnut: #6e4633;
   --brand-chestnut-dark: #4b2e21;
-  --brand-gold: #d2a52b;
-  --brand-gold-deep: #8a6816;
+  --brand-wood: #b08968;
+  --brand-wood-dark: #7a553c;
+  --brand-wood-deep: #4a3225;
+  --brand-copper: #a8724a;
+  --brand-copper-deep: #744a2d;
+  --brand-gold: var(--brand-copper);
+  --brand-gold-deep: var(--brand-copper-deep);
   --brand-indigo: #274b63;
   --brand-clay: #b5654a;
   --brand-muted: #5a4f44;
-  --brand-sand: #f4e7d5;
-
-  /* Photographic wood texture, tiled to read as a full wooden floor. */
-  --wood-texture: url('/textures/maria-kovalets-muk6SSCdPwc-unsplash.jpg');
-  --wood-texture-size: 100% auto;
+  --brand-sand: #ead9c4;
 
   /* Legacy aliases (kept for admin / login screens) */
   --yellowColor: var(--brand-gold-deep);
@@ -41,7 +42,7 @@
   --card-foreground: var(--brand-ink);
   --popover: var(--brand-washi-card);
   --popover-foreground: var(--brand-ink);
-  --primary: var(--brand-ink);
+  --primary: var(--brand-wood-dark);
   --primary-foreground: var(--brand-washi);
   --secondary: var(--brand-washi-deep);
   --secondary-foreground: var(--brand-ink);
@@ -53,26 +54,26 @@
   --destructive-foreground: #ffffff;
   --border: #dbcbb4;
   --input: #9c886d;
-  --ring: var(--brand-vermilion);
+  --ring: var(--brand-wood-dark);
   --chart-1: #c13b2b;
   --chart-2: #d8772f;
-  --chart-3: #d2a52b;
+  --chart-3: #a8724a;
   --chart-4: #6e4633;
   --chart-5: #274b63;
   --radius: 0.75rem;
-  --sidebar: var(--brand-washi-card);
-  --sidebar-foreground: var(--brand-ink);
-  --sidebar-primary: var(--brand-ink);
-  --sidebar-primary-foreground: var(--brand-washi);
-  --sidebar-accent: var(--brand-washi-deep);
-  --sidebar-accent-foreground: var(--brand-ink);
-  --sidebar-border: #dbcbb4;
-  --sidebar-ring: var(--brand-vermilion);
+  --sidebar: var(--brand-wood-deep);
+  --sidebar-foreground: var(--brand-washi);
+  --sidebar-primary: var(--brand-washi);
+  --sidebar-primary-foreground: var(--brand-wood-deep);
+  --sidebar-accent: var(--brand-wood-dark);
+  --sidebar-accent-foreground: var(--brand-washi);
+  --sidebar-border: rgb(247 241 229 / 0.14);
+  --sidebar-ring: var(--brand-copper);
 
   /* Elevation */
   --elevation-soft: 0 1px 2px rgb(20 17 16 / 0.05), 0 12px 32px -16px rgb(20 17 16 / 0.2);
   --elevation-lift: 0 2px 4px rgb(20 17 16 / 0.06), 0 24px 48px -20px rgb(20 17 16 / 0.3);
-  --elevation-gold: 0 12px 32px -14px rgb(138 104 22 / 0.5);
+  --elevation-gold: 0 12px 32px -14px rgb(168 114 74 / 0.5);
   --elevation-ember: 0 12px 32px -14px rgb(193 59 43 / 0.45);
 }
 
@@ -83,8 +84,8 @@
   --card-foreground: var(--brand-washi);
   --popover: var(--brand-sumi-soft);
   --popover-foreground: var(--brand-washi);
-  --primary: var(--brand-washi);
-  --primary-foreground: var(--brand-sumi);
+  --primary: var(--brand-wood);
+  --primary-foreground: var(--brand-washi);
   --secondary: #2a211b;
   --secondary-foreground: var(--brand-washi);
   --muted: #2a211b;
@@ -95,20 +96,20 @@
   --destructive-foreground: #ffffff;
   --border: rgb(247 241 229 / 0.14);
   --input: rgb(247 241 229 / 0.22);
-  --ring: var(--brand-gold);
+  --ring: var(--brand-wood);
   --chart-1: #e05240;
   --chart-2: #e68a45;
-  --chart-3: #e2b83e;
+  --chart-3: #c08a5e;
   --chart-4: #a9775c;
   --chart-5: #5c85a3;
-  --sidebar: #171310;
+  --sidebar: var(--brand-wood-deep);
   --sidebar-foreground: var(--brand-washi);
-  --sidebar-primary: var(--brand-gold);
-  --sidebar-primary-foreground: var(--brand-sumi);
-  --sidebar-accent: #241c17;
+  --sidebar-primary: var(--brand-washi);
+  --sidebar-primary-foreground: var(--brand-wood-deep);
+  --sidebar-accent: var(--brand-wood-dark);
   --sidebar-accent-foreground: var(--brand-washi);
   --sidebar-border: rgb(247 241 229 / 0.14);
-  --sidebar-ring: var(--brand-gold);
+  --sidebar-ring: var(--brand-copper);
 }
 
 @theme inline {
@@ -128,6 +129,11 @@
   --color-brand-persimmon-dark: var(--brand-persimmon-dark);
   --color-brand-chestnut: var(--brand-chestnut);
   --color-brand-chestnut-dark: var(--brand-chestnut-dark);
+  --color-brand-wood: var(--brand-wood);
+  --color-brand-wood-dark: var(--brand-wood-dark);
+  --color-brand-wood-deep: var(--brand-wood-deep);
+  --color-brand-copper: var(--brand-copper);
+  --color-brand-copper-deep: var(--brand-copper-deep);
   --color-brand-gold: var(--brand-gold);
   --color-brand-gold-deep: var(--brand-gold-deep);
   --color-brand-indigo: var(--brand-indigo);
@@ -247,26 +253,25 @@
 }
 
 @utility bg-wood {
-  background-color: #d8bd97;
+  background-color: #c9a77f;
   background-image:
-    linear-gradient(105deg, rgb(255 246 230 / 0.24), transparent 45%, rgb(110 70 51 / 0.12)),
-    radial-gradient(circle at 20% 0%, rgb(216 119 47 / 0.1), transparent 55%),
-    repeating-linear-gradient(0deg, rgb(110 70 51 / 0.035) 0px, rgb(110 70 51 / 0.035) 1px, transparent 1px, transparent 4px),
-    var(--wood-texture);
-  background-size: auto, auto, auto, var(--wood-texture-size);
-  background-position: 0 0, 0 0, 0 0, 0 0;
-  background-repeat: repeat, repeat, repeat, repeat-y;
+    linear-gradient(105deg, rgb(255 246 230 / 0.3), transparent 48%, rgb(74 50 37 / 0.14)),
+    radial-gradient(circle at 20% 0%, rgb(168 114 74 / 0.16), transparent 55%),
+    repeating-linear-gradient(0deg, rgb(74 50 37 / 0.055) 0px, rgb(74 50 37 / 0.055) 1px, transparent 1px, transparent 5px);
+  background-size: auto, auto, auto;
+  background-position: 0 0, 0 0, 0 0;
+  background-repeat: repeat, repeat, repeat;
 }
 
 @utility bg-wood-dark {
-  background-color: #1c130f;
+  background-color: #2a1d16;
   background-image:
-    linear-gradient(180deg, rgb(20 17 16 / 0.66), rgb(28 19 15 / 0.86)),
-    radial-gradient(circle at 75% 20%, rgb(216 119 47 / 0.12), transparent 55%),
-    var(--wood-texture);
-  background-size: auto, auto, var(--wood-texture-size);
+    linear-gradient(180deg, rgb(20 17 16 / 0.72), rgb(42 29 22 / 0.9)),
+    radial-gradient(circle at 75% 20%, rgb(168 114 74 / 0.16), transparent 55%),
+    repeating-linear-gradient(0deg, rgb(247 241 229 / 0.035) 0px, rgb(247 241 229 / 0.035) 1px, transparent 1px, transparent 6px);
+  background-size: auto, auto, auto;
   background-position: 0 0, 0 0, 0 0;
-  background-repeat: repeat, repeat, repeat-y;
+  background-repeat: repeat, repeat, repeat;
 }
 
 @keyframes marquee {

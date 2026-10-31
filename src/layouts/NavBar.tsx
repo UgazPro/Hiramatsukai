@@ -40,7 +40,7 @@ export function NavBar() {
                         {item.label}
                         <span
                             aria-hidden="true"
-                            className="absolute inset-x-3 -bottom-0.5 h-0.5 origin-center scale-x-0 rounded-full bg-brand-gold transition-transform duration-300 group-hover:scale-x-100"
+                            className="absolute inset-x-3 -bottom-0.5 h-0.5 origin-center scale-x-0 rounded-full bg-brand-copper transition-transform duration-300 group-hover:scale-x-100"
                         />
                     </button>
                 ))}
@@ -100,7 +100,7 @@ export function NavBarMobile({ goToScroll }: NavBarMobileProps) {
                 aria-expanded={open}
                 aria-controls="mobile-section-nav"
                 aria-label={open ? "Cerrar menú de secciones" : "Abrir menú de secciones"}
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi transition-colors duration-200 hover:bg-white/10 focus-visible:border-brand-gold"
+                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi transition-colors duration-200 hover:bg-white/10 focus-visible:border-brand-copper"
             >
                 {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>

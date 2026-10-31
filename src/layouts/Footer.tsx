@@ -6,7 +6,7 @@ export default function Footer() {
     return (
         <footer className="relative overflow-hidden border-t border-brand-chestnut/40 bg-linear-to-b from-brand-sumi-soft to-brand-sumi text-brand-washi">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood-dark opacity-40" />
-            <div aria-hidden="true" className="pointer-events-none absolute -top-24 left-1/2 h-48 w-[32rem] -translate-x-1/2 rounded-full bg-brand-gold/12 blur-[90px]" />
+            <div aria-hidden="true" className="pointer-events-none absolute -top-24 left-1/2 h-48 w-[32rem] -translate-x-1/2 rounded-full bg-brand-copper/12 blur-[90px]" />
             <div aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 h-40 w-64 rounded-full bg-brand-persimmon/10 blur-[100px]" />
 
             <div className="relative mx-auto flex   flex-col gap-8 px-5 py-10 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
@@ -24,7 +24,7 @@ export default function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Instagram de Hiramatsukai"
-                        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi/85 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-gold/60 hover:bg-white/10 hover:text-brand-gold"
+                        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi/85 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-copper/60 hover:bg-white/10 hover:text-brand-copper"
                     >
                         <FaInstagram size={20} aria-hidden="true" />
                     </a>
@@ -33,7 +33,7 @@ export default function Footer() {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="Facebook de Hiramatsukai"
-                        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi/85 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-gold/60 hover:bg-white/10 hover:text-brand-gold"
+                        className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi/85 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-copper/60 hover:bg-white/10 hover:text-brand-copper"
                     >
                         <FaFacebook size={20} aria-hidden="true" />
                     </a>

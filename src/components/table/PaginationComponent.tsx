@@ -70,7 +70,7 @@ export function PaginationComponent({
                                 onClick={() => onPageChange(page)}
                                 aria-current={page === currentPage ? "page" : undefined}
                                 className={`min-w-9 cursor-pointer rounded-lg px-3 py-2 text-sm font-medium transition ${page === currentPage
-                                        ? "bg-brand-gold text-brand-sumi shadow-sm"
+                                        ? "bg-brand-wood-dark text-brand-washi shadow-sm"
                                         : "border border-border text-foreground hover:bg-muted"
                                     }`}
                             >

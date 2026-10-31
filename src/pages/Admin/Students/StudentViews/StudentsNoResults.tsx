@@ -19,7 +19,7 @@ export default function StudentsNoResults() {
 
             <div className="flex justify-center gap-3">
                 <Button
-                    variant="gold"
+                    variant="wood"
                     onClick={startCreate}
                 >
                     <Plus className="h-4 w-4 mr-2" />
