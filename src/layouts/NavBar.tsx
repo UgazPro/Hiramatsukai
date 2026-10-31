@@ -100,7 +100,7 @@ export function NavBarMobile({ goToScroll }: NavBarMobileProps) {
                 aria-expanded={open}
                 aria-controls="mobile-section-nav"
                 aria-label={open ? "Cerrar menú de secciones" : "Abrir menú de secciones"}
-                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi transition-colors duration-200 hover:bg-white/10 focus-visible:border-brand-copper"
+                className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-brand-wood/30 bg-brand-wood/5 text-brand-wood-deep transition-colors duration-200 hover:bg-brand-wood/10 focus-visible:border-brand-wood"
             >
                 {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>

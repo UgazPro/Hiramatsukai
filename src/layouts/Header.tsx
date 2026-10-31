@@ -79,7 +79,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     : `sticky ${visible ? "top-0" : "-top-60"} z-50 w-full transition-all duration-300`
             }
         >
-            <div className="border-b border-brand-chestnut/35 bg-linear-to-r from-brand-sumi via-brand-sumi-soft to-brand-sumi/92 backdrop-blur-xl supports-[backdrop-filter]:bg-brand-sumi/88">
+            <div className="border-b border-brand-wood/20 bg-white/95 backdrop-blur-xl supports-[backdrop-filter]:bg-white/92">
                 <div className="flex h-18 w-full items-center justify-between gap-4 px-2 lg:px-8 lg:h-20">
                     <div className="flex items-center gap-2">
                         <div className="block lg:hidden">
@@ -89,7 +89,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             type="button"
                             onClick={onToggleMobileNav}
                             aria-label="Abrir menú de administración"
-                            className={`${isAdmin ? "flex" : "hidden"} h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-brand-chestnut/40 bg-brand-washi/5 text-brand-washi transition-colors hover:bg-brand-washi/10 focus-visible:border-brand-wood md:hidden`}
+                            className={`${isAdmin ? "flex" : "hidden"} h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-brand-wood/30 bg-brand-wood/5 text-brand-wood-deep transition-colors hover:bg-brand-wood/10 focus-visible:border-brand-wood md:hidden`}
                         >
                             <Menu className="h-5 w-5" />
                         </button>
@@ -99,7 +99,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             aria-label="Hiramatsukai Internacional - Inicio"
                             className="group flex items-center gap-3 rounded-full focus-visible:outline-offset-4"
                         >
-                            {!isLogin || !isAdmin && (
+                            {!isAdmin && (
                                 <span className="rounded-full bg-white p-0.5 shadow-soft ring-1 ring-brand-copper/50 transition-all duration-300 group-hover:scale-105 group-hover:ring-brand-copper">
                                     <img
                                         src="/oki2.png"
@@ -109,14 +109,18 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                                 </span>
                             )}
                             <span className="flex flex-col items-start leading-none">
-                                <span className="font-script text-xl text-brand-washi transition-colors duration-300 group-hover:text-white sm:text-3xl lg:text-4xl">
+                                <span className="font-script text-xl text-brand-wood-dark transition-colors duration-300 group-hover:text-brand-wood-deep sm:text-3xl lg:text-4xl">
                                     Hiramatsukai
                                 </span>
-                                <span className="mt-1.5 mx-auto text-[9px] font-semibold uppercase tracking-[0.32em] text-brand-copper sm:text-[10px] lg:text-[11px]">
+                                <span className="mt-1.5 mx-auto text-[9px] font-semibold uppercase tracking-[0.32em] text-brand-wood-dark sm:text-[10px] lg:text-[11px]">
                                     Internacional
                                 </span>
                             </span>
                         </Link>
+                    </div>
+
+                    <div className="hidden lg:block">
+                        {!isAdmin && !isLogin && <NavBar />}
                     </div>
 
                     <div className="flex items-center gap-3">
@@ -129,13 +133,13 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                                         className="flex items-center justify-center gap-4 rounded-full focus-visible:outline-offset-4"
                                     >
                                         <span className="hidden flex-col items-end text-right lg:flex">
-                                            <span className="text-sm font-medium text-brand-washi">
+                                            <span className="text-sm font-medium text-brand-wood-dark">
                                                 {userName} {userLastName}
                                             </span>
-                                            <span className="text-xs text-brand-washi/60">{userRole}</span>
+                                            <span className="text-xs text-brand-muted">{userRole}</span>
                                         </span>
-                                        <Avatar size="lg" className="bg-brand-wood-dark text-brand-washi ring-1 ring-brand-washi/20">
-                                            <AvatarFallback className="font-bold text-sm text-brand-washi">
+                                        <Avatar size="lg" className="bg-brand-wood/25 text-brand-wood-deep ring-1 ring-brand-wood/30">
+                                            <AvatarFallback className="font-bold text-sm text-brand-wood-deep">
                                                 {userName?.[0]}{userLastName?.[0]}
                                             </AvatarFallback>
                                         </Avatar>
@@ -186,7 +190,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             !isAdmin && !isLogin && (
                                 <Link
                                     to="/login"
-                                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-brand-wood/45 bg-white/5 px-4 text-xs font-medium tracking-wide text-brand-washi transition-all duration-300 hover:border-brand-wood hover:bg-brand-wood-dark hover:text-brand-washi md:px-5 md:text-sm lg:min-h-9"
+                                    className="inline-flex min-h-11 items-center justify-center rounded-full border border-brand-wood/40 bg-brand-wood/5 px-4 text-xs font-medium tracking-wide text-brand-wood-deep transition-all duration-300 hover:border-brand-wood hover:bg-brand-wood-dark hover:text-brand-washi md:px-5 md:text-sm lg:min-h-9"
                                 >
                                     Ingresar
                                 </Link>
@@ -194,10 +198,6 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                         )}
                     </div>
                 </div>
-            </div>
-
-            <div className="hidden lg:block">
-                {!isAdmin && !isLogin && <NavBar />}
             </div>
         </header>
     );
