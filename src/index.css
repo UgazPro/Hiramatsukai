@@ -5,26 +5,29 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Japanese brand palette */
-  --brand-sumi: #0b0d12;
-  --brand-sumi-soft: #151922;
-  --brand-ink: #1a1614;
-  --brand-washi: #f7f3ea;
-  --brand-washi-deep: #efe8da;
-  --brand-washi-card: #fffdf8;
-  --brand-vermilion: #b03a2e;
-  --brand-vermilion-dark: #8e2c22;
-  --brand-gold: #c9a227;
-  --brand-gold-deep: #8a6d1b;
-  --brand-indigo: #223b5c;
-  --brand-muted: #4b443d;
+  /* Japanese brand palette — Shu · Kaki · Kuri */
+  --brand-sumi: #141110;
+  --brand-sumi-soft: #211a16;
+  --brand-ink: #1b1512;
+  --brand-washi: #f7f1e5;
+  --brand-washi-deep: #eee3d1;
+  --brand-washi-card: #fffcf5;
+  --brand-vermilion: #c13b2b;
+  --brand-vermilion-dark: #8e241a;
+  --brand-persimmon: #d8772f;
+  --brand-persimmon-dark: #a4521a;
+  --brand-chestnut: #6e4633;
+  --brand-chestnut-dark: #4b2e21;
+  --brand-gold: #d2a52b;
+  --brand-gold-deep: #8a6816;
+  --brand-indigo: #274b63;
+  --brand-clay: #b5654a;
+  --brand-muted: #5a4f44;
+  --brand-sand: #f4e7d5;
 
-  /* Optional photographic wood texture (none by default).
-     Set to url("/textures/wood.jpg") to use a real texture image. */
-  /* --wood-texture: none; */
-  --wood-texture: url('/public/textures/maria-kovalets-muk6SSCdPwc-unsplash.jpg');
-  /* --wood-texture-size: 900px auto; */
-  --wood-texture-size: 100px auto;
+  /* Photographic wood texture, tiled to read as a full wooden floor. */
+  --wood-texture: url('/textures/maria-kovalets-muk6SSCdPwc-unsplash.jpg');
+  --wood-texture-size: 100% auto;
 
   /* Legacy aliases (kept for admin / login screens) */
   --yellowColor: var(--brand-gold-deep);
@@ -44,18 +47,18 @@
   --secondary-foreground: var(--brand-ink);
   --muted: var(--brand-washi-deep);
   --muted-foreground: var(--brand-muted);
-  --accent: var(--brand-washi-deep);
+  --accent: var(--brand-sand);
   --accent-foreground: var(--brand-ink);
   --destructive: #a93226;
   --destructive-foreground: #ffffff;
-  --border: #ded5c4;
-  --input: #9a8c74;
+  --border: #dbcbb4;
+  --input: #9c886d;
   --ring: var(--brand-vermilion);
-  --chart-1: #b03a2e;
-  --chart-2: #223b5c;
-  --chart-3: #c9a227;
-  --chart-4: #4b443d;
-  --chart-5: #8a6d1b;
+  --chart-1: #c13b2b;
+  --chart-2: #d8772f;
+  --chart-3: #d2a52b;
+  --chart-4: #6e4633;
+  --chart-5: #274b63;
   --radius: 0.75rem;
   --sidebar: var(--brand-washi-card);
   --sidebar-foreground: var(--brand-ink);
@@ -63,13 +66,14 @@
   --sidebar-primary-foreground: var(--brand-washi);
   --sidebar-accent: var(--brand-washi-deep);
   --sidebar-accent-foreground: var(--brand-ink);
-  --sidebar-border: #ded5c4;
+  --sidebar-border: #dbcbb4;
   --sidebar-ring: var(--brand-vermilion);
 
   /* Elevation */
-  --elevation-soft: 0 1px 2px rgb(11 13 18 / 0.04), 0 12px 32px -16px rgb(11 13 18 / 0.18);
-  --elevation-lift: 0 2px 4px rgb(11 13 18 / 0.05), 0 24px 48px -20px rgb(11 13 18 / 0.28);
-  --elevation-gold: 0 12px 32px -14px rgb(138 109 27 / 0.45);
+  --elevation-soft: 0 1px 2px rgb(20 17 16 / 0.05), 0 12px 32px -16px rgb(20 17 16 / 0.2);
+  --elevation-lift: 0 2px 4px rgb(20 17 16 / 0.06), 0 24px 48px -20px rgb(20 17 16 / 0.3);
+  --elevation-gold: 0 12px 32px -14px rgb(138 104 22 / 0.5);
+  --elevation-ember: 0 12px 32px -14px rgb(193 59 43 / 0.45);
 }
 
 .dark {
@@ -81,24 +85,29 @@
   --popover-foreground: var(--brand-washi);
   --primary: var(--brand-washi);
   --primary-foreground: var(--brand-sumi);
-  --secondary: #1f242f;
+  --secondary: #2a211b;
   --secondary-foreground: var(--brand-washi);
-  --muted: #1f242f;
-  --muted-foreground: #b9ae9a;
-  --accent: #1f242f;
+  --muted: #2a211b;
+  --muted-foreground: #c9bca8;
+  --accent: #2a211b;
   --accent-foreground: var(--brand-washi);
   --destructive: #d05043;
   --destructive-foreground: #ffffff;
-  --border: rgb(247 243 234 / 0.14);
-  --input: rgb(247 243 234 / 0.22);
+  --border: rgb(247 241 229 / 0.14);
+  --input: rgb(247 241 229 / 0.22);
   --ring: var(--brand-gold);
-  --sidebar: #11141b;
+  --chart-1: #e05240;
+  --chart-2: #e68a45;
+  --chart-3: #e2b83e;
+  --chart-4: #a9775c;
+  --chart-5: #5c85a3;
+  --sidebar: #171310;
   --sidebar-foreground: var(--brand-washi);
   --sidebar-primary: var(--brand-gold);
   --sidebar-primary-foreground: var(--brand-sumi);
-  --sidebar-accent: #1f242f;
+  --sidebar-accent: #241c17;
   --sidebar-accent-foreground: var(--brand-washi);
-  --sidebar-border: rgb(247 243 234 / 0.14);
+  --sidebar-border: rgb(247 241 229 / 0.14);
   --sidebar-ring: var(--brand-gold);
 }
 
@@ -115,14 +124,21 @@
   --color-brand-washi-card: var(--brand-washi-card);
   --color-brand-vermilion: var(--brand-vermilion);
   --color-brand-vermilion-dark: var(--brand-vermilion-dark);
+  --color-brand-persimmon: var(--brand-persimmon);
+  --color-brand-persimmon-dark: var(--brand-persimmon-dark);
+  --color-brand-chestnut: var(--brand-chestnut);
+  --color-brand-chestnut-dark: var(--brand-chestnut-dark);
   --color-brand-gold: var(--brand-gold);
   --color-brand-gold-deep: var(--brand-gold-deep);
   --color-brand-indigo: var(--brand-indigo);
+  --color-brand-clay: var(--brand-clay);
+  --color-brand-sand: var(--brand-sand);
   --color-brand-muted: var(--brand-muted);
 
   --shadow-soft: var(--elevation-soft);
   --shadow-lift: var(--elevation-lift);
   --shadow-gold: var(--elevation-gold);
+  --shadow-ember: var(--elevation-ember);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -207,48 +223,50 @@
 }
 
 @utility glass {
-  background-color: rgb(255 253 248 / 0.62);
+  background-color: color-mix(in oklab, var(--brand-washi-card) 78%, transparent);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid rgb(26 22 20 / 0.08);
+  border: 1px solid color-mix(in oklab, var(--brand-chestnut) 16%, transparent);
   box-shadow: var(--elevation-soft);
 }
 
 @utility glass-strong {
-  background-color: rgb(255 253 248 / 0.82);
+  background-color: color-mix(in oklab, var(--brand-washi-card) 88%, transparent);
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgb(26 22 20 / 0.1);
+  border: 1px solid color-mix(in oklab, var(--brand-chestnut) 20%, transparent);
   box-shadow: var(--elevation-soft);
 }
 
 @utility glass-dark {
-  background-color: rgb(247 243 234 / 0.08);
+  background-color: color-mix(in oklab, var(--brand-washi) 8%, transparent);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
-  border: 1px solid rgb(247 243 234 / 0.14);
+  border: 1px solid color-mix(in oklab, var(--brand-gold) 22%, transparent);
   box-shadow: 0 18px 48px -24px rgb(0 0 0 / 0.65);
 }
 
 @utility bg-wood {
-  background-color: #e5cfa9;
+  background-color: #d8bd97;
   background-image:
-    linear-gradient(105deg, rgb(255 250 238 / 0.22), transparent 45%, rgb(120 80 40 / 0.08)),
-    repeating-linear-gradient(0deg, rgb(96 64 32 / 0.03) 0px, rgb(96 64 32 / 0.03) 1px, transparent 1px, transparent 4px),
+    linear-gradient(105deg, rgb(255 246 230 / 0.24), transparent 45%, rgb(110 70 51 / 0.12)),
+    radial-gradient(circle at 20% 0%, rgb(216 119 47 / 0.1), transparent 55%),
+    repeating-linear-gradient(0deg, rgb(110 70 51 / 0.035) 0px, rgb(110 70 51 / 0.035) 1px, transparent 1px, transparent 4px),
     var(--wood-texture);
-  background-size: auto, auto, var(--wood-texture-size);
-  background-position: 0 0, 0 0, center;
-  background-repeat: repeat, repeat, no-repeat;
+  background-size: auto, auto, auto, var(--wood-texture-size);
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  background-repeat: repeat, repeat, repeat, repeat-y;
 }
 
 @utility bg-wood-dark {
-  background-color: #241a13;
+  background-color: #1c130f;
   background-image:
-    linear-gradient(180deg, rgb(11 13 18 / 0.58), rgb(11 13 18 / 0.78)),
+    linear-gradient(180deg, rgb(20 17 16 / 0.66), rgb(28 19 15 / 0.86)),
+    radial-gradient(circle at 75% 20%, rgb(216 119 47 / 0.12), transparent 55%),
     var(--wood-texture);
-  background-size: auto, var(--wood-texture-size);
-  background-position: 0 0, center;
-  background-repeat: repeat, no-repeat;
+  background-size: auto, auto, var(--wood-texture-size);
+  background-position: 0 0, 0 0, 0 0;
+  background-repeat: repeat, repeat, repeat-y;
 }
 
 @keyframes marquee {
@@ -279,6 +297,17 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 0.4rem;
+    height: 0.4rem;
+    flex-shrink: 0;
+    border-radius: 0.1rem;
+    background-color: var(--brand-vermilion);
+    box-shadow: 0 0 0 2px color-mix(in oklab, var(--brand-vermilion) 18%, transparent);
+  }
 }
 
 @utility text-measure {

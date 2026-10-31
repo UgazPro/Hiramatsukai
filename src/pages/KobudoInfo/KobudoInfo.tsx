@@ -36,12 +36,12 @@ export default function KobudoInfo() {
     const hasMoreKatas = weaponKatas.length > 3;
 
     return (
-        <div className="min-h-screen bg-brand-washi">
+        <div className="min-h-dvh">
             {/* Introducción */}
             <section className="relative overflow-hidden bg-brand-washi pb-12 pt-12 lg:pb-16 lg:pt-16">
                 <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood opacity-25" />
 
-                <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+                <div className="relative mx-auto   px-4 sm:px-6 lg:px-10">
                     <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
                         <div>
                             <span className="section-eyebrow rounded-full border border-brand-indigo/25 bg-brand-indigo/10 px-4 py-2 text-brand-indigo">
@@ -64,7 +64,7 @@ export default function KobudoInfo() {
                         </div>
 
                         <div className="relative">
-                            <div className="group relative overflow-hidden rounded-[2rem] border border-brand-indigo/20 bg-white/55 p-7 shadow-lift backdrop-blur-md sm:p-9">
+                            <div className="group relative overflow-hidden rounded-[2rem] border border-brand-indigo/20 bg-card/55 p-7 shadow-lift backdrop-blur-md sm:p-9">
                                 <div aria-hidden="true" className="absolute inset-0 bg-wood opacity-20 transition-opacity duration-500 group-hover:opacity-30" />
                                 <div aria-hidden="true" className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-brand-indigo/10 blur-3xl" />
 
@@ -120,7 +120,7 @@ export default function KobudoInfo() {
                                     }}
                                     className={`relative min-w-44 md:min-w-0 cursor-pointer overflow-hidden flex flex-col items-center justify-center p-4 rounded-2xl transition-all duration-300 border ${isSelected
                                         ? "text-white shadow-lg scale-105 border-transparent"
-                                        : "bg-white text-gray-700 hover:bg-gray-50 border-gray-200"
+                                        : "bg-card text-foreground hover:bg-muted/40 border-border"
                                         }`}
                                 >
                                     {isSelected ? (
@@ -149,7 +149,7 @@ export default function KobudoInfo() {
                     {selectedWeaponData && (
                         <motion.div
                             key={selectedWeaponData.id}
-                            className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden mb-4"
+                            className="bg-card rounded-3xl shadow-xl border border-border overflow-hidden mb-4"
                             initial={{ opacity: 0, y: 16, scale: 0.99 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -12, scale: 0.99 }}
@@ -193,7 +193,7 @@ export default function KobudoInfo() {
                                         <h4 className="font-bold text-lg mb-2">Técnicas Principales</h4>
                                         <div className="flex flex-wrap gap-2">
                                             {selectedWeaponData.techniques.map((tech, index) => (
-                                                <span key={index} className="px-3 py-1 bg-white/20 rounded-full text-sm">
+                                                <span key={index} className="px-3 py-1 bg-card/20 rounded-full text-sm">
                                                     {tech}
                                                 </span>
                                             ))}
@@ -203,7 +203,7 @@ export default function KobudoInfo() {
                             </div>
 
                             <div className="p-8">
-                                <h4 className="text-2xl font-bold text-gray-900 mb-6">Katas Específicos</h4>
+                                <h4 className="text-2xl font-bold text-foreground mb-6">Katas Específicos</h4>
                                 <div className="space-y-4">
                                     {visibleKatas.map((kata, index) => (
                                         <motion.div
@@ -211,18 +211,18 @@ export default function KobudoInfo() {
                                             initial={{ opacity: 0, x: 12 }}
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: 0.06 * index, duration: 0.22 }}
-                                            className="flex items-center justify-between p-4 bg-gray-50 rounded-xl"
+                                            className="flex items-center justify-between p-4 bg-muted/40 rounded-xl"
                                         >
                                             <div>
-                                                <h5 className="font-bold text-gray-900">{kata.name}</h5>
+                                                <h5 className="font-bold text-foreground">{kata.name}</h5>
                                                 <div className="flex items-center gap-4 mt-1">
-                                                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                                                    <span className="px-3 py-1 bg-brand-indigo/10 text-brand-indigo rounded-full text-sm">
                                                         {kata.level}
                                                     </span>
-                                                    <span className="text-sm text-gray-600">{kata.style}</span>
+                                                    <span className="text-sm text-muted-foreground">{kata.style}</span>
                                                 </div>
                                             </div>
-                                            <Book className="h-6 w-6 text-gray-400" />
+                                            <Book className="h-6 w-6 text-muted-foreground" />
                                         </motion.div>
                                     ))}
 
@@ -256,26 +256,26 @@ export default function KobudoInfo() {
             {/* Armas Adicionales */}
             <section className="lg:px-10 px-4">
                 <div className="text-center mb-4">
-                    <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                        Armas <span className="text-blue-600">Adicionales</span>
+                    <h2 className="text-4xl font-bold text-foreground mb-4">
+                        Armas <span className="text-brand-indigo">Adicionales</span>
                     </h2>
-                    <p className="text-xl text-gray-700">
+                    <p className="text-xl text-foreground">
                         Especializaciones avanzadas dentro del sistema Matayoshi
                     </p>
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-6 gap-6">
                     {additionalWeapons.map((weapon, index) => (
-                        <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                        <div key={index} className="bg-card rounded-2xl p-6 shadow-lg border border-border hover:shadow-xl transition-shadow duration-300">
                             <div className="text-center">
-                                <div className="inline-block p-3 bg-gray-100 rounded-xl mb-4">
-                                    <GiBo className="h-8 w-8 text-gray-600" />
+                                <div className="inline-block p-3 bg-muted rounded-xl mb-4">
+                                    <GiBo className="h-8 w-8 text-muted-foreground" />
                                 </div>
-                                <h3 className="font-bold text-gray-900 mb-1">{weapon.name}</h3>
-                                <div className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-bold mb-3 inline-block">
+                                <h3 className="font-bold text-foreground mb-1">{weapon.name}</h3>
+                                <div className="px-3 py-1 bg-brand-gold/15 text-brand-gold-deep rounded-full text-sm font-bold mb-3 inline-block">
                                     {weapon.type}
                                 </div>
-                                <p className="text-sm text-gray-600">{weapon.description}</p>
+                                <p className="text-sm text-muted-foreground">{weapon.description}</p>
                             </div>
                         </div>
                     ))}
@@ -283,44 +283,44 @@ export default function KobudoInfo() {
             </section>
 
             {/* Sistema de Grados */}
-            <section className="lg:p-10 p-4 bg-linear-to-b from-gray-50 to-white">
-                <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+            <section className="lg:p-10 p-4 bg-linear-to-b from-muted/40 to-white">
+                <div className="bg-card rounded-3xl p-8 shadow-xl border border-border">
                     <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                            Sistema de <span className="text-blue-600">Grados</span>
+                        <h2 className="text-4xl font-bold text-foreground mb-4">
+                            Sistema de <span className="text-brand-indigo">Grados</span>
                         </h2>
-                        <p className="text-xl text-gray-700">
+                        <p className="text-xl text-foreground">
                             Especialización progresiva en armas tradicionales
                         </p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="text-center p-6">
-                            <div className="h-16 w-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-2xl font-bold text-blue-600">初</span>
+                            <div className="h-16 w-16 bg-brand-indigo/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span className="text-2xl font-bold text-brand-indigo">初</span>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-3">Nivel Básico</h3>
-                            <p className="text-gray-600 mb-4">
+                            <h3 className="text-xl font-bold text-foreground mb-3">Nivel Básico</h3>
+                            <p className="text-muted-foreground mb-4">
                                 Fundamentos de Bo y Sai. Posturas básicas y movimientos esenciales.
                             </p>
                         </div>
 
                         <div className="text-center p-6">
-                            <div className="h-16 w-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-2xl font-bold text-yellow-600">中</span>
+                            <div className="h-16 w-16 bg-brand-gold/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span className="text-2xl font-bold text-brand-gold-deep">中</span>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-3">Nivel Intermedio</h3>
-                            <p className="text-gray-600 mb-4">
+                            <h3 className="text-xl font-bold text-foreground mb-3">Nivel Intermedio</h3>
+                            <p className="text-muted-foreground mb-4">
                                 Tonfa y Nunchaku. Katas completos y aplicaciones prácticas.
                             </p>
                         </div>
 
                         <div className="text-center p-6">
-                            <div className="h-16 w-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="text-2xl font-bold text-red-600">高</span>
+                            <div className="h-16 w-16 bg-brand-vermilion/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span className="text-2xl font-bold text-brand-vermilion">高</span>
                             </div>
-                            <h3 className="text-xl font-bold text-gray-900 mb-3">Nivel Avanzado</h3>
-                            <p className="text-gray-600 mb-4">
+                            <h3 className="text-xl font-bold text-foreground mb-3">Nivel Avanzado</h3>
+                            <p className="text-muted-foreground mb-4">
                                 Kai y armas adicionales. Maestría en el sistema completo.
                             </p>
                         </div>

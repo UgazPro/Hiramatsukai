@@ -28,8 +28,8 @@ export function NavBar() {
     };
 
     return (
-        <div className="border-b border-brand-ink/10 bg-brand-washi/80 backdrop-blur-xl transition-all duration-300">
-            <nav aria-label="Secciones principales" className="mx-auto flex max-w-7xl items-center justify-center gap-1 px-4 py-1.5">
+        <div className="border-b border-brand-chestnut/20 bg-brand-washi-card/85 backdrop-blur-xl transition-all duration-300">
+            <nav aria-label="Secciones principales" className="mx-auto flex   items-center justify-center gap-1 px-4 py-1.5">
                 {menuItems.map((item) => (
                     <button
                         key={item.id}

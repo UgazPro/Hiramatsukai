@@ -143,7 +143,7 @@ export default function KaratedoInfo() {
                 <ProgressStepper steps={progressData} onSelectStep={setActiveHistory} />
             </div>
 
-            <div className="mx-auto hidden w-11/12 max-w-5xl rounded-3xl border border-brand-ink/8 bg-white/60 p-10 shadow-soft backdrop-blur-md md:block">
+            <div className="mx-auto hidden w-11/12 max-w-5xl rounded-3xl border border-brand-ink/8 bg-brand-washi-card/65 p-10 shadow-soft backdrop-blur-md md:block">
                 {activeHistoryEntry?.content.map((paragraph, index) => (
                     <p key={index} className="mb-4 leading-relaxed text-brand-muted last:mb-0">
                         {paragraph}
@@ -190,7 +190,7 @@ export default function KaratedoInfo() {
                             const content = karatedoInfoData.find((info) => info.name === step.name)?.content ?? [];
 
                             return (
-                                <div key={step.name} className={`overflow-hidden rounded-xl border bg-white/70 backdrop-blur-md transition-colors ${isActive ? "border-brand-vermilion/40" : "border-brand-ink/10"}`}>
+                                <div key={step.name} className={`overflow-hidden rounded-xl border bg-brand-washi-card/75 backdrop-blur-md transition-colors ${isActive ? "border-brand-vermilion/40" : "border-brand-ink/10"}`}>
                                     <button
                                         type="button"
                                         onClick={() => {
@@ -251,7 +251,7 @@ export default function KaratedoInfo() {
                                         aria-pressed={isActive}
                                         className={`flex cursor-pointer items-center justify-center gap-2.5 rounded-2xl px-5 py-3.5 text-sm font-medium transition-all duration-300 lg:px-7 ${isActive
                                             ? 'bg-brand-vermilion text-white shadow-soft'
-                                            : 'text-brand-muted hover:bg-white/60 hover:text-brand-ink'
+                                            : 'text-brand-muted hover:bg-brand-washi-card/70 hover:text-brand-ink'
                                             }`}
                                     >
                                         <Icon className="h-4 w-4" aria-hidden="true" />

@@ -20,7 +20,7 @@ export default function HiramatsukaiInfo() {
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood opacity-45" />
 
             <div className="relative px-4 sm:px-8 lg:px-12">
-                <div className="mx-auto max-w-7xl">
+                <div className="mx-auto  ">
 
                     <Reveal y={18}>
                         <div className="glass grid items-center gap-10 rounded-[2rem] p-7 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:p-14">
@@ -45,9 +45,9 @@ export default function HiramatsukaiInfo() {
                                 {logos.map((logo) => (
                                     <div
                                         key={logo.label}
-                                        className="group flex w-28 flex-col items-center gap-3 rounded-2xl border border-brand-ink/8 bg-white/60 p-4 shadow-soft backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-gold/40 hover:bg-white/90 hover:shadow-lift sm:w-32"
+                                        className="group flex w-28 flex-col items-center gap-3 rounded-2xl border border-brand-ink/8 bg-brand-washi-card/70 p-4 shadow-soft backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-gold/40 hover:bg-brand-washi-card/95 hover:shadow-lift sm:w-32"
                                     >
-                                        <div className="h-18 w-18 overflow-hidden rounded-full bg-white/80 p-2 ring-1 ring-brand-gold/35 transition-all duration-500 group-hover:scale-105 group-hover:ring-brand-gold sm:h-20 sm:w-20">
+                                        <div className="h-18 w-18 overflow-hidden rounded-full bg-brand-washi-card/90 p-2 ring-1 ring-brand-gold/35 transition-all duration-500 group-hover:scale-105 group-hover:ring-brand-gold sm:h-20 sm:w-20">
                                             <img
                                                 src={logo.src}
                                                 alt={logo.alt}

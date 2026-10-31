@@ -232,7 +232,7 @@ console.log(user)
   if (isDojoLoading) {
     return (
       <div className="min-h-full bg-linear-to-b from-background to-muted/40 p-3 sm:p-4 md:p-6">
-        <div className="mx-auto w-full max-w-7xl space-y-6">
+        <div className="mx-auto w-full   space-y-6">
           <div className="flex items-center justify-between mb-8">
             <div className="space-y-2">
               <div className="h-8 w-72 bg-muted rounded-md animate-pulse" />
@@ -279,7 +279,7 @@ console.log(user)
   return (
     <div className="min-h-full bg-linear-to-b from-background to-muted/40 p-3 sm:p-4 md:p-6">
       {/* Header */}
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="mx-auto w-full  ">
         <div className="mb-6 flex flex-col items-center justify-between gap-3 sm:mb-8 sm:flex-row">
 
           <div className="min-w-0 text-center sm:text-left">

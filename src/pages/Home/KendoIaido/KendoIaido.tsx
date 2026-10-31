@@ -12,7 +12,7 @@ export default function KendoIaido() {
             description: '"El camino de la espada" - Combate con shinai',
             icon: "剣",
             bgIcon: "bg-linear-to-br from-brand-indigo to-brand-indigo/80",
-            bg: "bg-linear-to-br from-blue-50 to-blue-100",
+            bg: "bg-linear-to-br from-brand-indigo/10 to-brand-indigo/5",
             border: "border-brand-indigo/25",
         },
         {
@@ -20,24 +20,24 @@ export default function KendoIaido() {
             description: '"Arte del desenvaine" - Katana tradicional',
             icon: "居",
             bgIcon: "bg-linear-to-br from-brand-ink to-brand-sumi",
-            bg: "bg-linear-to-br from-gray-100 to-gray-200",
+            bg: "bg-linear-to-br from-brand-chestnut/12 to-brand-chestnut/20",
             border: "border-brand-ink/20",
         },
         {
             title: "Bushido",
             description: "Código del samurái - Honor y disciplina",
             icon: "道",
-            bgIcon: "bg-linear-to-br from-indigo-500 to-indigo-700",
-            bg: "bg-linear-to-br from-indigo-50 to-indigo-100",
-            border: "border-indigo-300/40",
+            bgIcon: "bg-linear-to-br from-brand-indigo to-brand-chestnut",
+            bg: "bg-linear-to-br from-brand-indigo/12 to-brand-indigo/5",
+            border: "border-brand-indigo/30",
         },
         {
             title: "Bogu",
             description: "Armadura tradicional - Protección y etiqueta",
             icon: "具",
-            bgIcon: "bg-linear-to-br from-slate-600 to-slate-800",
-            bg: "bg-linear-to-br from-slate-50 to-slate-100",
-            border: "border-slate-300/50",
+            bgIcon: "bg-linear-to-br from-brand-chestnut to-brand-sumi",
+            bg: "bg-linear-to-br from-brand-chestnut/10 to-brand-sumi/10",
+            border: "border-brand-chestnut/30",
         }
     ];
 
@@ -46,7 +46,7 @@ export default function KendoIaido() {
         <section id="kendoIaido" aria-labelledby="kendoiaido-title" className="relative scroll-mt-32 overflow-hidden bg-brand-washi py-20 sm:py-24">
 
 
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+            <div className="relative mx-auto   px-4 sm:px-6 lg:px-10">
 
                 <div className="flex flex-col items-start gap-10 lg:flex-row lg:gap-14">
 

@@ -185,7 +185,7 @@ export default function Hiramatsukai() {
     ];
 
     return (
-        <div className="mx-auto w-full max-w-7xl p-3 sm:p-4 md:p-6">
+        <div className="mx-auto w-full   p-3 sm:p-4 md:p-6">
             {/* Header + Filter Buttons */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-5">
                 <div className="flex items-center gap-3">

@@ -4,11 +4,12 @@ import { FaInstagram, FaFacebook } from "react-icons/fa";
 export default function Footer() {
 
     return (
-        <footer className="relative overflow-hidden border-t border-white/10 bg-brand-sumi text-brand-washi">
+        <footer className="relative overflow-hidden border-t border-brand-chestnut/40 bg-linear-to-b from-brand-sumi-soft to-brand-sumi text-brand-washi">
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood-dark opacity-40" />
-            <div aria-hidden="true" className="pointer-events-none absolute -top-24 left-1/2 h-48 w-[32rem] -translate-x-1/2 rounded-full bg-brand-gold/10 blur-[90px]" />
+            <div aria-hidden="true" className="pointer-events-none absolute -top-24 left-1/2 h-48 w-[32rem] -translate-x-1/2 rounded-full bg-brand-gold/12 blur-[90px]" />
+            <div aria-hidden="true" className="pointer-events-none absolute bottom-0 right-0 h-40 w-64 rounded-full bg-brand-persimmon/10 blur-[100px]" />
 
-            <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-5 py-10 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
+            <div className="relative mx-auto flex   flex-col gap-8 px-5 py-10 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
 
                 <Link to="/" className="group flex items-center gap-3 self-center lg:self-auto">
                     <span className="font-script text-3xl text-brand-washi transition-colors duration-300 group-hover:text-white lg:text-4xl">
@@ -39,7 +40,7 @@ export default function Footer() {
                 </nav>
             </div>
 
-            <div className="relative mx-auto max-w-7xl px-5 pb-8 sm:px-8 lg:px-10">
+            <div className="relative mx-auto   px-5 pb-8 sm:px-8 lg:px-10">
                 <div aria-hidden="true" className="gold-rule mb-6 h-px w-full opacity-60" />
                 <p className="text-center text-xs leading-relaxed text-brand-washi/60 lg:text-sm">
                     © {new Date().getFullYear()} Hiramatsukai Internacional. Todos los derechos reservados.

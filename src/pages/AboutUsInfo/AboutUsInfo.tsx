@@ -125,7 +125,7 @@ export default function AboutUsInfo() {
     ];
 
     return (
-        <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
+        <div className="min-h-dvh">
             {/* Hero con Carousel */}
             <section className="relative">
                 <div className="h-150 md:h-175">
@@ -134,14 +134,14 @@ export default function AboutUsInfo() {
             </section>
 
             {/* Introducción */}
-            <section className="bg-white">
+            <section className="bg-card">
                 <div className="px-4">
                     <div className="text-center">
-                        <Shield className="h-16 w-16 text-yellow-600 mx-auto mb-6" />
-                        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                            Organización <span className="text-red-600">Hiramatsukai</span>
+                        <Shield className="h-16 w-16 text-brand-gold-deep mx-auto mb-6" />
+                        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                            Organización <span className="text-brand-vermilion">Hiramatsukai</span>
                         </h1>
-                        <p className="text-xl text-gray-700 mb-8 leading-relaxed">
+                        <p className="text-xl text-foreground mb-8 leading-relaxed">
                             Fundada en 1997 en Okinawa, Japón, Hiramatsukai se ha dedicado a preservar y transmitir
                             las artes marciales tradicionales en su forma más pura. Con una estructura organizativa
                             sólida y una junta directiva de maestros de alto rango, mantenemos los estándares más
@@ -149,16 +149,16 @@ export default function AboutUsInfo() {
                         </p>
                         <div className="hidden  grid-cols-1 md:grid-cols-3 gap-8 mt-12">
                             <div className="text-center">
-                                <div className="text-4xl font-bold text-red-600 mb-2">25+</div>
-                                <div className="text-gray-600">Años de Tradición</div>
+                                <div className="text-4xl font-bold text-brand-vermilion mb-2">25+</div>
+                                <div className="text-muted-foreground">Años de Tradición</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-4xl font-bold text-blue-600 mb-2">15</div>
-                                <div className="text-gray-600">Países con Dojos Afiliados</div>
+                                <div className="text-4xl font-bold text-brand-indigo mb-2">15</div>
+                                <div className="text-muted-foreground">Países con Dojos Afiliados</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-4xl font-bold text-yellow-600 mb-2">3000+</div>
-                                <div className="text-gray-600">Estudiantes Activos</div>
+                                <div className="text-4xl font-bold text-brand-gold-deep mb-2">3000+</div>
+                                <div className="text-muted-foreground">Estudiantes Activos</div>
                             </div>
                         </div>
                     </div>
@@ -166,7 +166,7 @@ export default function AboutUsInfo() {
             </section>
 
             {/* Navegación por pestañas */}
-            <section className="py-8 bg-gray-50">
+            <section className="py-8 bg-muted/40">
                 <div className="px-4">
                     <div className="">
                         <div className="flex flex-wrap gap-2 justify-center">
@@ -178,8 +178,8 @@ export default function AboutUsInfo() {
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
                                         className={`flex items-center gap-3 px-6 py-4 rounded-xl font-medium transition-all duration-300 ${isActive
-                                            ? 'bg-linear-to-r from-red-500 to-red-600 text-white shadow-lg'
-                                            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                                            ? 'bg-linear-to-r from-brand-vermilion to-brand-persimmon text-white shadow-lg'
+                                            : 'bg-card text-foreground hover:bg-muted border border-border'
                                             }`}
                                     >
                                         <Icon className="h-5 w-5" />
@@ -199,10 +199,10 @@ export default function AboutUsInfo() {
                         <div>
                             <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
                                 <div>
-                                    <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                                        Nuestra <span className="text-red-600">Historia</span>
+                                    <h2 className="text-3xl font-bold text-foreground mb-6">
+                                        Nuestra <span className="text-brand-vermilion">Historia</span>
                                     </h2>
-                                    <div className="space-y-4 text-gray-700">
+                                    <div className="space-y-4 text-foreground">
                                         <p>
                                             La Hiramatsukai fue fundada en 1997 por un grupo de maestros dedicados a preservar
                                             las artes marciales tradicionales de Okinawa en su forma más auténtica impartidas por el Maestro Hiramatsu.
@@ -210,12 +210,12 @@ export default function AboutUsInfo() {
                                     </div>
                                 </div>
                                 <div className="relative">
-                                    <div className="bg-linear-to-br from-gray-900 to-gray-800 rounded-3xl overflow-hidden">
+                                    <div className="bg-linear-to-br from-brand-sumi to-brand-sumi rounded-3xl overflow-hidden">
                                         <div className="p-8 text-white">
                                             <Calendar className="h-12 w-12 mb-4" />
                                             <h3 className="text-2xl font-bold mb-2">1997</h3>
-                                            <p className="text-gray-300">Año de Fundación</p>
-                                            <p className="text-sm text-gray-400 mt-4">
+                                            <p className="text-border">Año de Fundación</p>
+                                            <p className="text-sm text-muted-foreground mt-4">
                                                 "Comienza tu viaje marcial donde otros terminaron el suyo"
                                             </p>
                                         </div>
@@ -232,51 +232,51 @@ export default function AboutUsInfo() {
 
             {/* Junta Directiva */}
             {activeTab === "directiva" && (
-                <section className="py-8 bg-gray-50">
+                <section className="py-8 bg-muted/40">
                     <div className="px-4">
                         <div>
                             <div className="text-center mb-12">
-                                <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                                    Junta <span className="text-red-600">Directiva</span>
+                                <h2 className="text-4xl font-bold text-foreground mb-4">
+                                    Junta <span className="text-brand-vermilion">Directiva</span>
                                 </h2>
-                                <p className="text-xl text-gray-700">
+                                <p className="text-xl text-foreground">
                                     Liderazgo experimentado con décadas de dedicación a las artes marciales
                                 </p>
                             </div>
 
                             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 {boardMembers.map((member, index) => (
-                                    <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+                                    <div key={index} className="bg-card rounded-2xl p-6 shadow-lg border border-border">
                                         <div className="flex items-center gap-2 mb-3">
-                                            <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-bold uppercase">
+                                            <span className="px-3 py-1 bg-brand-vermilion/10 text-brand-vermilion-dark rounded-full text-sm font-bold uppercase">
                                                 {member.position}
                                             </span>
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                                        <h3 className="text-xl font-bold text-foreground mb-1">{member.name}</h3>
                                         <div className="flex items-center gap-2 mb-4">
-                                            <Award className="h-4 w-4 text-red-500" />
-                                            <span className="text-sm font-semibold text-gray-700">{member.rank}</span>
+                                            <Award className="h-4 w-4 text-brand-vermilion" />
+                                            <span className="text-sm font-semibold text-foreground">{member.rank}</span>
                                         </div>
-                                        <div className="space-y-2 text-sm text-gray-600">
+                                        <div className="space-y-2 text-sm text-muted-foreground">
                                             <div className="flex items-center">
-                                                <MapPin className="h-4 w-4 text-gray-400 mr-2 shrink-0" />
+                                                <MapPin className="h-4 w-4 text-muted-foreground mr-2 shrink-0" />
                                                 {member.location}
                                             </div>
                                             <div className="flex items-center">
-                                                <Users className="h-4 w-4 text-gray-400 mr-2 shrink-0" />
+                                                <Users className="h-4 w-4 text-muted-foreground mr-2 shrink-0" />
                                                 C.I: {member.id}
                                             </div>
                                             <div className="flex items-start">
-                                                <Globe className="h-4 w-4 text-gray-400 mr-2 shrink-0 mt-0.5" />
+                                                <Globe className="h-4 w-4 text-muted-foreground mr-2 shrink-0 mt-0.5" />
                                                 <div>
-                                                    <a href={`tel:${member.phones[0].replace(/[^+\d]/g, "")}`} className="hover:text-red-600 block">
+                                                    <a href={`tel:${member.phones[0].replace(/[^+\d]/g, "")}`} className="hover:text-brand-vermilion block">
                                                         {member.phones.join(" / ")}
                                                     </a>
                                                 </div>
                                             </div>
                                             <div className="flex items-center">
-                                                <Mail className="h-4 w-4 text-gray-400 mr-2 shrink-0" />
-                                                <a href={`mailto:${member.email}`} className="hover:text-red-600 break-all">
+                                                <Mail className="h-4 w-4 text-muted-foreground mr-2 shrink-0" />
+                                                <a href={`mailto:${member.email}`} className="hover:text-brand-vermilion break-all">
                                                     {member.email}
                                                 </a>
                                             </div>
@@ -287,10 +287,10 @@ export default function AboutUsInfo() {
 
                             {/* Rangos Jerárquicos */}
                             <div className="mt-20 hidden">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-                                    Sistema de <span className="text-red-600">Rangos</span>
+                                <h3 className="text-2xl font-bold text-foreground mb-8 text-center">
+                                    Sistema de <span className="text-brand-vermilion">Rangos</span>
                                 </h3>
-                                <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+                                <div className="bg-card rounded-2xl p-8 shadow-lg border border-border">
                                     <div className="grid md:grid-cols-4 gap-6">
                                         {[
                                             { rank: "Shihan", level: "Maestro Instructor", color: "red" },
@@ -299,17 +299,17 @@ export default function AboutUsInfo() {
                                             { rank: "Sensei", level: "Instructor", color: "green" }
                                         ].map((item, index) => (
                                             <div key={index} className="text-center p-4">
-                                                <div className={`h-16 w-16 rounded-full mx-auto mb-4 flex items-center justify-center ${item.color === 'red' ? 'bg-red-100' :
-                                                    item.color === 'orange' ? 'bg-orange-100' :
-                                                        item.color === 'blue' ? 'bg-blue-100' : 'bg-green-100'
+                                                <div className={`h-16 w-16 rounded-full mx-auto mb-4 flex items-center justify-center ${item.color === 'red' ? 'bg-brand-vermilion/10' :
+                                                    item.color === 'orange' ? 'bg-brand-persimmon/15' :
+                                                        item.color === 'blue' ? 'bg-brand-indigo/10' : 'bg-green-100'
                                                     }`}>
-                                                    <Award className={`h-8 w-8 ${item.color === 'red' ? 'text-red-600' :
-                                                        item.color === 'orange' ? 'text-orange-600' :
-                                                            item.color === 'blue' ? 'text-blue-600' : 'text-green-600'
+                                                    <Award className={`h-8 w-8 ${item.color === 'red' ? 'text-brand-vermilion' :
+                                                        item.color === 'orange' ? 'text-brand-persimmon-dark' :
+                                                            item.color === 'blue' ? 'text-brand-indigo' : 'text-green-600'
                                                         }`} />
                                                 </div>
-                                                <h4 className="font-bold text-gray-900">{item.rank}</h4>
-                                                <p className="text-sm text-gray-600">{item.level}</p>
+                                                <h4 className="font-bold text-foreground">{item.rank}</h4>
+                                                <p className="text-sm text-muted-foreground">{item.level}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -326,44 +326,44 @@ export default function AboutUsInfo() {
                     <div className="px-4">
                         <div>
                             <div className="text-center mb-12">
-                                <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                                    Nuestros <span className="text-red-600">Dojos</span>
+                                <h2 className="text-4xl font-bold text-foreground mb-4">
+                                    Nuestros <span className="text-brand-vermilion">Dojos</span>
                                 </h2>
-                                {/* <p className="text-xl text-gray-700">
+                                {/* <p className="text-xl text-foreground">
                                     Red internacional de dojos certificados por Hiramatsukai
                                 </p> */}
                             </div>
 
                             <div className="grid md:grid-cols-2 gap-8">
                                 {dojos.map((dojo, index) => (
-                                    <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                                    <div key={index} className="bg-card rounded-2xl p-6 shadow-lg border border-border hover:shadow-xl transition-shadow duration-300">
                                         <div className="flex items-start justify-between mb-4">
                                             <div>
-                                                <h3 className="text-xl font-bold text-gray-900 mb-1">{dojo.dojo}</h3>
-                                                <div className="flex items-center text-gray-600">
+                                                <h3 className="text-xl font-bold text-foreground mb-1">{dojo.dojo}</h3>
+                                                <div className="flex items-center text-muted-foreground">
                                                     <MapPin className="h-4 w-4 mr-1" />
-                                                    <p className="text-gray-600 whitespace-nowrap text-ellipsis overflow-hidden w-80">{dojo.address}</p>
+                                                    <p className="text-muted-foreground whitespace-nowrap text-ellipsis overflow-hidden w-80">{dojo.address}</p>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center justify-center py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-bold min-w-30">
+                                            <div className="flex items-center justify-center py-1 bg-brand-indigo/10 text-brand-indigo rounded-full text-sm font-bold min-w-30">
                                                 {dojo.students} estudiantes
                                             </div>
                                         </div>
 
                                         <div className="mb-4">
-                                            <p className="text-gray-700 mb-2">
+                                            <p className="text-foreground mb-2">
                                                 <span className="font-semibold">Instructor Principal:</span> {dojo.leaderInstructor?.userRanks?.[0]?.rank?.rank_name} {dojo.leaderInstructor?.name} {dojo.leaderInstructor?.lastName}
                                             </p>
                                             <div className="flex flex-wrap gap-2">
                                                 {dojo.dojoMartialArts.map((art, idx) => (
-                                                    <span key={idx} className="flex items-center gap-2 py-1 px-2 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                                    <span key={idx} className="flex items-center gap-2 py-1 px-2 bg-muted text-foreground rounded-full text-sm">
                                                         <img src={`/${art.icon}`} className={art.martialArt === "Kobudo" ? "h-7 w-9" : "w-8 h-8"} alt={art.martialArt} /> {art.martialArt}
                                                     </span>
                                                 ))}
                                             </div>
                                         </div>
 {/* 
-                                        <Button variant="outline" className="w-full border-blue-500 text-blue-600 hover:bg-blue-50">
+                                        <Button variant="outline" className="w-full border-brand-indigo text-brand-indigo hover:bg-brand-indigo/5">
                                             Contactar Dojo
                                         </Button> */}
                                     </div>
@@ -371,29 +371,29 @@ export default function AboutUsInfo() {
                             </div>
 
                             {/* Mapa de dojos (conceptual) */}
-                            <div className="hidden mt-16 bg-linear-to-r from-gray-900 to-gray-800 rounded-2xl p-8 text-white">
+                            <div className="hidden mt-16 bg-linear-to-r from-brand-sumi to-brand-sumi rounded-2xl p-8 text-white">
                                 <div className="flex items-center gap-4 mb-6">
                                     <Globe className="h-8 w-8" />
                                     <h3 className="text-2xl font-bold">
-                                        Presencia <span className="text-yellow-400">Global</span>
+                                        Presencia <span className="text-brand-gold">Global</span>
                                     </h3>
                                 </div>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                                     <div>
                                         <div className="text-3xl font-bold mb-2">4</div>
-                                        <div className="text-gray-300">Dojos Principales</div>
+                                        <div className="text-border">Dojos Principales</div>
                                     </div>
                                     <div>
                                         <div className="text-3xl font-bold mb-2">12</div>
-                                        <div className="text-gray-300">Dojos Afiliados</div>
+                                        <div className="text-border">Dojos Afiliados</div>
                                     </div>
                                     <div>
                                         <div className="text-3xl font-bold mb-2">15</div>
-                                        <div className="text-gray-300">Países</div>
+                                        <div className="text-border">Países</div>
                                     </div>
                                     <div>
                                         <div className="text-3xl font-bold mb-2">3</div>
-                                        <div className="text-gray-300">Continentes</div>
+                                        <div className="text-border">Continentes</div>
                                     </div>
                                 </div>
                             </div>
@@ -404,14 +404,14 @@ export default function AboutUsInfo() {
 
             {/* Artes Marciales */}
             {activeTab === "artes" && (
-                <section className="py-20 bg-gray-50">
+                <section className="py-20 bg-muted/40">
                     <div className="px-4">
                         <div>
                             <div className="text-center mb-12">
-                                <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                                    Artes <span className="text-red-600">Marciales</span>
+                                <h2 className="text-4xl font-bold text-foreground mb-4">
+                                    Artes <span className="text-brand-vermilion">Marciales</span>
                                 </h2>
-                                <p className="text-xl text-gray-700">
+                                <p className="text-xl text-foreground">
                                     Tres disciplinas, una filosofía: excelencia marcial integral
                                 </p>
                             </div>
@@ -420,7 +420,7 @@ export default function AboutUsInfo() {
                                 {arts.map((art, index) => {
                                     const Icon = art.icon;
                                     return (
-                                        <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                                        <div key={index} className="bg-card rounded-2xl overflow-hidden shadow-lg border border-border">
                                             <div className={`p-6 bg-linear-to-r from-${art.color}-500 to-${art.color}-600 text-white`}>
                                                 <Icon className="h-12 w-12 mb-4" />
                                                 <h3 className="text-2xl font-bold">{art.name}</h3>
@@ -431,7 +431,7 @@ export default function AboutUsInfo() {
                                                     {art.features.map((feature, idx) => (
                                                         <li key={idx} className="flex items-center">
                                                             <div className={`h-2 w-2 bg-${art.color}-500 rounded-full mr-3`}></div>
-                                                            <span className="text-gray-700">{feature}</span>
+                                                            <span className="text-foreground">{feature}</span>
                                                         </li>
                                                     ))}
                                                 </ul>

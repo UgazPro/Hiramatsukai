@@ -99,7 +99,7 @@ export default function ExamDetail() {
                             <div className="flex flex-wrap gap-3 mt-4">
                                 <Badge
                                     variant="outline"
-                                    className="bg-blue-50 text-blue-700 border-blue-200 text-sm px-3 py-1"
+                                    className="border-brand-indigo/20 bg-brand-indigo/10 text-sm text-brand-indigo px-3 py-1"
                                 >
                                     <Users className="h-3 w-3 mr-1" />
                                     {exams.length} participantes

@@ -69,7 +69,7 @@ export default function Activities() {
 
         primaryChildren={
 
-            <div className="mx-auto w-full max-w-7xl p-3 sm:p-4 md:p-6">
+            <div className="mx-auto w-full   p-3 sm:p-4 md:p-6">
 
               {/* Header */}
               <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">

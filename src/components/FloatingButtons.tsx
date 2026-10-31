@@ -52,7 +52,7 @@ export default function FloatingButtons() {
                     onClick={handleBack}
                     size="icon"
                     aria-label="Volver atrás"
-                    className="group h-11 w-11 rounded-full sm:h-12 sm:w-12 border border-brand-gold/50 bg-brand-washi/80 text-brand-ink shadow-soft backdrop-blur-lg transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold hover:text-brand-sumi hover:shadow-gold active:translate-y-0"
+                    className="group h-11 w-11 rounded-full border border-brand-gold/50 bg-brand-washi-card/85 text-brand-ink shadow-soft backdrop-blur-lg transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-gold hover:bg-brand-gold hover:text-brand-sumi hover:shadow-gold active:translate-y-0 sm:h-12 sm:w-12"
                 >
                     <ArrowLeft className="h-5 w-5" aria-hidden="true" />
                 </Button>

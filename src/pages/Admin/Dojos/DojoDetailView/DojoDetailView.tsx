@@ -86,7 +86,7 @@ export default function DojoDetailView({ dojos }: DojoDetailViewProps) {
                 <div className="flex flex-wrap items-center gap-2 mt-2">
                     <Badge className="bg-gray-900 text-white border-gray-900">{selectedDojo.code}</Badge>
                     {parentDojo && (
-                        <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+                        <Badge className="border-brand-indigo/20 bg-brand-indigo/10 text-brand-indigo">
                             Hijo de: {parentDojo.dojo}
                         </Badge>
                     )}

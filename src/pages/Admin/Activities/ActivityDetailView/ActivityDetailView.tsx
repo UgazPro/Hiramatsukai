@@ -30,7 +30,7 @@ export default function ActivityDetailView() {
       }}
       subtitle={
         <div className="mt-2 flex flex-wrap gap-2">
-          <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+          <Badge className="border-brand-indigo/20 bg-brand-indigo/10 text-brand-indigo">
             {selectedActivity.type}
           </Badge>
 

@@ -18,9 +18,10 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        glass: "border border-brand-ink/10 bg-white/60 text-brand-ink shadow-soft backdrop-blur-md hover:bg-white/85 hover:shadow-lift",
-        brand: "bg-brand-vermilion text-white shadow-soft hover:bg-brand-vermilion-dark hover:shadow-gold",
+        glass: "border border-brand-chestnut/20 bg-brand-washi-card/75 text-brand-ink shadow-soft backdrop-blur-md hover:bg-brand-washi-card/95 hover:shadow-lift",
+        brand: "bg-brand-vermilion text-white shadow-soft hover:bg-brand-vermilion-dark hover:shadow-ember",
         gold: "bg-brand-gold text-brand-sumi shadow-soft hover:bg-brand-gold-deep hover:text-white hover:shadow-gold",
+        persimmon: "bg-brand-persimmon text-brand-sumi shadow-soft hover:bg-brand-persimmon-dark hover:text-white hover:shadow-ember",
         link: "bg-transparent px-1 py-1 text-sm font-semibold text-brand-ink underline-offset-8 hover:text-brand-vermilion hover:underline",
         clickRed: "px-4 py-2 rounded-lg border-2 border-(--redColor) cursor-pointer hover:bg-(--redColor) hover:text-white transition-colors",
       },

@@ -68,7 +68,7 @@ export default function GreatMasters() {
 
     return (
         <section id="masters" aria-labelledby="masters-title" className="relative scroll-mt-32 overflow-hidden bg-brand-washi py-24 lg:py-28">
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+            <div className="relative mx-auto   px-4 sm:px-6 lg:px-10">
 
                 <Reveal className="mx-auto mb-14 max-w-2xl text-center" y={18}>
                     <span className="section-eyebrow text-brand-gold-deep">Linaje</span>

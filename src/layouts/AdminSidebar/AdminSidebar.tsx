@@ -80,7 +80,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
         </div>
       )}
 
-      <aside className="group absolute inset-y-0 left-0 z-[60] hidden w-16 flex-col justify-between overflow-hidden border-r border-white/10 bg-brand-sumi p-4 pl-3 text-brand-washi transition-[width] duration-300 ease-in-out hover:w-72 md:flex">
+      <aside className="group absolute inset-y-0 left-0 z-[60] hidden w-16 flex-col justify-between overflow-hidden border-r border-brand-chestnut/40 bg-brand-sumi p-4 pl-3 text-brand-washi transition-[width] duration-300 ease-in-out hover:w-72 md:flex">
         <div className="w-full">
           {/* Logo/Header */}
           <div className="mt-2 flex items-center gap-3 rounded-xl p-1 transition-colors duration-300 group-hover:bg-white/5">
@@ -166,11 +166,11 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
 
       {/* Mobile Drawer */}
       <Sheet open={isMobileNavOpen} onOpenChange={onCloseMobileNav}>
-        <SheetContent side="left" className="w-72 gap-0 border-white/10 bg-brand-sumi p-0 text-brand-washi sm:max-w-72">
+        <SheetContent side="left" className="w-72 gap-0 border-brand-chestnut/40 bg-brand-sumi p-0 text-brand-washi sm:max-w-72">
           <SheetTitle className="sr-only">Navegación</SheetTitle>
           <SheetDescription className="sr-only">Menú de navegación del dojo</SheetDescription>
           <div className="flex h-full flex-col">
-            <div className="border-b border-white/10 p-5 pr-12">
+            <div className="border-b border-brand-chestnut/30 p-5 pr-12">
               <div className="flex items-center gap-3">
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white p-0.5 ring-1 ring-brand-gold/60">
                   <img src="/oki2.png" className="size-full rounded-full object-contain" alt="Logo del dojo" />
@@ -220,7 +220,7 @@ export default function AdminSidebar({ isMobileNavOpen, onCloseMobileNav }: Admi
               ))}
             </nav>
 
-            <div className="flex flex-col gap-3 border-t border-white/10 p-4">
+            <div className="flex flex-col gap-3 border-t border-brand-chestnut/30 p-4">
               {user && (
                 <div className="flex items-center gap-3">
                   <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-brand-gold text-brand-sumi">

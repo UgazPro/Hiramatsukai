@@ -12,7 +12,7 @@ export default function Karatedo() {
       description: 'Técnicas lineales y poderosas',
       icon: "力",
       bgIcon: "bg-linear-to-br from-brand-vermilion to-brand-vermilion-dark",
-      bg: "bg-linear-to-br from-red-50 to-red-100",
+      bg: "bg-linear-to-br from-brand-vermilion/12 to-brand-persimmon/18",
       border: "border-brand-vermilion/25",
     },
     {
@@ -20,7 +20,7 @@ export default function Karatedo() {
       description: 'Movimientos circulares y flexibles',
       icon: "柔",
       bgIcon: "bg-linear-to-br from-brand-indigo to-brand-sumi",
-      bg: "bg-linear-to-br from-blue-50 to-blue-100",
+      bg: "bg-linear-to-br from-brand-indigo/10 to-brand-indigo/5",
       border: "border-brand-indigo/25",
     }
   ];
@@ -32,7 +32,7 @@ export default function Karatedo() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood opacity-40" />
 
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+      <div className="relative mx-auto   px-4 sm:px-6 lg:px-10">
 
         <div className="flex flex-col items-start gap-10 lg:flex-row lg:gap-14">
 

@@ -349,7 +349,7 @@ export default function DojoPage() {
             ))}
           </>
         ) : (
-          <p className="text-gray-500 text-sm lg:text-base">No hay horarios disponibles</p>
+          <p className="text-muted-foreground text-sm lg:text-base">No hay horarios disponibles</p>
         )
         }
       </>
@@ -361,34 +361,34 @@ export default function DojoPage() {
 
     if (social === "facebook") {
       return {
-        cardClass: "bg-blue-600/90 border-blue-300/60 hover:bg-blue-600 text-white",
+        cardClass: "bg-brand-indigo/90 border-brand-indigo/30 hover:bg-brand-indigo text-white",
         Icon: Facebook,
       };
     }
 
     if (social === "youtube") {
       return {
-        cardClass: "bg-red-600/90 border-red-300/60 hover:bg-red-600 text-white",
+        cardClass: "bg-brand-vermilion/90 border-brand-vermilion/25 hover:bg-brand-vermilion-dark text-white",
         Icon: Youtube,
       };
     }
 
     if (social === "instagram") {
       return {
-        cardClass: "bg-linear-to-br from-pink-500 via-fuchsia-500 to-orange-400 border-pink-200/60 hover:opacity-95 text-white",
+        cardClass: "bg-linear-to-br from-brand-vermilion via-brand-persimmon to-brand-chestnut border-brand-persimmon/25 hover:opacity-95 text-white",
         Icon: Instagram,
       };
     }
 
     if (social === "twitter" || social === "x") {
       return {
-        cardClass: "bg-sky-500/90 border-sky-300/60 hover:bg-sky-500 text-white",
+        cardClass: "bg-brand-sumi/90 border-brand-chestnut/40 hover:bg-brand-sumi text-white",
         Icon: Twitter,
       };
     }
 
     return {
-      cardClass: "bg-gray-700/90 border-gray-300/40 hover:bg-gray-700 text-white",
+      cardClass: "bg-brand-chestnut/90 border-border/40 hover:bg-brand-chestnut text-white",
       Icon: Globe,
     };
   }
@@ -480,14 +480,14 @@ export default function DojoPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-dvh flex items-center justify-center">
         <Loader size="lg" message="Cargando información del Dojo..." />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-brand-washi">
+    <div className="min-h-dvh">
 
       {dojo && (
         <>
@@ -501,7 +501,7 @@ export default function DojoPage() {
 
             <div className="container relative mx-auto px-4 py-16 md:py-24">
               <div className="mx-auto max-w-4xl text-center">
-                <span className="mb-6 inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-medium text-brand-washi backdrop-blur-md">
+                <span className="mb-6 inline-flex rounded-full border border-white/20 bg-card/10 px-4 py-1.5 text-xs font-medium text-brand-washi backdrop-blur-md">
                   {setFoundedText(dojo.founded)} · Afiliado Hiramatsukai
                 </span>
 
@@ -539,7 +539,7 @@ export default function DojoPage() {
                       aria-pressed={isActive}
                       className={`flex cursor-pointer items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 lg:w-1/4 lg:text-base ${isActive
                         ? "bg-brand-vermilion text-white shadow-soft"
-                        : "text-brand-muted hover:bg-white/60 hover:text-brand-ink"
+                        : "text-brand-muted hover:bg-card/60 hover:text-brand-ink"
                         }`}
                     >
                       <Icon className="h-4 w-4" aria-hidden="true" />
@@ -551,7 +551,7 @@ export default function DojoPage() {
             </div>
           </div>
 
-          <main className="mx-auto max-w-7xl px-4 py-10">
+          <main className="mx-auto   px-4 py-10">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeTab}
@@ -611,18 +611,18 @@ export default function DojoPage() {
 
                     {/* Principios */}
                     {/* <section>
-                      <h2 className="text-2xl font-bold text-center text-gray-900 mb-8">
+                      <h2 className="text-2xl font-bold text-center text-foreground mb-8">
                         Principios del Dojo
                       </h2>
 
                       <div className="max-w-3xl mx-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           {dojoData.principles.map((principle, index) => (
-                            <div key={index} className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
-                              <div className="h-6 w-6 rounded-full bg-red-100 flex items-center justify-center shrink-0">
-                                <span className="text-red-600 font-bold text-sm">{index + 1}</span>
+                            <div key={index} className="flex items-start gap-3 p-4 bg-muted/40 rounded-lg">
+                              <div className="h-6 w-6 rounded-full bg-brand-vermilion/10 flex items-center justify-center shrink-0">
+                                <span className="text-brand-vermilion font-bold text-sm">{index + 1}</span>
                               </div>
-                              <p className="text-gray-700">{principle}</p>
+                              <p className="text-foreground">{principle}</p>
                             </div>
                           ))}
                         </div>
@@ -722,7 +722,7 @@ export default function DojoPage() {
                                   <h4 className="mb-2 text-sm font-medium text-brand-ink">Horarios de Clase:</h4>
                                   <ul className="space-y-3">
                                     {currentDiscipline.schedule.map((item) => (
-                                      <li key={`${item.day}-${item.time}`} className="rounded-xl border border-brand-ink/8 bg-white/70 p-3">
+                                      <li key={`${item.day}-${item.time}`} className="rounded-xl border border-brand-ink/8 bg-card/70 p-3">
                                         <div className="mb-1 flex items-center justify-between gap-2">
                                           <span className="font-medium text-brand-ink">{item.day}</span>
                                           <span className="font-semibold text-brand-ink">{item.time}</span>
@@ -810,26 +810,26 @@ export default function DojoPage() {
 
                             <div className="space-y-4">
                               {/*   <div>
-                            <h4 className="font-bold text-gray-900 mb-2">Especialidad</h4>
-                            <p className="text-gray-700">{master.specialty}</p>
+                            <h4 className="font-bold text-foreground mb-2">Especialidad</h4>
+                            <p className="text-foreground">{master.specialty}</p>
                           </div>
 
                           <div>
-                            <h4 className="font-bold text-gray-900 mb-2">Experiencia</h4>
-                            <p className="text-gray-700">{master.experience}</p>
+                            <h4 className="font-bold text-foreground mb-2">Experiencia</h4>
+                            <p className="text-foreground">{master.experience}</p>
                           </div>
 
                           <div>
-                            <h4 className="font-bold text-gray-900 mb-2">Biografía</h4>
-                            <p className="text-gray-700 text-sm">{master.bio}</p>
+                            <h4 className="font-bold text-foreground mb-2">Biografía</h4>
+                            <p className="text-foreground text-sm">{master.bio}</p>
                           </div>
 
                           <div>
-                            <h4 className="font-bold text-gray-900 mb-2">Reconocimientos</h4>
+                            <h4 className="font-bold text-foreground mb-2">Reconocimientos</h4>
                             <ul className="space-y-1">
                               {master.awards.map((award, idx) => (
-                                <li key={idx} className="text-sm text-gray-600 flex items-center gap-2">
-                                  <Trophy className="h-4 w-4 text-yellow-500" />
+                                <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
+                                  <Trophy className="h-4 w-4 text-brand-gold" />
                                   {award}
                                 </li>
                               ))}
@@ -846,7 +846,7 @@ export default function DojoPage() {
                   <TabsContent value="gallery" className="space-y-12 mt-8">
                     {/* Carousel Principal */}
                     <section>
-                      <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                      <h2 className="text-2xl font-bold text-foreground mb-6">
                         Galería de Entrenamiento
                       </h2>
                       <CarouselComponent />
@@ -861,7 +861,7 @@ export default function DojoPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {dojoData.videos.map((video) => (
                           <Card key={video.id} className="overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                            <div className="relative h-48 bg-linear-to-br from-gray-900 to-black">
+                            <div className="relative h-48 bg-linear-to-br from-brand-sumi to-black">
                               <div className="absolute inset-0 flex items-center justify-center">
                                 <Play className="h-12 w-12 text-white/70" />
                               </div>
@@ -870,8 +870,8 @@ export default function DojoPage() {
                               </div>
                             </div>
                             <CardContent className="p-4">
-                              <h3 className="font-bold text-gray-900 mb-2">{video.title}</h3>
-                              <Button variant="ghost" className="w-full text-red-600 hover:text-red-700">
+                              <h3 className="font-bold text-foreground mb-2">{video.title}</h3>
+                              <Button variant="ghost" className="w-full text-brand-vermilion hover:text-brand-vermilion-dark">
                                 <Play className="h-4 w-4 mr-2" />
                                 Ver Video
                               </Button>
@@ -883,7 +883,7 @@ export default function DojoPage() {
 
                     {/* Galería de Fotos */}
                     <section>
-                      <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                      <h2 className="text-2xl font-bold text-foreground mb-6">
                         Más Fotos
                       </h2>
 
@@ -944,7 +944,7 @@ export default function DojoPage() {
                         </h2>
 
                         <div className="mt-6 space-y-4">
-                          <div className="flex items-start gap-4 rounded-2xl border border-brand-ink/8 bg-white/55 p-4 backdrop-blur-md">
+                          <div className="flex items-start gap-4 rounded-2xl border border-brand-ink/8 bg-card/55 p-4 backdrop-blur-md">
                             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-vermilion/10">
                               <MapPin className="h-6 w-6 text-brand-vermilion" aria-hidden="true" />
                             </div>
@@ -961,7 +961,7 @@ export default function DojoPage() {
                             className="block rounded-2xl focus-visible:outline-offset-4"
                           >
                             <span className="mb-2 inline-block text-sm font-semibold text-green-700">Haz click aquí para ir al chat de WhatsApp</span>
-                            <div className="flex items-start gap-4 rounded-2xl border border-brand-ink/8 bg-white/55 p-4 backdrop-blur-md transition-colors duration-300 hover:border-green-600/30 hover:bg-green-50/70">
+                            <div className="flex items-start gap-4 rounded-2xl border border-brand-ink/8 bg-card/55 p-4 backdrop-blur-md transition-colors duration-300 hover:border-green-600/30 hover:bg-green-50/70">
                               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-green-600/10">
                                 <MdWhatsapp className="h-6 w-6 text-green-700" aria-hidden="true" />
                               </div>
@@ -972,7 +972,7 @@ export default function DojoPage() {
                             </div>
                           </a>
 
-                          <div className="flex items-start gap-4 rounded-2xl border border-brand-ink/8 bg-white/55 p-4 backdrop-blur-md">
+                          <div className="flex items-start gap-4 rounded-2xl border border-brand-ink/8 bg-card/55 p-4 backdrop-blur-md">
                             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-indigo/10">
                               <Mail className="h-6 w-6 text-brand-indigo" aria-hidden="true" />
                             </div>
@@ -982,7 +982,7 @@ export default function DojoPage() {
                             </div>
                           </div>
 
-                          <div className="flex flex-col items-start gap-4 rounded-2xl border border-brand-ink/8 bg-white/55 p-4 backdrop-blur-md lg:flex-row">
+                          <div className="flex flex-col items-start gap-4 rounded-2xl border border-brand-ink/8 bg-card/55 p-4 backdrop-blur-md lg:flex-row">
                             <div className="flex items-center gap-2">
                               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-gold/15">
                                 <Clock className="h-6 w-6 text-brand-gold-deep" aria-hidden="true" />
@@ -1139,7 +1139,7 @@ export default function DojoPage() {
                             >
                               <Card className={`${socialConfig.cardClass} backdrop-blur-sm transition-transform duration-300 hover:scale-[1.02] cursor-pointer`}>
                                 <CardContent className="p-6 text-center">
-                                  <div className="h-16 w-16 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
+                                  <div className="h-16 w-16 rounded-full bg-card/20 flex items-center justify-center mx-auto mb-4">
                                     <Icon className="h-8 w-8 text-white" />
                                   </div>
                                   <h3 className="font-bold text-lg mb-1 capitalize">{data.socialMedia}</h3>
@@ -1155,15 +1155,15 @@ export default function DojoPage() {
                     {/* Mapa */}
                     <Card className="hidden">
                       <CardContent className="p-8">
-                        <h3 className="text-xl font-bold text-gray-900 mb-6">
+                        <h3 className="text-xl font-bold text-foreground mb-6">
                           Ubicación del Dojo
                         </h3>
 
-                        <div className="h-96 bg-linear-to-br from-gray-200 to-gray-300 rounded-xl flex items-center justify-center">
+                        <div className="h-96 bg-linear-to-br from-muted to-border rounded-xl flex items-center justify-center">
                           <div className="text-center">
-                            <MapPin className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                            <p className="text-gray-600">Mapa interactivo de ubicación</p>
-                            <Button className="mt-4 bg-red-600 hover:bg-red-700 text-white">
+                            <MapPin className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                            <p className="text-muted-foreground">Mapa interactivo de ubicación</p>
+                            <Button className="mt-4 bg-brand-vermilion hover:bg-brand-vermilion-dark text-white">
                               <Globe className="h-4 w-4 mr-2" />
                               Abrir en Google Maps
                             </Button>

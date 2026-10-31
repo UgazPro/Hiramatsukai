@@ -67,7 +67,7 @@ export default function Login() {
             <div className="relative grid w-full items-stretch gap-8 px-2 py-8 sm:px-6 sm:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:px-10 lg:py-14">
 
                 {/* Panel visual */}
-                <div className="relative hidden overflow-hidden rounded-4xl border border-white/10 bg-brand-sumi lg:block">
+                <div className="relative hidden overflow-hidden rounded-4xl border border-brand-chestnut/40 bg-brand-sumi lg:block">
                     <img
                         src="/Hiramatsukai.jpg"
                         alt="Practicantes de Hiramatsukai entrenando en el dojo"
@@ -75,12 +75,12 @@ export default function Login() {
                     />
                     <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-brand-sumi via-brand-sumi/75 to-brand-sumi/35" />
                     <div aria-hidden="true" className="absolute inset-0 bg-wood-dark opacity-20" />
-                    <div aria-hidden="true" className="absolute -left-16 top-1/4 h-64 w-64 rounded-full bg-brand-gold/10 blur-[90px]" />
+                    <div aria-hidden="true" className="absolute -left-16 top-1/4 h-64 w-64 rounded-full bg-brand-persimmon/12 blur-[90px]" />
 
                     <div className="relative flex h-full min-h-[34rem] flex-col justify-between p-10">
                         <Link
                             to="/"
-                            className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-brand-washi/80 backdrop-blur-md transition-colors duration-300 hover:bg-white/10 hover:text-white"
+                            className="inline-flex w-fit items-center gap-2 rounded-full border border-brand-chestnut/40 bg-brand-washi/5 px-4 py-2 text-sm text-brand-washi/80 backdrop-blur-md transition-colors duration-300 hover:bg-brand-washi/10 hover:text-white"
                         >
                             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
                             Volver al inicio

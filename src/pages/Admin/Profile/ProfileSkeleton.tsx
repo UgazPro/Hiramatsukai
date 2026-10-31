@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function ProfileSkeleton() {
   return (
     <div className="w-full p-3 sm:p-4 md:p-6">
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="mx-auto w-full  ">
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
           {/* Header de perfil */}
           <Card className="overflow-hidden border-brand-gold/30 shadow-lg lg:col-span-1">

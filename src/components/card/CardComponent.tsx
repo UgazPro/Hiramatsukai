@@ -17,7 +17,7 @@ export const CardComponent = ({ card }: CardComponentSimple) => {
     const isLongIcon = icon.length > 2;
 
     return (
-        <div className={`group relative overflow-hidden rounded-2xl border ${border} bg-white/55 p-4 shadow-soft backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/80 hover:shadow-lift`}>
+        <div className={`group relative overflow-hidden rounded-2xl border ${border} bg-brand-washi-card/70 p-4 shadow-soft backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-washi-card/90 hover:shadow-lift`}>
 
             <div aria-hidden="true" className={`absolute inset-0 opacity-40 transition-opacity duration-300 group-hover:opacity-60 ${bg}`} />
 

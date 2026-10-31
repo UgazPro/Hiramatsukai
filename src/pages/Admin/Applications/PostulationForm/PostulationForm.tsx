@@ -49,9 +49,9 @@ const beltColors: Record<string, { bg: string; text: string; stripe: string }> =
       stripe: "bg-green-400",
     },
     Azul: {
-      bg: "bg-blue-100",
-      text: "text-blue-800",
-      stripe: "bg-blue-400",
+      bg: "bg-brand-indigo/10",
+      text: "text-brand-indigo",
+      stripe: "bg-brand-indigo/60",
     },
     Marrón: {
       bg: "bg-amber-800",
@@ -98,10 +98,10 @@ const martialArtColors: Record<string, { tabBorder: string; tabHoverBorder: stri
 };
 
 const defaultMaColor = {
-  tabBorder: "border-blue-300",
-  tabHoverBorder: "hover:border-blue-100",
-  tabText: "text-blue-700",
-  tabBadgeBg: "bg-blue-50",
+  tabBorder: "border-brand-indigo/40",
+  tabHoverBorder: "hover:border-brand-indigo/25",
+  tabText: "text-brand-indigo",
+  tabBadgeBg: "bg-brand-indigo/10",
 };
 
 function getMaColor(name: string) {
@@ -405,7 +405,7 @@ export default function PostulationForm() {
                               group relative text-left w-full rounded-xl border transition-all duration-200 overflow-visible
                               ${isSelected
                                 ? "-translate-y-1 shadow-md border-brand-gold/40 bg-card"
-                                : "border-border bg-card hover:border-border hover:shadow-sm hover:bg-muted/40/50"
+                                : "border-border bg-card hover:border-border hover:shadow-sm hover:bg-muted/40"
                             }
                             `}
                           >

@@ -225,7 +225,7 @@ export default function MyInformation() {
 
   return (
     <div className="w-full p-3 sm:p-4 md:p-6">
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-6">
+      <div className="mx-auto grid w-full   grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-6">
         {/* Header de perfil */}
         <Card className="overflow-hidden border-brand-gold/30 shadow-lg lg:col-span-1">
           <div className="h-24 bg-linear-to-r from-brand-gold to-brand-gold-deep" />
@@ -260,7 +260,7 @@ export default function MyInformation() {
               <p className="text-muted-foreground text-sm sm:text-base">@{me.username}</p>
 
               <div className="flex flex-wrap justify-center gap-2">
-                <Badge className="bg-blue-100 text-blue-800 border-blue-200 text-xs sm:text-sm font-medium px-3 py-1">
+                <Badge className="border-brand-indigo/20 bg-brand-indigo/10 text-xs font-medium text-brand-indigo sm:text-sm px-3 py-1">
                   {me.dojo?.dojo}
                 </Badge>
               </div>

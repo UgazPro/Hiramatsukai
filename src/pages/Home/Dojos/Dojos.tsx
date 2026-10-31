@@ -34,7 +34,7 @@ export default function Dojos() {
         >
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood opacity-40" />
 
-            <div className="relative mx-auto max-w-7xl">
+            <div className="relative mx-auto  ">
 
                 <div className="text-center">
 

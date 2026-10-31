@@ -185,7 +185,7 @@ export default function Profile() {
 
   return (
     <div className="w-full bg-linear-to-b from-background to-muted/40 p-3 sm:p-4 md:p-6">
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="mx-auto w-full  ">
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
           {/* Columna izquierda */}
@@ -215,7 +215,7 @@ export default function Profile() {
                   <p className="text-muted-foreground text-sm sm:text-base">@{displayUsername}</p>
 
                   <div className="flex flex-wrap justify-center gap-2">
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs sm:text-sm font-medium">
+                    <span className="rounded-full bg-brand-indigo/10 px-3 py-1 text-xs font-medium text-brand-indigo sm:text-sm">
                       {displayDojo}
                     </span>
                   </div>
@@ -551,7 +551,7 @@ export default function Profile() {
                           </p>
                         </div>
                         <div
-                          className={`h-6 w-11 rounded-full relative cursor-pointer transition-colors ${value ? 'bg-blue-600' : 'bg-gray-300'}`}
+                          className={`h-6 w-11 rounded-full relative cursor-pointer transition-colors ${value ? 'bg-brand-indigo' : 'bg-muted'}`}
                           onClick={() => toggleNotification(key as keyof typeof notifications)}
                         >
                           <div className={`absolute top-1 h-4 w-4 bg-card rounded-full transition-transform ${value ? 'left-6' : 'left-1'}`} />

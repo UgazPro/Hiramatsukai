@@ -281,7 +281,7 @@ export default function Payments() {
       case 'pendiente':
         return {
           estado: 'Pendiente',
-          clase: 'bg-blue-100 text-blue-800 border-blue-200',
+          clase: 'border-brand-indigo/20 bg-brand-indigo/10 text-brand-indigo',
           icon: <AlertCircle />
         };
       default:
@@ -349,7 +349,7 @@ export default function Payments() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-7xl p-3 sm:p-4 md:p-6">
+    <div className="mx-auto w-full   p-3 sm:p-4 md:p-6">
       {/* Header */}
       <div className="mb-6 flex flex-col justify-between gap-4 lg:flex-row lg:items-center md:mb-8">
         <div className="min-w-0">
@@ -425,13 +425,13 @@ export default function Payments() {
                   </div>
                 </CardContent>
               </Card>
-              <Card className="border border-blue-300 bg-blue-50/30 shadow-sm">
+              <Card className="border border-brand-gold/30 bg-brand-gold/10 shadow-sm">
                 <CardContent className="p-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-700">
+                    <div className="text-2xl font-bold text-brand-gold-deep">
                       {formatMoneda(estadisticasMes.totalRecaudado)}
                     </div>
-                    <div className="text-xs text-blue-600">Recaudado</div>
+                    <div className="text-xs text-brand-gold-deep">Recaudado</div>
                   </div>
                 </CardContent>
               </Card>

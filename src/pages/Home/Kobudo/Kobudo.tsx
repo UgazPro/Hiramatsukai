@@ -12,7 +12,7 @@ export default function Kobudo() {
             description: 'Arma de 1.8m, base del kobudo tradicional',
             icon: "棒",
             bgIcon: "bg-linear-to-br from-brand-gold to-brand-gold-deep",
-            bg: "bg-linear-to-br from-yellow-50 to-yellow-100",
+            bg: "bg-linear-to-br from-brand-gold/15 to-brand-persimmon/15",
             border: "border-brand-gold/40",
         },
         {
@@ -20,7 +20,7 @@ export default function Kobudo() {
             description: 'Arma de metal para defensa y ataque',
             icon: "釵",
             bgIcon: "bg-linear-to-br from-brand-indigo to-brand-sumi",
-            bg: "bg-linear-to-br from-blue-50 to-blue-100",
+            bg: "bg-linear-to-br from-brand-indigo/10 to-brand-indigo/5",
             border: "border-brand-indigo/25",
         },
         {
@@ -28,16 +28,16 @@ export default function Kobudo() {
             description: "Originalmente mango de molino, ahora arma policial",
             icon: "トンファー",
             bgIcon: "bg-linear-to-br from-brand-vermilion to-brand-vermilion-dark",
-            bg: "bg-linear-to-br from-red-50 to-red-100",
+            bg: "bg-linear-to-br from-brand-vermilion/12 to-brand-persimmon/18",
             border: "border-brand-vermilion/25",
         },
         {
             title: "Nunchaku",
             description: "Dos palos de madera unidos por una cadena o cuerda",
             icon: "ヌンチャク",
-            bgIcon: "bg-linear-to-br from-purple-600 to-purple-800",
-            bg: "bg-linear-to-br from-purple-100 to-purple-300",
-            border: "border-purple-300/40",
+            bgIcon: "bg-linear-to-br from-brand-persimmon to-brand-chestnut",
+            bg: "bg-linear-to-br from-brand-persimmon/15 to-brand-chestnut/20",
+            border: "border-brand-persimmon/30",
         }
     ];
 
@@ -51,7 +51,7 @@ export default function Kobudo() {
             <div aria-hidden="true" className="pointer-events-none absolute -right-32 top-10 h-80 w-80 rounded-full bg-brand-gold/10 blur-[100px]" />
 
 
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+            <div className="relative mx-auto   px-4 sm:px-6 lg:px-10">
 
                 <div className="flex flex-col items-start gap-10 lg:flex-row-reverse lg:gap-14">
 

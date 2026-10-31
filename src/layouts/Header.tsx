@@ -79,7 +79,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     : `sticky ${visible ? "top-0" : "-top-60"} z-50 w-full transition-all duration-300`
             }
         >
-            <div className="border-b border-white/10 bg-brand-sumi/90 backdrop-blur-xl supports-[backdrop-filter]:bg-brand-sumi/85">
+            <div className="border-b border-brand-chestnut/35 bg-linear-to-r from-brand-sumi via-brand-sumi-soft to-brand-sumi/92 backdrop-blur-xl supports-[backdrop-filter]:bg-brand-sumi/88">
                 <div className="flex h-18 w-full items-center justify-between gap-4 px-2 lg:px-8 lg:h-20">
                     <div className="flex items-center gap-2">
                         <div className="block lg:hidden">
@@ -89,7 +89,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                             type="button"
                             onClick={onToggleMobileNav}
                             aria-label="Abrir menú de administración"
-                            className={`${isAdmin ? "flex" : "hidden"} h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/5 text-brand-washi transition-colors hover:bg-white/10 focus-visible:border-brand-gold md:hidden`}
+                            className={`${isAdmin ? "flex" : "hidden"} h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-brand-chestnut/40 bg-brand-washi/5 text-brand-washi transition-colors hover:bg-brand-washi/10 focus-visible:border-brand-gold md:hidden`}
                         >
                             <Menu className="h-5 w-5" />
                         </button>

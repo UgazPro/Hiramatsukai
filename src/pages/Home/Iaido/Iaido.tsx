@@ -12,16 +12,16 @@ export default function Iaido() {
             description: "Espada sin filo para práctica segura",
             icon: "居",
             bgIcon: "bg-linear-to-br from-brand-ink to-brand-sumi",
-            bg: "bg-linear-to-br from-gray-100 to-gray-200",
+            bg: "bg-linear-to-br from-brand-chestnut/12 to-brand-chestnut/20",
             border: "border-brand-ink/20",
         },
         {
             title: "Kata (Formas)",
             description: "Secuencias de desenvaine y corte",
             icon: "型",
-            bgIcon: "bg-linear-to-br from-brand-indigo to-brand-sumi",
-            bg: "bg-linear-to-br from-indigo-50 to-indigo-100",
-            border: "border-brand-indigo/25",
+            bgIcon: "bg-linear-to-br from-brand-chestnut to-brand-chestnut-dark",
+            bg: "bg-linear-to-br from-brand-chestnut/12 to-brand-chestnut/20",
+            border: "border-brand-chestnut/30",
         },
     ];
 
@@ -30,7 +30,7 @@ export default function Iaido() {
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood opacity-40" />
 
 
-            <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+            <div className="relative mx-auto   px-4 sm:px-6 lg:px-10">
 
                 <div className="flex flex-col items-start gap-10 lg:flex-row-reverse lg:gap-14">
 
@@ -45,7 +45,7 @@ export default function Iaido() {
                             </div>
 
                             <h2 id="iaido-title" className="text-right text-3xl font-semibold leading-tight text-brand-ink sm:text-4xl lg:text-5xl">
-                                Iaido <span className="text-brand-indigo">居合道</span>
+                                Iaido <span className="text-brand-chestnut">居合道</span>
                             </h2>
 
                             <p className="text-measure ml-auto text-left text-base leading-relaxed text-brand-muted sm:text-lg">
@@ -64,7 +64,7 @@ export default function Iaido() {
                             </div>
 
                             <div className="mx-auto hidden h-40 w-40 lg:block">
-                                <img src="/kendoiaido.jpg" alt="Emblema de Iaido" className="rounded-full ring-1 ring-brand-indigo/25" />
+                                <img src="/kendoiaido.jpg" alt="Emblema de Iaido" className="rounded-full ring-1 ring-brand-chestnut/30" />
                             </div>
 
                         </Reveal>
@@ -81,7 +81,7 @@ export default function Iaido() {
                                     className="h-80 w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 lg:h-72"
                                 />
                                 <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-brand-sumi/80 via-brand-sumi/10 to-transparent" />
-                                <div className="absolute left-4 top-4 rounded-full bg-brand-indigo px-3 py-1 text-xs font-semibold text-white shadow-soft">
+                                <div className="absolute left-4 top-4 rounded-full bg-brand-chestnut px-3 py-1 text-xs font-semibold text-white shadow-soft">
                                     Iaido · 居合道
                                 </div>
                                 <div className="absolute bottom-4 left-4 text-white">
@@ -100,7 +100,7 @@ export default function Iaido() {
                                     className="h-80 w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 lg:h-72"
                                 />
                                 <div aria-hidden="true" className="absolute inset-0 bg-linear-to-t from-brand-sumi/80 via-brand-sumi/10 to-transparent" />
-                                <div className="absolute left-4 top-4 rounded-full bg-brand-indigo px-3 py-1 text-xs font-semibold text-white shadow-soft">
+                                <div className="absolute left-4 top-4 rounded-full bg-brand-chestnut px-3 py-1 text-xs font-semibold text-white shadow-soft">
                                     Iaido · 居合道
                                 </div>
                                 <div className="absolute bottom-4 left-4 text-white">

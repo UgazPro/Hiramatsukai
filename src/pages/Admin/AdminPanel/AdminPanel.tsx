@@ -43,11 +43,12 @@ const getCountdownTone = (fecha: Date) => {
   return "border-brand-indigo/25 bg-brand-indigo/10 text-brand-indigo";
 };
 
-type Accent = "gold" | "vermilion" | "indigo";
+type Accent = "gold" | "vermilion" | "persimmon" | "indigo";
 
 const accentText: Record<Accent, string> = {
   gold: "text-brand-gold-deep",
   vermilion: "text-brand-vermilion",
+  persimmon: "text-brand-persimmon-dark",
   indigo: "text-brand-indigo",
 };
 
@@ -198,7 +199,7 @@ export default function AdminPanel() {
           value={formatMoneda(monthlyIncome)}
           hint="Mes actual"
           icon={DollarSign}
-          accent="gold"
+          accent="persimmon"
         />
         <StatCard
           label="Clases del Mes"
