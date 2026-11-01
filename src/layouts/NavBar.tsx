@@ -118,14 +118,14 @@ export function NavBarMobile({ goToScroll }: NavBarMobileProps) {
                         className="fixed left-0 right-0 z-50"
                         style={{ top: headerHeight }}
                     >
-                        <div className="rounded-b-3xl border-b border-white/10 bg-brand-blue-deep shadow-lift">
+                        <div className="rounded-b-3xl border-b border-brand-wood/20 bg-background/95 shadow-soft backdrop-blur-xl">
                             <div className="mx-auto flex max-w-md flex-col gap-1 px-4 py-4">
                                 {menuItems.map((item) => (
                                     <button
                                         key={item.id}
                                         type="button"
                                         onClick={() => handleSelect(item.id)}
-                                        className="cursor-pointer rounded-xl px-4 py-3 text-left text-base font-medium tracking-wide text-brand-washi/85 transition-colors duration-200 hover:bg-white/10 hover:text-white focus-visible:bg-white/10"
+                                        className="cursor-pointer rounded-xl px-4 py-3 text-left text-base font-medium tracking-wide text-brand-ink/80 transition-colors duration-200 hover:bg-brand-copper/10 hover:text-brand-ink focus-visible:bg-brand-copper/10 focus-visible:text-brand-ink"
                                     >
                                         {item.label}
                                     </button>
