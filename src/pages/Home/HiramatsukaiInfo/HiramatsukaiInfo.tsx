@@ -66,7 +66,7 @@ export default function HiramatsukaiInfo() {
                 {logos.map((logo) => (
                   <div
                     key={logo.label}
-                    className="group flex w-28 flex-col items-center gap-3 rounded-2xl border border-brand-ink/8 bg-brand-washi-card/70 p-4 shadow-soft backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-gold/40 hover:bg-brand-washi-card/95 hover:shadow-lift sm:w-32"
+                    className="group flex w-full flex-col items-center gap-3 rounded-2xl border border-brand-ink/8 bg-brand-washi-card/70 p-4 shadow-soft backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-gold/40 hover:bg-brand-washi-card/95 hover:shadow-lift sm:w-32"
                   >
                     {" "}
                     <div className="h-18 w-18 overflow-hidden rounded-full bg-brand-washi-card/90 p-2 ring-1 ring-brand-gold/35 transition-all duration-500 group-hover:scale-105 group-hover:ring-brand-gold sm:h-20 sm:w-20">

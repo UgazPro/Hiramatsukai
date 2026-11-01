@@ -205,6 +205,23 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* Public site: remap the blue family to the warm Japanese palette.
+   Admin layouts stay outside this scope and keep their original blue accents. */
+.site-theme {
+  --brand-blue: var(--brand-vermilion);
+  --brand-blue-dark: var(--brand-vermilion-dark);
+  --brand-blue-deep: var(--brand-sumi);
+  --brand-blue-light: var(--brand-sand);
+  --brand-blue-soft: var(--brand-copper-light);
+  --brand-indigo: var(--brand-chestnut);
+
+  --primary: var(--brand-vermilion);
+  --primary-foreground: #ffffff;
+  --ring: var(--brand-vermilion);
+  --heading: var(--brand-ink);
+  --heading-accent: var(--brand-copper-deep);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

@@ -25,7 +25,7 @@ function ScrollProgress() {
 export default function AppLayout() {
 
     return (
-        <div className="relative flex min-h-dvh w-full flex-col overflow-x-clip">
+        <div className="site-theme relative flex min-h-dvh w-full flex-col overflow-x-clip">
 
             <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 bg-background">
                 <div className="absolute inset-0 bg-wood opacity-50" />
