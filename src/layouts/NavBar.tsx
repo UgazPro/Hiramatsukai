@@ -59,15 +59,16 @@ export function NavBarMobile({ goToScroll }: NavBarMobileProps) {
     const [headerHeight, setHeaderHeight] = useState(0);
 
     useEffect(() => {
-        const measure = () => {
-            const header = document.querySelector("header");
-            if (header) {
-                setHeaderHeight(header.offsetHeight);
-            }
-        };
+        const header = document.querySelector("header");
+        if (!header) return;
+
+        const measure = () => setHeaderHeight(header.offsetHeight);
         measure();
-        window.addEventListener("resize", measure);
-        return () => window.removeEventListener("resize", measure);
+
+        const observer = new ResizeObserver(measure);
+        observer.observe(header);
+
+        return () => observer.disconnect();
     }, []);
 
     useEffect(() => {
