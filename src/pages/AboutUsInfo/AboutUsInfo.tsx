@@ -971,7 +971,7 @@ export default function AboutUsInfo() {
                                     aria-hidden="true"
                                   />
                                 </div>
-                                <h4 className="relative mt-5 font-serif text-2xl font-semibold">
+                                <h4 className="relative mt-5 font-serif text-2xl font-semibold text-white">
                                   {art.name}
                                 </h4>
                                 <p className="relative mt-2 text-sm leading-relaxed text-white/85">
