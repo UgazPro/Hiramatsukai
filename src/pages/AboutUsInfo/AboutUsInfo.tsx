@@ -277,7 +277,7 @@ export default function AboutUsInfo() {
           className="absolute inset-0 bg-wood-dark opacity-15 mix-blend-overlay"
         />
 
-        <div className="relative mx-auto grid w-full max-w-[1400px] items-center gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:px-12 lg:py-28">
+        <div className="relative mx-auto grid w-full max-w-350 items-center gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[1.15fr_0.85fr] lg:px-12 lg:py-28">
           <div>
             <Reveal y={14} duration={0.5}>
               <span className="section-eyebrow rounded-full border border-brand-copper-light/40 bg-brand-sumi/60 px-4 py-2 text-brand-copper-light backdrop-blur-md">
@@ -582,28 +582,28 @@ export default function AboutUsInfo() {
                         <div className="relative">
                           <div
                             aria-hidden="true"
-                            className="absolute -inset-4 rounded-[2rem] bg-linear-to-br from-brand-copper/15 to-brand-vermilion/10 blur-2xl"
+                            className="absolute -inset-4 rounded-4xl bg-linear-to-br from-brand-copper/15 to-brand-vermilion/10 blur-2xl"
                           />
-                          <div className="relative overflow-hidden rounded-3xl border border-brand-wood/20 bg-linear-to-br from-brand-sumi via-brand-sumi to-brand-wood-deep p-8 text-brand-washi shadow-lift">
+                          <div className="relative overflow-hidden rounded-3xl border border-brand-vermilion/20 bg-linear-to-br from-brand-vermilion/10 via-brand-washi-card to-brand-sand/40 p-8 text-brand-ink">
                             <Calendar
-                              className="h-12 w-12 text-brand-gold"
+                              className="h-12 w-12 text-brand-vermilion"
                               aria-hidden="true"
                             />
-                            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-brand-washi/55">
+                            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-brand-muted">
                               Año de fundación
                             </p>
-                            <p className="mt-2 font-serif text-5xl font-semibold text-brand-copper-light">
+                            <p className="mt-2 font-serif text-5xl font-semibold text-brand-vermilion-dark">
                               1997
                             </p>
                             <div
                               aria-hidden="true"
                               className="gold-rule my-6 h-px w-full"
                             />
-                            <blockquote className="text-lg leading-relaxed text-brand-washi/85">
+                            <blockquote className="text-lg leading-relaxed text-brand-ink/80">
                               “Comienza tu viaje marcial donde otros terminaron
                               el suyo”.
                             </blockquote>
-                            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.3em] text-brand-washi/45">
+                            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.3em] text-brand-muted">
                               Okinawa · Japón
                             </p>
                           </div>

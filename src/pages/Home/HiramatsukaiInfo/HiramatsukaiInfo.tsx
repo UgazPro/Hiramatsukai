@@ -33,7 +33,7 @@ export default function HiramatsukaiInfo() {
           {" "}
           <Reveal y={18}>
             {" "}
-            <div className="glass grid items-center gap-10 rounded-[2rem] p-7 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:p-14">
+            <div className="glass grid items-center gap-10 rounded-4xl p-7 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:p-14">
               {" "}
               <div className="text-center lg:text-left">
                 {" "}

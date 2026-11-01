@@ -107,7 +107,7 @@ export default function GreatMasters() {
                 className="h-full"
               >
                 {" "}
-                <article className="glass group flex h-full flex-col overflow-hidden rounded-[2rem] transition-all duration-500 hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-lift">
+                <article className="glass group flex h-full flex-col overflow-hidden rounded-4xl transition-all duration-500 hover:-translate-y-2 hover:border-brand-gold/30 hover:shadow-lift">
                   {" "}
                   <div className="relative h-72 overflow-hidden sm:h-80 lg:h-96">
                     {" "}

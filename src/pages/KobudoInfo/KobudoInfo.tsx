@@ -75,7 +75,7 @@ export default function KobudoInfo() {
             </div>{" "}
             <div className="relative">
               {" "}
-              <div className="group relative overflow-hidden rounded-[2rem] border border-brand-indigo/20 bg-card/55 p-7 shadow-lift backdrop-blur-md sm:p-9">
+              <div className="group relative overflow-hidden rounded-4xl border border-brand-indigo/20 bg-card/55 p-7 shadow-lift backdrop-blur-md sm:p-9">
                 {" "}
                 <div
                   aria-hidden="true"
