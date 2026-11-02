@@ -8,11 +8,8 @@ import {
   useSpring,
 } from "motion/react";
 import { Sparkles } from "lucide-react";
-const stats = [
-  { value: "1997", label: "Fundación en Okinawa" },
-  { value: "3", label: "Disciplinas tradicionales" },
-  { value: "∞", label: "Generaciones de legado" },
-];
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDojos } from "@/hooks/useDojos";
 const floatingTags = [
   { label: "Karatedo · Goju-Ryu", position: "-left-2 top-20", delay: 0 },
   { label: "Kobudo · Matayoshi", position: "-right-3 top-1/3", delay: 1.4 },
@@ -20,6 +17,22 @@ const floatingTags = [
 ];
 export default function AboutUs() {
   const shouldReduceMotion = useReducedMotion();
+  const {
+    data: dojos = [],
+    isLoading: isLoadingDojos,
+    isError: isErrorDojos,
+  } = useDojos();
+
+  const stats: { value: string; label: string; loading?: boolean }[] = [
+    { value: "1997", label: "Fundación en Okinawa" },
+    { value: "3", label: "Disciplinas tradicionales" },
+    {
+      value: isLoadingDojos ? "" : isErrorDojos ? "—" : String(dojos.length),
+      label: "Dojos afiliados",
+      loading: isLoadingDojos,
+    },
+  ];
+
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
   const parallaxX = useSpring(pointerX, { stiffness: 60, damping: 16 });
@@ -127,9 +140,13 @@ export default function AboutUs() {
                   className="glass-dark rounded-2xl px-3 py-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-brand-gold/40 lg:text-left"
                 >
                   {" "}
-                  <p className="font-serif text-2xl font-semibold text-brand-copper-light sm:text-3xl">
-                    {stat.value}
-                  </p>{" "}
+                  {stat.loading ? (
+                    <Skeleton className="mx-auto h-8 w-10 rounded-md bg-brand-washi/20 lg:mx-0" />
+                  ) : (
+                    <p className="font-serif text-2xl font-semibold text-brand-copper-light sm:text-3xl">
+                      {stat.value}
+                    </p>
+                  )}{" "}
                   <p className="mt-1 text-[10px] leading-tight tracking-wide text-brand-washi/65 sm:text-[11px]">
                     {" "}
                     {stat.label}{" "}
