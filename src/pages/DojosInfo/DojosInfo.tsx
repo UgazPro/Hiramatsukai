@@ -35,6 +35,17 @@ import { AnimatePresence, motion } from "motion/react";
 
 type MainTabId = "about" | "masters" | "gallery" | "contact";
 
+const GRADES: Record<string, string> = {
+  '1': "ro",
+  '2': "do",
+  '3': "ro",
+  '4': "to",
+  '5': "to",
+  '6': "to",
+  '7': "mo",
+  '8': "vo",
+};
+
 const MAIN_TAB_SECTIONS: { id: MainTabId; label: string; icon: typeof Globe }[] = [
   { id: "about", label: "Dojo", icon: ShieldCheck },
   { id: "masters", label: "Maestros", icon: UsersLucide },
@@ -853,7 +864,7 @@ export default function DojoPage() {
                                       key={`${rank.id}-${martialArt.martialArt}`}
                                       className="inline-flex items-center gap-1.5 rounded-full bg-brand-gold/15 px-3 py-1 text-xs font-semibold text-brand-gold-deep"
                                     >
-                                      <Medal className="h-3.5 w-3.5" aria-hidden="true" />
+                                      <span className="font-semibold text-brand-gold-deep">{rank.code.split(' ')[0]} <sup className="text-[0.6rem]">{GRADES[rank.code.split(' ')[0]]}</sup> {rank.code.split(' ')[1]}</span>
                                       {rank.rank_name}
                                       <span className="font-normal text-brand-muted">
                                         · {martialArt.martialArt}
