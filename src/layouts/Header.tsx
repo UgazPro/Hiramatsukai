@@ -133,7 +133,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     compacted ? "h-14 lg:h-16" : "h-18 lg:h-20",
                 )}
             >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 lg:w-1/4">
                     <div className="block lg:hidden">
                         {!isAdmin && !isLogin && <NavBarMobile goToScroll={goToScroll} />}
                     </div>
@@ -192,7 +192,7 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                     {!isAdmin && !isLogin && <NavBar />}
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-end gap-2 lg:w-1/4">
                     {isAuthenticated ? (
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild className="cursor-pointer">
@@ -214,7 +214,10 @@ export default function Header({ onToggleMobileNav }: HeaderProps) {
                                     </Avatar>
                                 </button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="w-48">
+                            <DropdownMenuContent
+                                align="end"
+                                className={cn("w-48", !isAdmin && "site-theme")}
+                            >
                                 <div className="p-1">
                                     <p className="font-medium">{userName} {userLastName}</p>
                                     <p className="text-xs text-muted-foreground">{userRole}</p>

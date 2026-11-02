@@ -6,6 +6,7 @@ import Reveal from "@/components/animation/Reveal";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { ArrowRight } from "lucide-react";
+
 export default function Karatedo() {
   const cardsKarate: CardComponentProps[] = [
     {
@@ -142,9 +143,9 @@ export default function Karatedo() {
       <Reveal className="relative mt-10 text-center" y={14}>
         {" "}
         <Button asChild variant="link">
-          
+
           <Link to="/karatedo">
-            
+
             Descubre más sobre el Karatedo
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>

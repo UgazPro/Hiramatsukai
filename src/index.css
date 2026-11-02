@@ -205,9 +205,30 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Public site: remap the blue family to the warm Japanese palette.
-   Admin layouts stay outside this scope and keep their original blue accents. */
+/* Public site: stone palette with warm gold/copper accents.
+   Admin layouts stay outside this scope and keep the original warm/blue palette. */
 .site-theme {
+  --brand-sumi: #0c0a09;
+  --brand-sumi-soft: #292524;
+  --brand-ink: #1c1917;
+  --brand-washi: #f5f5f4;
+  --brand-washi-deep: #e7e5e4;
+  --brand-washi-card: #fafaf9;
+  --brand-sand: #d6d3d1;
+  --brand-linen: #f5f5f4;
+  --brand-wood: #a8a29e;
+  --brand-wood-dark: #57534e;
+  --brand-wood-deep: #292524;
+  --brand-copper: #a8724a;
+  --brand-copper-deep: #744a2d;
+  --brand-copper-light: #d6a77a;
+  --brand-gold: var(--brand-copper);
+  --brand-gold-deep: var(--brand-copper-deep);
+  --brand-chestnut: #57534e;
+  --brand-chestnut-dark: #292524;
+  --brand-muted: #57534e;
+  --heading-accent-dark: #d6a77a;
+
   --brand-blue: var(--brand-vermilion);
   --brand-blue-dark: var(--brand-vermilion-dark);
   --brand-blue-deep: var(--brand-sumi);
@@ -215,11 +236,47 @@
   --brand-blue-soft: var(--brand-copper-light);
   --brand-indigo: var(--brand-chestnut);
 
+  --background: var(--brand-washi);
+  --foreground: var(--brand-ink);
+  --card: var(--brand-washi-card);
+  --card-foreground: var(--brand-ink);
+  --popover: var(--brand-washi-card);
+  --popover-foreground: var(--brand-ink);
   --primary: var(--brand-vermilion);
   --primary-foreground: #ffffff;
+  --secondary: var(--brand-washi-deep);
+  --secondary-foreground: var(--brand-ink);
+  --muted: var(--brand-washi-deep);
+  --muted-foreground: var(--brand-muted);
+  --accent: var(--brand-sand);
+  --accent-foreground: var(--brand-ink);
+  --border: #d6d3d1;
+  --input: #a8a29e;
   --ring: var(--brand-vermilion);
   --heading: var(--brand-ink);
   --heading-accent: var(--brand-copper-deep);
+
+  --elevation-soft: 0 1px 2px rgb(28 25 23 / 0.05), 0 12px 32px -16px rgb(28 25 23 / 0.18);
+  --elevation-lift: 0 2px 4px rgb(28 25 23 / 0.06), 0 24px 48px -20px rgb(28 25 23 / 0.28);
+  --elevation-gold: 0 12px 32px -14px rgb(168 114 74 / 0.5);
+}
+
+/* Stone versions of the wood textures for the public site.
+   The admin keeps the original brown wood utilities. */
+.site-theme .bg-wood {
+  background-color: #d6d3d1;
+  background-image:
+    linear-gradient(105deg, rgb(250 250 249 / 0.35), transparent 48%, rgb(68 64 60 / 0.12)),
+    radial-gradient(circle at 20% 0%, rgb(120 113 108 / 0.16), transparent 55%),
+    repeating-linear-gradient(0deg, rgb(68 64 60 / 0.045) 0px, rgb(68 64 60 / 0.045) 1px, transparent 1px, transparent 5px);
+}
+
+.site-theme .bg-wood-dark {
+  background-color: #292524;
+  background-image:
+    linear-gradient(180deg, rgb(12 10 9 / 0.72), rgb(41 37 36 / 0.9)),
+    radial-gradient(circle at 75% 20%, rgb(168 162 158 / 0.14), transparent 55%),
+    repeating-linear-gradient(0deg, rgb(245 245 244 / 0.03) 0px, rgb(245 245 244 / 0.03) 1px, transparent 1px, transparent 6px);
 }
 
 @layer base {

@@ -431,7 +431,7 @@ export default function AboutUsInfo() {
             </Reveal>
           </div>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-3">
+          <div className="mt-12 hidden gap-5 sm:grid-cols-3">
             {stats.map((stat, index) => {
               const Icon = stat.icon;
               return (

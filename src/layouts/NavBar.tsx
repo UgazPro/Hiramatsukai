@@ -7,7 +7,8 @@ const menuItems = [
     { id: "home", label: "Inicio" },
     { id: "karate", label: "Karatedo" },
     { id: "kobudo", label: "Kobudo" },
-    { id: "kendoIaido", label: "Kendo Iaido" },
+    { id: "kendo", label: "Kendo" },
+    { id: "iaido", label: "Iaido" },
     { id: "dojos", label: "Dojos" },
 ];
 
