@@ -8,11 +8,19 @@ import { MdWhatsapp } from "react-icons/md";
 import { Loader } from "@/components/spinner/Loader";
 import {
   MapPin, Mail, Globe, Clock,
-  Sword, Target, Zap, Instagram, Facebook, Youtube, Twitter, ChevronRight,
+  Sword, Target, Zap, ChevronRight,
   ShieldCheck, Play, Medal, Flag, UserCheck,
   Shield, Users as UsersLucide, Heart
 } from "lucide-react";
 import { FaRegUserCircle } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaGlobe,
+  FaInstagram,
+  FaTiktok,
+  FaXTwitter,
+  FaYoutube,
+} from "react-icons/fa6";
 import CarouselComponent from "@/components/CarouselComponent";
 import { useDojosInfo } from "@/hooks/useDojos";
 import { useParams } from "react-router";
@@ -361,35 +369,49 @@ export default function DojoPage() {
 
     if (social === "facebook") {
       return {
-        cardClass: "bg-brand-indigo/90 border-brand-indigo/30 hover:bg-brand-indigo text-white",
-        Icon: Facebook,
-      };
-    }
-
-    if (social === "youtube") {
-      return {
-        cardClass: "bg-brand-vermilion/90 border-brand-vermilion/25 hover:bg-brand-vermilion-dark text-white",
-        Icon: Youtube,
+        Icon: FaFacebook,
+        iconClass: "text-[#1877F2]",
+        iconWrapClass: "bg-[#1877F2]/10",
       };
     }
 
     if (social === "instagram") {
       return {
-        cardClass: "bg-linear-to-br from-brand-vermilion via-brand-persimmon to-brand-chestnut border-brand-persimmon/25 hover:opacity-95 text-white",
-        Icon: Instagram,
+        Icon: FaInstagram,
+        iconClass: "text-white",
+        iconWrapClass: "bg-linear-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]",
+      };
+    }
+
+    if (social === "youtube") {
+      return {
+        Icon: FaYoutube,
+        iconClass: "text-[#FF0000]",
+        iconWrapClass: "bg-[#FF0000]/10",
+      };
+    }
+
+    if (social === "tiktok") {
+      return {
+        Icon: FaTiktok,
+        iconClass: "text-brand-ink",
+        iconWrapClass:
+          "bg-linear-to-br from-[#25F4EE]/20 via-brand-washi-card to-[#FE2C55]/20 ring-1 ring-brand-ink/10",
       };
     }
 
     if (social === "twitter" || social === "x") {
       return {
-        cardClass: "bg-brand-blue-deep/90 border-brand-chestnut/40 hover:bg-brand-blue-deep text-white",
-        Icon: Twitter,
+        Icon: FaXTwitter,
+        iconClass: "text-brand-ink",
+        iconWrapClass: "bg-brand-ink/5",
       };
     }
 
     return {
-      cardClass: "bg-brand-chestnut/90 border-border/40 hover:bg-brand-chestnut text-white",
-      Icon: Globe,
+      Icon: FaGlobe,
+      iconClass: "text-brand-copper",
+      iconWrapClass: "bg-brand-copper/10",
     };
   }
 
@@ -551,7 +573,7 @@ export default function DojoPage() {
             </div>
           </div>
 
-          <main className="mx-auto   px-4 py-10">
+          <main className="mx-auto px-4 py-8">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeTab}
@@ -564,7 +586,7 @@ export default function DojoPage() {
                 <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as MainTabId)} className="w-full">
 
                   {/* Pestaña: El Dojo */}
-                  <TabsContent value="about" className="space-y-12 mt-8">
+                  <TabsContent value="about" className="space-y-6 mt-4">
                     {/* Sección Acerca del Dojo */}
                     <section>
                       <div className="text-center">
@@ -596,10 +618,10 @@ export default function DojoPage() {
                           const Icon = value.icon;
                           return (
                             <div key={value.title} className="glass group rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-                              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-blue-deep text-brand-gold transition-colors duration-300 group-hover:bg-brand-vermilion group-hover:text-white">
+                              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-gold/15 text-brand-gold-deep transition-colors duration-300 group-hover:bg-brand-gold/25">
                                 <Icon className="h-6 w-6" aria-hidden="true" />
                               </div>
-                              <h3 className="font-serif font-semibold text-heading">{value.title}</h3>
+                              <h3 className="font-serif font-semibold text-brand-gold-deep">{value.title}</h3>
                               <p className="mt-2 text-sm leading-relaxed text-brand-muted">{value.description}</p>
                             </div>
                           );
@@ -787,15 +809,24 @@ export default function DojoPage() {
                   {/* Pestaña: Maestros */}
                   <TabsContent value="masters" className="space-y-12 mt-8">
                     <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-                      {dojo.masters.map((master) => (
-                        <div key={master.id} className="glass rounded-3xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lift">
-                          <div className="p-6">
-                            <div className="mb-6 text-center">
+                      {dojo.masters.map((master) => {
+                        const fullName = `${master.userRanks[0].rank.rank_name} ${master.name} ${master.lastName}`.trim();
+                        const roles = master.roles?.filter(
+                          (role) => role.rol.trim().toLowerCase() !== "administrador",
+                        ) ?? [];
+                        const ranks = master.userRanks ?? [];
+
+                        return (
+                          <div
+                            key={master.id}
+                            className="glass flex h-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lift"
+                          >
+                            <div className="text-center">
                               <div className="mx-auto mb-4 h-32 w-32 overflow-hidden rounded-full border-2 border-brand-gold/40 p-1">
                                 {master.profileImg.trim() != '' ? (
                                   <img
                                     src={getProfileImg(master)}
-                                    alt={master.name}
+                                    alt={fullName}
                                     className="h-full w-full rounded-full object-cover"
                                   />
                                 ) : (
@@ -804,41 +835,41 @@ export default function DojoPage() {
                                   </div>
                                 )}
                               </div>
-                              <h3 className="font-serif text-xl font-semibold text-heading">{master.userRanks[0].rank.rank_name} {master.name}</h3>
-                              <p className="mt-1 font-medium text-brand-vermilion">{master.roles?.map((r) => r.rol).join(", ")}</p>
+
+                              <h3 className="font-serif text-xl font-semibold text-heading">
+                                {fullName}
+                              </h3>
+
+                              {roles.length > 0 && (
+                                <span className="mt-2 inline-flex rounded-full bg-brand-vermilion/10 px-3 py-1 text-xs font-semibold text-brand-vermilion-dark">
+                                  {roles.map((role) => role.rol).join(" · ")}
+                                </span>
+                              )}
+
+                              <div className="mt-4 flex flex-wrap justify-center gap-2">
+                                {ranks.length > 0 ? (
+                                  ranks.map(({ rank, martialArt }) => (
+                                    <span
+                                      key={`${rank.id}-${martialArt.martialArt}`}
+                                      className="inline-flex items-center gap-1.5 rounded-full bg-brand-gold/15 px-3 py-1 text-xs font-semibold text-brand-gold-deep"
+                                    >
+                                      <Medal className="h-3.5 w-3.5" aria-hidden="true" />
+                                      {rank.rank_name}
+                                      <span className="font-normal text-brand-muted">
+                                        · {martialArt.martialArt}
+                                      </span>
+                                    </span>
+                                  ))
+                                ) : (
+                                  <span className="text-sm text-brand-muted">
+                                    Rango por confirmar
+                                  </span>
+                                )}
+                              </div>
                             </div>
-
-                            <div className="space-y-4">
-                              {/*   <div>
-                            <h4 className="font-bold text-heading mb-2">Especialidad</h4>
-                            <p className="text-foreground">{master.specialty}</p>
                           </div>
-
-                          <div>
-                            <h4 className="font-bold text-heading mb-2">Experiencia</h4>
-                            <p className="text-foreground">{master.experience}</p>
-                          </div>
-
-                          <div>
-                            <h4 className="font-bold text-heading mb-2">Biografía</h4>
-                            <p className="text-foreground text-sm">{master.bio}</p>
-                          </div>
-
-                          <div>
-                            <h4 className="font-bold text-heading mb-2">Reconocimientos</h4>
-                            <ul className="space-y-1">
-                              {master.awards.map((award, idx) => (
-                                <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
-                                  <Trophy className="h-4 w-4 text-brand-gold" />
-                                  {award}
-                                </li>
-                              ))}
-                            </ul>
-                          </div> */}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </TabsContent>
 
@@ -1117,9 +1148,12 @@ export default function DojoPage() {
                     </div>
 
                     {/* Redes Sociales */}
-                    <section className="relative overflow-hidden rounded-3xl border border-white/10 bg-brand-blue-deep p-6 text-brand-washi lg:p-8">
-                      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-wood-dark opacity-30" />
-                      <h2 className="relative text-center font-serif text-2xl font-semibold text-white">
+                    <section className="relative overflow-hidden rounded-3xl border border-brand-wood/15 bg-linear-to-br from-brand-vermilion/10 via-brand-washi-card to-brand-sand/40 p-6 lg:p-8">
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brand-vermilion/10 blur-3xl"
+                      />
+                      <h2 className="relative text-center font-serif text-2xl font-semibold text-heading">
                         Síguenos en Redes Sociales
                       </h2>
 
@@ -1135,15 +1169,25 @@ export default function DojoPage() {
                               href={socialLink}
                               target="_blank"
                               rel="noopener noreferrer"
+                              aria-label={`Abrir ${data.socialMedia}`}
                               className="block"
                             >
-                              <Card className={`${socialConfig.cardClass} backdrop-blur-sm transition-transform duration-300 hover:scale-[1.02] cursor-pointer`}>
-                                <CardContent className="p-6 text-center">
-                                  <div className="h-16 w-16 rounded-full bg-card/20 flex items-center justify-center mx-auto mb-4">
-                                    <Icon className="h-8 w-8 text-white" />
+                              <Card className="h-full cursor-pointer border-brand-wood/15 bg-brand-washi-card/80 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-copper/30">
+                                <CardContent className="flex flex-col items-center p-6 text-center">
+                                  <div
+                                    className={`mb-4 flex h-16 w-16 items-center justify-center rounded-full ${socialConfig.iconWrapClass}`}
+                                  >
+                                    <Icon
+                                      className={`h-8 w-8 ${socialConfig.iconClass}`}
+                                      aria-hidden="true"
+                                    />
                                   </div>
-                                  <h3 className="font-bold text-lg mb-1 capitalize">{data.socialMedia}</h3>
-                                  <p className="text-white/90 mb-3 truncate">{data.link}</p>
+                                  <h3 className="mb-1 font-serif text-lg font-semibold capitalize text-heading">
+                                    {data.socialMedia}
+                                  </h3>
+                                  <p className="w-full truncate text-sm text-brand-muted">
+                                    {data.link}
+                                  </p>
                                 </CardContent>
                               </Card>
                             </a>
