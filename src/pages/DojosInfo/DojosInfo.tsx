@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { MdWhatsapp } from "react-icons/md";
-import { Loader } from "@/components/spinner/Loader";
+import DojosInfoSkeleton from "./DojosInfoSkeleton";
 import {
   MapPin, Mail, Globe, Clock,
   Sword, Target, Zap, ChevronRight,
@@ -511,11 +511,7 @@ export default function DojoPage() {
   const currentDiscipline = dojoData.disciplines.find(d => d.id === activeDiscipline);
 
   if (isLoading) {
-    return (
-      <div className="min-h-dvh flex items-center justify-center">
-        <Loader size="lg" message="Cargando información del Dojo..." />
-      </div>
-    );
+    return <DojosInfoSkeleton />;
   }
 
   return (
