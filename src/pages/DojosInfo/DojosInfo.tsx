@@ -31,14 +31,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AnimatePresence, motion } from "motion/react";
 
 type MainTabId = "about" | "masters" | "gallery" | "contact";
 
 const GRADES: Record<string, string> = {
-  '1': "ro",
+  '1': "er",
   '2': "do",
-  '3': "ro",
+  '3': "er",
   '4': "to",
   '5': "to",
   '6': "to",
@@ -564,10 +563,9 @@ export default function DojoPage() {
                   const isActive = activeTab === section.id;
 
                   return (
-                    <motion.button
+                    <button
                       key={section.id}
                       type="button"
-                      initial={false}
                       onClick={() => setActiveTab(section.id)}
                       aria-pressed={isActive}
                       className={`flex cursor-pointer items-center justify-center gap-2 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300 lg:w-1/4 lg:text-base ${isActive
@@ -577,7 +575,7 @@ export default function DojoPage() {
                     >
                       <Icon className="h-4 w-4" aria-hidden="true" />
                       {section.label}
-                    </motion.button>
+                    </button>
                   );
                 })}
               </div>
@@ -585,14 +583,10 @@ export default function DojoPage() {
           </div>
 
           <main className="mx-auto px-4 py-8">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -14 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
+            <div
+              key={activeTab}
+              className="animate-in fade-in-0 slide-in-from-bottom-2 duration-300 ease-out"
+            >
                 {/* Contenido Principal dentro de Tabs */}
                 <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as MainTabId)} className="w-full">
 
@@ -864,7 +858,7 @@ export default function DojoPage() {
                                       key={`${rank.id}-${martialArt.martialArt}`}
                                       className="inline-flex items-center gap-1.5 rounded-full bg-brand-gold/15 px-3 py-1 text-xs font-semibold text-brand-gold-deep"
                                     >
-                                      <span className="font-semibold text-brand-gold-deep">{rank.code.split(' ')[0]} <sup className="text-[0.6rem]">{GRADES[rank.code.split(' ')[0]]}</sup> {rank.code.split(' ')[1]}</span>
+                                      <span className="font-semibold text-brand-gold-deep">{rank.code.split(' ')[0]}<sup className="text-[0.6rem]">{GRADES[rank.code.split(' ')[0]]}</sup> {rank.code.split(' ')[1]}</span>
                                       {rank.rank_name}
                                       <span className="font-normal text-brand-muted">
                                         · {martialArt.martialArt}
@@ -1229,8 +1223,7 @@ export default function DojoPage() {
                   </TabsContent>
 
                 </Tabs>
-              </motion.div>
-            </AnimatePresence>
+            </div>
           </main>
         </>
       )}
