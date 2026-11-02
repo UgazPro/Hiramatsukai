@@ -7,7 +7,7 @@ import {
   useReducedMotion,
   useSpring,
 } from "motion/react";
-import { ChevronDown, ArrowRight, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 const stats = [
   { value: "1997", label: "Fundación en Okinawa" },
   { value: "3", label: "Disciplinas tradicionales" },
@@ -113,23 +113,6 @@ export default function AboutUs() {
                 variant="brand"
                 className="group w-full rounded-full px-8 py-6 text-base shadow-gold sm:w-auto"
               >
-                
-                <a href="#karate">
-                  
-                  Comienza tu viaje
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                    aria-hidden="true"
-                  />
-                </a>
-              </Button>{" "}
-              <Button
-                asChild
-                size="lg"
-                variant="glass"
-                className="w-full rounded-full border-brand-gold/50 bg-brand-sumi/20 px-8 py-6 text-base text-white backdrop-blur-md hover:border-brand-copper-light/60 hover:bg-brand-copper-light hover:text-brand-sumi sm:w-auto"
-              >
-                
                 <a href="#hiramatsukai">Conoce la organización</a>
               </Button>{" "}
             </div>{" "}
@@ -230,14 +213,6 @@ export default function AboutUs() {
           </div>{" "}
         </Reveal>{" "}
       </div>{" "}
-      <a
-        href="#hiramatsukai"
-        aria-label="Desplázate para explorar la página"
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-white/20 bg-white/10 p-2.5 text-white/80 backdrop-blur-md transition-colors duration-300 hover:border-brand-copper-light/60 hover:text-brand-copper-light"
-      >
-        {" "}
-        <ChevronDown className="h-5 w-5" aria-hidden="true" />{" "}
-      </a>{" "}
     </section>
   );
 }
